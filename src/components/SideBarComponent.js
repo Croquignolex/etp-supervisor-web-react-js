@@ -6,35 +6,22 @@ import {APP_NAME} from "../constants/generalConstants";
 import {formatString} from "../functions/generalFunctions";
 import {
     SIMS,
-    USERS,
-    ZONES,
     AGENTS,
     REQUESTS,
-    OPERATORS,
-    COMPANIES,
-    COLLECTORS,
-    RECOVERIES,
+    CHECKOUT,
     OPERATIONS,
-    LISTING_PAGE,
-    USER_NEW_PAGE,
-    ZONE_NEW_PAGE,
+    RECOVERIES,
     ALL_SIMS_PAGE,
-    ALL_USERS_PAGE,
-    DASHBOARD_PAGE,
     AGENT_NEW_PAGE,
-    ALL_ZONES_PAGE,
+    DASHBOARD_PAGE,
     ALL_AGENTS_PAGE,
-    COMPANY_NEW_PAGE,
-    COLLECTOR_FLEETS,
-    OPERATOR_NEW_PAGE,
-    COLLECTOR_NEW_PAGE,
-    ALL_COMPANIES_PAGE,
-    ALL_OPERATORS_PAGE,
-    ALL_COLLECTORS_PAGE,
+    HANDING_OVER_PAGE,
     RECOVERIES_CASH_PAGE,
     REQUESTS_FLEETS_PAGE,
     RECOVERIES_FLEET_PAGE,
+    CHECKOUT_OUTlAYS_PAGE,
     OPERATIONS_FLEETS_PAGE,
+    CHECKOUT_PAYMENTS_PAGE,
     OPERATIONS_AFFORDS_PAGE,
     REQUESTS_CLEARANCES_PAGE,
     OPERATIONS_TRANSFERS_PAGE,
@@ -43,31 +30,17 @@ import {
 } from "../constants/pageNameConstants";
 import {
     SIMS_PAGE_PATH,
-    ZONES_PAGE_PATH,
-    USERS_PAGE_PATH,
     AGENTS_PAGE_PATH,
     PROFILE_PAGE_PATH,
-    LISTING_PAGE_PATH,
-    ZONE_NEW_PAGE_PATH,
-    USER_NEW_PAGE_PATH,
     SIM_EDIT_PAGE_PATH,
     AGENT_NEW_PAGE_PATH,
-    COMPANIES_PAGE_PATH,
     DASHBOARD_PAGE_PATH,
-    ZONE_EDIT_PAGE_PATH,
-    USER_EDIT_PAGE_PATH,
-    OPERATORS_PAGE_PATH,
-    COLLECTORS_PAGE_PATH,
     AGENT_EDIT_PAGE_PATH,
-    COMPANY_NEW_PAGE_PATH,
-    COMPANY_EDIT_PAGE_PATH,
-    OPERATOR_NEW_PAGE_PATH,
-    OPERATOR_EDIT_PAGE_PATH,
-    COLLECTOR_NEW_PAGE_PATH,
-    COLLECTOR_EDIT_PAGE_PATH,
+    HANDING_OVER_PAGE_PATH,
     REQUESTS_FLEETS_PAGE_PATH,
     RECOVERIES_CASH_PAGE_PATH,
-    COLLECTOR_FLEETS_PAGE_PATH,
+    CHECKOUT_OUTLAYS_PAGE_PATH,
+    CHECKOUT_PAYMENTS_PAGE_PATH,
     OPERATIONS_FLEETS_PAGE_PATH,
     OPERATION_AFFORDS_PAGE_PATH,
     RECOVERIES_FLEETS_PAGE_PATH,
@@ -94,16 +67,12 @@ function SideBarComponent({user, pathname}) {
             buildRequestsMenu(),
             buildAuthorisedOperationsMenu(),
             buildAuthorisedRecoveriesMenu(),
-            buildAuthorisedCompaniesMenu(),
-            buildAuthorisedUsersMenu(),
-            buildAuthorisedAgentsMenu(),
-            buildAuthorisedCollectorsMenu(),
-            buildAuthorisedZonesMenu(),
+            buildAuthorisedCheckoutMenu(),
+            buildAuthorisedAgentMenu(),
             buildAuthorisedSimsMenu(),
-            buildAuthorisedOperatorsMenu(),
-            buildAuthorisedListingMenu(),
         ];
-    }, []);
+        // eslint-disable-next-line
+    }, [pathname]);
 
     // Render
     return (
@@ -243,8 +212,21 @@ function buildAuthorisedRecoveriesMenu() {
     }
 }
 
+// Build checkout menu
+function buildAuthorisedCheckoutMenu() {
+    return {
+        name: CHECKOUT,
+        icon: 'fa fa-coins',
+        sub: [
+            {name: CHECKOUT_PAYMENTS_PAGE, path: CHECKOUT_PAYMENTS_PAGE_PATH},
+            {name: CHECKOUT_OUTlAYS_PAGE, path: CHECKOUT_OUTLAYS_PAGE_PATH},
+            {name: HANDING_OVER_PAGE, path: HANDING_OVER_PAGE_PATH},
+        ]
+    }
+}
+
 // Build agents menu
-function buildAuthorisedAgentsMenu() {
+function buildAuthorisedAgentMenu() {
     return {
         name: AGENTS,
         icon: 'fa fa-user-cog',
@@ -252,20 +234,6 @@ function buildAuthorisedAgentsMenu() {
             {name: ALL_AGENTS_PAGE, path: AGENTS_PAGE_PATH},
             {name: AGENT_NEW_PAGE, path: AGENT_NEW_PAGE_PATH},
             {name: INVISIBLE_MENU_ITEM, path: `${AGENT_EDIT_PAGE_PATH}/:id`}
-        ]
-    };
-}
-
-// Build collectors menu
-function buildAuthorisedCollectorsMenu() {
-    return {
-        name: COLLECTORS,
-        icon: 'fa fa-user-clock',
-        sub: [
-            {name: ALL_COLLECTORS_PAGE, path: COLLECTORS_PAGE_PATH},
-            {name: COLLECTOR_NEW_PAGE, path: COLLECTOR_NEW_PAGE_PATH},
-            {name: COLLECTOR_FLEETS, path: COLLECTOR_FLEETS_PAGE_PATH},
-            {name: INVISIBLE_MENU_ITEM, path: `${COLLECTOR_EDIT_PAGE_PATH}/:id`},
         ]
     };
 }
@@ -278,68 +246,6 @@ function buildAuthorisedSimsMenu() {
         sub: [
             {name: ALL_SIMS_PAGE, path: SIMS_PAGE_PATH},
             {name: INVISIBLE_MENU_ITEM, path: `${SIM_EDIT_PAGE_PATH}/:id`}
-        ]
-    };
-}
-
-// Build operators menu
-function buildAuthorisedOperatorsMenu() {
-    return {
-        name: OPERATORS,
-        icon: 'fa fa-globe',
-        sub: [
-            {name: ALL_OPERATORS_PAGE, path: OPERATORS_PAGE_PATH},
-            {name: OPERATOR_NEW_PAGE, path: OPERATOR_NEW_PAGE_PATH},
-            {name: INVISIBLE_MENU_ITEM, path: `${OPERATOR_EDIT_PAGE_PATH}/:id`}
-        ]
-    };
-}
-
-// Build listing menu
-function buildAuthorisedListingMenu() {
-    return {
-        name: LISTING_PAGE,
-        path: LISTING_PAGE_PATH,
-        icon: 'fa fa-list',
-        sub: []
-    };
-}
-
-// Build zones menu
-function buildAuthorisedZonesMenu() {
-    return {
-        name: ZONES,
-        icon: 'fa fa-map',
-        sub: [
-            {name: ALL_ZONES_PAGE, path: ZONES_PAGE_PATH},
-            {name: ZONE_NEW_PAGE, path: ZONE_NEW_PAGE_PATH},
-            {name: INVISIBLE_MENU_ITEM, path: `${ZONE_EDIT_PAGE_PATH}/:id`},
-        ]
-    };
-}
-
-// Build companies menu
-function buildAuthorisedCompaniesMenu() {
-    return {
-        name: COMPANIES,
-        icon: 'fa fa-university',
-        sub: [
-            {name: ALL_COMPANIES_PAGE, path: COMPANIES_PAGE_PATH},
-            {name: COMPANY_NEW_PAGE, path: COMPANY_NEW_PAGE_PATH},
-            {name: INVISIBLE_MENU_ITEM, path: `${COMPANY_EDIT_PAGE_PATH}/:id`},
-        ]
-    };
-}
-
-// Build users menu
-function buildAuthorisedUsersMenu() {
-    return {
-        name: USERS,
-        icon: 'fa fa-users',
-        sub: [
-            {name: ALL_USERS_PAGE, path: USERS_PAGE_PATH},
-            {name: USER_NEW_PAGE, path: USER_NEW_PAGE_PATH},
-            {name: INVISIBLE_MENU_ITEM, path: `${USER_EDIT_PAGE_PATH}/:id`},
         ]
     };
 }
