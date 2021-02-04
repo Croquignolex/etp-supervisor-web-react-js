@@ -9,8 +9,13 @@ import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {emitUserInformationUpdate} from "../../redux/user/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeUserProfileEditRequestReset} from "../../redux/requests/actions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {storeUserProfileEditRequestReset} from "../../redux/requests/user/actions";
+import {
+    applySuccess,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function ProfileEditComponent({user, request, dispatch}) {
@@ -33,40 +38,45 @@ function ProfileEditComponent({user, request, dispatch}) {
     useEffect(() => {
         // Cleaner error alert while component did unmount without store dependency
         return () => {
-            dispatch(storeUserProfileEditRequestReset());
+            shouldResetErrorData();
         };
         // eslint-disable-next-line
     }, []);
 
     const handleNameInput = (data) => {
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         setName({...name, isValid: true, data})
     }
 
     const handlePostInput = (data) => {
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         setPost({...post, isValid: true, data})
     }
 
     const handleEmailInput = (data) => {
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         setEmail({...email, isValid: true, data})
     }
 
     const handleAddressInput = (data) => {
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         setAddress({...address, isValid: true, data})
     }
 
     const handleDescriptionInput = (data) => {
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         setDescription({...description, isValid: true, data})
     }
+
+    // Reset error alert
+    const shouldResetErrorData = () => {
+        dispatch(storeUserProfileEditRequestReset());
+    };
 
     // Trigger user information form submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(storeUserProfileEditRequestReset());
+        shouldResetErrorData();
         const _name = requiredChecker(name);
         // Set value
         setName(_name);

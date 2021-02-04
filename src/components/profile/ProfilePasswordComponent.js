@@ -7,9 +7,14 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitUserPasswordUpdate} from "../../redux/user/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeUserPasswordEditRequestReset} from "../../redux/requests/actions";
+import {storeUserPasswordEditRequestReset} from "../../redux/requests/user/actions";
 import {passwordChecker, passwordConfirmChecker} from "../../functions/checkerFunctions";
-import {requestLoading, requestSucceeded, requestFailed, applySuccess} from "../../functions/generalFunctions";
+import {
+    applySuccess,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function ProfilePasswordComponent({request, dispatch}) {
@@ -33,30 +38,35 @@ function ProfilePasswordComponent({request, dispatch}) {
     useEffect(() => {
         // Cleaner error alert while component did unmount without store dependency
         return () => {
-            dispatch(storeUserPasswordEditRequestReset());
+            shouldResetErrorData();
         };
         // eslint-disable-next-line
     }, []);
 
     const handleOldPasswordInput = (data) => {
-        dispatch(storeUserPasswordEditRequestReset());
+        shouldResetErrorData();
         setOldPassword({...oldPassword, isValid: true, data})
     }
 
     const handleNewPasswordInput = (data) => {
-        dispatch(storeUserPasswordEditRequestReset());
+        shouldResetErrorData();
         setNewPassword({...newPassword, isValid: true, data})
     }
 
     const handleConfirmPasswordInput = (data) => {
-        dispatch(storeUserPasswordEditRequestReset());
+        shouldResetErrorData();
         setConfirmPassword({...confirmPassword, isValid: true, data})
     }
+
+    // Reset error alert
+    const shouldResetErrorData = () => {
+        dispatch(storeUserPasswordEditRequestReset());
+    };
 
     // Trigger password form submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(storeUserPasswordEditRequestReset());
+        shouldResetErrorData();
         // Check values
         const _oldPassword = passwordChecker(oldPassword);
         const _newPassword = passwordChecker(newPassword);
@@ -123,4 +133,5 @@ ProfilePasswordComponent.propTypes = {
     request: PropTypes.object.isRequired,
 };
 
-export default React.memo(ProfilePasswordComponent);
+export default
+React.memo(ProfilePasswordComponent);

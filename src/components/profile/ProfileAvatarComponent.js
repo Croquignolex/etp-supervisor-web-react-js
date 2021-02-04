@@ -8,8 +8,13 @@ import {emitUserAvatarUpdate} from "../../redux/user/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {requiredImageChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_OBJECT_FORM_DATA} from "../../constants/defaultConstants";
-import {storeUserAvatarEditRequestReset} from "../../redux/requests/actions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {storeUserAvatarEditRequestReset} from "../../redux/requests/user/actions";
+import {
+    applySuccess,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function ProfileAvatarComponent({dispatch, request}) {
@@ -28,20 +33,25 @@ function ProfileAvatarComponent({dispatch, request}) {
     useEffect(() => {
         // Cleaner error alert while component did unmount without store dependency
         return () => {
-            dispatch(storeUserAvatarEditRequestReset());
+            shouldResetErrorData();
         };
         // eslint-disable-next-line
     }, []);
 
     const handleAvatarInput = (data) => {
-        dispatch(storeUserAvatarEditRequestReset());
+        shouldResetErrorData();
         setAvatar({...avatar, isValid: true, data})
     }
+
+    // Reset error alert
+    const shouldResetErrorData = () => {
+        dispatch(storeUserAvatarEditRequestReset());
+    };
 
     // Trigger avatar form submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(storeUserAvatarEditRequestReset());
+        shouldResetErrorData();
         const _avatar = requiredImageChecker(avatar);
         // Set value
         setAvatar(_avatar);
