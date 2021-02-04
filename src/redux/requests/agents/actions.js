@@ -120,7 +120,7 @@ export const storeAllAgentsRequestSucceed = ({message}) => ({
 export const storeAllAgentsRequestReset = () => ({
     type: STORE_ALL_AGENTS_REQUEST_RESET
 });
-// ======================================================== Add agents
+// ======================================================== Add agent
 // Set add agent init data into store
 export const storeAddAgentRequestInit = () => ({
     type: STORE_ADD_AGENT_REQUEST_INIT

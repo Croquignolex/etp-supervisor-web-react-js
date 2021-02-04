@@ -16,13 +16,14 @@ function SideBarComponent({user, pathname}) {
     const {name, avatar} = user;
     const authorisedMenu = useMemo(() => {
         return [
-            buildDashboardMenu(),
-            buildNetworkMenu(),
-            buildRequestsMenu(),
-            buildOperationsMenu(),
-            buildRecoveriesMenu(),
-            buildAgentsMenu(),
-            buildSimsMenu(),
+            // buildDashboardMenu(),
+            // buildNetworkMenu(),
+            // buildRequestsMenu(),
+            // buildOperationsMenu(),
+            // buildRecoveriesMenu(),
+            // buildAgentsMenu(),
+            // buildSimsMenu(),
+            buildOperatorsMenu(),
         ];
         // eslint-disable-next-line
     }, [pathname]);
@@ -190,6 +191,15 @@ function buildSimsMenu() {
     };
 }
 
+// Build operators menu
+function buildOperatorsMenu() {
+    return {
+        name: page.OPERATORS,
+        path: path.OPERATORS_PAGE_PATH,
+        icon: 'fa fa-globe',
+        sub: []
+    };
+}
 
 // Side bar drawer open
 function drawer(toggle, key, sub, activePage) {
