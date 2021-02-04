@@ -1,5 +1,9 @@
 // Reducer action types
+export const STORE_SET_OPERATOR_DATA = 'STORE_SET_OPERATOR_DATA';
 export const STORE_SET_OPERATORS_DATA = 'STORE_SET_OPERATORS_DATA';
+export const STORE_SET_NEW_OPERATOR_DATA = 'STORE_SET_NEW_OPERATOR_DATA';
+export const STORE_SET_NEXT_OPERATORS_DATA = 'STORE_SET_NEXT_OPERATORS_DATA';
+export const STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA';
 
 // Middleware action types
 export const EMIT_OPERATOR_FETCH = 'EMIT_OPERATOR_FETCH';
@@ -14,6 +18,32 @@ export const storeSetOperatorsData = ({operators, hasMoreData, page}) => ({
     operators,
     hasMoreData,
     type: STORE_SET_OPERATORS_DATA
+});
+
+// Set operator data in store
+export const storeSetOperatorData = ({operator, alsoInList = false}) => ({
+    operator,
+    alsoInList,
+    type: STORE_SET_OPERATOR_DATA
+});
+
+// Set next operators data in store
+export const storeSetNextOperatorsData = ({operators, hasMoreData, page}) => ({
+    page,
+    operators,
+    hasMoreData,
+    type: STORE_SET_NEXT_OPERATORS_DATA
+});
+
+// Stop infinite scroll
+export const storeStopInfiniteScrollOperatorData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA
+});
+
+// Set new operator data in store
+export const storeSetNewOperatorData = ({operator}) => ({
+    operator,
+    type: STORE_SET_NEW_OPERATOR_DATA
 });
 
 //====================== Middleware trigger actions

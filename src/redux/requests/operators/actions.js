@@ -29,6 +29,11 @@ export const STORE_EDIT_OPERATOR_REQUEST_RESET = 'STORE_EDIT_OPERATOR_REQUEST_RE
 export const STORE_EDIT_OPERATOR_REQUEST_FAILED = 'STORE_EDIT_OPERATOR_REQUEST_FAILED';
 export const STORE_EDIT_OPERATOR_REQUEST_SUCCEEDED = 'STORE_EDIT_OPERATOR_REQUEST_SUCCEEDED';
 
+export const STORE_OPERATOR_ADD_SIM_REQUEST_INIT = 'STORE_OPERATOR_ADD_SIM_REQUEST_INIT';
+export const STORE_OPERATOR_ADD_SIM_REQUEST_RESET = 'STORE_OPERATOR_ADD_SIM_REQUEST_RESET';
+export const STORE_OPERATOR_ADD_SIM_REQUEST_FAILED = 'STORE_OPERATOR_ADD_SIM_REQUEST_FAILED';
+export const STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED';
+
 // ======================================================== Operators
 // Set operators init data into store
 export const storeOperatorsRequestInit = () => ({
@@ -160,4 +165,26 @@ export const storeEditOperatorRequestSucceed = ({message}) => ({
 // Set edit operator reset data into store
 export const storeEditOperatorRequestReset = () => ({
     type: STORE_EDIT_OPERATOR_REQUEST_RESET
+});
+// ======================================================== Operator add sim
+// Set operator add sim init data into store
+export const storeOperatorAddSimRequestInit = () => ({
+    type: STORE_OPERATOR_ADD_SIM_REQUEST_INIT
+});
+
+// Set operator add sim failed data into store
+export const storeOperatorAddSimRequestFailed = ({message}) => ({
+    message,
+    type: STORE_OPERATOR_ADD_SIM_REQUEST_FAILED
+});
+
+// Set operator add sim succeeded data into store
+export const storeOperatorAddSimRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED
+});
+
+// Set operator add sim reset data into store
+export const storeOperatorAddSimRequestReset = () => ({
+    type: STORE_OPERATOR_ADD_SIM_REQUEST_RESET
 });
