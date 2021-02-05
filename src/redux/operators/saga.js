@@ -26,6 +26,8 @@ import {
     storeAllOperatorsRequestSucceed,
     storeNextOperatorsRequestSucceed
 } from "../requests/operators/actions";
+import {EMIT_AGENT_FETCH, storeSetAgentData} from "../agents/actions";
+import {storeAgentRequestFailed, storeAgentRequestInit, storeAgentRequestSucceed} from "../requests/agents/actions";
 
 // Fetch all operators from API
 export function* emitAllOperatorsFetch() {
@@ -107,6 +109,33 @@ export function* emitNewOperator() {
         } catch (message) {
             // Fire event for request
             yield put(storeAddOperatorRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch agent from API
+export function* emitAgentFetch() {
+    yield takeLatest(EMIT_AGENT_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeAgentRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.AGENT_API_PATH}/${id}`);
+            // Extract data
+            const agent = extractAgentData(
+                apiResponse.data.agent,
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.createur,
+                apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetAgentData({agent}));
+            // Fire event for request
+            yield put(storeAgentRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAgentRequestFailed({message}));
         }
     });
 }

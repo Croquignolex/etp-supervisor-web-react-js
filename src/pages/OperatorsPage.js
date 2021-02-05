@@ -12,6 +12,7 @@ import FormModalComponent from "../components/modals/FormModalComponent";
 import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
 import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
 import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
+import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
 
@@ -125,7 +126,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                 <OperatorNewContainer handleClose={handleNewOperatorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
-                {/*<AgentDetailsContainer id={operatorDetailsModal.id} />*/}
+                <OperatorDetailsContainer id={operatorDetailsModal.id} />
             </FormModalComponent>
         </>
     )

@@ -6,7 +6,13 @@ import * as actions from "./actions";
 const initialState = {
     page: 1,
     list: [],
-    hasMoreData: false
+    hasMoreData: false,
+
+    current: {
+        id: '', name: '', description: '', creation: '',
+
+        sims: []
+    },
 };
 
 // Reduce
