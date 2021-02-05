@@ -6,12 +6,16 @@ import {OPERATORS} from "../constants/pageNameConstants";
 import {emitAllAgentsFetch} from "../redux/agents/actions";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
+import {emitAllCompaniesFetch} from "../redux/companies/actions";
+import {emitAllSimsTypesFetch} from "../redux/simsTypes/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
 import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
+import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
+import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
 import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
 import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
@@ -29,8 +33,8 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     useEffect(() => {
         dispatch(emitOperatorsFetch());
         dispatch(emitAllAgentsFetch());
-        // dispatch(emitAllCompaniesFetch());
-        // dispatch(emitAllSimsTypesFetch());
+        dispatch(emitAllCompaniesFetch());
+        dispatch(emitAllSimsTypesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -46,6 +50,8 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     const shouldResetErrorData = () => {
         dispatch(storeOperatorsRequestReset());
         dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllCompaniesRequestReset());
+        dispatch(storeAllSimsTypesRequestReset());
         dispatch(storeNextOperatorsRequestReset());
     };
 

@@ -1,7 +1,7 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
 import {EMIT_ALL_COMPANIES_FETCH, storeSetCompaniesData} from "./actions";
 import {
     storeAllCompaniesRequestInit,
@@ -61,7 +61,7 @@ function extractCompanyData(apiCompany) {
         company.description = apiCompany.description;
         company.document = getFileFromServer(apiCompany.dossier);
     }
-    return operator;
+    return company;
 }
 
 // Extract operators data
