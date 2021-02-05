@@ -7,6 +7,7 @@ import {
     EMIT_OPERATOR_FETCH,
     EMIT_OPERATORS_FETCH,
     storeSetOperatorData,
+    EMIT_UPDATE_OPERATOR,
     storeSetOperatorsData,
     storeSetNewOperatorData,
     EMIT_ALL_OPERATORS_FETCH,
@@ -21,14 +22,17 @@ import {
     storeShowOperatorRequestInit,
     storeAllOperatorsRequestInit,
     storeOperatorsRequestSucceed,
+    storeEditOperatorRequestInit,
     storeNextOperatorsRequestInit,
     storeAddOperatorRequestFailed,
     storeAllOperatorsRequestFailed,
     storeShowOperatorRequestFailed,
     storeAddOperatorRequestSucceed,
+    storeEditOperatorRequestFailed,
     storeNextOperatorsRequestFailed,
     storeAllOperatorsRequestSucceed,
     storeShowOperatorRequestSucceed,
+    storeEditOperatorRequestSucceed,
     storeNextOperatorsRequestSucceed
 } from "../requests/operators/actions";
 
@@ -139,6 +143,30 @@ export function* emitOperatorFetch() {
     });
 }
 
+// Update operator info
+export function* emitUpdateOperator() {
+    yield takeLatest(EMIT_UPDATE_OPERATOR, function*({id, name, description}) {
+        try {
+            // Fire event for request
+            yield put(storeEditOperatorRequestInit());
+            const data = {name, description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_OPERATOR_INFO_API_PATH}/${id}`, data);
+            // Extract data
+            const operator = extractOperatorData(
+                apiResponse.data.flote,
+                apiResponse.data.puces,
+            );
+            // Fire event to redux
+            yield put(storeSetOperatorData({operator, alsoInList: true}));
+            // Fire event for request
+            yield put(storeEditOperatorRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeEditOperatorRequestFailed({message}));
+        }
+    });
+}
+
 // Extract zone data
 function extractOperatorData(apiOperator, apiSims) {
     let operator = {
@@ -186,6 +214,7 @@ export default function* sagaZones() {
     yield all([
         fork(emitNewOperator),
         fork(emitOperatorFetch),
+        fork(emitUpdateOperator),
         fork(emitOperatorsFetch),
         fork(emitAllOperatorsFetch),
         fork(emitNextOperatorsFetch),

@@ -144,7 +144,7 @@ export const storeShowOperatorRequestSucceed = ({message}) => ({
 export const storeShowOperatorRequestReset = () => ({
     type: STORE_SHOW_OPERATOR_REQUEST_RESET
 });
-// ======================================================== Add operator
+// ======================================================== Edit operator
 // Set edit operator init data into store
 export const storeEditOperatorRequestInit = () => ({
     type: STORE_EDIT_OPERATOR_REQUEST_INIT

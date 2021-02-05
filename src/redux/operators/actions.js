@@ -8,6 +8,7 @@ export const STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA = 'STORE_STOP_INFINITE_SC
 // Middleware action types
 export const EMIT_NEW_OPERATOR = 'EMIT_NEW_OPERATOR';
 export const EMIT_OPERATOR_FETCH = 'EMIT_OPERATOR_FETCH';
+export const EMIT_UPDATE_OPERATOR = 'EMIT_UPDATE_OPERATOR';
 export const EMIT_OPERATORS_FETCH = 'EMIT_OPERATORS_FETCH';
 export const EMIT_ALL_OPERATORS_FETCH = 'EMIT_ALL_OPERATORS_FETCH';
 export const EMIT_NEXT_OPERATORS_FETCH = 'EMIT_NEXT_OPERATORS_FETCH';
@@ -75,4 +76,12 @@ export const emitNewOperator = ({name, description}) => ({
     name,
     description,
     type: EMIT_NEW_OPERATOR
+});
+
+// Emit update operator
+export const emitUpdateOperator = ({id, name, description}) => ({
+    id,
+    name,
+    description,
+    type: EMIT_UPDATE_OPERATOR
 });

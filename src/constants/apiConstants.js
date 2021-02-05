@@ -59,6 +59,7 @@ export const OPERATOR_API_PATH = `${API_URL}/show_flote`;
 export const OPERATORS_API_PATH = `${API_URL}/flote_list`;
 export const CREATE_OPERATOR_API_PATH = `${API_URL}/store_flote`;
 export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
+export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
 
 // Recoveries
 export const NEW_FLEET_RECOVERIES_API_PATH = `${API_URL}/retour_flotte`;

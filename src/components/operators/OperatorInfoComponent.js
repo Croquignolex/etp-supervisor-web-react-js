@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
 
 // Component
 function OperatorInfoComponent({operator}) {
@@ -44,7 +45,7 @@ function OperatorInfoComponent({operator}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                {/*<AgentPrimaryInfoEditContainer handleClose={handleInfoEditModalHide} />*/}
+                <OperatorInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
     )
