@@ -4,7 +4,9 @@ import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_OPERATOR,
+    EMIT_OPERATOR_FETCH,
     EMIT_OPERATORS_FETCH,
+    storeSetOperatorData,
     storeSetOperatorsData,
     storeSetNewOperatorData,
     EMIT_ALL_OPERATORS_FETCH,
@@ -16,18 +18,19 @@ import {
     storeOperatorsRequestInit,
     storeOperatorsRequestFailed,
     storeAddOperatorRequestInit,
+    storeShowOperatorRequestInit,
     storeAllOperatorsRequestInit,
     storeOperatorsRequestSucceed,
     storeNextOperatorsRequestInit,
     storeAddOperatorRequestFailed,
     storeAllOperatorsRequestFailed,
+    storeShowOperatorRequestFailed,
     storeAddOperatorRequestSucceed,
     storeNextOperatorsRequestFailed,
     storeAllOperatorsRequestSucceed,
+    storeShowOperatorRequestSucceed,
     storeNextOperatorsRequestSucceed
 } from "../requests/operators/actions";
-import {EMIT_AGENT_FETCH, storeSetAgentData} from "../agents/actions";
-import {storeAgentRequestFailed, storeAgentRequestInit, storeAgentRequestSucceed} from "../requests/agents/actions";
 
 // Fetch all operators from API
 export function* emitAllOperatorsFetch() {
@@ -113,29 +116,25 @@ export function* emitNewOperator() {
     });
 }
 
-// Fetch agent from API
-export function* emitAgentFetch() {
-    yield takeLatest(EMIT_AGENT_FETCH, function*({id}) {
+// Fetch operator from API
+export function* emitOperatorFetch() {
+    yield takeLatest(EMIT_OPERATOR_FETCH, function*({id}) {
         try {
             // Fire event for request
-            yield put(storeAgentRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.AGENT_API_PATH}/${id}`);
+            yield put(storeShowOperatorRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.OPERATOR_API_PATH}/${id}`);
             // Extract data
-            const agent = extractAgentData(
-                apiResponse.data.agent,
-                apiResponse.data.user,
-                apiResponse.data.zone,
-                apiResponse.data.caisse,
-                apiResponse.data.createur,
-                apiResponse.data.puces
+            const operator = extractOperatorData(
+                apiResponse.data.flote,
+                apiResponse.data.puces,
             );
             // Fire event to redux
-            yield put(storeSetAgentData({agent}));
+            yield put(storeSetOperatorData({operator}));
             // Fire event for request
-            yield put(storeAgentRequestSucceed({message: apiResponse.message}));
+            yield put(storeShowOperatorRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAgentRequestFailed({message}));
+            yield put(storeShowOperatorRequestFailed({message}));
         }
     });
 }
@@ -186,6 +185,7 @@ function extractOperatorsData(apiOperators) {
 export default function* sagaZones() {
     yield all([
         fork(emitNewOperator),
+        fork(emitOperatorFetch),
         fork(emitOperatorsFetch),
         fork(emitAllOperatorsFetch),
         fork(emitNextOperatorsFetch),

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-import OperatorCardComponent from "./OperatorCardComponent";
+import {dateToString} from "../../functions/generalFunctions";
 
 // Component
 function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
@@ -25,7 +25,14 @@ function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="card-body"><OperatorCardComponent operator={item} /></div>
+                                <div className="card-body">
+                                    <ul className="list-group list-group-unbordered">
+                                        <li className="list-group-item">
+                                            <b>Création</b>
+                                            <span className="float-right">{dateToString(item.creation)}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     )

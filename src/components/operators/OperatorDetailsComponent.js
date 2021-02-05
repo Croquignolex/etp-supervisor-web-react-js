@@ -5,6 +5,7 @@ import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import OperatorInfoComponent from "./OperatorInfoComponent";
 import {emitOperatorFetch} from "../../redux/operators/actions";
+import OperatorSimsListComponent from "./OperatorSimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeShowOperatorRequestReset} from "../../redux/requests/operators/actions";
 
@@ -32,11 +33,11 @@ function OperatorDetailsComponent({id, operator, dispatch, request}) {
             {requestLoading(request)  ? <LoaderComponent /> : (
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
-                        <div className="col-lg-6 col-md-6">
+                        <div className="col-12">
                             <OperatorInfoComponent operator={operator} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            {/*<AgentSimsListComponent agent={agent} />*/}
+                            <OperatorSimsListComponent operator={operator} />
                         </div>
                     </div>
                 )
