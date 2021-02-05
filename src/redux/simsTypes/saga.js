@@ -2,62 +2,55 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest} from "../../functions/axiosFunctions";
-import {EMIT_ALL_COMPANIES_FETCH, storeSetCompaniesData} from "./actions";
+import {EMIT_ALL_SIMS_TYPES_FETCH, storeSetSimsTypesData} from "./actions";
+import {AGENT_TYPE, COLLECTOR_TYPE, CORPORATE_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
 import {
-    storeAllCompaniesRequestInit,
-    storeAllCompaniesRequestFailed,
-    storeAllCompaniesRequestSucceed
-} from "../requests/companies/actions";
+    storeAllSimsTypesRequestInit,
+    storeAllSimsTypesRequestFailed,
+    storeAllSimsTypesRequestSucceed
+} from "../requests/simsTypes/actions";
 
-// Fetch all companies from API
-export function* emitAllCompaniesFetch() {
-    yield takeLatest(EMIT_ALL_COMPANIES_FETCH, function*() {
+// Fetch all sims types from API
+export function* emitAllSimsTypesFetch() {
+    yield takeLatest(EMIT_ALL_SIMS_TYPES_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeAllCompaniesRequestInit());
-            const apiResponse = yield call(apiGetRequest, api.All_COMPANIES_API_PATH);
+            yield put(storeAllSimsTypesRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.All_SIMS_TYPES_API_PATH);
             // Extract data
-            const companies = extractCompaniesData(apiResponse.data.flotes);
+            const simsTypes = extractSimsTypesData(apiResponse.data.types);
             // Fire event to redux
-            yield put(storeSetCompaniesData({companies, hasMoreData: false, page: 0}));
+            yield put(storeSetSimsTypesData({simsTypes, hasMoreData: false, page: 0}));
             // Fire event for request
-            yield put(storeAllCompaniesRequestSucceed({message: apiResponse.message}));
+            yield put(storeAllSimsTypesRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAllCompaniesRequestFailed({message}));
+            yield put(storeAllSimsTypesRequestFailed({message}));
         }
     });
 }
 
-// Extract zone data
-function extractOperatorData(apiOperator) {
-    let operator = {
-        id: '', name: '', description: '', creation: '',
-    };
-    if(apiOperator) {
-        operator.actionLoader = false;
-        operator.name = apiOperator.nom;
-        operator.id = apiOperator.id.toString();
-        operator.creation = apiOperator.created_at;
-        operator.description = apiOperator.description;
-    }
-    return operator;
-}
-
-// Extract zones data
-function extractCompaniesData(apiCompanies) {
-    const companies = [];
-    if(apiCompanies) {
-        apiCompanies.forEach(data => {
-            companies.push(extractOperatorData(data.flote));
+// Extract roles data
+function extractSimsTypesData(apiSimsTypes) {
+    const simsTypes = [];
+    if(apiSimsTypes) {
+        apiSimsTypes.forEach(data => {
+            const {id, name} = data;
+            const needCompany = (name === CORPORATE_TYPE);
+            const needAgent = (name === AGENT_TYPE || name === RESOURCE_TYPE);
+            const needCollector = (name === COLLECTOR_TYPE);
+            simsTypes.push({
+                id: id.toString(),
+                name, needAgent, needCompany, needCollector
+            });
         });
     }
-    return companies;
+    return simsTypes;
 }
 
 // Combine to export all functions at once
-export default function* sagaCompanies() {
+export default function* sagaSimsTypes() {
     yield all([
-        fork(emitAllCompaniesFetch),
+        fork(emitAllSimsTypesFetch),
     ]);
 }

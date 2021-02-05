@@ -61,6 +61,12 @@ export const CREATE_OPERATOR_API_PATH = `${API_URL}/store_flote`;
 export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
 export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
 
+// Companies
+export const All_COMPANIES_API_PATH = `${API_URL}/corporate_list_all`;
+
+// Sims types
+export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
+
 // Recoveries
 export const NEW_FLEET_RECOVERIES_API_PATH = `${API_URL}/retour_flotte`;
 export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_retour_flotte_by_rz`;

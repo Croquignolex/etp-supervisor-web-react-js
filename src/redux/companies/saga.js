@@ -17,7 +17,7 @@ export function* emitAllCompaniesFetch() {
             yield put(storeAllCompaniesRequestInit());
             const apiResponse = yield call(apiGetRequest, api.All_COMPANIES_API_PATH);
             // Extract data
-            const companies = extractCompaniesData(apiResponse.data.flotes);
+            const companies = extractCompaniesData(apiResponse.data.entreprises);
             // Fire event to redux
             yield put(storeSetCompaniesData({companies, hasMoreData: false, page: 0}));
             // Fire event for request
@@ -29,27 +29,47 @@ export function* emitAllCompaniesFetch() {
     });
 }
 
-// Extract zone data
-function extractOperatorData(apiOperator) {
-    let operator = {
-        id: '', name: '', description: '', creation: '',
+// Extract company data
+function extractCompanyData(apiCompany) {
+    let company = {
+        id: '', name: '', manager: '', phone: '', document: '',
+        address: '', creation: '', description: '',
+
+        sims: []
     };
-    if(apiOperator) {
-        operator.actionLoader = false;
-        operator.name = apiOperator.nom;
-        operator.id = apiOperator.id.toString();
-        operator.creation = apiOperator.created_at;
-        operator.description = apiOperator.description;
+    const apiSims = apiCompany.puces;
+    if(apiSims) {
+        apiSims.forEach(data => {
+            company.sims.push({
+                name: data.nom,
+                number: data.numero,
+                actionLoader: false,
+                id: data.id.toString(),
+                reference: data.reference,
+                creation: data.created_at
+            })
+        });
+    }
+    if(apiCompany) {
+        company.actionLoader = false;
+        company.name = apiCompany.nom;
+        company.phone = apiCompany.phone;
+        company.address = apiCompany.adresse;
+        company.id = apiCompany.id.toString();
+        company.manager = apiCompany.responsable;
+        company.creation = apiCompany.created_at;
+        company.description = apiCompany.description;
+        company.document = getFileFromServer(apiCompany.dossier);
     }
     return operator;
 }
 
-// Extract zones data
+// Extract operators data
 function extractCompaniesData(apiCompanies) {
     const companies = [];
     if(apiCompanies) {
         apiCompanies.forEach(data => {
-            companies.push(extractOperatorData(data.flote));
+            companies.push(extractCompanyData(data));
         });
     }
     return companies;
