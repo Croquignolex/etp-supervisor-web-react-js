@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
+import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimContainer";
 
 // Component
 function OperatorSimsListComponent({operator}) {
@@ -60,7 +61,7 @@ function OperatorSimsListComponent({operator}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                {/*<AgentAddSimContainer handleClose={handleAddSimModalHide} />*/}
+                <OperatorAddSimContainer handleClose={handleAddSimModalHide} />
             </FormModalComponent>
         </>
     )

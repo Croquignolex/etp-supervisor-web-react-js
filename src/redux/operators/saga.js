@@ -210,7 +210,7 @@ function extractOperatorsData(apiOperators) {
 }
 
 // Combine to export all functions at once
-export default function* sagaZones() {
+export default function* sagaOperators() {
     yield all([
         fork(emitNewOperator),
         fork(emitOperatorFetch),

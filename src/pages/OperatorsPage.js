@@ -3,12 +3,14 @@ import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import {OPERATORS} from "../constants/pageNameConstants";
+import {emitAllAgentsFetch} from "../redux/agents/actions";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
 import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
 import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
 import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
@@ -26,6 +28,9 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     // Local effects
     useEffect(() => {
         dispatch(emitOperatorsFetch());
+        dispatch(emitAllAgentsFetch());
+        // dispatch(emitAllCompaniesFetch());
+        // dispatch(emitAllSimsTypesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -40,6 +45,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeOperatorsRequestReset());
+        dispatch(storeAllAgentsRequestReset());
         dispatch(storeNextOperatorsRequestReset());
     };
 
