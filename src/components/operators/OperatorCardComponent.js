@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
+import {dateToString} from "../../functions/generalFunctions";
+
 // Component
 function OperatorsCardsComponent({operator}) {
     // Render
@@ -10,10 +12,6 @@ function OperatorsCardsComponent({operator}) {
                 <li className="list-group-item">
                     <b>Création</b>
                     <span className="float-right">{dateToString(operator.creation)}</span>
-                </li>
-                <li className="list-group-item">
-                    <b>Nom</b>
-                    <span className="float-right">{operator.sims}</span>
                 </li>
             </ul>
         </>

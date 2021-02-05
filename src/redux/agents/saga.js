@@ -382,10 +382,8 @@ function extractAgentData(apiAgent, apiUser, apiZone, apiAccount, apiCreator, ap
             agent.sims.push({
                 name: data.nom,
                 number: data.numero,
-                actionLoader: false,
                 balance: data.solde,
                 id: data.id.toString(),
-                reference: data.reference,
                 creation: data.created_at
             })
         });
