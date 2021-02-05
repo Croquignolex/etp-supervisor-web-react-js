@@ -56,6 +56,7 @@ export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
 
 // Operators
 export const OPERATORS_API_PATH = `${API_URL}/flote_list`;
+export const CREATE_OPERATOR_API_PATH = `${API_URL}/store_flote`;
 export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
 
 // Recoveries

@@ -6,6 +6,7 @@ export const STORE_SET_NEXT_OPERATORS_DATA = 'STORE_SET_NEXT_OPERATORS_DATA';
 export const STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA';
 
 // Middleware action types
+export const EMIT_NEW_OPERATOR = 'EMIT_NEW_OPERATOR';
 export const EMIT_OPERATOR_FETCH = 'EMIT_OPERATOR_FETCH';
 export const EMIT_OPERATORS_FETCH = 'EMIT_OPERATORS_FETCH';
 export const EMIT_ALL_OPERATORS_FETCH = 'EMIT_ALL_OPERATORS_FETCH';
@@ -67,4 +68,11 @@ export const emitAllOperatorsFetch = () => ({
 export const emitOperatorFetch = ({id}) => ({
     id,
     type: EMIT_OPERATOR_FETCH
+});
+
+// Emit new operator
+export const emitNewOperator = ({name, description}) => ({
+    name,
+    description,
+    type: EMIT_NEW_OPERATOR
 });

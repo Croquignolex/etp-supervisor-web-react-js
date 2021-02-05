@@ -1,10 +1,12 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
-    storeSetOperatorsData,
+    EMIT_NEW_OPERATOR,
     EMIT_OPERATORS_FETCH,
+    storeSetOperatorsData,
+    storeSetNewOperatorData,
     EMIT_ALL_OPERATORS_FETCH,
     storeSetNextOperatorsData,
     EMIT_NEXT_OPERATORS_FETCH,
@@ -13,10 +15,13 @@ import {
 import {
     storeOperatorsRequestInit,
     storeOperatorsRequestFailed,
+    storeAddOperatorRequestInit,
     storeAllOperatorsRequestInit,
     storeOperatorsRequestSucceed,
     storeNextOperatorsRequestInit,
+    storeAddOperatorRequestFailed,
     storeAllOperatorsRequestFailed,
+    storeAddOperatorRequestSucceed,
     storeNextOperatorsRequestFailed,
     storeAllOperatorsRequestSucceed,
     storeNextOperatorsRequestSucceed
@@ -83,6 +88,29 @@ export function* emitNextOperatorsFetch() {
     });
 }
 
+// New operator into API
+export function* emitNewOperator() {
+    yield takeLatest(EMIT_NEW_OPERATOR, function*({name, description}) {
+        try {
+            // Fire event for request
+            yield put(storeAddOperatorRequestInit());
+            // From data
+            const data = {name, description}
+            // API request
+            const apiResponse = yield call(apiPostRequest, api.CREATE_OPERATOR_API_PATH, data);
+            // Extract data
+            const operator = extractOperatorData(apiResponse.data.flote);
+            // Fire event to redux
+            yield put(storeSetNewOperatorData({operator}));
+            // Fire event for request
+            yield put(storeAddOperatorRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddOperatorRequestFailed({message}));
+        }
+    });
+}
+
 // Extract zone data
 function extractOperatorData(apiOperator, apiSims) {
     let operator = {
@@ -128,6 +156,7 @@ function extractOperatorsData(apiOperators) {
 // Combine to export all functions at once
 export default function* sagaZones() {
     yield all([
+        fork(emitNewOperator),
         fork(emitOperatorsFetch),
         fork(emitAllOperatorsFetch),
         fork(emitNextOperatorsFetch),
