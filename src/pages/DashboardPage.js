@@ -109,7 +109,7 @@ function DashboardPage({user, fleets, sims, clearances, agents, settings, dispat
                                     />
                                 </div>
                             }
-                            {cardsData.includes(setting.CARD_FLEETS_REQUESTS) &&
+                            {/*{cardsData.includes(setting.CARD_FLEETS_REQUESTS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent icon='fa fa-rss'
                                                             color='bg-danger'
@@ -119,7 +119,7 @@ function DashboardPage({user, fleets, sims, clearances, agents, settings, dispat
                                                             label={setting.LABEL_FLEETS_REQUESTS}
                                     />
                                 </div>
-                            }
+                            }*/}
                             {cardsData.includes(setting.CARD_CLEARANCES_REQUEST) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-warning'
