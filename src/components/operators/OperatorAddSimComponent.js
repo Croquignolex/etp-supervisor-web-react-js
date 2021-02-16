@@ -8,12 +8,12 @@ import ButtonComponent from "../form/ButtonComponent";
 import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitAddAgentSims} from "../../redux/agents/actions";
+import {emitAddOperatorSims} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
-import {storeAgentAddSimRequestReset} from "../../redux/requests/agents/actions";
+import {storeOperatorAddSimRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -51,7 +51,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAgentAddSimRequestReset());
+        dispatch(storeOperatorAddSimRequestReset());
     };
 
     const handleDescriptionInput = (data) => {
@@ -139,12 +139,16 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         setSimsType(_simsType);
         setResource(_resource);
         setCollector(_collector);
+
+        let reference;
         let validationOK = _simsType.isValid && _name.isValid && _number.isValid;
 
         if(simsTypeData.needAgent) {
-            validationOK = validationOK && _agent.isValid
+            validationOK = validationOK && _agent.isValid;
+            reference = types.AGENT_TYPE;
         } else if(simsTypeData.needResource) {
-            validationOK = validationOK && _resource.isValid
+            validationOK = validationOK && _resource.isValid;
+            reference = types.RESOURCE_TYPE;
         } else if(simsTypeData.needCollector) {
             validationOK = validationOK && _collector.isValid
         } else if(simsTypeData.needCompany) {
@@ -153,11 +157,18 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 
         // Check
         if(validationOK) {
-            /*dispatch(emitAddAgentSims({
+            dispatch(emitAddOperatorSims({
+                reference,
+                id: operator.id,
                 name: _name.data,
+                agent: _agent.data,
                 number: _number.data,
-                description: description.data
-            }));*/
+                company: _company.data,
+                simType: _simsType.data,
+                resource: _resource.data,
+                collector: _collector.data,
+                description: description.data,
+            }));
         }
         else playWarningSound();
     };

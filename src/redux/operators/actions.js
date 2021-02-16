@@ -10,6 +10,7 @@ export const EMIT_NEW_OPERATOR = 'EMIT_NEW_OPERATOR';
 export const EMIT_OPERATOR_FETCH = 'EMIT_OPERATOR_FETCH';
 export const EMIT_UPDATE_OPERATOR = 'EMIT_UPDATE_OPERATOR';
 export const EMIT_OPERATORS_FETCH = 'EMIT_OPERATORS_FETCH';
+export const EMIT_ADD_OPERATOR_SIMS = 'EMIT_ADD_OPERATOR_SIMS';
 export const EMIT_ALL_OPERATORS_FETCH = 'EMIT_ALL_OPERATORS_FETCH';
 export const EMIT_NEXT_OPERATORS_FETCH = 'EMIT_NEXT_OPERATORS_FETCH';
 
@@ -84,4 +85,19 @@ export const emitUpdateOperator = ({id, name, description}) => ({
     name,
     description,
     type: EMIT_UPDATE_OPERATOR
+});
+
+// Emit add operator sims
+export const emitAddOperatorSims = ({id, simType, name, number, description, agent, company, collector, resource, reference}) => ({
+    id,
+    name,
+    agent,
+    number,
+    simType,
+    company,
+    resource,
+    collector,
+    reference,
+    description,
+    type: EMIT_ADD_OPERATOR_SIMS
 });

@@ -9,6 +9,7 @@ import {
     storeSetOperatorData,
     EMIT_UPDATE_OPERATOR,
     storeSetOperatorsData,
+    EMIT_ADD_OPERATOR_SIMS,
     storeSetNewOperatorData,
     EMIT_ALL_OPERATORS_FETCH,
     storeSetNextOperatorsData,
@@ -29,11 +30,14 @@ import {
     storeShowOperatorRequestFailed,
     storeAddOperatorRequestSucceed,
     storeEditOperatorRequestFailed,
+    storeOperatorAddSimRequestInit,
     storeNextOperatorsRequestFailed,
     storeAllOperatorsRequestSucceed,
     storeShowOperatorRequestSucceed,
     storeEditOperatorRequestSucceed,
-    storeNextOperatorsRequestSucceed
+    storeNextOperatorsRequestSucceed,
+    storeOperatorAddSimRequestFailed,
+    storeOperatorAddSimRequestSucceed,
 } from "../requests/operators/actions";
 
 // Fetch all operators from API
@@ -167,6 +171,40 @@ export function* emitUpdateOperator() {
     });
 }
 
+// Add agent sim
+export function* emitAddOperatorSims() {
+    yield takeLatest(EMIT_ADD_OPERATOR_SIMS, function*({id, simType, name, number, description, agent, company, collector, resource, reference}) {
+        try {
+            // Fire event for request
+            yield put(storeOperatorAddSimRequestInit());
+            const data = {
+                reference,
+                nom: name,
+                description,
+                type: simType,
+                numero: number,
+                id_agent: agent,
+                id_rz: collector,
+                id_corporate: company,
+                id_ressource: resource,
+            }
+            const apiResponse = yield call(apiPostRequest, `${api.OPERATOR_ADD_SIM}/${id}`, data);
+            // Extract data
+            const operator = extractOperatorData(
+                apiResponse.data.flote,
+                apiResponse.data.puces,
+            );
+            // Fire event to redux
+            yield put(storeSetOperatorData({operator, alsoInList: true}));
+            // Fire event for request
+            yield put(storeOperatorAddSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeOperatorAddSimRequestFailed({message}));
+        }
+    });
+}
+
 // Extract zone data
 function extractOperatorData(apiOperator, apiSims) {
     let operator = {
@@ -216,6 +254,7 @@ export default function* sagaOperators() {
         fork(emitOperatorFetch),
         fork(emitUpdateOperator),
         fork(emitOperatorsFetch),
+        fork(emitAddOperatorSims),
         fork(emitAllOperatorsFetch),
         fork(emitNextOperatorsFetch),
     ]);

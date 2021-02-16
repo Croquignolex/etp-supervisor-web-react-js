@@ -57,6 +57,7 @@ export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;
 export const OPERATORS_API_PATH = `${API_URL}/flote_list`;
+export const OPERATOR_ADD_SIM = `${API_URL}/ajouter_puce_flote`;
 export const CREATE_OPERATOR_API_PATH = `${API_URL}/store_flote`;
 export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
 export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
