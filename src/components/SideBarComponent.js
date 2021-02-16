@@ -22,7 +22,7 @@ function SideBarComponent({user, pathname}) {
             // buildOperationsMenu(),
             // buildRecoveriesMenu(),
             // buildAgentsMenu(),
-            // buildSimsMenu(),
+            buildSimsMenu(),
             buildOperatorsMenu(),
         ];
         // eslint-disable-next-line
