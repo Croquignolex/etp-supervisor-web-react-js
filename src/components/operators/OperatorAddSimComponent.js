@@ -1,29 +1,34 @@
 import PropTypes from "prop-types";
 import React, {useEffect, useMemo, useState} from 'react';
 
+import DisabledInput from "../form/DisabledInput";
 import InputComponent from "../form/InputComponent";
+import SelectComponent from "../form/SelectComponent";
 import ButtonComponent from "../form/ButtonComponent";
+import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitAddAgentSims} from "../../redux/agents/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAgentAddSimRequestReset} from "../../redux/requests/agents/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import DisabledInput from "../form/DisabledInput";
 
 // Component
-function OperatorAddSimComponent({request, operator, dispatch, handleClose}) {
+function OperatorAddSimComponent({request, agents, simsTypes, companies, collectors, operator, dispatch, handleClose,
+                                     allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
     const [agent, setAgent] = useState(DEFAULT_FORM_DATA);
     const [number, setNumber] = useState(DEFAULT_FORM_DATA);
     const [company, setCompany] = useState(DEFAULT_FORM_DATA);
+    const [resource, setResource] = useState(DEFAULT_FORM_DATA);
     const [simsType, setSimsType] = useState(DEFAULT_FORM_DATA);
-    const [needAgent, setNeedAgent] = useState(false);
+    const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
+    const [simsTypeData, setSimsTypeData] = useState({});
     const [description, setDescription] = useState(DEFAULT_FORM_DATA);
-    const [needCompany, setNeedCompany] = useState(false);
 
     // Local effects
     useEffect(() => {
@@ -64,6 +69,57 @@ function OperatorAddSimComponent({request, operator, dispatch, handleClose}) {
         setNumber({...number, isValid: true, data})
     }
 
+    const handleTypeSelect = (data) => {
+        shouldResetErrorData();
+        setSimsType({...simsType,  isValid: true, data})
+        setSimsTypeData(simsTypes.find(item => item.id === data))
+    }
+
+    const handleAgentSelect = (data) => {
+        shouldResetErrorData();
+        setAgent({...agent,  isValid: true, data})
+    }
+
+    const handleResourceSelect = (data) => {
+        shouldResetErrorData();
+        setResource({...resource,  isValid: true, data})
+    }
+
+    const handleCompanySelect = (data) => {
+        shouldResetErrorData();
+        setCompany({...company,  isValid: true, data})
+    }
+
+    const handleCollectorSelect = (data) => {
+        shouldResetErrorData();
+        setCollector({...collector,  isValid: true, data})
+    }
+
+    // Build select options
+    const typeSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(simsTypes);
+    }, [simsTypes]);
+
+    // Build select options
+    const agentSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(agents.filter(agent => types.AGENT_TYPE === agent.reference));
+    }, [agents]);
+
+    // Build select options
+    const resourceSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(agents.filter(agent => types.RESOURCE_TYPE === agent.reference));
+    }, [agents]);
+
+    // Build select options
+    const companySelectOptions = useMemo(() => {
+        return dataToArrayForSelect(companies);
+    }, [companies]);
+
+    // Build select options
+    const collectorSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(collectors);
+    }, [collectors]);
+
     // Trigger user information form submit
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,6 +142,8 @@ function OperatorAddSimComponent({request, operator, dispatch, handleClose}) {
         else playWarningSound();
     };
 
+    console.log({simsTypeData})
+
     // Render
     return (
         <>
@@ -98,6 +156,66 @@ function OperatorAddSimComponent({request, operator, dispatch, handleClose}) {
                                        val={operator.name}
                         />
                     </div>
+                </div>
+                <div className="row">
+                    <div className='col-sm-6'>
+                        <SelectComponent label='Type'
+                                         id='inputType'
+                                         input={simsType}
+                                         title='Choisir un type'
+                                         options={typeSelectOptions}
+                                         handleInput={handleTypeSelect}
+                                         requestProcessing={requestLoading(allSimsTypesRequests)}
+                        />
+                    </div>
+                    {simsTypeData.needAgent &&  (
+                        <div className='col-sm-6'>
+                            <SelectComponent label='Agent'
+                                             input={agent}
+                                             id='inputAgent'
+                                             title='Choisir un agent'
+                                             options={agentSelectOptions}
+                                             handleInput={handleAgentSelect}
+                                             requestProcessing={requestLoading(allAgentsRequests)}
+                            />
+                        </div>
+                    )}
+                    {simsTypeData.needResource &&  (
+                        <div className='col-sm-6'>
+                            <SelectComponent label='Ressource'
+                                             input={resource}
+                                             id='inputResource'
+                                             title='Choisir une ressource'
+                                             options={resourceSelectOptions}
+                                             handleInput={handleResourceSelect}
+                                             requestProcessing={requestLoading(allAgentsRequests)}
+                            />
+                        </div>
+                    )}
+                    {simsTypeData.needCompany &&  (
+                        <div className='col-sm-6'>
+                            <SelectComponent label='Entreprise'
+                                             input={company}
+                                             id='inputCompany'
+                                             title='Choisir une entreprise'
+                                             options={companySelectOptions}
+                                             handleInput={handleCompanySelect}
+                                             requestProcessing={requestLoading(allCompaniesRequests)}
+                            />
+                        </div>
+                    )}
+                    {simsTypeData.needCollector &&  (
+                        <div className='col-sm-6'>
+                            <SelectComponent input={collector}
+                                             label='Responsable de zone'
+                                             id='inputCollector'
+                                             options={collectorSelectOptions}
+                                             handleInput={handleCollectorSelect}
+                                             title='Choisir un responsable de zone'
+                                             requestProcessing={requestLoading(allCollectorsRequests)}
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className='row'>
                     <div className='col-sm-6'>
@@ -136,10 +254,18 @@ function OperatorAddSimComponent({request, operator, dispatch, handleClose}) {
 
 // Prop types to ensure destroyed props data type
 OperatorAddSimComponent.propTypes = {
-    operator: PropTypes.object.isRequired,
+    agents: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
+    simsTypes: PropTypes.array.isRequired,
+    companies: PropTypes.array.isRequired,
+    operator: PropTypes.object.isRequired,
+    collectors: PropTypes.array.isRequired,
     handleClose: PropTypes.func.isRequired,
+    allAgentsRequests: PropTypes.object.isRequired,
+    allSimsTypesRequests: PropTypes.object.isRequired,
+    allCompaniesRequests: PropTypes.object.isRequired,
+    allCollectorsRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(OperatorAddSimComponent);

@@ -36,12 +36,13 @@ function extractSimsTypesData(apiSimsTypes) {
     if(apiSimsTypes) {
         apiSimsTypes.forEach(data => {
             const {id, name} = data;
+            const needAgent = (name === AGENT_TYPE);
             const needCompany = (name === CORPORATE_TYPE);
-            const needAgent = (name === AGENT_TYPE || name === RESOURCE_TYPE);
+            const needResource = (name === RESOURCE_TYPE);
             const needCollector = (name === COLLECTOR_TYPE);
             simsTypes.push({
                 id: id.toString(),
-                name, needAgent, needCompany, needCollector
+                name, needAgent, needCompany, needCollector, needResource
             });
         });
     }
