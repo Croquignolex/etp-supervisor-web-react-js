@@ -126,18 +126,38 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         shouldResetErrorData();
         const _name = requiredChecker(name);
         const _number = phoneChecker(number);
+        const _agent = requiredChecker(agent);
+        const _company = requiredChecker(company);
+        const _resource= requiredChecker(resource);
+        const _simsType = requiredChecker(simsType);
+        const _collector = requiredChecker(collector);
         // Set value
         setName(_name);
+        setAgent(_agent);
         setNumber(_number);
-        const validationOK = (_name.isValid && _number.isValid);
+        setCompany(_company);
+        setSimsType(_simsType);
+        setResource(_resource);
+        setCollector(_collector);
+        let validationOK = _simsType.isValid && _name.isValid && _number.isValid;
+
+        if(simsTypeData.needAgent) {
+            validationOK = validationOK && _agent.isValid
+        } else if(simsTypeData.needResource) {
+            validationOK = validationOK && _resource.isValid
+        } else if(simsTypeData.needCollector) {
+            validationOK = validationOK && _collector.isValid
+        } else if(simsTypeData.needCompany) {
+            validationOK = validationOK && _company.isValid
+        }
 
         // Check
         if(validationOK) {
-            dispatch(emitAddAgentSims({
+            /*dispatch(emitAddAgentSims({
                 name: _name.data,
                 number: _number.data,
                 description: description.data
-            }));
+            }));*/
         }
         else playWarningSound();
     };
