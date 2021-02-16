@@ -71,6 +71,12 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 
     const handleTypeSelect = (data) => {
         shouldResetErrorData();
+        // reinitialize selects
+        setAgent(DEFAULT_FORM_DATA)
+        setCompany(DEFAULT_FORM_DATA)
+        setResource(DEFAULT_FORM_DATA)
+        setCollector(DEFAULT_FORM_DATA)
+
         setSimsType({...simsType,  isValid: true, data})
         setSimsTypeData(simsTypes.find(item => item.id === data))
     }
@@ -172,8 +178,6 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         }
         else playWarningSound();
     };
-
-    console.log({simsTypeData})
 
     // Render
     return (
