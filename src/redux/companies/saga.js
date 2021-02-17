@@ -10,6 +10,7 @@ import {
     storeSetCompaniesData,
     EMIT_ADD_COMPANY_SIMS,
     storeSetNewCompanyData,
+    EMIT_UPDATE_COMPANY_DOC,
     EMIT_ALL_COMPANIES_FETCH,
     storeSetNextCompaniesData,
     EMIT_NEXT_COMPANIES_FETCH,
@@ -29,11 +30,14 @@ import {
     storeCompanyAddSimRequestInit,
     storeAllCompaniesRequestFailed,
     storeShowCompanyRequestSucceed,
+    storeCompanyEditDocRequestInit,
     storeAllCompaniesRequestSucceed,
     storeNextCompaniesRequestFailed,
     storeCompanyAddSimRequestFailed,
     storeNextCompaniesRequestSucceed,
-    storeCompanyAddSimRequestSucceed
+    storeCompanyAddSimRequestSucceed,
+    storeCompanyEditDocRequestFailed,
+    storeCompanyEditDocRequestSucceed
 } from "../requests/companies/actions";
 
 // Fetch all companies from API
@@ -168,6 +172,28 @@ export function* emitAddCompanySims() {
     });
 }
 
+// Update company doc
+export function* emitUpdateCompanyDoc() {
+    yield takeLatest(EMIT_UPDATE_COMPANY_DOC, function*({id, doc}) {
+        try {
+            // Fire event for request
+            yield put(storeCompanyEditDocRequestInit());
+            const data = new FormData();
+            data.append('dossier', doc);
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_COMPANY_DOC_API_PATH}/${id}`, data);
+            // Extract data
+            const company = extractCompanyData(apiResponse.data.entreprise);
+            // Fire event to redux
+            yield put(storeSetCompanyData({company, alsoInList: true}));
+            // Fire event for request
+            yield put(storeCompanyEditDocRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCompanyEditDocRequestFailed({message}));
+        }
+    });
+}
+
 // Extract company data
 function extractCompanyData(apiCompany) {
     let company = {
@@ -220,6 +246,7 @@ export default function* sagaCompanies() {
         fork(emitCompanyFetch),
         fork(emitCompaniesFetch),
         fork(emitAddCompanySims),
+        fork(emitUpdateCompanyDoc),
         fork(emitAllCompaniesFetch),
         fork(emitNextCompaniesFetch),
     ]);

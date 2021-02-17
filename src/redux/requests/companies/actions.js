@@ -34,6 +34,11 @@ export const STORE_COMPANY_ADD_SIM_REQUEST_RESET = 'STORE_COMPANY_ADD_SIM_REQUES
 export const STORE_COMPANY_ADD_SIM_REQUEST_FAILED = 'STORE_COMPANY_ADD_SIM_REQUEST_FAILED';
 export const STORE_COMPANY_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_COMPANY_ADD_SIM_REQUEST_SUCCEEDED';
 
+export const STORE_COMPANY_EDIT_DOC_REQUEST_INIT = 'STORE_COMPANY_EDIT_DOC_REQUEST_INIT';
+export const STORE_COMPANY_EDIT_DOC_REQUEST_RESET = 'STORE_COMPANY_EDIT_DOC_REQUEST_RESET';
+export const STORE_COMPANY_EDIT_DOC_REQUEST_FAILED = 'STORE_COMPANY_EDIT_DOC_REQUEST_FAILED';
+export const STORE_COMPANY_EDIT_DOC_REQUEST_SUCCEEDED = 'STORE_COMPANY_EDIT_DOC_REQUEST_SUCCEEDED';
+
 // ======================================================== All companies
 // Set all companies init data into store
 export const storeAllCompaniesRequestInit = () => ({
@@ -144,7 +149,7 @@ export const storeShowCompanyRequestSucceed = ({message}) => ({
 export const storeShowCompanyRequestReset = () => ({
     type: STORE_SHOW_COMPANY_REQUEST_RESET
 });
-// ======================================================== Edit company
+// ======================================================== Edit company info
 // Set edit company init data into store
 export const storeEditCompanyRequestInit = () => ({
     type: STORE_EDIT_COMPANY_REQUEST_INIT
@@ -165,6 +170,28 @@ export const storeEditCompanyRequestSucceed = ({message}) => ({
 // Set edit company reset data into store
 export const storeEditCompanyRequestReset = () => ({
     type: STORE_EDIT_COMPANY_REQUEST_RESET
+});
+// ======================================================== Company edit doc
+// Set company edit doc init data into store
+export const storeCompanyEditDocRequestInit = () => ({
+    type: STORE_COMPANY_EDIT_DOC_REQUEST_INIT
+});
+
+// Set company edit doc failed data into store
+export const storeCompanyEditDocRequestFailed = ({message}) => ({
+    message,
+    type: STORE_COMPANY_EDIT_DOC_REQUEST_FAILED
+});
+
+// Set company edit doc succeeded data into store
+export const storeCompanyEditDocRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_COMPANY_EDIT_DOC_REQUEST_SUCCEEDED
+});
+
+// Set company edit doc reset data into store
+export const storeCompanyEditDocRequestReset = () => ({
+    type: STORE_COMPANY_EDIT_DOC_REQUEST_RESET
 });
 // ======================================================== Company add sim
 // Set company add sim init data into store

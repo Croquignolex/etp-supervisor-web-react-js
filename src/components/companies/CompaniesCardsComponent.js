@@ -43,13 +43,6 @@ function CompaniesCardsComponent({companies, handleCompanyDetailsModalShow}) {
                                             <b>Téléphone</b>
                                             <span className="float-right">{item.phone}</span>
                                         </li>
-                                        {item.document && (
-                                            <li className="list-group-item text-center">
-                                                <a download target='_blank' href={item.document} rel='noopener noreferrer' className="btn btn-theme">
-                                                    <i className="fa fa-file-archive" /> Dossier
-                                                </a>
-                                            </li>
-                                        )}
                                     </ul>
                                 </div>
                             </div>

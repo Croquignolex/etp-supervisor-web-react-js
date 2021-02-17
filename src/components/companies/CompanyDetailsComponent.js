@@ -3,12 +3,11 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import OperatorInfoComponent from "./CompanyInfoComponent";
+import CompanyInfoComponent from "./CompanyInfoComponent";
 import {emitCompanyFetch} from "../../redux/companies/actions";
-import OperatorSimsListComponent from "./CompanySimsListComponent";
+import CompanySimsListComponent from "./CompanySimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeShowCompanyRequestReset} from "../../redux/requests/companies/actions";
-import CompanySimsListComponent from "./CompanySimsListComponent";
 
 // Component
 function CompanyDetailsComponent({id, company, dispatch, request}) {
@@ -35,7 +34,7 @@ function CompanyDetailsComponent({id, company, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-12">
-                            <OperatorInfoComponent operator={company} />
+                            <CompanyInfoComponent company={company} />
                         </div>
                         <div className="col-lg-12 col-md-12">
                             <CompanySimsListComponent company={company} />

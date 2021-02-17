@@ -8,8 +8,11 @@ const initialState = {
     add: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
-    show: {failed: false, loading: false, succeeded: false, message: ""},
-    edit: {failed: false, loading: false, succeeded: false, message: ""},
+    show: {failed: false, loading: false, succeeded: false, message: ""}, 
+    edit: {
+        doc: {failed: false, loading: false, succeeded: false, message: ""}, 
+        info: {failed: false, loading: false, succeeded: false, message: ""}, 
+    }
 };
 
 // Reduce
@@ -33,7 +36,7 @@ function reduce(state = initialState, action) {
         case actions.STORE_ALL_COMPANIES_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
             return nextState || state;
-        // ======================================================== Operators
+        // ======================================================== Companys
         // Resolve event to set companies init request store data
         case actions.STORE_COMPANIES_REQUEST_INIT:
             nextState = {...state, list: requestInitValue()};
@@ -101,39 +104,56 @@ function reduce(state = initialState, action) {
         case actions.STORE_SHOW_COMPANY_REQUEST_RESET:
             nextState = {...state, show: initialState.show};
             return nextState || state;
-        // ======================================================== Edit company
+        // ======================================================== Edit company info
         // Resolve event to set edit company init request store data
         case actions.STORE_EDIT_COMPANY_REQUEST_INIT:
-            nextState = {...state, edit: requestInitValue()};
+            nextState = {...state, edit: {...state.edit, info: requestInitValue()}};
             return nextState || state;
         // Resolve event to set edit company failed request store data
         case actions.STORE_EDIT_COMPANY_REQUEST_FAILED:
-            nextState = {...state, edit: requestFailedValue(action.message)};
+            nextState = {...state, edit: {...state.edit, info: requestFailedValue(action.message)}};
             return nextState || state;
         // Resolve event to set edit company succeeded request store data
         case actions.STORE_EDIT_COMPANY_REQUEST_SUCCEEDED:
-            nextState = {...state, edit: requestSucceededValue(action.message)};
+            nextState = {...state, edit: {...state.edit, info: requestSucceededValue(action.message)}};
             return nextState || state;
         // Resolve event to set edit company reset request store data
         case actions.STORE_EDIT_COMPANY_REQUEST_RESET:
-            nextState = {...state, edit: initialState.edit};
+            nextState = {...state, edit: {...state.edit, info: initialState.edit.info}};
             return nextState || state;
-        // ======================================================== Operator add sim
+        // ======================================================== Company edit doc
+        // Resolve event to set company edit doc init request store data
+        case actions.STORE_COMPANY_EDIT_DOC_REQUEST_INIT:
+            nextState = {...state, edit: {...state.edit, doc: requestInitValue()}};
+            return nextState || state;
+        // Resolve event to set company edit doc failed request store data
+        case actions.STORE_COMPANY_EDIT_DOC_REQUEST_FAILED:
+            nextState = {...state, edit: {...state.edit, doc: requestFailedValue(action.message)}};
+            return nextState || state;
+        // Resolve event to set company edit doc succeeded request store data
+        case actions.STORE_COMPANY_EDIT_DOC_REQUEST_SUCCEEDED:
+            nextState = {...state, edit: {...state.edit, doc: requestSucceededValue(action.message)}};
+            return nextState || state;
+        // Resolve event to set company edit doc reset request store data
+        case actions.STORE_COMPANY_EDIT_DOC_REQUEST_RESET:
+            nextState = {...state, edit: {...state.edit, doc: initialState.edit.doc}};
+            return nextState || state;
+        // ======================================================== Company add sim
         // Resolve event to set company add sim init request store data
         case actions.STORE_COMPANY_ADD_SIM_REQUEST_INIT:
-            nextState = {...state, sim: requestInitValue()}
+            nextState = {...state, edit: {...state.edit, sim: requestInitValue()}};
             return nextState || state;
         // Resolve event to set company add sim failed request store data
         case actions.STORE_COMPANY_ADD_SIM_REQUEST_FAILED:
-            nextState = {...state, sim: requestFailedValue(action.message)};
+            nextState = {...state, edit: {...state.edit, sim: requestFailedValue(action.message)}};
             return nextState || state;
         // Resolve event to set company add sim succeeded request store data
         case actions.STORE_COMPANY_ADD_SIM_REQUEST_SUCCEEDED:
-            nextState = {...state, sim: requestSucceededValue(action.message)};
+            nextState = {...state, edit: {...state.edit, sim: requestSucceededValue(action.message)}};
             return nextState || state;
         // Resolve event to set company add sim reset request store data
         case actions.STORE_COMPANY_ADD_SIM_REQUEST_RESET:
-            nextState = {...state, sim: initialState.sim};
+            nextState = {...state, edit: {...state.edit, sim: initialState.edit.sim}};
             return nextState || state;
         // ========================================================
         // Unknown action

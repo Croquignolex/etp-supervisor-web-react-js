@@ -11,6 +11,7 @@ export const EMIT_COMPANY_FETCH = 'EMIT_COMPANY_FETCH';
 export const EMIT_UPDATE_COMPANY = 'EMIT_UPDATE_COMPANY';
 export const EMIT_COMPANIES_FETCH = 'EMIT_COMPANIES_FETCH';
 export const EMIT_ADD_COMPANY_SIMS = 'EMIT_ADD_COMPANY_SIMS';
+export const EMIT_UPDATE_COMPANY_DOC = 'EMIT_UPDATE_COMPANY_DOC';
 export const EMIT_ALL_COMPANIES_FETCH = 'EMIT_ALL_COMPANIES_FETCH';
 export const EMIT_NEXT_COMPANIES_FETCH = 'EMIT_NEXT_COMPANIES_FETCH';
 
@@ -100,4 +101,11 @@ export const emitAddCompanySims = ({id, name, reference, number, description, op
     reference,
     description,
     type: EMIT_ADD_COMPANY_SIMS
+});
+
+// Emit update company doc
+export const emitUpdateCompanyDoc = ({id, doc}) => ({
+    id,
+    doc,
+    type: EMIT_UPDATE_COMPANY_DOC
 });

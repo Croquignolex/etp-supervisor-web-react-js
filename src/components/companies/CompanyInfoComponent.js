@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
-import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
+import CompanyDocEditContainer from "../../containers/companies/CompanyDocEditContainer";
 
 // Component
-function CompanyInfoComponent({operator}) {
+function CompanyInfoComponent({company}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + operator.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + company.name});
+    const [docEditModal, setDocEditModal] = useState({show: false, header: 'MODIFIER LE DOSSIER DE ' + company.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -20,32 +21,67 @@ function CompanyInfoComponent({operator}) {
         setInfoEditModal({...infoEditModal, show: false})
     }
 
+    // Show doc edit modal form
+    const handleDocEditModalShow = () => {
+        setDocEditModal({...docEditModal, show: true})
+    }
+
+    // Hide doc edit modal form
+    const handleDocEditModalHide = () => {
+        setDocEditModal({...docEditModal, show: false})
+    }
+
     // Render
     return (
         <>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleInfoEditModalShow}>
+            <button type="button" className="btn btn-theme mr-1 mb-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
+            </button>
+            <button type="button" className="btn btn-theme mb-1" onClick={handleDocEditModalShow}>
+                <i className="fa fa-pencil" /> Modifier le dossier
             </button>
             <div className="card">
                 <div className="card-header bg-secondary">
-                    <h3 className="card-title">{operator.name}</h3>
+                    <h3 className="card-title">{company.name}</h3>
                 </div>
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(operator.creation)}</span>
+                            <span className="float-right">{dateToString(company.creation)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Responsable</b>
+                            <span className="float-right">{company.manager}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Téléphone</b>
+                            <span className="float-right">{company.phone}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Adresse</b>
+                            <p>{company.address}</p>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>
-                            <p>{operator.description}</p>
+                            <p>{company.description}</p>
                         </li>
+                        {company.document && (
+                            <li className="list-group-item text-center">
+                                <a download target='_blank' href={company.document} rel='noopener noreferrer' className="btn btn-theme">
+                                    <i className="fa fa-file-archive" /> Dossier
+                                </a>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <OperatorInfoEditContainer handleClose={handleInfoEditModalHide} />
+                {/*<OperatorInfoEditContainer handleClose={handleInfoEditModalHide} />*/}
+            </FormModalComponent>
+            <FormModalComponent modal={docEditModal} handleClose={handleDocEditModalHide}>
+                <CompanyDocEditContainer handleClose={handleDocEditModalHide} />
             </FormModalComponent>
         </>
     )
@@ -53,7 +89,7 @@ function CompanyInfoComponent({operator}) {
 
 // Prop types to ensure destroyed props data type
 CompanyInfoComponent.propTypes = {
-    operator: PropTypes.object.isRequired
+    company: PropTypes.object.isRequired
 };
 
 export default React.memo(CompanyInfoComponent);
