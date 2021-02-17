@@ -21,9 +21,11 @@ function SideBarComponent({user, pathname}) {
             // buildRequestsMenu(),
             // buildOperationsMenu(),
             // buildRecoveriesMenu(),
+            // buildUsersMenu(),
             buildAgentsMenu(),
             // buildCollectorsMenu(),
             // buildZonesMenu(),
+            buildCompaniesMenu(),
             buildSimsMenu(),
             buildOperatorsMenu(),
         ];
@@ -183,12 +185,22 @@ function buildAgentsMenu() {
     };
 }
 
-// Build sims menu
-function buildSimsMenu() {
+// Build corporates menu
+function buildCompaniesMenu() {
     return {
         name: page.SIMS_PAGE,
         path: path.SIMS_PAGE_PATH,
         icon: 'fa fa-sim-card',
+        sub: []
+    };
+}
+
+// Build sims menu
+function buildSimsMenu() {
+    return {
+        name: page.COMPANIES_PAGE,
+        path: path.COMPANIES_PAGE_PATH,
+        icon: 'fa fa-university',
         sub: []
     };
 }
