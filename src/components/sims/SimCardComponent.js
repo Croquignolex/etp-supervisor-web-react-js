@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 
 import FormModalComponent from "../modals/FormModalComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
-import {AGENT_COLLECTOR_TYPE, COLLECTOR_TYPE} from "../../constants/typeConstants";
-import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
+import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
 import OperatorDetailsContainer from "../../containers/operators/OperatorDetailsContainer";
+import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
+import {AGENT_COLLECTOR_CORPORATE_TYPE, AGENT_TYPE, COLLECTOR_TYPE, CORPORATE_TYPE} from "../../constants/typeConstants";
 
 // Component
 function SimCardComponent({sim}) {
     // Local states
+    const [companyDetailsModal, setCompanyDetailsModal] = useState({show: false, header: "DETAIL DE L'ENTREPRISE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
     const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEUR", id: ''});
 
@@ -21,6 +23,11 @@ function SimCardComponent({sim}) {
     // Hide operator details modal form
     const handleOperatorDetailsModalHide = () => {
         setOperatorDetailsModal({...operatorDetailsModal, show: false})
+    }
+
+    // Hide company details modal form
+    const handleCompanyDetailsModalHide = () => {
+        setCompanyDetailsModal({...companyDetailsModal, show: false})
     }
 
     // Render
@@ -52,21 +59,34 @@ function SimCardComponent({sim}) {
                         />
                     </span>
                 </li>
-                {AGENT_COLLECTOR_TYPE.includes(sim.type.name) &&
+                {AGENT_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) &&
                 <li className="list-group-item">
                     <b>{upperFirstCase(sim.type.name)}</b>
                     <span className="float-right">
-                        {sim.type.name === COLLECTOR_TYPE
-                            ? sim.collector.name
-                            : (
-                                <>
-                                    {sim.agent.name}
-                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                       onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
-                                    />
-                                </>
-                            )
-                        }
+                        {sim.type.name === AGENT_TYPE && (
+                            <>
+                                {sim.agent.name}
+                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                />
+                            </>
+                        )}
+                        {sim.type.name === COLLECTOR_TYPE && (
+                            <>
+                                {sim.collector.name}
+                                {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                />*/}
+                            </>
+                        )}
+                        {sim.type.name === CORPORATE_TYPE && (
+                            <>
+                                {sim.company.name}
+                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setCompanyDetailsModal({...companyDetailsModal, show: true, id: sim.company.id})}
+                                />
+                            </>
+                        )}
                     </span>
                 </li>
                 }
@@ -75,9 +95,11 @@ function SimCardComponent({sim}) {
             <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
                 <OperatorDetailsContainer id={operatorDetailsModal.id} />
             </FormModalComponent>
-            {/* Modal */}
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={companyDetailsModal} handleClose={handleCompanyDetailsModalHide}>
+                <CompanyDetailsContainer id={companyDetailsModal.id} />
             </FormModalComponent>
         </div>
     )
