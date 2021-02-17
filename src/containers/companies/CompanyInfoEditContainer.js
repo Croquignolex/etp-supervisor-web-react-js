@@ -5,7 +5,7 @@ import CompanyInfoEditComponent from "../../components/companies/CompanyInfoEdit
 // Map state function to component props
 const mapStateToProps = (state) => ({
     company: state.companies.current,
-    request: state.companiesRequests.edit,
+    request: state.companiesRequests.edit.info,
 });
 
 // Map dispatch function to component props

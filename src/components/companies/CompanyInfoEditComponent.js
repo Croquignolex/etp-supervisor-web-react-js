@@ -5,18 +5,21 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitUpdateCompany} from "../../redux/companies/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
-import {emitUpdateOperator} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CompanyInfoEditComponent({request, operator, dispatch, handleClose}) {
+function CompanyInfoEditComponent({request, company, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: operator.name});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: operator.description});
+    const [name, setName] = useState(DEFAULT_FORM_DATA);
+    const [phone, setPhone] = useState(DEFAULT_FORM_DATA);
+    const [manager, setManager] = useState(DEFAULT_FORM_DATA);
+    const [address, setAddress] = useState(DEFAULT_FORM_DATA);
+    const [description, setDescription] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
     useEffect(() => {
@@ -47,25 +50,49 @@ function CompanyInfoEditComponent({request, operator, dispatch, handleClose}) {
         setName({...name, isValid: true, data})
     }
 
+    const handleManagerInput = (data) => {
+        shouldResetErrorData();
+        setManager({...manager, isValid: true, data})
+    }
+
+    const handlePhoneInput = (data) => {
+        shouldResetErrorData();
+        setPhone({...phone, isValid: true, data})
+    }
+
     const handleDescriptionInput = (data) => {
         shouldResetErrorData();
         setDescription({...description, isValid: true, data})
+    }
+
+    const handleAddressInput = (data) => {
+        shouldResetErrorData();
+        setAddress({...address, isValid: true, data})
     }
 
     // Trigger user information form submit
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
+        const _phone = phoneChecker(phone);
         const _name = requiredChecker(name);
+        const _manager = requiredChecker(manager);
+        const _address = requiredChecker(address);
         // Set value
         setName(_name);
-        const validationOK = _name.isValid;
+        setPhone(_phone);
+        setManager(_manager);
+        setAddress(_address);
+        const validationOK = (_name.isValid && _phone.isValid && _manager.isValid && _address.isValid);
         // Check
         if(validationOK) {
-            dispatch(emitUpdateOperator({
-                id: operator.id,
+            dispatch(emitUpdateCompany({
+                id: company.id,
                 name: _name.data,
-                description: description.data
+                phone: _phone.data,
+                address: _address.data,
+                manager: _manager.data,
+                description: description.data,
             }));
         }
         else playWarningSound();
@@ -83,6 +110,33 @@ function CompanyInfoEditComponent({request, operator, dispatch, handleClose}) {
                                         input={name}
                                         id='inputName'
                                         handleInput={handleNameInput}
+                        />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <InputComponent type='text'
+                                        input={manager}
+                                        id='inputManager'
+                                        label='Responsable'
+                                        handleInput={handleManagerInput}
+                        />
+                    </div>
+                    <div className='col-sm-6'>
+                        <InputComponent type='text'
+                                        input={phone}
+                                        id='inputPhone'
+                                        label='Téléphone'
+                                        handleInput={handlePhoneInput}
+                        />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <TextareaComponent label='Adresse'
+                                           input={address}
+                                           id='inputAddress'
+                                           handleInput={handleAddressInput}
                         />
                     </div>
                     <div className='col-sm-6'>
@@ -105,7 +159,7 @@ function CompanyInfoEditComponent({request, operator, dispatch, handleClose}) {
 CompanyInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
+    company: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 

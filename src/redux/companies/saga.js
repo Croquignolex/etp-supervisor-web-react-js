@@ -14,7 +14,7 @@ import {
     EMIT_ALL_COMPANIES_FETCH,
     storeSetNextCompaniesData,
     EMIT_NEXT_COMPANIES_FETCH,
-    storeStopInfiniteScrollCompanyData
+    storeStopInfiniteScrollCompanyData, EMIT_UPDATE_COMPANY
 } from "./actions";
 import {
     storeCompaniesRequestInit,
@@ -39,6 +39,12 @@ import {
     storeCompanyEditDocRequestFailed,
     storeCompanyEditDocRequestSucceed
 } from "../requests/companies/actions";
+import {EMIT_UPDATE_OPERATOR, storeSetOperatorData} from "../operators/actions";
+import {
+    storeEditOperatorRequestFailed,
+    storeEditOperatorRequestInit,
+    storeEditOperatorRequestSucceed
+} from "../requests/operators/actions";
 
 // Fetch all companies from API
 export function* emitAllCompaniesFetch() {
@@ -190,6 +196,30 @@ export function* emitUpdateCompanyDoc() {
         } catch (message) {
             // Fire event for request
             yield put(storeCompanyEditDocRequestFailed({message}));
+        }
+    });
+}
+
+// Update company info
+export function* emitUpdateCompany() {
+    yield takeLatest(EMIT_UPDATE_COMPANY, function*({id, name, description, phone, address, manager}) {
+        try {
+            // Fire event for request
+            yield put(storeEditOperatorRequestInit());
+            const data = {name, description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_OPERATOR_INFO_API_PATH}/${id}`, data);
+            // Extract data
+            const operator = extractOperatorData(
+                apiResponse.data.flote,
+                apiResponse.data.puces,
+            );
+            // Fire event to redux
+            yield put(storeSetOperatorData({operator, alsoInList: true}));
+            // Fire event for request
+            yield put(storeEditOperatorRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeEditOperatorRequestFailed({message}));
         }
     });
 }

@@ -85,9 +85,12 @@ export const emitNewCompany = ({name, phone, address, manager, document, descrip
 });
 
 // Emit update company
-export const emitUpdateCompany = ({id, name, description}) => ({
+export const emitUpdateCompany = ({id, name, description, phone, address, manager}) => ({
     id,
     name,
+    phone,
+    address,
+    manager,
     description,
     type: EMIT_UPDATE_COMPANY
 });
