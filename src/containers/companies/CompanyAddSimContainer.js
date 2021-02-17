@@ -4,16 +4,10 @@ import CompanyAddSimComponent from "../../components/companies/CompanyAddSimComp
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    agents: state.agents.list,
-    companies: state.companies.list,
-    simsTypes: state.simsTypes.list,
-    collectors: state.collectors.list,
-    operator: state.operators.current,
-    request: state.operatorsRequests.sim,
-    allAgentsRequests: state.agentsRequests.all,
-    allSimsTypesRequests: state.simsTypesRequests.all,
-    allCompaniesRequests: state.companiesRequests.all,
-    allCollectorsRequests: state.collectorsRequests.all,
+    operators: state.operators.list,
+    company: state.companies.current,
+    request: state.companiesRequests.sim,
+    allOperatorsRequests: state.operatorsRequests.all,
 });
 
 // Map dispatch function to component props

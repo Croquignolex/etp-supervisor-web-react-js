@@ -8,6 +8,7 @@ import {emitCompanyFetch} from "../../redux/companies/actions";
 import OperatorSimsListComponent from "./CompanySimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeShowCompanyRequestReset} from "../../redux/requests/companies/actions";
+import CompanySimsListComponent from "./CompanySimsListComponent";
 
 // Component
 function CompanyDetailsComponent({id, company, dispatch, request}) {
@@ -37,7 +38,7 @@ function CompanyDetailsComponent({id, company, dispatch, request}) {
                             <OperatorInfoComponent operator={company} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            <OperatorSimsListComponent operator={company} />
+                            <CompanySimsListComponent company={company} />
                         </div>
                     </div>
                 )

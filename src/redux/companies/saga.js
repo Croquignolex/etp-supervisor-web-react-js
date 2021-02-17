@@ -8,6 +8,7 @@ import {
     storeSetCompanyData,
     EMIT_COMPANIES_FETCH,
     storeSetCompaniesData,
+    EMIT_ADD_COMPANY_SIMS,
     storeSetNewCompanyData,
     EMIT_ALL_COMPANIES_FETCH,
     storeSetNextCompaniesData,
@@ -25,11 +26,14 @@ import {
     storeNextCompaniesRequestInit,
     storeShowCompanyRequestFailed,
     storeAddCompanyRequestSucceed,
+    storeCompanyAddSimRequestInit,
     storeAllCompaniesRequestFailed,
     storeShowCompanyRequestSucceed,
     storeAllCompaniesRequestSucceed,
     storeNextCompaniesRequestFailed,
-    storeNextCompaniesRequestSucceed
+    storeCompanyAddSimRequestFailed,
+    storeNextCompaniesRequestSucceed,
+    storeCompanyAddSimRequestSucceed
 } from "../requests/companies/actions";
 
 // Fetch all companies from API
@@ -143,6 +147,27 @@ export function* emitCompanyFetch() {
     });
 }
 
+// Add company sim
+export function* emitAddCompanySims() {
+    yield takeLatest(EMIT_ADD_COMPANY_SIMS, function*({id, name, reference, number, description, operator}) {
+        try {
+            // Fire event for request
+            yield put(storeCompanyAddSimRequestInit());
+            const data = {reference, nom: name, description, numero: number, id_flotte: operator,}
+            const apiResponse = yield call(apiPostRequest, `${api.COMPANY_ADD_SIM}/${id}`, data);
+            // Extract data
+            const company = extractCompanyData(apiResponse.data.entreprise);
+            // Fire event to redux
+            yield put(storeSetCompanyData({company, alsoInList: true}));
+            // Fire event for request
+            yield put(storeCompanyAddSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCompanyAddSimRequestFailed({message}));
+        }
+    });
+}
+
 // Extract company data
 function extractCompanyData(apiCompany) {
     let company = {
@@ -157,9 +182,8 @@ function extractCompanyData(apiCompany) {
             company.sims.push({
                 name: data.nom,
                 number: data.numero,
-                actionLoader: false,
+                balance: data.solde,
                 id: data.id.toString(),
-                reference: data.reference,
                 creation: data.created_at
             })
         });
@@ -195,6 +219,7 @@ export default function* sagaCompanies() {
         fork(emitNewCompany),
         fork(emitCompanyFetch),
         fork(emitCompaniesFetch),
+        fork(emitAddCompanySims),
         fork(emitAllCompaniesFetch),
         fork(emitNextCompaniesFetch),
     ]);

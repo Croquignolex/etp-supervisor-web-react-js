@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
-import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimContainer";
+import CompanyAddSimContainer from "../../containers/companies/CompanyAddSimContainer";
 
 // Component
-function CompanySimsListComponent({operator}) {
+function CompanySimsListComponent({company}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + company.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
@@ -37,7 +37,7 @@ function CompanySimsListComponent({operator}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {operator.sims.map((item, key) => {
+                            {company.sims.map((item, key) => {
                                 return (
                                     <tr key={key}>
                                         <td>{item.name}</td>
@@ -46,7 +46,7 @@ function CompanySimsListComponent({operator}) {
                                     </tr>
                                 )
                             })}
-                            {operator.sims.length === 0 && (
+                            {company.sims.length === 0 && (
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
@@ -61,7 +61,7 @@ function CompanySimsListComponent({operator}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                <OperatorAddSimContainer handleClose={handleAddSimModalHide} />
+                <CompanyAddSimContainer handleClose={handleAddSimModalHide} />
             </FormModalComponent>
         </>
     )
@@ -69,7 +69,7 @@ function CompanySimsListComponent({operator}) {
 
 // Prop types to ensure destroyed props data type
 CompanySimsListComponent.propTypes = {
-    operator: PropTypes.object.isRequired
+    company: PropTypes.object.isRequired
 };
 
 export default React.memo(CompanySimsListComponent);

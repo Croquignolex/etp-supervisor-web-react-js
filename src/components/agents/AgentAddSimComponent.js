@@ -13,6 +13,7 @@ import {playWarningSound} from "../../functions/playSoundFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAgentAddSimRequestReset} from "../../redux/requests/agents/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import DisabledInput from "../form/DisabledInput";
 
 // Component
 function AgentAddSimComponent({request, agent, operators, allOperatorsRequests, dispatch, handleClose}) {
@@ -103,6 +104,14 @@ function AgentAddSimComponent({request, agent, operators, allOperatorsRequests, 
         <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             <form onSubmit={handleSubmit}>
+                <div className="row">
+                    <div className='col-sm-6'>
+                        <DisabledInput id='inputAgent'
+                                       val={agent.name}
+                                       label='Agent/Ressource'
+                        />
+                    </div>
+                </div>
                 <div className='row'>
                     <div className='col-sm-6'>
                         <InputComponent label='Nom'

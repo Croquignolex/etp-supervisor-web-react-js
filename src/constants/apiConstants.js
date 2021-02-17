@@ -66,6 +66,7 @@ export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
 // Companies
 export const COMPANY_API_PATH = `${API_URL}/show_corporate`;
 export const COMPANIES_API_PATH = `${API_URL}/corporate_list`;
+export const COMPANY_ADD_SIM = `${API_URL}/ajouter_puce_corporate`;
 export const CREATE_COMPANY_API_PATH = `${API_URL}/store_corporate`;
 export const All_COMPANIES_API_PATH = `${API_URL}/corporate_list_all`;
 

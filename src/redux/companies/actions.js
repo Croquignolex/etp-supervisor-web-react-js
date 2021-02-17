@@ -92,15 +92,11 @@ export const emitUpdateCompany = ({id, name, description}) => ({
 });
 
 // Emit add company sims
-export const emitAddCompanySims = ({id, simType, name, number, description, agent, company, collector, resource, reference}) => ({
+export const emitAddCompanySims = ({id, name, reference, number, description, operator}) => ({
     id,
     name,
-    agent,
     number,
-    simType,
-    company,
-    resource,
-    collector,
+    operator,
     reference,
     description,
     type: EMIT_ADD_COMPANY_SIMS
