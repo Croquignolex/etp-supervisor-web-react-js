@@ -2,11 +2,25 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
-import {EMIT_ALL_COMPANIES_FETCH, storeSetCompaniesData} from "./actions";
 import {
+    storeSetCompanyData,
+    EMIT_COMPANIES_FETCH,
+    storeSetCompaniesData,
+    EMIT_ALL_COMPANIES_FETCH,
+    storeSetNextCompaniesData,
+    EMIT_NEXT_COMPANIES_FETCH,
+    storeStopInfiniteScrollCompanyData
+} from "./actions";
+import {
+    storeCompaniesRequestInit,
+    storeCompaniesRequestFailed,
     storeAllCompaniesRequestInit,
+    storeCompaniesRequestSucceed,
+    storeNextCompaniesRequestInit,
     storeAllCompaniesRequestFailed,
-    storeAllCompaniesRequestSucceed
+    storeAllCompaniesRequestSucceed,
+    storeNextCompaniesRequestFailed,
+    storeNextCompaniesRequestSucceed
 } from "../requests/companies/actions";
 
 // Fetch all companies from API
@@ -25,6 +39,47 @@ export function* emitAllCompaniesFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeAllCompaniesRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch companies from API
+export function* emitCompaniesFetch() {
+    yield takeLatest(EMIT_COMPANIES_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeCompaniesRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.COMPANIES_API_PATH}?page=1`);
+            // Extract data
+            const companies = extractCompaniesData(apiResponse.data.entreprises);
+            // Fire event to redux
+            yield put(storeSetCompanyData({companies, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeCompaniesRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCompaniesRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch next companies from API
+export function* emitNextCompaniesFetch() {
+    yield takeLatest(EMIT_NEXT_COMPANIES_FETCH, function*({page}) {
+        try {
+            // Fire event for request
+            yield put(storeNextCompaniesRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.COMPANIES_API_PATH}?page=${page}`);
+            // Extract data
+            const companies = extractCompaniesData(apiResponse.data.entreprises);
+            // Fire event to redux
+            yield put(storeSetNextCompaniesData({companies, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
+            // Fire event for request
+            yield put(storeNextCompaniesRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeNextCompaniesRequestFailed({message}));
+            yield put(storeStopInfiniteScrollCompanyData());
         }
     });
 }
@@ -78,6 +133,8 @@ function extractCompaniesData(apiCompanies) {
 // Combine to export all functions at once
 export default function* sagaCompanies() {
     yield all([
+        fork(emitCompaniesFetch),
         fork(emitAllCompaniesFetch),
+        fork(emitNextCompaniesFetch),
     ]);
 }

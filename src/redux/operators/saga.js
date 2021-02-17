@@ -80,7 +80,7 @@ export function* emitOperatorsFetch() {
     });
 }
 
-// Fetch next agents from API
+// Fetch next operators from API
 export function* emitNextOperatorsFetch() {
     yield takeLatest(EMIT_NEXT_OPERATORS_FETCH, function*({page}) {
         try {

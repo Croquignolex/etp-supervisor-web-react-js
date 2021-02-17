@@ -2,28 +2,17 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {COMPANIES_PAGE, OPERATORS} from "../constants/pageNameConstants";
-import {emitAllAgentsFetch} from "../redux/agents/actions";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
-import {emitAllCompaniesFetch} from "../redux/companies/actions";
-import {emitAllSimsTypesFetch} from "../redux/simsTypes/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
-import {emitAllCollectorsFetch} from "../redux/collectors/actions";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
+import {COMPANIES_PAGE, OPERATORS} from "../constants/pageNameConstants";
 import FormModalComponent from "../components/modals/FormModalComponent";
-import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
-import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
-import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
-import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
-import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
-import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
-import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
-import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
-import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
-import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
+import {emitCompaniesFetch, emitNextCompaniesFetch} from "../redux/companies/actions";
 import CompaniesCardsComponent from "../components/companies/OperatorsCardsComponent";
+import {storeCompaniesRequestReset, storeNextCompaniesRequestReset} from "../redux/requests/companies/actions";
+import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 
 // Component
 function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatch, location}) {
@@ -34,7 +23,7 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorsFetch());
+        dispatch(emitCompaniesFetch());
         // dispatch(emitAllAgentsFetch());
         // dispatch(emitAllCompaniesFetch());
         // dispatch(emitAllSimsTypesFetch());
@@ -52,17 +41,17 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeOperatorsRequestReset());
+        dispatch(storeCompaniesRequestReset());
         // dispatch(storeAllAgentsRequestReset());
         // dispatch(storeAllCompaniesRequestReset());
         // dispatch(storeAllSimsTypesRequestReset());
         // dispatch(storeAllCollectorsRequestReset());
-        dispatch(storeNextOperatorsRequestReset());
+        dispatch(storeNextCompaniesRequestReset());
     };
 
     // Fetch next companies data to enhance infinite scroll
     const handleNextCompaniesData = () => {
-        dispatch(emitNextOperatorsFetch({page}));
+        dispatch(emitNextCompaniesFetch({page}));
     }
 
     // Show new company modal form
@@ -82,7 +71,7 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
 
     // Hide company details modal form
     const handleCompanyDetailsModalHide = () => {
-        setCompanyDetailsModal({...comapnyDetailsModal, show: false})
+        setCompanyDetailsModal({...companyDetailsModal, show: false})
     }
 
     // Render

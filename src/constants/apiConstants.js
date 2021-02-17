@@ -64,6 +64,7 @@ export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
 export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
 
 // Companies
+export const COMPANIES_API_PATH = `${API_URL}/corporate_list`;
 export const All_COMPANIES_API_PATH = `${API_URL}/corporate_list_all`;
 
 // Sims types
