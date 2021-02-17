@@ -73,8 +73,12 @@ export const emitCompanyFetch = ({id}) => ({
 });
 
 // Emit new company
-export const emitNewCompany = ({name, description}) => ({
+export const emitNewCompany = ({name, phone, address, manager, document, description}) => ({
     name,
+    phone,
+    address,
+    manager,
+    document,
     description,
     type: EMIT_NEW_COMPANY
 });

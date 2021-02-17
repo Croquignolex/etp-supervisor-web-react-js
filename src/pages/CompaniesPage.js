@@ -9,8 +9,9 @@ import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import {COMPANIES_PAGE, OPERATORS} from "../constants/pageNameConstants";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import CompanyNewContainer from "../containers/companies/CompanyNewContainer";
 import {emitCompaniesFetch, emitNextCompaniesFetch} from "../redux/companies/actions";
-import CompaniesCardsComponent from "../components/companies/OperatorsCardsComponent";
+import CompaniesCardsComponent from "../components/companies/CompaniesCardsComponent";
 import {storeCompaniesRequestReset, storeNextCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 
@@ -129,7 +130,7 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={newCompanyModal} handleClose={handleNewCompanyModalHide}>
-                {/*<OperatorNewContainer handleClose={handleNewCompanyModalHide} />*/}
+                <CompanyNewContainer handleClose={handleNewCompanyModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={companyDetailsModal} handleClose={handleCompanyDetailsModalHide}>
                 {/*<OperatorDetailsContainer id={companyDetailsModal.id} />*/}

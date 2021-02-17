@@ -6,7 +6,7 @@ import FormModalComponent from "../modals/FormModalComponent";
 import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimContainer";
 
 // Component
-function OperatorSimsListComponent({operator}) {
+function CompanySimsListComponent({operator}) {
     // Local states
     const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
 
@@ -68,8 +68,8 @@ function OperatorSimsListComponent({operator}) {
 }
 
 // Prop types to ensure destroyed props data type
-OperatorSimsListComponent.propTypes = {
+CompanySimsListComponent.propTypes = {
     operator: PropTypes.object.isRequired
 };
 
-export default React.memo(OperatorSimsListComponent);
+export default React.memo(CompanySimsListComponent);

@@ -5,18 +5,18 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitNewOperator} from "../../redux/operators/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
+import {emitUpdateOperator} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeAddOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function OperatorNewComponent({request, dispatch, handleClose}) {
+function CompanyInfoEditComponent({request, operator, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState(DEFAULT_FORM_DATA);
-    const [description, setDescription] = useState(DEFAULT_FORM_DATA);
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: operator.name});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: operator.description});
 
     // Local effects
     useEffect(() => {
@@ -37,6 +37,11 @@ function OperatorNewComponent({request, dispatch, handleClose}) {
         // eslint-disable-next-line
     }, [request]);
 
+    // Reset error alert
+    const shouldResetErrorData = () => {
+        dispatch(storeEditOperatorRequestReset());
+    };
+
     const handleNameInput = (data) => {
         shouldResetErrorData();
         setName({...name, isValid: true, data})
@@ -47,67 +52,61 @@ function OperatorNewComponent({request, dispatch, handleClose}) {
         setDescription({...description, isValid: true, data})
     }
 
-    // Reset error alert
-    const shouldResetErrorData = () => {
-        dispatch(storeAddOperatorRequestReset());
-    };
-
-    // Trigger new agent form submit
+    // Trigger user information form submit
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
         const _name = requiredChecker(name);
         // Set value
         setName(_name);
-        const validationOK = (_name.isValid);
+        const validationOK = _name.isValid;
         // Check
-        if(validationOK)
-            dispatch(emitNewOperator({
+        if(validationOK) {
+            dispatch(emitUpdateOperator({
+                id: operator.id,
                 name: _name.data,
                 description: description.data
             }));
+        }
         else playWarningSound();
     };
 
     // Render
     return (
-        <div>
+        <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
-            <div className="row">
-                <div className="col">
-                    <form onSubmit={handleSubmit}>
-                        <div className='row'>
-                            <div className='col-sm-6'>
-                                <InputComponent label='Nom'
-                                                type='text'
-                                                input={name}
-                                                id='inputName'
-                                                handleInput={handleNameInput}
-                                />
-                            </div>
-                            <div className='col-sm-6'>
-                                <TextareaComponent label='Description'
-                                                   input={description}
-                                                   id='inputDescription'
-                                                   handleInput={handleDescriptionInput}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <ButtonComponent processing={requestLoading(request)} />
-                        </div>
-                    </form>
+            <form onSubmit={handleSubmit}>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <InputComponent label='Nom'
+                                        type='text'
+                                        input={name}
+                                        id='inputName'
+                                        handleInput={handleNameInput}
+                        />
+                    </div>
+                    <div className='col-sm-6'>
+                        <TextareaComponent label='Description'
+                                           input={description}
+                                           id='inputDescription'
+                                           handleInput={handleDescriptionInput}
+                        />
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div className="form-group row">
+                    <ButtonComponent processing={requestLoading(request)} />
+                </div>
+            </form>
+        </>
     )
 }
 
 // Prop types to ensure destroyed props data type
-OperatorNewComponent.propTypes = {
+CompanyInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
+    operator: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 
-export default React.memo(OperatorNewComponent);
+export default React.memo(CompanyInfoEditComponent);

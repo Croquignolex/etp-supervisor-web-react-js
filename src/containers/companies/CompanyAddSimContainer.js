@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import OperatorAddSimComponent from "../../components/operators/OperatorAddSimComponent";
+import CompanyAddSimComponent from "../../components/companies/CompanyAddSimComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
@@ -22,4 +22,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(OperatorAddSimComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyAddSimComponent);

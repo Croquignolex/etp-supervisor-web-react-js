@@ -3,14 +3,14 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import OperatorInfoComponent from "./OperatorInfoComponent";
+import OperatorInfoComponent from "./CompanyInfoComponent";
 import {emitOperatorFetch} from "../../redux/operators/actions";
-import OperatorSimsListComponent from "./OperatorSimsListComponent";
+import OperatorSimsListComponent from "./CompanySimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeShowOperatorRequestReset} from "../../redux/requests/operators/actions";
 
 // Component
-function OperatorDetailsComponent({id, operator, dispatch, request}) {
+function CompanyDetailsComponent({id, operator, dispatch, request}) {
 
     // Local effects
     useEffect(() => {
@@ -47,11 +47,11 @@ function OperatorDetailsComponent({id, operator, dispatch, request}) {
 }
 
 // Prop types to ensure destroyed props data type
-OperatorDetailsComponent.propTypes = {
+CompanyDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     operator: PropTypes.object.isRequired,
 };
 
-export default React.memo(OperatorDetailsComponent);
+export default React.memo(CompanyDetailsComponent);

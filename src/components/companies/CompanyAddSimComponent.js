@@ -17,7 +17,7 @@ import {storeOperatorAddSimRequestReset} from "../../redux/requests/operators/ac
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function OperatorAddSimComponent({request, agents, simsTypes, companies, collectors, operator, dispatch, handleClose,
+function CompanyAddSimComponent({request, agents, simsTypes, companies, collectors, operator, dispatch, handleClose,
                                      allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
@@ -288,7 +288,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 }
 
 // Prop types to ensure destroyed props data type
-OperatorAddSimComponent.propTypes = {
+CompanyAddSimComponent.propTypes = {
     agents: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
@@ -303,4 +303,4 @@ OperatorAddSimComponent.propTypes = {
     allCollectorsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(OperatorAddSimComponent);
+export default React.memo(CompanyAddSimComponent);
