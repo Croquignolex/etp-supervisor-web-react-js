@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
 import CompanyDocEditContainer from "../../containers/companies/CompanyDocEditContainer";
+import CompanyInfoEditContainer from "../../containers/companies/CompanyInfoEditContainer";
 
 // Component
 function CompanyInfoComponent({company}) {
@@ -78,7 +79,7 @@ function CompanyInfoComponent({company}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                {/*<OperatorInfoEditContainer handleClose={handleInfoEditModalHide} />*/}
+                <CompanyInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={docEditModal} handleClose={handleDocEditModalHide}>
                 <CompanyDocEditContainer handleClose={handleDocEditModalHide} />

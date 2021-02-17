@@ -6,7 +6,7 @@ import CompanyAddSimComponent from "../../components/companies/CompanyAddSimComp
 const mapStateToProps = (state) => ({
     operators: state.operators.list,
     company: state.companies.current,
-    request: state.companiesRequests.sim,
+    request: state.companiesRequests.edit.sim,
     allOperatorsRequests: state.operatorsRequests.all,
 });
 

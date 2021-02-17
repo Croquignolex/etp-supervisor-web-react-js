@@ -4,14 +4,14 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 // Partial global store for requests data management
 const initialState = {
     all: {failed: false, loading: false, succeeded: false, message: ""},
-    sim: {failed: false, loading: false, succeeded: false, message: ""},
     add: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""}, 
     edit: {
-        doc: {failed: false, loading: false, succeeded: false, message: ""}, 
-        info: {failed: false, loading: false, succeeded: false, message: ""}, 
+        doc: {failed: false, loading: false, succeeded: false, message: ""},
+        sim: {failed: false, loading: false, succeeded: false, message: ""},
+        info: {failed: false, loading: false, succeeded: false, message: ""},
     }
 };
 
@@ -36,7 +36,7 @@ function reduce(state = initialState, action) {
         case actions.STORE_ALL_COMPANIES_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
             return nextState || state;
-        // ======================================================== Companys
+        // ======================================================== Companies
         // Resolve event to set companies init request store data
         case actions.STORE_COMPANIES_REQUEST_INIT:
             nextState = {...state, list: requestInitValue()};
