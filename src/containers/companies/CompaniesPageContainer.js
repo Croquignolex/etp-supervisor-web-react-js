@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 
-import OperatorsPage from "../../pages/OperatorsPage";
-import {OPERATORS} from "../../constants/pageNameConstants";
+import CompaniesPage from "../../pages/CompaniesPage";
 import {setPageTitle} from "../../functions/generalFunctions";
+import {COMPANIES_PAGE} from "../../constants/pageNameConstants";
 
-setPageTitle(OPERATORS);
+setPageTitle(COMPANIES_PAGE);
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    page: state.operators.page,
-    operators: state.operators.list,
-    hasMoreData: state.operators.hasMoreData,
-    operatorsRequests: state.operatorsRequests,
+    page: state.companies.page,
+    companies: state.companies.list,
+    hasMoreData: state.companies.hasMoreData,
+    companiesRequests: state.companiesRequests,
 });
 
 // Map dispatch function to component props
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(OperatorsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CompaniesPage);
