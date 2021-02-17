@@ -9,7 +9,7 @@ import {emitNewCompany} from "../../redux/companies/actions";
 import FileDocumentComponent from "../form/FileDocumentComponent";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeAddOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeAddCompanyRequestReset} from "../../redux/requests/companies/actions";
 import {fileChecker, phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
@@ -74,7 +74,7 @@ function CompanyNewComponent({request, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddOperatorRequestReset());
+        dispatch(storeAddCompanyRequestReset());
     };
 
     // Trigger new agent form submit
