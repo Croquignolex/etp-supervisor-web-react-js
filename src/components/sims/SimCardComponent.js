@@ -59,37 +59,37 @@ function SimCardComponent({sim}) {
                         />
                     </span>
                 </li>
-                {AGENT_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) &&
-                <li className="list-group-item">
-                    <b>{upperFirstCase(sim.type.name)}</b>
-                    <span className="float-right">
-                        {sim.type.name === AGENT_TYPE && (
-                            <>
-                                {sim.agent.name}
-                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
-                                />
-                            </>
-                        )}
-                        {sim.type.name === COLLECTOR_TYPE && (
-                            <>
-                                {sim.collector.name}
-                                {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
-                                />*/}
-                            </>
-                        )}
-                        {sim.type.name === CORPORATE_TYPE && (
-                            <>
-                                {sim.company.name}
-                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setCompanyDetailsModal({...companyDetailsModal, show: true, id: sim.company.id})}
-                                />
-                            </>
-                        )}
-                    </span>
-                </li>
-                }
+                {AGENT_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) && (
+                    <li className="list-group-item">
+                        <b>{upperFirstCase(sim.type.name)}</b>
+                        <span className="float-right">
+                            {sim.type.name === AGENT_TYPE && (
+                                <>
+                                    {sim.agent.name}
+                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                       onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                    />
+                                </>
+                            )}
+                                {sim.type.name === COLLECTOR_TYPE && (
+                                    <>
+                                        {sim.collector.name}
+                                        {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                       onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                    />*/}
+                                    </>
+                                )}
+                                {sim.type.name === CORPORATE_TYPE && (
+                                    <>
+                                        {sim.company.name}
+                                        <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                           onClick={() => setCompanyDetailsModal({...companyDetailsModal, show: true, id: sim.company.id})}
+                                        />
+                                    </>
+                                )}
+                        </span>
+                    </li>
+                )}
             </ul>
             {/* Modal */}
             <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
