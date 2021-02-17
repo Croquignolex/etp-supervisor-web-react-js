@@ -161,7 +161,7 @@ function CompanyNewComponent({request, dispatch, handleClose}) {
                             <div className='col'>
                                 <FileDocumentComponent id='file'
                                                        input={doc}
-                                                       label='Document'
+                                                       label='Dossier'
                                                        handleInput={handleFileInput}
                                 />
                             </div>

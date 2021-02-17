@@ -3,24 +3,30 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_COMPANY,
+    EMIT_COMPANY_FETCH,
     storeSetCompanyData,
     EMIT_COMPANIES_FETCH,
     storeSetCompaniesData,
+    storeSetNewCompanyData,
     EMIT_ALL_COMPANIES_FETCH,
     storeSetNextCompaniesData,
     EMIT_NEXT_COMPANIES_FETCH,
-    storeStopInfiniteScrollCompanyData, EMIT_NEW_COMPANY, storeSetNewCompanyData
+    storeStopInfiniteScrollCompanyData
 } from "./actions";
 import {
     storeCompaniesRequestInit,
     storeAddCompanyRequestInit,
     storeCompaniesRequestFailed,
+    storeShowCompanyRequestInit,
     storeAllCompaniesRequestInit,
     storeCompaniesRequestSucceed,
     storeAddCompanyRequestFailed,
     storeNextCompaniesRequestInit,
+    storeShowCompanyRequestFailed,
     storeAddCompanyRequestSucceed,
     storeAllCompaniesRequestFailed,
+    storeShowCompanyRequestSucceed,
     storeAllCompaniesRequestSucceed,
     storeNextCompaniesRequestFailed,
     storeNextCompaniesRequestSucceed
@@ -56,7 +62,7 @@ export function* emitCompaniesFetch() {
             // Extract data
             const companies = extractCompaniesData(apiResponse.data.entreprises);
             // Fire event to redux
-            yield put(storeSetCompanyData({companies, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            yield put(storeSetCompaniesData({companies, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
             // Fire event for request
             yield put(storeCompaniesRequestSucceed({message: apiResponse.message}));
         } catch (message) {
@@ -117,6 +123,26 @@ export function* emitNewCompany() {
     });
 }
 
+// Fetch company from API
+export function* emitCompanyFetch() {
+    yield takeLatest(EMIT_COMPANY_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeShowCompanyRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.COMPANY_API_PATH}/${id}`);
+            // Extract data
+            const company = extractCompanyData(apiResponse.data.entreprise,);
+            // Fire event to redux
+            yield put(storeSetCompanyData({company}));
+            // Fire event for request
+            yield put(storeShowCompanyRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeShowCompanyRequestFailed({message}));
+        }
+    });
+}
+
 // Extract company data
 function extractCompanyData(apiCompany) {
     let company = {
@@ -167,6 +193,7 @@ function extractCompaniesData(apiCompanies) {
 export default function* sagaCompanies() {
     yield all([
         fork(emitNewCompany),
+        fork(emitCompanyFetch),
         fork(emitCompaniesFetch),
         fork(emitAllCompaniesFetch),
         fork(emitNextCompaniesFetch),

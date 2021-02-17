@@ -46,7 +46,7 @@ function CompaniesCardsComponent({companies, handleCompanyDetailsModalShow}) {
                                         {item.document && (
                                             <li className="list-group-item text-center">
                                                 <a download target='_blank' href={item.document} rel='noopener noreferrer' className="btn btn-theme">
-                                                    Reçus
+                                                    <i className="fa fa-file-archive" /> Dossier
                                                 </a>
                                             </li>
                                         )}

@@ -4,17 +4,17 @@ import React, {useEffect} from 'react';
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import OperatorInfoComponent from "./CompanyInfoComponent";
-import {emitOperatorFetch} from "../../redux/operators/actions";
+import {emitCompanyFetch} from "../../redux/companies/actions";
 import OperatorSimsListComponent from "./CompanySimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeShowOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeShowCompanyRequestReset} from "../../redux/requests/companies/actions";
 
 // Component
-function CompanyDetailsComponent({id, operator, dispatch, request}) {
+function CompanyDetailsComponent({id, company, dispatch, request}) {
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorFetch({id}));
+        dispatch(emitCompanyFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -24,7 +24,7 @@ function CompanyDetailsComponent({id, operator, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeShowOperatorRequestReset());
+        dispatch(storeShowCompanyRequestReset());
     };
 
     // Render
@@ -34,10 +34,10 @@ function CompanyDetailsComponent({id, operator, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-12">
-                            <OperatorInfoComponent operator={operator} />
+                            <OperatorInfoComponent operator={company} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            <OperatorSimsListComponent operator={operator} />
+                            <OperatorSimsListComponent operator={company} />
                         </div>
                     </div>
                 )
@@ -51,7 +51,7 @@ CompanyDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
+    company: PropTypes.object.isRequired,
 };
 
 export default React.memo(CompanyDetailsComponent);
