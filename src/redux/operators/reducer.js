@@ -12,7 +12,7 @@ const initialState = {
         id: '', name: '', description: '', creation: '',
 
         sims: []
-    },
+    }
 };
 
 // Reduce
