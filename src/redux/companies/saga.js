@@ -6,6 +6,7 @@ import {
     EMIT_NEW_COMPANY,
     EMIT_COMPANY_FETCH,
     storeSetCompanyData,
+    EMIT_UPDATE_COMPANY,
     EMIT_COMPANIES_FETCH,
     storeSetCompaniesData,
     EMIT_ADD_COMPANY_SIMS,
@@ -14,22 +15,25 @@ import {
     EMIT_ALL_COMPANIES_FETCH,
     storeSetNextCompaniesData,
     EMIT_NEXT_COMPANIES_FETCH,
-    storeStopInfiniteScrollCompanyData, EMIT_UPDATE_COMPANY
+    storeStopInfiniteScrollCompanyData
 } from "./actions";
 import {
     storeCompaniesRequestInit,
     storeAddCompanyRequestInit,
     storeCompaniesRequestFailed,
     storeShowCompanyRequestInit,
+    storeEditCompanyRequestInit,
     storeAllCompaniesRequestInit,
     storeCompaniesRequestSucceed,
     storeAddCompanyRequestFailed,
     storeNextCompaniesRequestInit,
     storeShowCompanyRequestFailed,
     storeAddCompanyRequestSucceed,
+    storeEditCompanyRequestFailed,
     storeCompanyAddSimRequestInit,
     storeAllCompaniesRequestFailed,
     storeShowCompanyRequestSucceed,
+    storeEditCompanyRequestSucceed,
     storeCompanyEditDocRequestInit,
     storeAllCompaniesRequestSucceed,
     storeNextCompaniesRequestFailed,
@@ -39,12 +43,6 @@ import {
     storeCompanyEditDocRequestFailed,
     storeCompanyEditDocRequestSucceed
 } from "../requests/companies/actions";
-import {EMIT_UPDATE_OPERATOR, storeSetOperatorData} from "../operators/actions";
-import {
-    storeEditOperatorRequestFailed,
-    storeEditOperatorRequestInit,
-    storeEditOperatorRequestSucceed
-} from "../requests/operators/actions";
 
 // Fetch all companies from API
 export function* emitAllCompaniesFetch() {
@@ -205,21 +203,18 @@ export function* emitUpdateCompany() {
     yield takeLatest(EMIT_UPDATE_COMPANY, function*({id, name, description, phone, address, manager}) {
         try {
             // Fire event for request
-            yield put(storeEditOperatorRequestInit());
-            const data = {name, description};
-            const apiResponse = yield call(apiPostRequest, `${api.EDIT_OPERATOR_INFO_API_PATH}/${id}`, data);
+            yield put(storeEditCompanyRequestInit());
+            const data = { phone, nom: name, description, adresse: address, responsable: manager};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_COMPANY_INFO_API_PATH}/${id}`, data);
             // Extract data
-            const operator = extractOperatorData(
-                apiResponse.data.flote,
-                apiResponse.data.puces,
-            );
+            const company = extractCompanyData(apiResponse.data.entreprise);
             // Fire event to redux
-            yield put(storeSetOperatorData({operator, alsoInList: true}));
+            yield put(storeSetCompanyData({company, alsoInList: true}));
             // Fire event for request
-            yield put(storeEditOperatorRequestSucceed({message: apiResponse.message}));
+            yield put(storeEditCompanyRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeEditOperatorRequestFailed({message}));
+            yield put(storeEditCompanyRequestFailed({message}));
         }
     });
 }
@@ -274,6 +269,7 @@ export default function* sagaCompanies() {
     yield all([
         fork(emitNewCompany),
         fork(emitCompanyFetch),
+        fork(emitUpdateCompany),
         fork(emitCompaniesFetch),
         fork(emitAddCompanySims),
         fork(emitUpdateCompanyDoc),
