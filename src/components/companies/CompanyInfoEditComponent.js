@@ -6,20 +6,20 @@ import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitUpdateCompany} from "../../redux/companies/actions";
-import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function CompanyInfoEditComponent({request, company, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState(DEFAULT_FORM_DATA);
-    const [phone, setPhone] = useState(DEFAULT_FORM_DATA);
-    const [manager, setManager] = useState(DEFAULT_FORM_DATA);
-    const [address, setAddress] = useState(DEFAULT_FORM_DATA);
-    const [description, setDescription] = useState(DEFAULT_FORM_DATA);
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: company.name});
+    const [phone, setPhone] = useState({...DEFAULT_FORM_DATA, data: company.phone});
+    const [manager, setManager] = useState({...DEFAULT_FORM_DATA, data: company.manager});
+    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: company.address});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: company.description});
 
     // Local effects
     useEffect(() => {
