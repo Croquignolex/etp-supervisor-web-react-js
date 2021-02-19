@@ -6,7 +6,13 @@ import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer
 import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
 import OperatorDetailsContainer from "../../containers/operators/OperatorDetailsContainer";
 import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
-import {AGENT_COLLECTOR_CORPORATE_TYPE, AGENT_TYPE, COLLECTOR_TYPE, CORPORATE_TYPE} from "../../constants/typeConstants";
+import {
+    AGENT_TYPE,
+    RESOURCE_TYPE,
+    COLLECTOR_TYPE,
+    CORPORATE_TYPE,
+    AGENT_RESOURCE_COLLECTOR_CORPORATE_TYPE
+} from "../../constants/typeConstants";
 
 // Component
 function SimCardComponent({sim}) {
@@ -59,7 +65,7 @@ function SimCardComponent({sim}) {
                         />
                     </span>
                 </li>
-                {AGENT_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) && (
+                {AGENT_RESOURCE_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) && (
                     <li className="list-group-item">
                         <b>{upperFirstCase(sim.type.name)}</b>
                         <span className="float-right">
@@ -71,22 +77,30 @@ function SimCardComponent({sim}) {
                                     />
                                 </>
                             )}
-                                {sim.type.name === COLLECTOR_TYPE && (
-                                    <>
-                                        {sim.collector.name}
-                                        {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                            {sim.type.name === RESOURCE_TYPE && (
+                                <>
+                                    {sim.agent.name}
+                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
                                        onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
-                                    />*/}
-                                    </>
-                                )}
-                                {sim.type.name === CORPORATE_TYPE && (
-                                    <>
-                                        {sim.company.name}
-                                        <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                           onClick={() => setCompanyDetailsModal({...companyDetailsModal, show: true, id: sim.company.id})}
-                                        />
-                                    </>
-                                )}
+                                    />
+                                </>
+                            )}
+                            {sim.type.name === COLLECTOR_TYPE && (
+                                <>
+                                    {sim.collector.name}
+                                    {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                />*/}
+                                </>
+                            )}
+                            {sim.type.name === CORPORATE_TYPE && (
+                                <>
+                                    {sim.company.name}
+                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                       onClick={() => setCompanyDetailsModal({...companyDetailsModal, show: true, id: sim.company.id})}
+                                    />
+                                </>
+                            )}
                         </span>
                     </li>
                 )}
