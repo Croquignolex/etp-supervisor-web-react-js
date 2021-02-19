@@ -8,7 +8,7 @@ import {emitAllOperatorsFetch} from "../redux/operators/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
-import {COMPANIES_PAGE, OPERATORS} from "../constants/pageNameConstants";
+import {COMPANIES_PAGE} from "../constants/pageNameConstants";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import CompanyNewContainer from "../containers/companies/CompanyNewContainer";
 import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";

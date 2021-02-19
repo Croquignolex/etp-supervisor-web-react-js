@@ -8,9 +8,8 @@ import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {emitUpdateCompanyDoc} from "../../redux/companies/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {requiredFileChecker} from "../../functions/checkerFunctions";
-import {storeAgentEditDocRequestReset} from "../../redux/requests/agents/actions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeCompanyEditDocRequestReset} from "../../redux/requests/companies/actions";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function CompanyDocEditComponent({request, company, dispatch, handleClose}) {
