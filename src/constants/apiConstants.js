@@ -50,6 +50,7 @@ export const TOGGLE_AGENT_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
 export const All_ZONES_API_PATH = `${API_URL}/zone_list_all`;
 
 // Collectors
+export const COLLECTORS_API_PATH = `${API_URL}/recouvreurs`;
 export const ALL_COLLECTORS_API_PATH = `${API_URL}/recouvreurs_all`;
 
 // Manager

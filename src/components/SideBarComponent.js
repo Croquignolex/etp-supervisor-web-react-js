@@ -190,7 +190,7 @@ function buildCollectorsMenu() {
     return {
         name: page.COLLECTORS,
         path: path.COLLECTORS_PAGE_PATH,
-        icon: 'fa fa-user-cog',
+        icon: 'fa fa-user-clock',
         sub: []
     };
 }
