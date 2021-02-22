@@ -33,7 +33,7 @@ function OperatorDetailsComponent({id, operator, dispatch, request}) {
             {requestLoading(request)  ? <LoaderComponent /> : (
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-lg-12 col-md-12">
                             <OperatorInfoComponent operator={operator} />
                         </div>
                         <div className="col-lg-12 col-md-12">

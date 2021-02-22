@@ -2,14 +2,12 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
-import {agentTypeBadgeColor} from "../../functions/typeFunctions";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import AgentPrimaryInfoEditContainer from "../../containers/agents/AgentPrimaryInfoEditContainer";
 
 // Component
-function CollectorInfoComponent({agent}) {
+function CollectorInfoComponent({collector}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + agent.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + collector.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -28,10 +26,10 @@ function CollectorInfoComponent({agent}) {
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
             <div className="card">
-                <div className={`${agentTypeBadgeColor(agent.reference).background} card-header`}>
-                    <h3 className="card-title">{agentTypeBadgeColor(agent.reference).text}</h3>
+                <div className="card-header bg-secondary">
+                    <h3 className="card-title">{collector.name}</h3>
                     <div className="card-tools">
-                        {agent.status
+                        {collector.status
                             ?  <span className="badge badge-success">Activé</span>
                             :  <span className="badge badge-danger">Bloqué</span>
                         }
@@ -39,35 +37,43 @@ function CollectorInfoComponent({agent}) {
                 </div>
                 <div className="card-body">
                     <div className="text-center mb-2">
-                        <img src={agent.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <img src={collector.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
                     </div>
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(agent.creation)}</span>
+                            <span className="float-right">{dateToString(collector.creation)}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Nom</b>
-                            <span className="float-right">{agent.name}</span>
+                            <span className="float-right">{collector.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Téléphone</b>
-                            <span className="float-right">{agent.phone}</span>
+                            <span className="float-right">{collector.phone}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Email</b>
-                            <span className="float-right">{agent.email}</span>
+                            <span className="float-right">{collector.email}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Solde total</b>
-                            <span className="float-right text-success text-bold">{formatNumber(agent.account.balance)}</span>
+                            <span className="float-right text-success text-bold">{formatNumber(collector.account.balance)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Adresse</b>
+                            <p>{collector.address}</p>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Description</b>
+                            <p>{collector.description}</p>
                         </li>
                     </ul>
                 </div>
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <AgentPrimaryInfoEditContainer handleClose={handleInfoEditModalHide} />
+                {/*<AgentPrimaryInfoEditContainer handleClose={handleInfoEditModalHide} />*/}
             </FormModalComponent>
         </>
     )
@@ -75,7 +81,7 @@ function CollectorInfoComponent({agent}) {
 
 // Prop types to ensure destroyed props data type
 CollectorInfoComponent.propTypes = {
-    agent: PropTypes.object.isRequired
+    collector: PropTypes.object.isRequired
 };
 
 export default React.memo(CollectorInfoComponent);

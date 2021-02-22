@@ -51,6 +51,7 @@ export const All_ZONES_API_PATH = `${API_URL}/zone_list_all`;
 
 // Collectors
 export const COLLECTORS_API_PATH = `${API_URL}/recouvreurs`;
+export const COLLECTOR_DETAILS_API_PATH = `${API_URL}/details_user`;
 export const ALL_COLLECTORS_API_PATH = `${API_URL}/recouvreurs_all`;
 export const CREATE_COLLECTOR_API_PATH = `${API_URL}/create_recouvreur`;
 export const TOGGLE_COLLECTOR_STATUS_API_PATH = `${API_URL}/edit_user_status`;

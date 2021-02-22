@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import CollectorInfoComponent from "./CollectorInfoComponent";
 import {emitCollectorFetch} from "../../redux/collectors/actions";
 import CollectorSimsListComponent from "./CollectorSimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
@@ -31,15 +32,9 @@ function CollectorDetailsComponent({id, collector, dispatch, request}) {
             {requestLoading(request)  ? <LoaderComponent /> : (
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
-                       {/* <div className="col-lg-6 col-md-6">
-                            <AgentPrimaryInfoComponent collector={collector} />
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                            <AgentSecondaryInfoComponent collector={collector} />
-                        </div>
                         <div className="col-lg-12 col-md-12">
-                            <AgentCniComponent collector={collector} />
-                        </div>*/}
+                            <CollectorInfoComponent collector={collector} />
+                        </div>
                         <div className="col-lg-12 col-md-12">
                             <CollectorSimsListComponent collector={collector} />
                         </div>

@@ -5,39 +5,40 @@ import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
 import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_COLLECTOR,
+    EMIT_COLLECTOR_FETCH,
+    storeSetCollectorData,
     EMIT_COLLECTORS_FETCH,
     storeSetCollectorsData,
+    storeSetNewCollectorData,
     EMIT_ALL_COLLECTORS_FETCH,
     storeSetNextCollectorsData,
     EMIT_NEXT_COLLECTORS_FETCH,
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
-    storeStopInfiniteScrollCollectorData, EMIT_NEW_COLLECTOR, storeSetNewCollectorData
+    storeStopInfiniteScrollCollectorData
 } from "./actions";
 import {
+    storeCollectorRequestInit,
     storeCollectorsRequestInit,
+    storeCollectorRequestFailed,
+    storeAddCollectorRequestInit,
     storeCollectorsRequestFailed,
+    storeCollectorRequestSucceed,
     storeCollectorsRequestSucceed,
     storeAllCollectorsRequestInit,
     storeNextCollectorsRequestInit,
+    storeAddCollectorRequestFailed,
     storeAllCollectorsRequestFailed,
+    storeAddCollectorRequestSucceed,
     storeNextCollectorsRequestFailed,
     storeAllCollectorsRequestSucceed,
     storeNextCollectorsRequestSucceed,
     storeCollectorStatusToggleRequestInit,
     storeCollectorStatusToggleRequestFailed,
-    storeCollectorStatusToggleRequestSucceed,
-    storeAddCollectorRequestInit,
-    storeAddCollectorRequestSucceed,
-    storeAddCollectorRequestFailed
+    storeCollectorStatusToggleRequestSucceed
 } from "../requests/collectors/actions";
-import {EMIT_NEW_AGENT, storeSetNewAgentData} from "../agents/actions";
-import {
-    storeAddAgentRequestFailed,
-    storeAddAgentRequestInit,
-    storeAddAgentRequestSucceed
-} from "../requests/agents/actions";
 
 // Fetch all collectors from API
 export function* emitAllCollectorsFetch() {
@@ -148,6 +149,31 @@ export function* emitNewCollector() {
     });
 }
 
+// Fetch collector from API
+export function* emitCollectorFetch() {
+    yield takeLatest(EMIT_COLLECTOR_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.COLLECTOR_DETAILS_API_PATH}/${id}`);
+            // Extract data
+            const collector = extractCollectorData(
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorData({collector}));
+            // Fire event for request
+            yield put(storeCollectorRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorRequestFailed({message}));
+        }
+    });
+}
+
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
     let collector = {
@@ -218,6 +244,7 @@ function extractCollectorsData(apiCollectors) {
 export default function* sagaCollectors() {
     yield all([
         fork(emitNewCollector),
+        fork(emitCollectorFetch),
         fork(emitCollectorsFetch),
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),
