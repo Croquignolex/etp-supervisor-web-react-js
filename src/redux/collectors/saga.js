@@ -13,7 +13,7 @@ import {
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
-    storeStopInfiniteScrollCollectorData
+    storeStopInfiniteScrollCollectorData, EMIT_NEW_COLLECTOR, storeSetNewCollectorData
 } from "./actions";
 import {
     storeCollectorsRequestInit,
@@ -27,8 +27,17 @@ import {
     storeNextCollectorsRequestSucceed,
     storeCollectorStatusToggleRequestInit,
     storeCollectorStatusToggleRequestFailed,
-    storeCollectorStatusToggleRequestSucceed
+    storeCollectorStatusToggleRequestSucceed,
+    storeAddCollectorRequestInit,
+    storeAddCollectorRequestSucceed,
+    storeAddCollectorRequestFailed
 } from "../requests/collectors/actions";
+import {EMIT_NEW_AGENT, storeSetNewAgentData} from "../agents/actions";
+import {
+    storeAddAgentRequestFailed,
+    storeAddAgentRequestInit,
+    storeAddAgentRequestSucceed
+} from "../requests/agents/actions";
 
 // Fetch all collectors from API
 export function* emitAllCollectorsFetch() {
@@ -112,6 +121,33 @@ export function* emitToggleCollectorStatus() {
     });
 }
 
+// New collector into API
+export function* emitNewCollector() {
+    yield takeLatest(EMIT_NEW_COLLECTOR, function*({name, address, phone, zone, email, password,  description}) {
+        try {
+            // Fire event for request
+            yield put(storeAddCollectorRequestInit());
+            // From data
+            const data = {name, phone, email, password, description, id_zone: zone, adresse: address}
+            // API request
+            const apiResponse = yield call(apiPostRequest, api.CREATE_COLLECTOR_API_PATH, data);
+            // Extract data
+            const collector = extractCollectorData(
+                apiResponse.data.recouvreur,
+                apiResponse.data.zone,
+                apiResponse.data.caisse
+            );
+            // Fire event to redux
+            yield put(storeSetNewCollectorData({collector}));
+            // Fire event for request
+            yield put(storeAddCollectorRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddCollectorRequestFailed({message}));
+        }
+    });
+}
+
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
     let collector = {
@@ -181,6 +217,7 @@ function extractCollectorsData(apiCollectors) {
 // Combine to export all functions at once
 export default function* sagaCollectors() {
     yield all([
+        fork(emitNewCollector),
         fork(emitCollectorsFetch),
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),

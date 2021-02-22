@@ -148,7 +148,6 @@ export function* emitNewAgent() {
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_AGENT_API_PATH, data);
             // Extract data
-            // apiResponse.agent, apiResponse.user, apiResponse.zone, apiResponse.puces, apiResponse.caisse
             const agent = extractAgentData(
                 apiResponse.data.agent,
                 apiResponse.data.user,

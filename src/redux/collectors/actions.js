@@ -95,21 +95,13 @@ export const emitToggleCollectorStatus = ({id}) => ({
 });
 
 // Emit new collector fetch
-export const emitNewCollector = ({name, address, phone, zone, reference, town,
-                                 country, email, password, description,
-                                 backIDCard, frontIDCard, document}) => ({
+export const emitNewCollector = ({name, address, phone, zone, email, password,  description}) => ({
     name,
     zone,
-    town,
     phone,
     email,
-    country,
     address,
-    document,
     password,
-    reference,
-    backIDCard,
-    frontIDCard,
     description,
     type: EMIT_NEW_COLLECTOR
 });

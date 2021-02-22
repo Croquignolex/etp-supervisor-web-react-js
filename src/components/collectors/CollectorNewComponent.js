@@ -1,32 +1,27 @@
-import React, {useEffect, useMemo, useState} from 'react';
 import PropTypes from "prop-types";
+import React, {useEffect, useMemo, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import SelectComponent from "../form/SelectComponent";
-import {emitNewAgent} from "../../redux/agents/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import FileImageComponent from "../form/FileImageComponent";
 import * as constants from "../../constants/defaultConstants";
-import FileDocumentComponent from "../form/FileDocumentComponent";
+import {emitNewCollector} from "../../redux/collectors/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeAddAgentRequestReset} from "../../redux/requests/agents/actions";
+import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {dataToArrayForSelect, mappedZones} from "../../functions/arrayFunctions";
-import {fileChecker, imageChecker, phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
+import {storeAddCollectorRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CollectorNewComponent({type, zones, request, allZonesRequests, dispatch, handleClose}) {
+function CollectorNewComponent({zones, request, allZonesRequests, dispatch, handleClose}) {
     // Local state
-    const [doc, setDoc] = useState(constants.DEFAULT_FORM_DATA);
     const [zone, setZone] = useState(constants.DEFAULT_FORM_DATA);
     const [name, setName] = useState(constants.DEFAULT_FORM_DATA);
     const [phone, setPhone] = useState(constants.DEFAULT_FORM_DATA);
     const [email, setEmail] = useState(constants.DEFAULT_FORM_DATA);
     const [address, setAddress] = useState(constants.DEFAULT_FORM_DATA);
-    const [backIDCard, setBackIDCard] = useState(constants.DEFAULT_FORM_DATA);
-    const [frontIDCard, setFrontIDCard] = useState(constants.DEFAULT_FORM_DATA);
     const [description, setDescription] = useState(constants.DEFAULT_FORM_DATA);
 
     // Local effects
@@ -73,24 +68,9 @@ function CollectorNewComponent({type, zones, request, allZonesRequests, dispatch
         setDescription({...description, isValid: true, data})
     }
 
-    const handleFrontIDCardInput = (data) => {
-        shouldResetErrorData();
-        setFrontIDCard({...frontIDCard, isValid: true, data})
-    }
-
-    const handleBackIDCardInput = (data) => {
-        shouldResetErrorData();
-        setBackIDCard({...backIDCard, isValid: true, data})
-    }
-
     const handleZoneSelect = (data) => {
         shouldResetErrorData();
         setZone({...zone, isValid: true, data})
-    }
-
-    const handleFileInput = (data) => {
-        shouldResetErrorData();
-        setDoc({...doc, isValid: true, data})
     }
 
     // Build select options
@@ -100,47 +80,30 @@ function CollectorNewComponent({type, zones, request, allZonesRequests, dispatch
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddAgentRequestReset());
+        dispatch(storeAddCollectorRequestReset());
     };
 
     // Trigger new agent form submit
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
-        const _document = fileChecker(doc);
         const _phone = phoneChecker(phone);
         const _name = requiredChecker(name);
         const _zone = requiredChecker(zone);
-        const _backIDCard = imageChecker(backIDCard);
-        const _frontIDCard = imageChecker(frontIDCard);
         // Set value
         setName(_name);
         setZone(_zone);
         setPhone(_phone);
-        setDoc(_document);
-        setBackIDCard(_backIDCard);
-        setFrontIDCard(_frontIDCard);
-        const validationOK = (
-            _name.isValid && _phone.isValid &&
-            _document.isValid && _zone.isValid &&
-            _backIDCard.isValid && _frontIDCard.isValid
-        );
-        console.log(_backIDCard)
+        const validationOK = (_name.isValid && _phone.isValid && _zone.isValid);
         // Check
         if(validationOK)
-            dispatch(emitNewAgent({
-                reference: type,
+            dispatch(emitNewCollector({
                 name: _name.data,
                 zone: _zone.data,
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
-                document: _document.data,
-                town: constants.DEFAULT_TOWN,
                 description: description.data,
-                backIDCard: _backIDCard.data.file,
-                country: constants.DEFAULT_COUNTRY,
-                frontIDCard: _frontIDCard.data.file,
                 password: constants.DEFAULT_PASSWORD,
             }));
         else playWarningSound();
@@ -208,29 +171,6 @@ function CollectorNewComponent({type, zones, request, allZonesRequests, dispatch
                                 />
                             </div>
                         </div>
-                        <div className='row'>
-                            <FileImageComponent input={frontIDCard}
-                                                id='inputFrontIDCard'
-                                                label='Image avant CNI'
-                                                handleInput={handleFrontIDCardInput}
-                            />
-                        </div>
-                        <div className='row'>
-                            <FileImageComponent input={backIDCard}
-                                                id='inputBackIDCard'
-                                                label='Image arrière CNI'
-                                                handleInput={handleBackIDCardInput}
-                            />
-                        </div>
-                        <div className='row'>
-                            <div className='col'>
-                                <FileDocumentComponent id='file'
-                                                       input={doc}
-                                                       label='Dossier agent'
-                                                       handleInput={handleFileInput}
-                                />
-                            </div>
-                        </div>
                         <div className="form-group row">
                             <ButtonComponent processing={requestLoading(request)} />
                         </div>
@@ -244,7 +184,6 @@ function CollectorNewComponent({type, zones, request, allZonesRequests, dispatch
 // Prop types to ensure destroyed props data type
 CollectorNewComponent.propTypes = {
     zones: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,

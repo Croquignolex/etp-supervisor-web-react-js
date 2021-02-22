@@ -125,7 +125,6 @@ function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, ha
             _document.isValid && _zone.isValid &&
             _backIDCard.isValid && _frontIDCard.isValid
         );
-        console.log(_backIDCard)
         // Check
         if(validationOK)
             dispatch(emitNewAgent({
