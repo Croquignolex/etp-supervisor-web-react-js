@@ -17,7 +17,7 @@ import {
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
-    storeStopInfiniteScrollCollectorData
+    storeStopInfiniteScrollCollectorData, EMIT_UPDATE_COLLECTOR_INFO
 } from "./actions";
 import {
     storeCollectorRequestInit,
@@ -37,8 +37,17 @@ import {
     storeNextCollectorsRequestSucceed,
     storeCollectorStatusToggleRequestInit,
     storeCollectorStatusToggleRequestFailed,
-    storeCollectorStatusToggleRequestSucceed
+    storeCollectorStatusToggleRequestSucceed,
+    storeCollectorEditInfoRequestInit,
+    storeCollectorEditInfoRequestSucceed,
+    storeCollectorEditInfoRequestFailed
 } from "../requests/collectors/actions";
+import {EMIT_UPDATE_AGENT_INFO, storeSetAgentData} from "../agents/actions";
+import {
+    storeAgentEditInfoRequestFailed,
+    storeAgentEditInfoRequestInit,
+    storeAgentEditInfoRequestSucceed
+} from "../requests/agents/actions";
 
 // Fetch all collectors from API
 export function* emitAllCollectorsFetch() {
@@ -121,6 +130,33 @@ export function* emitToggleCollectorStatus() {
         }
     });
 }
+
+// Update collector info
+export function* emitUpdateCollectorInfo() {
+    yield takeLatest(EMIT_UPDATE_COLLECTOR_INFO, function*({id, email, name, address, description}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorEditInfoRequestInit());
+            const data = {email, name, adresse: address, description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_COLLECTOR_API_PATH}/${id}`, data);
+            // Extract data
+            const collector = extractCollectorData(
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorData({collector, alsoInList: true}));
+            // Fire event for request
+            yield put(storeCollectorEditInfoRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorEditInfoRequestFailed({message}));
+        }
+    });
+}
+
 
 // New collector into API
 export function* emitNewCollector() {
@@ -248,6 +284,7 @@ export default function* sagaCollectors() {
         fork(emitCollectorsFetch),
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),
+        fork(emitUpdateCollectorInfo),
         fork(emitToggleCollectorStatus),
     ]);
 }

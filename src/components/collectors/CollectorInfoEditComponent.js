@@ -5,20 +5,20 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitUpdateAgentInfo} from "../../redux/agents/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {emitUpdateCollectorInfo} from "../../redux/collectors/actions";
 import {storeAgentEditInfoRequestReset} from "../../redux/requests/agents/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CollectorInfoEditComponent({request, agent, dispatch, handleClose}) {
+function CollectorInfoEditComponent({request, collector, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: agent.name});
-    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: agent.email});
-    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: agent.address});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: agent.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: collector.name});
+    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: collector.email});
+    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: collector.address});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: collector.description});
 
     // Local effects
     useEffect(() => {
@@ -74,8 +74,8 @@ function CollectorInfoEditComponent({request, agent, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateAgentInfo({
-                id: agent.id,
+            dispatch(emitUpdateCollectorInfo({
+                id: collector.id,
                 name: _name.data,
                 email: email.data,
                 address: address.data,
@@ -134,9 +134,9 @@ function CollectorInfoEditComponent({request, agent, dispatch, handleClose}) {
 
 // Prop types to ensure destroyed props data type
 CollectorInfoEditComponent.propTypes = {
-    agent: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
+    collector: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 
