@@ -7,10 +7,10 @@ import LoaderComponent from "../components/LoaderComponent";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
-import AgentNewContainer from "../containers/agents/AgentNewContainer";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import BlockModalComponent from "../components/modals/BlockModalComponent";
 import AgentDetailsContainer from "../containers/agents/AgentDetailsContainer";
+import CollectorNewContainer from "../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../components/collectors/CollectorsCardsComponent";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../redux/collectors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
@@ -167,7 +167,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                  handleClose={handleBlockModalHide}
             />
             <FormModalComponent modal={newCollectorModal} handleClose={handleNewCollectorModalHide}>
-                <AgentNewContainer type={newCollectorModal.type} handleClose={handleNewCollectorModalHide} />
+                <CollectorNewContainer type={newCollectorModal.type} handleClose={handleNewCollectorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
                 <AgentDetailsContainer id={collectorDetailsModal.id} />
