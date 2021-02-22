@@ -6,6 +6,7 @@ import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer
 import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
 import OperatorDetailsContainer from "../../containers/operators/OperatorDetailsContainer";
 import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
+import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
 import {
     AGENT_TYPE,
     RESOURCE_TYPE,
@@ -20,10 +21,16 @@ function SimCardComponent({sim}) {
     const [companyDetailsModal, setCompanyDetailsModal] = useState({show: false, header: "DETAIL DE L'ENTREPRISE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
     const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEUR", id: ''});
+    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
     // Hide agent details modal form
     const handleAgentDetailsModalHide = () => {
         setAgentDetailsModal({...agentDetailsModal, show: false})
+    }
+
+    // Hide collector details modal form
+    const handleCollectorDetailsModalHide = () => {
+        setCollectorDetailsModal({...collectorDetailsModal, show: false})
     }
 
     // Hide operator details modal form
@@ -88,9 +95,9 @@ function SimCardComponent({sim}) {
                             {sim.type.name === COLLECTOR_TYPE && (
                                 <>
                                     {sim.collector.name}
-                                    {/*<i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
-                                />*/}
+                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                        onClick={() => setCollectorDetailsModal({...collectorDetailsModal, show: true, id: sim.collector.id})}
+                                    />
                                 </>
                             )}
                             {sim.type.name === CORPORATE_TYPE && (
@@ -111,6 +118,9 @@ function SimCardComponent({sim}) {
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
+                <CollectorDetailsContainer id={collectorDetailsModal.id} />
             </FormModalComponent>
             <FormModalComponent modal={companyDetailsModal} handleClose={handleCompanyDetailsModalHide}>
                 <CompanyDetailsContainer id={companyDetailsModal.id} />
