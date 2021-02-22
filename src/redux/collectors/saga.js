@@ -3,13 +3,16 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
-import {apiGetRequest, getImageFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_COLLECTORS_FETCH,
     storeSetCollectorsData,
     EMIT_ALL_COLLECTORS_FETCH,
     storeSetNextCollectorsData,
     EMIT_NEXT_COLLECTORS_FETCH,
+    storeSetCollectorActionData,
+    storeSetCollectorToggleData,
+    EMIT_TOGGLE_COLLECTOR_STATUS,
     storeStopInfiniteScrollCollectorData
 } from "./actions";
 import {
@@ -21,7 +24,10 @@ import {
     storeAllCollectorsRequestFailed,
     storeNextCollectorsRequestFailed,
     storeAllCollectorsRequestSucceed,
-    storeNextCollectorsRequestSucceed
+    storeNextCollectorsRequestSucceed,
+    storeCollectorStatusToggleRequestInit,
+    storeCollectorStatusToggleRequestFailed,
+    storeCollectorStatusToggleRequestSucceed
 } from "../requests/collectors/actions";
 
 // Fetch all collectors from API
@@ -81,6 +87,27 @@ export function* emitNextCollectorsFetch() {
             // Fire event for request
             yield put(storeNextCollectorsRequestFailed({message}));
             yield put(storeStopInfiniteScrollCollectorData());
+        }
+    });
+}
+
+// Toggle collector status into API
+export function* emitToggleCollectorStatus() {
+    yield takeLatest(EMIT_TOGGLE_COLLECTOR_STATUS, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeSetCollectorActionData({id}));
+            yield put(storeCollectorStatusToggleRequestInit());
+            const apiResponse = yield call(apiPostRequest, `${api.TOGGLE_COLLECTOR_STATUS_API_PATH}/${id}`);
+            // Fire event to redux
+            yield put(storeSetCollectorToggleData({id}));
+            // Fire event for request
+            yield put(storeCollectorStatusToggleRequestSucceed({message: apiResponse.message}));
+            yield put(storeSetCollectorActionData({id}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSetCollectorActionData({id}));
+            yield put(storeCollectorStatusToggleRequestFailed({message}));
         }
     });
 }
@@ -157,5 +184,6 @@ export default function* sagaCollectors() {
         fork(emitCollectorsFetch),
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),
+        fork(emitToggleCollectorStatus),
     ]);
 }
