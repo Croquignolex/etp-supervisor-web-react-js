@@ -1,13 +1,13 @@
 import {connect} from "react-redux";
 
-import AgentZoneEditComponent from "../../components/agents/AgentZoneEditComponent";
+import CollectorZoneEditComponent from "../../components/collectors/CollectorZoneEditComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
     zones: state.zones.list,
-    agent: state.agents.current,
-    request: state.agentsRequests.edit.zone,
+    collectors: state.collectors.current,
     allZonesRequests: state.zonesRequests.all,
+    request: state.collectorsRequests.edit.zone,
 });
 
 // Map dispatch function to component props
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(AgentZoneEditComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectorZoneEditComponent);

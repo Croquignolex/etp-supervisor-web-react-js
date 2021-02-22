@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import CollectorInfoEditContainer from "../../containers/collectors/CollectorInfoEditContainer";
-import AgentZoneEditContainer from "../../containers/agents/AgentZoneEditContainer";
+import CollectorZoneEditContainer from "../../containers/collectors/CollectorZoneEditContainer";
 
 // Component
 function CollectorInfoComponent({collector}) {
@@ -77,6 +77,10 @@ function CollectorInfoComponent({collector}) {
                             <span className="float-right text-success text-bold">{formatNumber(collector.account.balance)}</span>
                         </li>
                         <li className="list-group-item">
+                            <b>Zone</b>
+                            <span className="float-right">{collector.zone.name}</span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Adresse</b>
                             <p>{collector.address}</p>
                         </li>
@@ -92,7 +96,7 @@ function CollectorInfoComponent({collector}) {
                 <CollectorInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={zoneEditModal} handleClose={handleZoneEditModalHide}>
-                <AgentZoneEditContainer handleClose={handleZoneEditModalHide} />
+                <CollectorZoneEditContainer handleClose={handleZoneEditModalHide} />
             </FormModalComponent>
         </>
     )

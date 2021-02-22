@@ -4,18 +4,18 @@ import React, {useEffect, useMemo, useState} from 'react';
 import SelectComponent from "../form/SelectComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {emitUpdateAgentZone} from "../../redux/agents/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {emitUpdateCollectorZone} from "../../redux/collectors/actions";
 import {dataToArrayForSelect, mappedZones} from "../../functions/arrayFunctions";
-import {storeAgentEditZoneRequestReset} from "../../redux/requests/agents/actions";
+import {storeCollectorEditZoneRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CollectorZoneEditComponent({request, agent, zones, allZonesRequests, dispatch, handleClose}) {
+function CollectorZoneEditComponent({request, collector, zones, allZonesRequests, dispatch, handleClose}) {
     // Local state
-    const [zone, setZone] = useState({...DEFAULT_FORM_DATA, data: agent.zone.id});
+    const [zone, setZone] = useState({...DEFAULT_FORM_DATA, data: collector.zone.id});
 
     // Local effects
     useEffect(() => {
@@ -38,7 +38,7 @@ function CollectorZoneEditComponent({request, agent, zones, allZonesRequests, di
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAgentEditZoneRequestReset());
+        dispatch(storeCollectorEditZoneRequestReset());
     };
 
     // Build select options
@@ -61,7 +61,7 @@ function CollectorZoneEditComponent({request, agent, zones, allZonesRequests, di
         const validationOK = _zone.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateAgentZone({id: agent.id, zone: _zone.data}))
+            dispatch(emitUpdateCollectorZone({id: collector.id, zone: _zone.data}))
         } else playWarningSound();
     };
 
@@ -93,10 +93,10 @@ function CollectorZoneEditComponent({request, agent, zones, allZonesRequests, di
 // Prop types to ensure destroyed props data type
 CollectorZoneEditComponent.propTypes = {
     zones: PropTypes.array.isRequired,
-    agent: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
+    collector: PropTypes.object.isRequired,
     allZonesRequests: PropTypes.object.isRequired,
 };
 

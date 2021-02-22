@@ -13,11 +13,13 @@ import {
     storeSetNewCollectorData,
     EMIT_ALL_COLLECTORS_FETCH,
     storeSetNextCollectorsData,
+    EMIT_UPDATE_COLLECTOR_ZONE,
+    EMIT_UPDATE_COLLECTOR_INFO,
     EMIT_NEXT_COLLECTORS_FETCH,
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
-    storeStopInfiniteScrollCollectorData, EMIT_UPDATE_COLLECTOR_INFO
+    storeStopInfiniteScrollCollectorData
 } from "./actions";
 import {
     storeCollectorRequestInit,
@@ -35,19 +37,16 @@ import {
     storeNextCollectorsRequestFailed,
     storeAllCollectorsRequestSucceed,
     storeNextCollectorsRequestSucceed,
+    storeCollectorEditInfoRequestInit,
+    storeCollectorEditZoneRequestInit,
+    storeCollectorEditZoneRequestFailed,
+    storeCollectorEditInfoRequestFailed,
+    storeCollectorEditInfoRequestSucceed,
+    storeCollectorEditZoneRequestSucceed,
     storeCollectorStatusToggleRequestInit,
     storeCollectorStatusToggleRequestFailed,
-    storeCollectorStatusToggleRequestSucceed,
-    storeCollectorEditInfoRequestInit,
-    storeCollectorEditInfoRequestSucceed,
-    storeCollectorEditInfoRequestFailed
+    storeCollectorStatusToggleRequestSucceed
 } from "../requests/collectors/actions";
-import {EMIT_UPDATE_AGENT_INFO, storeSetAgentData} from "../agents/actions";
-import {
-    storeAgentEditInfoRequestFailed,
-    storeAgentEditInfoRequestInit,
-    storeAgentEditInfoRequestSucceed
-} from "../requests/agents/actions";
 
 // Fetch all collectors from API
 export function* emitAllCollectorsFetch() {
@@ -157,7 +156,6 @@ export function* emitUpdateCollectorInfo() {
     });
 }
 
-
 // New collector into API
 export function* emitNewCollector() {
     yield takeLatest(EMIT_NEW_COLLECTOR, function*({name, address, phone, zone, email, password,  description}) {
@@ -184,6 +182,33 @@ export function* emitNewCollector() {
         }
     });
 }
+
+// Update collector zone
+export function* emitUpdateCollectorZone() {
+    yield takeLatest(EMIT_UPDATE_COLLECTOR_ZONE, function*({id, zone}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorEditZoneRequestInit());
+            const data = {id_zone: zone};
+            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_ZONE_UPDATE_API_PATH}/${id}`, data);
+            // Extract data
+            const collector = extractCollectorData(
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorData({collector, alsoInList: true}));
+            // Fire event for request
+            yield put(storeCollectorEditZoneRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorEditZoneRequestFailed({message}));
+        }
+    });
+}
+
 
 // Fetch collector from API
 export function* emitCollectorFetch() {
@@ -285,6 +310,7 @@ export default function* sagaCollectors() {
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),
         fork(emitUpdateCollectorInfo),
+        fork(emitUpdateCollectorZone),
         fork(emitToggleCollectorStatus),
     ]);
 }

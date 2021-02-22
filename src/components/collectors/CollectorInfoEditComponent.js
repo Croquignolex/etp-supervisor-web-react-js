@@ -9,7 +9,7 @@ import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {emitUpdateCollectorInfo} from "../../redux/collectors/actions";
-import {storeAgentEditInfoRequestReset} from "../../redux/requests/agents/actions";
+import {storeCollectorEditInfoRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -41,7 +41,7 @@ function CollectorInfoEditComponent({request, collector, dispatch, handleClose})
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAgentEditInfoRequestReset());
+        dispatch(storeCollectorEditInfoRequestReset());
     };
 
     const handleNameInput = (data) => {

@@ -55,6 +55,7 @@ export const EDIT_COLLECTOR_API_PATH = `${API_URL}/edit_user`;
 export const COLLECTOR_DETAILS_API_PATH = `${API_URL}/details_user`;
 export const ALL_COLLECTORS_API_PATH = `${API_URL}/recouvreurs_all`;
 export const CREATE_COLLECTOR_API_PATH = `${API_URL}/create_recouvreur`;
+export const COLLECTOR_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_user`;
 export const TOGGLE_COLLECTOR_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 
 // Manager
