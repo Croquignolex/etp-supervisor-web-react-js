@@ -10,6 +10,7 @@ export const AGENTS_PAGE_PATH = "/agents";
 export const COMPANIES_PAGE_PATH = "/companies";
 export const RESOURCES_PAGE_PATH = "/resources";
 export const OPERATORS_PAGE_PATH = "/operators";
+export const COLLECTORS_PAGE_PATH = "/collectors";
 
 // Operations
 export const OPERATIONS_FLEETS_PAGE_PATH = "/operations/fleets";

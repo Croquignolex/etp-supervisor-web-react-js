@@ -36,6 +36,7 @@ function AppRoutes({history}) {
                 <RestrictedRouteContainer exact path={path.AGENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/agents/AgentsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.OPERATORS_PAGE_PATH} component={asyncComponent(() => import('./containers/operators/OperatorsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.COMPANIES_PAGE_PATH} component={asyncComponent(() => import('./containers/companies/CompaniesPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.COLLECTORS_PAGE_PATH} component={asyncComponent(() => import('./containers/collectors/CollectorsPageContainer'))} />
                 {/* Network */}
                 <RestrictedRouteContainer exact path={path.NETWORK_FLEETS_PAGE_PATH} component={asyncComponent(() => import('./containers/network/NetworkFleetsPageContainer'))} />
                 {/* 404 page */}

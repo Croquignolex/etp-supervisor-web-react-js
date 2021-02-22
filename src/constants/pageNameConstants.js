@@ -12,6 +12,7 @@ export const MY_NETWORK_FLEET = 'Flottages';
 export const SIMS_PAGE = 'Puces';
 export const OPERATORS = 'Opérateurs';
 export const AGENTS = 'Agents/Resources';
+export const COLLECTORS = 'Responsables';
 export const COMPANIES_PAGE = 'Entreprises';
 
 // Operations
