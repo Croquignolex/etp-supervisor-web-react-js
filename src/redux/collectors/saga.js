@@ -30,8 +30,23 @@ export function* emitAllCollectorsFetch() {
 }
 
 // Extract collector data
-function extractCollectorData(apiCollector) {
-    let collector = {id: '', name: '', phone: ''};
+function extractCollectorData(apiCollector, apiSims) {
+    let collector = {
+        id: '', name: '', phone: '',
+
+        sims: []
+    };
+    if(apiSims) {
+        apiSims.forEach(data => {
+            collector.sims.push({
+                name: data.nom,
+                number: data.numero,
+                balance: data.solde,
+                id: data.id.toString(),
+                creation: data.created_at
+            })
+        });
+    }
     if(apiCollector) {
         collector.name = apiCollector.name;
         collector.phone = apiCollector.phone;
@@ -45,7 +60,7 @@ function extractCollectorsData(apiCollectors) {
     const collectors = [];
     if(apiCollectors) {
         apiCollectors.forEach(data => {
-            collectors.push(extractCollectorData(data.recouvreur));
+            collectors.push(extractCollectorData(data.recouvreur, data.puces));
         });
     }
     return collectors;

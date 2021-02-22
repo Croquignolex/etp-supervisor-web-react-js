@@ -2,8 +2,8 @@
 export const STORE_SET_AGENT_DATA = 'STORE_SET_AGENT_DATA';
 export const STORE_SET_AGENTS_DATA = 'STORE_SET_AGENTS_DATA';
 export const STORE_SET_NEW_AGENT_DATA = 'STORE_SET_NEW_AGENT_DATA';
-export const STORE_SET_SIM_ACTION_DATA = 'STORE_SET_SIM_ACTION_DATA';
 export const STORE_SET_NEXT_AGENTS_DATA = 'STORE_SET_NEXT_AGENTS_DATA';
+export const STORE_SET_AGENT_ACTION_DATA = 'STORE_SET_AGENT_ACTION_DATA';
 export const STORE_SET_AGENT_TOGGLE_DATA = 'STORE_SET_AGENT_TOGGLE_DATA';
 export const STORE_STOP_INFINITE_SCROLL_AGENTS_DATA = 'STORE_STOP_INFINITE_SCROLL_AGENTS_DATA';
 
@@ -58,7 +58,7 @@ export const storeStopInfiniteScrollAgentData = () => ({
 // Set sim action data in store
 export const storeSetAgentActionData = ({id}) => ({
     id,
-    type: STORE_SET_SIM_ACTION_DATA
+    type: STORE_SET_AGENT_ACTION_DATA
 });
 
 // Set agent toggle data in store

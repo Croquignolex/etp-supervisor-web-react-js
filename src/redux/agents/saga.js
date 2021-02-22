@@ -3,12 +3,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {AGENT_SCOPE, PROFILE_SCOPE} from "../../constants/defaultConstants";
-import {
-    apiGetRequest,
-    apiPostRequest,
-    getFileFromServer,
-    getImageFromServer
-} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest, getFileFromServer, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_AGENT,
     EMIT_AGENT_FETCH,
@@ -375,7 +370,7 @@ function extractAgentData(apiAgent, apiUser, apiZone, apiAccount, apiCreator, ap
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
-        sims: [],
+        sims: []
     };
     if(apiSims) {
         apiSims.forEach(data => {
