@@ -10,6 +10,7 @@ import {
     storeSetCollectorData,
     EMIT_COLLECTORS_FETCH,
     storeSetCollectorsData,
+    EMIT_ADD_COLLECTOR_SIMS,
     storeSetNewCollectorData,
     EMIT_ALL_COLLECTORS_FETCH,
     storeSetNextCollectorsData,
@@ -34,11 +35,14 @@ import {
     storeAddCollectorRequestFailed,
     storeAllCollectorsRequestFailed,
     storeAddCollectorRequestSucceed,
+    storeCollectorAddSimRequestInit,
     storeNextCollectorsRequestFailed,
     storeAllCollectorsRequestSucceed,
     storeNextCollectorsRequestSucceed,
     storeCollectorEditInfoRequestInit,
+    storeCollectorAddSimRequestFailed,
     storeCollectorEditZoneRequestInit,
+    storeCollectorAddSimRequestSucceed,
     storeCollectorEditZoneRequestFailed,
     storeCollectorEditInfoRequestFailed,
     storeCollectorEditInfoRequestSucceed,
@@ -209,7 +213,6 @@ export function* emitUpdateCollectorZone() {
     });
 }
 
-
 // Fetch collector from API
 export function* emitCollectorFetch() {
     yield takeLatest(EMIT_COLLECTOR_FETCH, function*({id}) {
@@ -231,6 +234,32 @@ export function* emitCollectorFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeCollectorRequestFailed({message}));
+        }
+    });
+}
+
+// Add collector sim
+export function* emitAddCollectorSims() {
+    yield takeLatest(EMIT_ADD_COLLECTOR_SIMS, function*({id, name, number, description, operator}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorAddSimRequestInit());
+            const data = {nom: name, description, numero: number, id_flotte: operator}
+            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_ADD_SIM}/${id}`, data);
+            // Extract data
+            const collector = extractCollectorData(
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorData({collector, alsoInList: true}));
+            // Fire event for request
+            yield put(storeCollectorAddSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorAddSimRequestFailed({message}));
         }
     });
 }
@@ -307,6 +336,7 @@ export default function* sagaCollectors() {
         fork(emitNewCollector),
         fork(emitCollectorFetch),
         fork(emitCollectorsFetch),
+        fork(emitAddCollectorSims),
         fork(emitAllCollectorsFetch),
         fork(emitNextCollectorsFetch),
         fork(emitUpdateCollectorInfo),
