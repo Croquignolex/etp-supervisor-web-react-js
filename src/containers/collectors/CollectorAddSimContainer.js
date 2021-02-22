@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
 
-import AgentAddSimComponent from "../../components/agents/AgentAddSimComponent";
+import CollectorAddSimComponent from "../../components/collectors/CollectorAddSimComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    agent: state.agents.current,
     operators: state.operators.list,
-    request: state.agentsRequests.edit.sim,
+    collector: state.collectors.current,
+    request: state.collectorsRequests.edit.sim,
     allOperatorsRequests: state.operatorsRequests.all,
 });
 
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(AgentAddSimComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectorAddSimComponent);

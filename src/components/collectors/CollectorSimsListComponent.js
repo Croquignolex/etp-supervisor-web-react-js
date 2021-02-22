@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
+import CollectorAddSimContainer from "../../containers/collectors/CollectorAddSimContainer";
 
 // Component
 function CollectorSimsListComponent({collector}) {
@@ -60,7 +61,7 @@ function CollectorSimsListComponent({collector}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                {/*<AgentAddSimContainer handleClose={handleAddSimModalHide} />*/}
+                <CollectorAddSimContainer handleClose={handleAddSimModalHide} />
             </FormModalComponent>
         </>
     )

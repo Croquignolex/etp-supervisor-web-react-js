@@ -124,12 +124,11 @@ export const emitUpdateCollectorZone = ({id, zone}) => ({
 });
 
 // Emit add collector sims
-export const emitAddCollectorSims = ({id, name, reference, number, description, operator}) => ({
+export const emitAddCollectorSims = ({id, name, number, description, operator}) => ({
     id,
     name,
     number,
     operator,
-    reference,
     description,
     type: EMIT_ADD_COLLECTOR_SIMS
 });

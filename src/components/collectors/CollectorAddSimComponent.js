@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import React, {useEffect, useMemo, useState} from 'react';
 
+import DisabledInput from "../form/DisabledInput";
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitAddAgentSims} from "../../redux/agents/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {emitAddCollectorSims} from "../../redux/collectors/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAgentAddSimRequestReset} from "../../redux/requests/agents/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import DisabledInput from "../form/DisabledInput";
 
 // Component
-function CollectorAddSimComponent({request, agent, operators, allOperatorsRequests, dispatch, handleClose}) {
+function CollectorAddSimComponent({request, collector, operators, allOperatorsRequests, dispatch, handleClose}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
     const [number, setNumber] = useState(DEFAULT_FORM_DATA);
@@ -87,12 +87,11 @@ function CollectorAddSimComponent({request, agent, operators, allOperatorsReques
 
         // Check
         if(validationOK) {
-            dispatch(emitAddAgentSims({
-                id: agent.id,
+            dispatch(emitAddCollectorSims({
+                id: collector.id,
                 name: _name.data,
                 number: _number.data,
                 operator: _operator.data,
-                reference: agent.reference,
                 description: description.data
             }));
         }
@@ -106,9 +105,9 @@ function CollectorAddSimComponent({request, agent, operators, allOperatorsReques
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className='col-sm-6'>
-                        <DisabledInput id='inputAgent'
-                                       val={agent.name}
-                                       label='Agent/Ressource'
+                        <DisabledInput id='inputCollector'
+                                       val={collector.name}
+                                       label='Responsable de zone'
                         />
                     </div>
                 </div>
@@ -159,10 +158,10 @@ function CollectorAddSimComponent({request, agent, operators, allOperatorsReques
 
 // Prop types to ensure destroyed props data type
 CollectorAddSimComponent.propTypes = {
-    agent: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     operators: PropTypes.array.isRequired,
+    collector: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
     allOperatorsRequests: PropTypes.object.isRequired,
 };
