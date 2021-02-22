@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import AgentDetailsComponent from "../../components/agents/AgentDetailsComponent";
+import CollectorDetailsComponent from "../../components/collectors/CollectorDetailsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    agent: state.agents.current,
-    request: state.agentsRequests.show,
+    collector: state.collectors.current,
+    request: state.collectorsRequests.show,
 });
 
 // Map dispatch function to component props
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(AgentDetailsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectorDetailsComponent);

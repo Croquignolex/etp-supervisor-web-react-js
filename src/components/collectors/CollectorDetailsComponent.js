@@ -2,20 +2,17 @@ import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
-import AgentCniComponent from "./AgentCniComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {emitAgentFetch} from "../../redux/agents/actions";
-import AgentSimsListComponent from "./CollectorSimsListComponent";
-import AgentPrimaryInfoComponent from "./CollectorInfoComponent";
-import AgentSecondaryInfoComponent from "./AgentSecondaryInfoComponent";
-import {storeAgentRequestReset} from "../../redux/requests/agents/actions";
+import {emitCollectorFetch} from "../../redux/collectors/actions";
+import CollectorSimsListComponent from "./CollectorSimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {storeCollectorRequestReset} from "../../redux/requests/collectors/actions";
 
 // Component
-function CollectorDetailsComponent({id, agent, dispatch, request}) {
+function CollectorDetailsComponent({id, collector, dispatch, request}) {
     // Local effects
     useEffect(() => {
-        dispatch(emitAgentFetch({id}));
+        dispatch(emitCollectorFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -25,7 +22,7 @@ function CollectorDetailsComponent({id, agent, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAgentRequestReset());
+        dispatch(storeCollectorRequestReset());
     };
 
     // Render
@@ -34,17 +31,17 @@ function CollectorDetailsComponent({id, agent, dispatch, request}) {
             {requestLoading(request)  ? <LoaderComponent /> : (
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
-                        <div className="col-lg-6 col-md-6">
-                            <AgentPrimaryInfoComponent agent={agent} />
+                       {/* <div className="col-lg-6 col-md-6">
+                            <AgentPrimaryInfoComponent collector={collector} />
                         </div>
                         <div className="col-lg-6 col-md-6">
-                            <AgentSecondaryInfoComponent agent={agent} />
+                            <AgentSecondaryInfoComponent collector={collector} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            <AgentCniComponent agent={agent} />
-                        </div>
+                            <AgentCniComponent collector={collector} />
+                        </div>*/}
                         <div className="col-lg-12 col-md-12">
-                            <AgentSimsListComponent agent={agent} />
+                            <CollectorSimsListComponent collector={collector} />
                         </div>
                     </div>
                 )
@@ -56,9 +53,9 @@ function CollectorDetailsComponent({id, agent, dispatch, request}) {
 // Prop types to ensure destroyed props data type
 CollectorDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
-    agent: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
+    collector: PropTypes.object.isRequired,
 };
 
 export default React.memo(CollectorDetailsComponent);

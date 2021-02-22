@@ -3,12 +3,11 @@ import React, {useState} from 'react';
 
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
-import AgentAddSimContainer from "../../containers/agents/AgentAddSimContainer";
 
 // Component
-function CollectorSimsListComponent({agent}) {
+function CollectorSimsListComponent({collector}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM CHEZ ' + agent.name});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM CHEZ ' + collector.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
@@ -37,7 +36,7 @@ function CollectorSimsListComponent({agent}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {agent.sims.map((item, key) => {
+                            {collector.sims.map((item, key) => {
                                 return (
                                     <tr key={key}>
                                         <td>{item.name}</td>
@@ -46,7 +45,7 @@ function CollectorSimsListComponent({agent}) {
                                     </tr>
                                 )
                             })}
-                            {agent.sims.length === 0 && (
+                            {collector.sims.length === 0 && (
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
@@ -61,7 +60,7 @@ function CollectorSimsListComponent({agent}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                <AgentAddSimContainer handleClose={handleAddSimModalHide} />
+                {/*<AgentAddSimContainer handleClose={handleAddSimModalHide} />*/}
             </FormModalComponent>
         </>
     )
@@ -69,7 +68,7 @@ function CollectorSimsListComponent({agent}) {
 
 // Prop types to ensure destroyed props data type
 CollectorSimsListComponent.propTypes = {
-    agent: PropTypes.object.isRequired
+    collector: PropTypes.object.isRequired
 };
 
 export default React.memo(CollectorSimsListComponent);

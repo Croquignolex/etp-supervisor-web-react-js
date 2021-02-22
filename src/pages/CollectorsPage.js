@@ -12,10 +12,10 @@ import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import {storeAllZonesRequestReset} from "../redux/requests/zones/actions";
 import BlockModalComponent from "../components/modals/BlockModalComponent";
-import AgentDetailsContainer from "../containers/agents/AgentDetailsContainer";
 import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
 import CollectorNewContainer from "../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../components/collectors/CollectorsCardsComponent";
+import CollectorDetailsContainer from "../containers/collectors/CollectorDetailsContainer";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../redux/collectors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
 import {
@@ -174,7 +174,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                 <CollectorNewContainer type={newCollectorModal.type} handleClose={handleNewCollectorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
-                <AgentDetailsContainer id={collectorDetailsModal.id} />
+                <CollectorDetailsContainer id={collectorDetailsModal.id} />
             </FormModalComponent>
         </>
     )
