@@ -5,7 +5,7 @@ import CollectorZoneEditComponent from "../../components/collectors/CollectorZon
 // Map state function to component props
 const mapStateToProps = (state) => ({
     zones: state.zones.list,
-    collectors: state.collectors.current,
+    collector: state.collectors.current,
     allZonesRequests: state.zonesRequests.all,
     request: state.collectorsRequests.edit.zone,
 });
