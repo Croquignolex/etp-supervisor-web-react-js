@@ -10,6 +10,7 @@ export const MY_NETWORK_FLEET = 'Flottages';
 
 // Commons
 export const SIMS_PAGE = 'Puces';
+export const ZONES_PAGE = 'Zones';
 export const OPERATORS = 'Opérateurs';
 export const AGENTS = 'Agents/Resources';
 export const COLLECTORS = 'Responsables';

@@ -24,7 +24,7 @@ function SideBarComponent({user, pathname}) {
             // buildUsersMenu(),
             buildAgentsMenu(),
             buildCollectorsMenu(),
-            // buildZonesMenu(),
+            buildZonesMenu(),
             buildSimsMenu(),
             buildCompaniesMenu(),
             buildOperatorsMenu(),
@@ -197,6 +197,16 @@ function buildCollectorsMenu() {
 
 // Build corporates menu
 function buildCompaniesMenu() {
+    return {
+        name: page.ZONES_PAGE,
+        path: path.ZONES_PAGE_PATH,
+        icon: 'fa fa-map',
+        sub: []
+    };
+}
+
+// Build corporates menu
+function buildZonesMenu() {
     return {
         name: page.COMPANIES_PAGE,
         path: path.COMPANIES_PAGE_PATH,
