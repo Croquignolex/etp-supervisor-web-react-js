@@ -156,7 +156,8 @@ function searchEngine(data, _needle) {
         data = data.filter((item) => {
             return (
                 needleSearch(item.name, _needle) ||
-                needleSearch(item.sims, _needle) ||
+                needleSearch(item.reference, _needle) ||
+                needleSearch(item.collector.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )
         });
