@@ -45,7 +45,7 @@ function SimCardComponent({sim}) {
 
     // Render
     return (
-        <div>
+        <>
             <ul className="list-group list-group-unbordered">
                 <li className="list-group-item">
                     <b>Création</b>
@@ -125,7 +125,7 @@ function SimCardComponent({sim}) {
             <FormModalComponent modal={companyDetailsModal} handleClose={handleCompanyDetailsModalHide}>
                 <CompanyDetailsContainer id={companyDetailsModal.id} />
             </FormModalComponent>
-        </div>
+        </>
     )
 }
 

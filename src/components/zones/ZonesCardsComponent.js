@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
+import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
+import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
 
 // Component
 function ZonesCardsComponent({zones, handleZoneDetailsModalShow}) {
+    // Local states
+    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+
+    // Hide collector details modal form
+    const handleCollectorDetailsModalHide = () => {
+        setCollectorDetailsModal({...collectorDetailsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -41,7 +51,16 @@ function ZonesCardsComponent({zones, handleZoneDetailsModalShow}) {
                                         </li>
                                         <li className="list-group-item">
                                             <b>Responsable</b>
-                                            <span className="float-right">{item.collector.name}</span>
+                                            <span className="float-right">
+                                                {item.collector.name && (
+                                                    <>
+                                                        {item.collector.name}
+                                                        <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                           onClick={() => setCollectorDetailsModal({...collectorDetailsModal, show: true, id: item.collector.id})}
+                                                        />
+                                                    </>
+                                                )}
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
@@ -57,6 +76,10 @@ function ZonesCardsComponent({zones, handleZoneDetailsModalShow}) {
                     </div>
                 }
             </div>
+            {/* Modal */}
+            <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
+                <CollectorDetailsContainer id={collectorDetailsModal.id} />
+            </FormModalComponent>
         </>
     )
 }
