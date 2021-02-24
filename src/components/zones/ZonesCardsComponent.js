@@ -42,10 +42,6 @@ function ZonesCardsComponent({zones, handleZoneDetailsModalShow}) {
                                             <span className="float-right">{dateToString(item.creation)}</span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Nom</b>
-                                            <span className="float-right">{item.name}</span>
-                                        </li>
-                                        <li className="list-group-item">
                                             <b>Reference</b>
                                             <span className="float-right">{item.reference}</span>
                                         </li>

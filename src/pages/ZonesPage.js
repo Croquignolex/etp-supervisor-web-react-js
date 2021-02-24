@@ -15,6 +15,7 @@ import FormModalComponent from "../components/modals/FormModalComponent";
 import ZonesCardsComponent from "../components/zones/ZonesCardsComponent";
 import {emitNextZonesFetch, emitZonesFetch} from "../redux/zones/actions";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
+import ZoneDetailsContainer from "../containers/zones/ZoneDetailsContainer";
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import {storeNextZonesRequestReset, storeZonesRequestReset} from "../redux/requests/zones/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
