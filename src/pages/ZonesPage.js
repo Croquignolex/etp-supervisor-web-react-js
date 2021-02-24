@@ -133,7 +133,7 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
                 <ZoneNewContainer handleClose={handleNewZoneModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailsModalHide}>
-                {/*<ZoneDetailsContainer id={zoneDetailsModal.id} />*/}
+                <ZoneDetailsContainer id={zoneDetailsModal.id} />
             </FormModalComponent>
         </>
     )

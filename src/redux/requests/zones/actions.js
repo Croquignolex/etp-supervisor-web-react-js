@@ -29,11 +29,6 @@ export const STORE_EDIT_ZONE_REQUEST_RESET = 'STORE_EDIT_ZONE_REQUEST_RESET';
 export const STORE_EDIT_ZONE_REQUEST_FAILED = 'STORE_EDIT_ZONE_REQUEST_FAILED';
 export const STORE_EDIT_ZONE_REQUEST_SUCCEEDED = 'STORE_EDIT_ZONE_REQUEST_SUCCEEDED';
 
-export const STORE_ZONE_EDIT_COLLECTOR_REQUEST_INIT = 'STORE_ZONE_EDIT_COLLECTOR_REQUEST_INIT';
-export const STORE_ZONE_EDIT_COLLECTOR_REQUEST_RESET = 'STORE_ZONE_EDIT_COLLECTOR_REQUEST_RESET';
-export const STORE_ZONE_EDIT_COLLECTOR_REQUEST_FAILED = 'STORE_ZONE_EDIT_COLLECTOR_REQUEST_FAILED';
-export const STORE_ZONE_EDIT_COLLECTOR_REQUEST_SUCCEEDED = 'STORE_ZONE_EDIT_COLLECTOR_REQUEST_SUCCEEDED';
-
 export const STORE_ZONE_ADD_AGENT_REQUEST_INIT = 'STORE_ZONE_ADD_AGENT_REQUEST_INIT';
 export const STORE_ZONE_ADD_AGENT_REQUEST_RESET = 'STORE_ZONE_ADD_AGENT_REQUEST_RESET';
 export const STORE_ZONE_ADD_AGENT_REQUEST_FAILED = 'STORE_ZONE_ADD_AGENT_REQUEST_FAILED';
@@ -192,26 +187,4 @@ export const storeZoneAddAgentRequestSucceed = ({message}) => ({
 // Set zone add agent reset data into store
 export const storeZoneAddAgentRequestReset = () => ({
     type: STORE_ZONE_ADD_AGENT_REQUEST_RESET
-});
-// ======================================================== Zone edit collector
-// Set zone edit collector init data into store
-export const storeZoneEditCollectorRequestInit = () => ({
-    type: STORE_ZONE_EDIT_COLLECTOR_REQUEST_INIT
-});
-
-// Set zone edit collector failed data into store
-export const storeZoneEditCollectorRequestFailed = ({message}) => ({
-    message,
-    type: STORE_ZONE_EDIT_COLLECTOR_REQUEST_FAILED
-});
-
-// Set zone edit collector succeeded data into store
-export const storeZoneEditCollectorRequestSucceed = ({message}) => ({
-    message,
-    type: STORE_ZONE_EDIT_COLLECTOR_REQUEST_SUCCEEDED
-});
-
-// Set zone edit collector reset data into store
-export const storeZoneEditCollectorRequestReset = () => ({
-    type: STORE_ZONE_EDIT_COLLECTOR_REQUEST_RESET
 });

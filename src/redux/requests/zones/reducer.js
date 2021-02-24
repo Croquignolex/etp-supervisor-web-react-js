@@ -10,8 +10,7 @@ const initialState = {
     show: {failed: false, loading: false, succeeded: false, message: ""},
     edit: {
         info: {failed: false, loading: false, succeeded: false, message: ""},
-        agent: {failed: false, loading: false, succeeded: false, message: ""},
-        collector: {failed: false, loading: false, succeeded: false, message: ""},
+        agent: {failed: false, loading: false, succeeded: false, message: ""}
     }
 };
 
@@ -137,23 +136,6 @@ function reduce(state = initialState, action) {
         // Resolve event to set zone add agent reset request store data
         case actions.STORE_ZONE_ADD_AGENT_REQUEST_RESET:
             nextState = {...state, edit: {...state.edit, agent: initialState.edit.agent}};
-            return nextState || state;
-        // ======================================================== Zone edit collector
-        // Resolve event to set zone edit collector init request store data
-        case actions.STORE_ZONE_EDIT_COLLECTOR_REQUEST_INIT:
-            nextState = {...state, edit: {...state.edit, collector: requestInitValue()}};
-            return nextState || state;
-        // Resolve event to set zone edit collector failed request store data
-        case actions.STORE_ZONE_EDIT_COLLECTOR_REQUEST_FAILED:
-            nextState = {...state, edit: {...state.edit, collector: requestFailedValue(action.message)}};
-            return nextState || state;
-        // Resolve event to set zone edit collector succeeded request store data
-        case actions.STORE_ZONE_EDIT_COLLECTOR_REQUEST_SUCCEEDED:
-            nextState = {...state, edit: {...state.edit, collector: requestSucceededValue(action.message)}};
-            return nextState || state;
-        // Resolve event to set zone edit collector reset request store data
-        case actions.STORE_ZONE_EDIT_COLLECTOR_REQUEST_RESET:
-            nextState = {...state, edit: {...state.edit, collector: initialState.edit.collector}};
             return nextState || state;
         // ========================================================
         // Unknown action

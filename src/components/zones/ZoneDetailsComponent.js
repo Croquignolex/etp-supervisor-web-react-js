@@ -2,19 +2,18 @@ import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
+import ZoneInfoComponent from "./ZoneInfoComponent";
+import {emitZoneFetch} from "../../redux/zones/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import OperatorInfoComponent from "./ZoneInfoComponent";
-import {emitOperatorFetch} from "../../redux/operators/actions";
-import OperatorSimsListComponent from "./ZoneAgentsListComponent";
+import {storeShowZoneRequestReset} from "../../redux/requests/zones/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeShowOperatorRequestReset} from "../../redux/requests/operators/actions";
 
 // Component
-function ZoneDetailsComponent({id, operator, dispatch, request}) {
+function ZoneDetailsComponent({id, zone, dispatch, request}) {
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorFetch({id}));
+        dispatch(emitZoneFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -24,7 +23,7 @@ function ZoneDetailsComponent({id, operator, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeShowOperatorRequestReset());
+        dispatch(storeShowZoneRequestReset());
     };
 
     // Render
@@ -34,10 +33,10 @@ function ZoneDetailsComponent({id, operator, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <OperatorInfoComponent operator={operator} />
+                            <ZoneInfoComponent zone={zone} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            <OperatorSimsListComponent operator={operator} />
+                            {/*<ZoneAgentsListComponent zone={zone} />*/}
                         </div>
                     </div>
                 )
@@ -51,7 +50,7 @@ ZoneDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
+    zone: PropTypes.object.isRequired,
 };
 
 export default React.memo(ZoneDetailsComponent);

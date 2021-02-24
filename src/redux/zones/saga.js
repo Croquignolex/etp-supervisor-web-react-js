@@ -4,6 +4,8 @@ import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_ZONE,
+    EMIT_ZONE_FETCH,
+    storeSetZoneData,
     EMIT_ZONES_FETCH,
     storeSetZonesData,
     storeSetNewZoneData,
@@ -17,15 +19,19 @@ import {
     storeZonesRequestFailed,
     storeAddZoneRequestInit,
     storeAllZonesRequestInit,
+    storeShowZoneRequestInit,
     storeZonesRequestSucceed,
     storeNextZonesRequestInit,
     storeAddZoneRequestFailed,
     storeAddZoneRequestSucceed,
     storeAllZonesRequestFailed,
+    storeShowZoneRequestFailed,
+    storeShowZoneRequestSucceed,
     storeNextZonesRequestFailed,
     storeAllZonesRequestSucceed,
     storeNextZonesRequestSucceed
 } from "../requests/zones/actions";
+
 
 // Fetch all zones from API
 export function* emitAllZonesFetch() {
@@ -115,6 +121,30 @@ export function* emitNewZone() {
     });
 }
 
+// Fetch zone from API
+export function* emitZoneFetch() {
+    yield takeLatest(EMIT_ZONE_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeShowZoneRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ZONES_DETAILS_API_PATH}/${id}`);
+            // Extract data
+            const zone = extractZoneData(
+                apiResponse.data.zone,
+                apiResponse.data.agents,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetZoneData({zone}));
+            // Fire event for request
+            yield put(storeShowZoneRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeShowZoneRequestFailed({message}));
+        }
+    });
+}
+
 // Extract zone data
 function extractZoneData(apiZone, apiAgents, apiCollector) {
     let zone = {
@@ -175,6 +205,7 @@ function extractZonesData(apiZones) {
 export default function* sagaZones() {
     yield all([
         fork(emitNewZone),
+        fork(emitZoneFetch),
         fork(emitZonesFetch),
         fork(emitAllZonesFetch),
         fork(emitNextZonesFetch),

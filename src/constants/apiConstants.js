@@ -73,6 +73,7 @@ export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
 // Zones
 export const ZONES_API_PATH = `${API_URL}/zone_list`;
 export const CREATE_ZONE_API_PATH = `${API_URL}/store_zone`;
+export const ZONES_DETAILS_API_PATH = `${API_URL}/show_zone`;
 
 // Companies
 export const COMPANY_API_PATH = `${API_URL}/show_corporate`;

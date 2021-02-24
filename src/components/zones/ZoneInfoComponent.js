@@ -6,9 +6,9 @@ import {dateToString} from "../../functions/generalFunctions";
 import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
 
 // Component
-function ZoneInfoComponent({operator}) {
+function ZoneInfoComponent({zone}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + operator.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + zone.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -23,22 +23,30 @@ function ZoneInfoComponent({operator}) {
     // Render
     return (
         <>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleInfoEditModalShow}>
+            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
             <div className="card">
                 <div className="card-header bg-secondary">
-                    <h3 className="card-title">{operator.name}</h3>
+                    <h3 className="card-title">{zone.name}</h3>
                 </div>
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(operator.creation)}</span>
+                            <span className="float-right">{dateToString(zone.creation)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Reference</b>
+                            <span className="float-right">{zone.reference}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Responsable</b>
+                            <span className="float-right">{zone.collector.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>
-                            <p>{operator.description}</p>
+                            <p>{zone.description}</p>
                         </li>
                     </ul>
                 </div>
@@ -53,7 +61,7 @@ function ZoneInfoComponent({operator}) {
 
 // Prop types to ensure destroyed props data type
 ZoneInfoComponent.propTypes = {
-    operator: PropTypes.object.isRequired
+    zone: PropTypes.object.isRequired
 };
 
 export default React.memo(ZoneInfoComponent);
