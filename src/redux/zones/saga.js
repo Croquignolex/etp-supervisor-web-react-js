@@ -2,11 +2,24 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest} from "../../functions/axiosFunctions";
-import {EMIT_ALL_ZONES_FETCH, storeSetZonesData} from "./actions";
 import {
+    EMIT_ZONES_FETCH,
+    storeSetZonesData,
+    EMIT_ALL_ZONES_FETCH,
+    storeSetNextZonesData,
+    EMIT_NEXT_ZONES_FETCH,
+    storeStopInfiniteScrollZoneData
+} from "./actions";
+import {
+    storeZonesRequestInit,
+    storeZonesRequestFailed,
     storeAllZonesRequestInit,
+    storeZonesRequestSucceed,
+    storeNextZonesRequestInit,
     storeAllZonesRequestFailed,
-    storeAllZonesRequestSucceed
+    storeNextZonesRequestFailed,
+    storeAllZonesRequestSucceed,
+    storeNextZonesRequestSucceed
 } from "../requests/zones/actions";
 
 // Fetch all zones from API
@@ -25,6 +38,47 @@ export function* emitAllZonesFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeAllZonesRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch operators from API
+export function* emitZonesFetch() {
+    yield takeLatest(EMIT_ZONES_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeZonesRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ZONES_API_PATH}?page=1`);
+            // Extract data
+            const zones = extractZonesData(apiResponse.data.zones);
+            // Fire event to redux
+            yield put(storeSetZonesData({zones, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeZonesRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeZonesRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch next operators from API
+export function* emitNextZonesFetch() {
+    yield takeLatest(EMIT_NEXT_ZONES_FETCH, function*({page}) {
+        try {
+            // Fire event for request
+            yield put(storeNextZonesRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ZONES_API_PATH}?page=${page}`);
+            // Extract data
+            const zones = extractZonesData(apiResponse.data.zones);
+            // Fire event to redux
+            yield put(storeSetNextZonesData({zones, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
+            // Fire event for request
+            yield put(storeNextZonesRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeNextZonesRequestFailed({message}));
+            yield put(storeStopInfiniteScrollZoneData());
         }
     });
 }
@@ -88,6 +142,8 @@ function extractZonesData(apiZones) {
 // Combine to export all functions at once
 export default function* sagaZones() {
     yield all([
+        fork(emitZonesFetch),
         fork(emitAllZonesFetch),
+        fork(emitNextZonesFetch),
     ]);
 }
