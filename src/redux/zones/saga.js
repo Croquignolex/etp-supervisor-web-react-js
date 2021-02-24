@@ -1,10 +1,12 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_ZONE,
     EMIT_ZONES_FETCH,
     storeSetZonesData,
+    storeSetNewZoneData,
     EMIT_ALL_ZONES_FETCH,
     storeSetNextZonesData,
     EMIT_NEXT_ZONES_FETCH,
@@ -13,9 +15,12 @@ import {
 import {
     storeZonesRequestInit,
     storeZonesRequestFailed,
+    storeAddZoneRequestInit,
     storeAllZonesRequestInit,
     storeZonesRequestSucceed,
     storeNextZonesRequestInit,
+    storeAddZoneRequestFailed,
+    storeAddZoneRequestSucceed,
     storeAllZonesRequestFailed,
     storeNextZonesRequestFailed,
     storeAllZonesRequestSucceed,
@@ -42,7 +47,7 @@ export function* emitAllZonesFetch() {
     });
 }
 
-// Fetch operators from API
+// Fetch zones from API
 export function* emitZonesFetch() {
     yield takeLatest(EMIT_ZONES_FETCH, function*() {
         try {
@@ -62,7 +67,7 @@ export function* emitZonesFetch() {
     });
 }
 
-// Fetch next operators from API
+// Fetch next zones from API
 export function* emitNextZonesFetch() {
     yield takeLatest(EMIT_NEXT_ZONES_FETCH, function*({page}) {
         try {
@@ -79,6 +84,33 @@ export function* emitNextZonesFetch() {
             // Fire event for request
             yield put(storeNextZonesRequestFailed({message}));
             yield put(storeStopInfiniteScrollZoneData());
+        }
+    });
+}
+
+// New zone into API
+export function* emitNewZone() {
+    yield takeLatest(EMIT_NEW_ZONE, function*({name, reference, description}) {
+        try {
+            // Fire event for request
+            yield put(storeAddZoneRequestInit());
+            // From data
+            const data = {name, reference, description}
+            // API request
+            const apiResponse = yield call(apiPostRequest, api.CREATE_ZONE_API_PATH, data);
+            // Extract data
+            const zone = extractZoneData(
+                apiResponse.data.zone,
+                apiResponse.data.agents,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetNewZoneData({zone}));
+            // Fire event for request
+            yield put(storeAddZoneRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddZoneRequestFailed({message}));
         }
     });
 }
@@ -142,6 +174,7 @@ function extractZonesData(apiZones) {
 // Combine to export all functions at once
 export default function* sagaZones() {
     yield all([
+        fork(emitNewZone),
         fork(emitZonesFetch),
         fork(emitAllZonesFetch),
         fork(emitNextZonesFetch),

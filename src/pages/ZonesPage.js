@@ -8,6 +8,7 @@ import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import {emitAllCollectorsFetch} from "../redux/collectors/actions";
+import ZoneNewContainer from "../containers/zones/ZoneNewContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
@@ -129,7 +130,7 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={newZoneModal} handleClose={handleNewZoneModalHide}>
-                {/*<ZoneNewContainer handleClose={handleNewZoneModalHide} />*/}
+                <ZoneNewContainer handleClose={handleNewZoneModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailsModalHide}>
                 {/*<ZoneDetailsContainer id={zoneDetailsModal.id} />*/}

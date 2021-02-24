@@ -73,16 +73,18 @@ export const emitZoneFetch = ({id}) => ({
 });
 
 // Emit new zone
-export const emitNewZone = ({name, description}) => ({
+export const emitNewZone = ({name, reference, description}) => ({
     name,
+    reference,
     description,
     type: EMIT_NEW_ZONE
 });
 
 // Emit update zone
-export const emitUpdateZone = ({id, name, description}) => ({
+export const emitUpdateZone = ({id, name, reference, description}) => ({
     id,
     name,
+    reference,
     description,
     type: EMIT_UPDATE_ZONE
 });

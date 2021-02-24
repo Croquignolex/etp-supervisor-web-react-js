@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 
-import OperatorNewComponent from "../../components/operators/OperatorNewComponent";
+import ZoneNewComponent from "../../components/zones/ZoneNewComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    request: state.operatorsRequests.add
+    request: state.zonesRequests.add
 });
 
 // Map dispatch function to component props
@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(OperatorNewComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ZoneNewComponent);

@@ -3,19 +3,20 @@ import React, {useEffect, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
+import {emitNewZone} from "../../redux/zones/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitNewOperator} from "../../redux/operators/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeAddOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeAddZoneRequestReset} from "../../redux/requests/zones/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function ZoneNewComponent({request, dispatch, handleClose}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
+    const [reference, setReference] = useState(DEFAULT_FORM_DATA);
     const [description, setDescription] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
@@ -42,6 +43,11 @@ function ZoneNewComponent({request, dispatch, handleClose}) {
         setName({...name, isValid: true, data})
     }
 
+    const handleReferenceInput = (data) => {
+        shouldResetErrorData();
+        setReference({...reference, isValid: true, data})
+    }
+
     const handleDescriptionInput = (data) => {
         shouldResetErrorData();
         setDescription({...description, isValid: true, data})
@@ -49,7 +55,7 @@ function ZoneNewComponent({request, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddOperatorRequestReset());
+        dispatch(storeAddZoneRequestReset());
     };
 
     // Trigger new agent form submit
@@ -62,8 +68,9 @@ function ZoneNewComponent({request, dispatch, handleClose}) {
         const validationOK = (_name.isValid);
         // Check
         if(validationOK)
-            dispatch(emitNewOperator({
+            dispatch(emitNewZone({
                 name: _name.data,
+                reference: reference.data,
                 description: description.data
             }));
         else playWarningSound();
@@ -85,6 +92,16 @@ function ZoneNewComponent({request, dispatch, handleClose}) {
                                                 handleInput={handleNameInput}
                                 />
                             </div>
+                            <div className='col-sm-6'>
+                                <InputComponent type='text'
+                                                label='Reference'
+                                                input={reference}
+                                                id='inputReference'
+                                                handleInput={handleReferenceInput}
+                                />
+                            </div>
+                        </div>
+                        <div className='row'>
                             <div className='col-sm-6'>
                                 <TextareaComponent label='Description'
                                                    input={description}
