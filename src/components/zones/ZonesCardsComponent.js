@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import {dateToString} from "../../functions/generalFunctions";
 
 // Component
-function ZonesCardsComponent({operators, handleOperatorDetailsModalShow}) {
+function ZonesCardsComponent({zones, handleZoneDetailsModalShow}) {
     // Render
     return (
         <>
             <div className="row m-1">
-                {operators.map((item, key) => {
+                {zones.map((item, key) => {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
@@ -19,7 +19,7 @@ function ZonesCardsComponent({operators, handleOperatorDetailsModalShow}) {
                                         <button type="button"
                                                 title="Détails"
                                                 className=" btn-tool btn"
-                                                onClick={() => handleOperatorDetailsModalShow(item)}
+                                                onClick={() => handleZoneDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" />
                                         </button>
@@ -31,16 +31,28 @@ function ZonesCardsComponent({operators, handleOperatorDetailsModalShow}) {
                                             <b>Création</b>
                                             <span className="float-right">{dateToString(item.creation)}</span>
                                         </li>
+                                        <li className="list-group-item">
+                                            <b>Nom</b>
+                                            <span className="float-right">{item.name}</span>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <b>Reference</b>
+                                            <span className="float-right">{item.reference}</span>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <b>Responsable</b>
+                                            <span className="float-right">{item.collector.name}</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     )
                 })}
-                {operators.length === 0 &&
+                {zones.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas d'opérateur
+                            Pas de zone
                         </div>
                     </div>
                 }
@@ -51,8 +63,8 @@ function ZonesCardsComponent({operators, handleOperatorDetailsModalShow}) {
 
 // Prop types to ensure destroyed props data type
 ZonesCardsComponent.propTypes = {
-    operators: PropTypes.array.isRequired,
-    handleOperatorDetailsModalShow: PropTypes.func.isRequired
+    zones: PropTypes.array.isRequired,
+    handleZoneDetailsModalShow: PropTypes.func.isRequired
 };
 
 export default React.memo(ZonesCardsComponent);

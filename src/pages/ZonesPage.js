@@ -2,41 +2,33 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {OPERATORS} from "../constants/pageNameConstants";
+import {ZONES_PAGE} from "../constants/pageNameConstants";
 import {emitAllAgentsFetch} from "../redux/agents/actions";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
-import {emitAllCompaniesFetch} from "../redux/companies/actions";
-import {emitAllSimsTypesFetch} from "../redux/simsTypes/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import {emitAllCollectorsFetch} from "../redux/collectors/actions";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import ZonesCardsComponent from "../components/zones/ZonesCardsComponent";
+import {emitNextZonesFetch, emitZonesFetch} from "../redux/zones/actions";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
-import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
-import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
-import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
-import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
-import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
-import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
+import {storeNextZonesRequestReset, storeZonesRequestReset} from "../redux/requests/zones/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
-import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
 
 // Component
 function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [newOperatorModal, setNewOperatorModal] = useState({show: false, header: ''});
-    const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEEUR", id: ''});
+    const [newZoneModal, setNewZoneModal] = useState({show: false, header: ''});
+    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: "DETAIL DE LA ZONE", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorsFetch());
+        dispatch(emitZonesFetch());
         dispatch(emitAllAgentsFetch());
-        dispatch(emitAllCompaniesFetch());
-        dispatch(emitAllSimsTypesFetch());
         dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
@@ -51,37 +43,35 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeOperatorsRequestReset());
+        dispatch(storeZonesRequestReset());
         dispatch(storeAllAgentsRequestReset());
-        dispatch(storeAllCompaniesRequestReset());
-        dispatch(storeAllSimsTypesRequestReset());
+        dispatch(storeNextZonesRequestReset());
         dispatch(storeAllCollectorsRequestReset());
-        dispatch(storeNextOperatorsRequestReset());
     };
 
-    // Fetch next operators data to enhance infinite scroll
-    const handleNextOperatorsData = () => {
-        dispatch(emitNextOperatorsFetch({page}));
+    // Fetch next zones data to enhance infinite scroll
+    const handleNextZonesData = () => {
+        dispatch(emitNextZonesFetch({page}));
     }
 
-    // Show new operator modal form
-    const handleNewOperatorModalShow = () => {
-        setNewOperatorModal({newOperatorModal, header: "NOUVEL OPERATEUR", show: true})
+    // Show new zone modal form
+    const handleNewZoneModalShow = () => {
+        setNewZoneModal({newZoneModal, header: "NOUVELLE ZONE", show: true})
     }
 
-    // Hide new operator modal form
-    const handleNewOperatorModalHide = () => {
-        setNewOperatorModal({...newOperatorModal, show: false})
+    // Hide new zone modal form
+    const handleNewZoneModalHide = () => {
+        setNewZoneModal({...newZoneModal, show: false})
     }
 
-    // Show operator details modal form
-    const handleOperatorDetailsModalShow = ({id}) => {
-        setOperatorDetailsModal({...operatorDetailsModal, show: true, id})
+    // Show zone details modal form
+    const handleZoneDetailsModalShow = ({id}) => {
+        setZoneDetailsModal({...zoneDetailsModal, show: true, id})
     }
 
-    // Hide operator details modal form
-    const handleOperatorDetailsModalHide = () => {
-        setOperatorDetailsModal({...operatorDetailsModal, show: false})
+    // Hide zone details modal form
+    const handleZoneDetailsModalHide = () => {
+        setZoneDetailsModal({...zoneDetailsModal, show: false})
     }
 
     // Render
@@ -89,7 +79,7 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={OPERATORS} icon={'fa fa-globe'} />
+                    <HeaderComponent title={ZONES_PAGE} icon={'fa fa-map'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -103,28 +93,28 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(operatorsRequests.list) && <ErrorAlertComponent message={operatorsRequests.list.message} />}
-                                            {requestFailed(operatorsRequests.next) && <ErrorAlertComponent message={operatorsRequests.next.message} />}
+                                            {requestFailed(zonesRequests.list) && <ErrorAlertComponent message={zonesRequests.list.message} />}
+                                            {requestFailed(zonesRequests.next) && <ErrorAlertComponent message={zonesRequests.next.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mr-2 mb-2"
-                                                    onClick={handleNewOperatorModalShow}
+                                                    onClick={handleNewZoneModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouvel opérateur
+                                                <i className="fa fa-plus" /> Nouvelle zone
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <OperatorsCardsComponent operators={searchEngine(operators, needle)}
-                                                                           handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
+                                                ? <ZonesCardsComponent zones={searchEngine(zones, needle)}
+                                                                       handleZoneDetailsModalShow={handleZoneDetailsModalShow}
                                                 />
-                                                : (requestLoading(operatorsRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(zonesRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
+                                                                        dataLength={zones.length}
+                                                                        next={handleNextZonesData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={operators.length}
-                                                                        next={handleNextOperatorsData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <OperatorsCardsComponent operators={operators}
-                                                                                     handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
+                                                            <ZonesCardsComponent zones={zones}
+                                                                                 handleZoneDetailsModalShow={handleZoneDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -138,11 +128,11 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
-            <FormModalComponent modal={newOperatorModal} handleClose={handleNewOperatorModalHide}>
-                <OperatorNewContainer handleClose={handleNewOperatorModalHide} />
+            <FormModalComponent modal={newZoneModal} handleClose={handleNewZoneModalHide}>
+                {/*<ZoneNewContainer handleClose={handleNewZoneModalHide} />*/}
             </FormModalComponent>
-            <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
-                <OperatorDetailsContainer id={operatorDetailsModal.id} />
+            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailsModalHide}>
+                {/*<ZoneDetailsContainer id={zoneDetailsModal.id} />*/}
             </FormModalComponent>
         </>
     )
