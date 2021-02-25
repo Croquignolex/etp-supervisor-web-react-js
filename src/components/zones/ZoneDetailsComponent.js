@@ -5,6 +5,7 @@ import LoaderComponent from "../LoaderComponent";
 import ZoneInfoComponent from "./ZoneInfoComponent";
 import {emitZoneFetch} from "../../redux/zones/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import ZoneAgentsListComponent from "./ZoneAgentsListComponent";
 import {storeShowZoneRequestReset} from "../../redux/requests/zones/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -36,7 +37,7 @@ function ZoneDetailsComponent({id, zone, dispatch, request}) {
                             <ZoneInfoComponent zone={zone} />
                         </div>
                         <div className="col-lg-12 col-md-12">
-                            {/*<ZoneAgentsListComponent zone={zone} />*/}
+                            <ZoneAgentsListComponent zone={zone} />
                         </div>
                     </div>
                 )
@@ -48,9 +49,9 @@ function ZoneDetailsComponent({id, zone, dispatch, request}) {
 // Prop types to ensure destroyed props data type
 ZoneDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
+    zone: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    zone: PropTypes.object.isRequired,
 };
 
 export default React.memo(ZoneDetailsComponent);

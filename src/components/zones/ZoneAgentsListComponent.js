@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
-import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
-import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimContainer";
 
 // Component
-function ZoneAgentsListComponent({operator}) {
+function ZoneAgentsListComponent({zone}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UN AGENT A ' + zone.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
@@ -32,25 +30,25 @@ function ZoneAgentsListComponent({operator}) {
                         <thead>
                             <tr>
                                 <th>NOM</th>
-                                <th>NUMERO</th>
-                                <th>SOLDE</th>
+                                <th>TYPE</th>
+                                <th>TELEPHONE</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {operator.sims.map((item, key) => {
+                            {zone.agents.map((item, key) => {
                                 return (
                                     <tr key={key}>
                                         <td>{item.name}</td>
-                                        <td>{item.number}</td>
-                                        <td className='text-right'>{formatNumber(item.balance)}</td>
+                                        <td>{item.reference}</td>
+                                        <td>{item.phone}</td>
                                     </tr>
                                 )
                             })}
-                            {operator.sims.length === 0 && (
+                            {zone.agents.length === 0 && (
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
-                                            Pas de puces
+                                            Pas d'agents
                                         </div>
                                     </td>
                                 </tr>
@@ -61,7 +59,7 @@ function ZoneAgentsListComponent({operator}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                <OperatorAddSimContainer handleClose={handleAddSimModalHide} />
+                {/*<ZoneAddSimContainer handleClose={handleAddSimModalHide} />*/}
             </FormModalComponent>
         </>
     )
@@ -69,7 +67,7 @@ function ZoneAgentsListComponent({operator}) {
 
 // Prop types to ensure destroyed props data type
 ZoneAgentsListComponent.propTypes = {
-    operator: PropTypes.object.isRequired
+    zone: PropTypes.object.isRequired
 };
 
 export default React.memo(ZoneAgentsListComponent);
