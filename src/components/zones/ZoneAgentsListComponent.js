@@ -1,28 +1,35 @@
 import PropTypes from "prop-types";
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
+import * as types from "../../constants/typeConstants";
 import FormModalComponent from "../modals/FormModalComponent";
+import ZoneAddAgentContainer from "../../containers/zones/ZoneAddAgentContainer";
 
 // Component
 function ZoneAgentsListComponent({zone}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UN AGENT A ' + zone.name});
+    const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: 'AJOUTER UN AGENT A ' + zone.name});
 
     // Show add sim modal form
-    const handleAddSimModalShow = () => {
-        setAddSimEditModal({...addSimModal, show: true})
+    const handleAddAgentModalShow = () => {
+        setAddAgentEditModal({...addAgentModal, show: true})
     }
 
     // Hide add sim modal form
-    const handleAddSimModalHide = () => {
-        setAddSimEditModal({...addSimModal, show: false})
+    const handleAddAgentModalHide = () => {
+        setAddAgentEditModal({...addAgentModal, show: false})
     }
+
+    const agentsData = useMemo(() => {
+        return zone.agents.filter(agent => types.AGENT_TYPE === agent.reference)
+        // eslint-disable-next-line
+    }, [zone]);
 
     // Render
     return (
         <>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleAddSimModalShow}>
-                <i className="fa fa-plus" /> Ajouter une sim
+            <button type="button" className="btn btn-theme mb-1" onClick={handleAddAgentModalShow}>
+                <i className="fa fa-plus" /> Ajouter un agent
             </button>
             <div className="card">
                 <div className="table-responsive">
@@ -35,7 +42,7 @@ function ZoneAgentsListComponent({zone}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {zone.agents.map((item, key) => {
+                            {agentsData.map((item, key) => {
                                 return (
                                     <tr key={key}>
                                         <td>{item.name}</td>
@@ -44,7 +51,7 @@ function ZoneAgentsListComponent({zone}) {
                                     </tr>
                                 )
                             })}
-                            {zone.agents.length === 0 && (
+                            {agentsData.length === 0 && (
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
@@ -58,8 +65,8 @@ function ZoneAgentsListComponent({zone}) {
                 </div>
             </div>
             {/* Modal */}
-            <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                {/*<ZoneAddSimContainer handleClose={handleAddSimModalHide} />*/}
+            <FormModalComponent modal={addAgentModal} handleClose={handleAddAgentModalHide}>
+                <ZoneAddAgentContainer handleClose={handleAddAgentModalHide} />
             </FormModalComponent>
         </>
     )

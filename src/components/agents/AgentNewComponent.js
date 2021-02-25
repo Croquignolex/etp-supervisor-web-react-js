@@ -147,7 +147,7 @@ function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, ha
 
     // Render
     return (
-        <div>
+        <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             {requestFailed(allZonesRequests) && <ErrorAlertComponent message={allZonesRequests.message} />}
             <div className="row">
@@ -236,7 +236,7 @@ function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, ha
                     </form>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

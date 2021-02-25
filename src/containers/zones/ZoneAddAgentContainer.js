@@ -1,19 +1,11 @@
 import {connect} from "react-redux";
 
-import OperatorAddSimComponent from "../../components/operators/OperatorAddSimComponent";
+import ZoneAddAgentComponent from "../../components/zones/ZoneAddAgentComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    agents: state.agents.list,
-    companies: state.companies.list,
-    simsTypes: state.simsTypes.list,
-    collectors: state.collectors.list,
-    operator: state.operators.current,
-    request: state.operatorsRequests.sim,
-    allAgentsRequests: state.agentsRequests.all,
-    allSimsTypesRequests: state.simsTypesRequests.all,
-    allCompaniesRequests: state.companiesRequests.all,
-    allCollectorsRequests: state.collectorsRequests.all,
+    zone: state.zones.current,
+    request: state.zonesRequests.edit.agent,
 });
 
 // Map dispatch function to component props
@@ -22,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(OperatorAddSimComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ZoneAddAgentComponent);
