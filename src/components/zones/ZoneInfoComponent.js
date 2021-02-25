@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
-import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
+import ZoneInfoEditContainer from "../../containers/zones/ZoneInfoEditContainer";
 
 // Component
 function ZoneInfoComponent({zone}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + zone.name});
+    const [infoEditModal, setInfoEditModal]  = useState({show: false, header: 'MODIFIER LES INFO DE ' + zone.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -53,7 +53,7 @@ function ZoneInfoComponent({zone}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <OperatorInfoEditContainer handleClose={handleInfoEditModalHide} />
+                <ZoneInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
     )

@@ -5,6 +5,7 @@ import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_ZONE,
     EMIT_ZONE_FETCH,
+    EMIT_UPDATE_ZONE,
     storeSetZoneData,
     EMIT_ZONES_FETCH,
     storeSetZonesData,
@@ -26,12 +27,13 @@ import {
     storeAddZoneRequestSucceed,
     storeAllZonesRequestFailed,
     storeShowZoneRequestFailed,
+    storeEditZoneRequestFailed,
     storeShowZoneRequestSucceed,
     storeNextZonesRequestFailed,
     storeAllZonesRequestSucceed,
+    storeEditZoneRequestSucceed,
     storeNextZonesRequestSucceed
 } from "../requests/zones/actions";
-
 
 // Fetch all zones from API
 export function* emitAllZonesFetch() {
@@ -141,6 +143,31 @@ export function* emitZoneFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeShowZoneRequestFailed({message}));
+        }
+    });
+}
+
+// Update zone info
+export function* emitUpdateZone() {
+    yield takeLatest(EMIT_UPDATE_ZONE, function*({id, name, reference, description}) {
+        try {
+            // Fire event for request
+            yield put(storeEditZoneRequestInit());
+            const data = {name, reference,  description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_ZONE_API_PATH}/${id}`, data);
+            // Extract data
+            const zone = extractZoneData(
+                apiResponse.data.zone,
+                apiResponse.data.agents,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetZoneData({zone, alsoInList: true}));
+            // Fire event for request
+            yield put(storeEditZoneRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeEditZoneRequestFailed({message}));
         }
     });
 }

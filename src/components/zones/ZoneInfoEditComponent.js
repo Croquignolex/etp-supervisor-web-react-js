@@ -6,17 +6,18 @@ import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
-import {emitUpdateOperator} from "../../redux/operators/actions";
+import {emitUpdateZone} from "../../redux/zones/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeEditZoneRequestReset} from "../../redux/requests/zones/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ZoneInfoEditComponent({request, operator, dispatch, handleClose}) {
+function ZoneInfoEditComponent({request, zone, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: operator.name});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: operator.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: zone.name});
+    const [reference, setReference] = useState({...DEFAULT_FORM_DATA, data: zone.reference});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: zone.description});
 
     // Local effects
     useEffect(() => {
@@ -39,12 +40,17 @@ function ZoneInfoEditComponent({request, operator, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeEditOperatorRequestReset());
+        dispatch(storeEditZoneRequestReset());
     };
 
     const handleNameInput = (data) => {
         shouldResetErrorData();
         setName({...name, isValid: true, data})
+    }
+
+    const handleReferenceInput = (data) => {
+        shouldResetErrorData();
+        setReference({...reference, isValid: true, data})
     }
 
     const handleDescriptionInput = (data) => {
@@ -62,9 +68,10 @@ function ZoneInfoEditComponent({request, operator, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateOperator({
-                id: operator.id,
+            dispatch(emitUpdateZone({
+                id: zone.id,
                 name: _name.data,
+                reference: reference.data,
                 description: description.data
             }));
         }
@@ -75,28 +82,42 @@ function ZoneInfoEditComponent({request, operator, dispatch, handleClose}) {
     return (
         <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
-            <form onSubmit={handleSubmit}>
-                <div className='row'>
-                    <div className='col-sm-6'>
-                        <InputComponent label='Nom'
-                                        type='text'
-                                        input={name}
-                                        id='inputName'
-                                        handleInput={handleNameInput}
-                        />
-                    </div>
-                    <div className='col-sm-6'>
-                        <TextareaComponent label='Description'
-                                           input={description}
-                                           id='inputDescription'
-                                           handleInput={handleDescriptionInput}
-                        />
-                    </div>
+            <div className="row">
+                <div className="col">
+                    <form onSubmit={handleSubmit}>
+                        <div className='row'>
+                            <div className='col-sm-6'>
+                                <InputComponent label='Nom'
+                                                type='text'
+                                                input={name}
+                                                id='inputName'
+                                                handleInput={handleNameInput}
+                                />
+                            </div>
+                            <div className='col-sm-6'>
+                                <InputComponent type='text'
+                                                label='Reference'
+                                                input={reference}
+                                                id='inputReference'
+                                                handleInput={handleReferenceInput}
+                                />
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-sm-6'>
+                                <TextareaComponent label='Description'
+                                                   input={description}
+                                                   id='inputDescription'
+                                                   handleInput={handleDescriptionInput}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <ButtonComponent processing={requestLoading(request)} />
+                        </div>
+                    </form>
                 </div>
-                <div className="form-group row">
-                    <ButtonComponent processing={requestLoading(request)} />
-                </div>
-            </form>
+            </div>
         </>
     )
 }
@@ -105,7 +126,7 @@ function ZoneInfoEditComponent({request, operator, dispatch, handleClose}) {
 ZoneInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
+    zone: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 
