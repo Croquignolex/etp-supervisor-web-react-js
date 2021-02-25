@@ -20,6 +20,7 @@ import {
     storeZonesRequestFailed,
     storeAddZoneRequestInit,
     storeAllZonesRequestInit,
+    storeEditZoneRequestInit,
     storeShowZoneRequestInit,
     storeZonesRequestSucceed,
     storeNextZonesRequestInit,
@@ -233,6 +234,7 @@ export default function* sagaZones() {
     yield all([
         fork(emitNewZone),
         fork(emitZoneFetch),
+        fork(emitUpdateZone),
         fork(emitZonesFetch),
         fork(emitAllZonesFetch),
         fork(emitNextZonesFetch),

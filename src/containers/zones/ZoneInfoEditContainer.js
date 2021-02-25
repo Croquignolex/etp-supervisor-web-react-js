@@ -5,7 +5,7 @@ import ZoneInfoEditComponent from "../../components/zones/ZoneInfoEditComponent"
 // Map state function to component props
 const mapStateToProps = (state) => ({
     zone: state.zones.current,
-    request: state.zonesRequests.edit,
+    request: state.zonesRequests.edit.info,
 });
 
 // Map dispatch function to component props
