@@ -11,7 +11,7 @@ import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function SimDetailsComponent({id, sim, dispatch, request}) {
-console.log({request})
+
     // Local effects
     useEffect(() => {
         dispatch(emitSimFetch({id}));
