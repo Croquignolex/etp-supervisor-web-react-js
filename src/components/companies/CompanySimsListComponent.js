@@ -3,12 +3,14 @@ import React, {useState} from 'react';
 
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
+import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import CompanyAddSimContainer from "../../containers/companies/CompanyAddSimContainer";
 
 // Component
 function CompanySimsListComponent({company}) {
     // Local states
     const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + company.name});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
@@ -18,6 +20,11 @@ function CompanySimsListComponent({company}) {
     // Hide add sim modal form
     const handleAddSimModalHide = () => {
         setAddSimEditModal({...addSimModal, show: false})
+    }
+
+    // Hide sim details modal form
+    const handleSimDetailModalHide = () => {
+        setSimDetailsModal({...simDetailsModal, show: false})
     }
 
     // Render
@@ -40,7 +47,12 @@ function CompanySimsListComponent({company}) {
                             {company.sims.map((item, key) => {
                                 return (
                                     <tr key={key}>
-                                        <td>{item.name}</td>
+                                        <td>
+                                            <i className="fa fa-question-circle small mr-1 hand-cursor text-theme"
+                                               onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.id})}
+                                            />
+                                            {item.name}
+                                        </td>
                                         <td>{item.number}</td>
                                         <td className='text-right'>{formatNumber(item.balance)}</td>
                                     </tr>
@@ -62,6 +74,9 @@ function CompanySimsListComponent({company}) {
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
                 <CompanyAddSimContainer handleClose={handleAddSimModalHide} />
+            </FormModalComponent>
+            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailModalHide}>
+                <SimDetailsContainer id={simDetailsModal.id} />
             </FormModalComponent>
         </>
     )
