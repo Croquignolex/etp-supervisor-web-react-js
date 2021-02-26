@@ -9,8 +9,8 @@ import CompanyAddSimContainer from "../../containers/companies/CompanyAddSimCont
 // Component
 function CompanySimsListComponent({company}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + company.name});
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + company.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {

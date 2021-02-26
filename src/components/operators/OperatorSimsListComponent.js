@@ -9,8 +9,8 @@ import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimCo
 // Component
 function OperatorSimsListComponent({operator}) {
     // Local states
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
