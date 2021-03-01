@@ -13,15 +13,15 @@ import {
     storeStopInfiniteScrollSimData
 } from "./actions";
 import {
-    storeSimRequestInit,
     storeSimsRequestInit,
-    storeSimRequestFailed,
-    storeSimRequestSucceed,
     storeSimsRequestFailed,
+    storeShowSimRequestInit,
     storeSimsRequestSucceed,
     storeAllSimsRequestInit,
     storeNextSimsRequestInit,
+    storeShowSimRequestFailed,
     storeAllSimsRequestFailed,
+    storeShowSimRequestSucceed,
     storeNextSimsRequestFailed,
     storeAllSimsRequestSucceed,
     storeNextSimsRequestSucceed
@@ -93,7 +93,7 @@ export function* emitSimFetch() {
     yield takeLatest(EMIT_SIM_FETCH, function*({id}) {
         try {
             // Fire event for request
-            yield put(storeSimRequestInit());
+            yield put(storeShowSimRequestInit());
             const apiResponse = yield call(apiGetRequest, `${api.SIM_API_PATH}/${id}`);
             // Extract data
             const sim = extractSimData(
@@ -108,10 +108,10 @@ export function* emitSimFetch() {
             // Fire event to redux
             yield put(storeSetSimData({sim}));
             // Fire event for request
-            yield put(storeSimRequestSucceed({message: apiResponse.message}));
+            yield put(storeShowSimRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeSimRequestFailed({message}));
+            yield put(storeShowSimRequestFailed({message}));
         }
     });
 }

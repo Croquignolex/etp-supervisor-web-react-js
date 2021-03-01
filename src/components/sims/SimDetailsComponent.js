@@ -6,7 +6,7 @@ import SimCardComponent from "./SimCardComponent";
 import {emitSimFetch} from "../../redux/sims/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {simTypeBadgeColor} from "../../functions/typeFunctions";
-import {storeSimRequestReset} from "../../redux/requests/sims/actions";
+import {storeShowSimRequestReset} from "../../redux/requests/sims/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
@@ -24,7 +24,7 @@ function SimDetailsComponent({id, sim, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeSimRequestReset());
+        dispatch(storeShowSimRequestReset());
     };
 
     // Render
