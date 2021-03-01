@@ -73,13 +73,14 @@ export const emitSimFetch = ({id}) => ({
 });
 
 // Emit new sim
-export const emitNewSim = ({name, simType, number, operator, agent,
+export const emitNewSim = ({name, simType, number, operator, agent, resource,
                                reference, description, company, collector}) => ({
     name,
     agent,
     number,
     company,
     simType,
+    resource,
     operator,
     reference,
     collector,
