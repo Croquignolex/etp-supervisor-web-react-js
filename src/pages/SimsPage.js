@@ -17,6 +17,7 @@ import TableSearchComponent from "../components/TableSearchComponent";
 import {emitNextSimsFetch, emitSimsFetch} from "../redux/sims/actions";
 import SimsCardsComponent from "../components/sims/SimsCardsComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import SimDetailsContainer from "../containers/sims/SimDetailsContainer";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
@@ -140,8 +141,8 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
             <FormModalComponent modal={newSimModal} handleClose={handleNewSimModalHide}>
                 <SimNewContainer handleClose={handleNewSimModalHide} />
             </FormModalComponent>
-            <FormModalComponent modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
-                {/*<ZoneDetailsContainer id={simDetailsModal.id} />*/}
+            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
+                <SimDetailsContainer id={simDetailsModal.id} />
             </FormModalComponent>
         </>
     )
