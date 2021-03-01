@@ -1,11 +1,15 @@
 // Reducer action types
+import {STORE_SET_NEW_OPERATOR_DATA} from "../operators/actions";
+
 export const STORE_SET_SIM_DATA = 'STORE_SET_SIM_DATA';
 export const STORE_SET_SIMS_DATA = 'STORE_SET_SIMS_DATA';
+export const STORE_SET_NEW_SIM_DATA = 'STORE_SET_NEW_SIM_DATA';
 export const STORE_SET_NEXT_SIMS_DATA = 'STORE_SET_NEXT_SIMS_DATA';
 export const STORE_SET_SIM_ACTION_DATA = 'STORE_SET_SIM_ACTION_DATA';
 export const STORE_STOP_INFINITE_SCROLL_SIMS_DATA = 'STORE_STOP_INFINITE_SCROLL_SIMS_DATA';
 
 // Middleware action types
+export const EMIT_NEW_SIM = 'EMIT_NEW_SIM';
 export const EMIT_SIM_FETCH = 'EMIT_SIM_FETCH';
 export const EMIT_SIMS_FETCH = 'EMIT_SIMS_FETCH';
 export const EMIT_ALL_SIMS_FETCH = 'EMIT_ALL_SIMS_FETCH';
@@ -39,10 +43,10 @@ export const storeStopInfiniteScrollSimData = () => ({
     type: STORE_STOP_INFINITE_SCROLL_SIMS_DATA
 });
 
-// Set sim action data in store
-export const storeSetSimActionData = ({id}) => ({
-    id,
-    type: STORE_SET_SIM_ACTION_DATA
+// Set new sim data in store
+export const storeSetNewSimData = ({sim}) => ({
+    sim,
+    type: STORE_SET_NEW_SIM_DATA
 });
 
 //====================== Middleware trigger actions
@@ -66,4 +70,19 @@ export const emitAllSimsFetch = () => ({
 export const emitSimFetch = ({id}) => ({
     id,
     type: EMIT_SIM_FETCH
+});
+
+// Emit new sim
+export const emitNewSim = ({name, simType, number, operator, agent,
+                               reference, description, company, collector}) => ({
+    name,
+    agent,
+    number,
+    company,
+    simType,
+    operator,
+    reference,
+    collector,
+    description,
+    type: EMIT_NEW_SIM
 });

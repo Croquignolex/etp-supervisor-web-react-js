@@ -3,15 +3,25 @@ import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import {SIMS_PAGE} from "../constants/pageNameConstants";
+import {emitAllAgentsFetch} from "../redux/agents/actions";
 import LoaderComponent from "../components/LoaderComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import SimNewContainer from "../containers/sims/SimNewContainer";
+import {emitAllCompaniesFetch} from "../redux/companies/actions";
+import {emitAllSimsTypesFetch} from "../redux/simsTypes/actions";
+import {emitAllOperatorsFetch} from "../redux/operators/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
+import {emitAllCollectorsFetch} from "../redux/collectors/actions";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import {emitNextSimsFetch, emitSimsFetch} from "../redux/sims/actions";
 import SimsCardsComponent from "../components/sims/SimsCardsComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
+import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
+import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
+import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
+import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 
@@ -25,6 +35,11 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local effects
     useEffect(() => {
         dispatch(emitSimsFetch());
+        dispatch(emitAllAgentsFetch());
+        dispatch(emitAllCompaniesFetch());
+        dispatch(emitAllSimsTypesFetch());
+        dispatch(emitAllOperatorsFetch());
+        dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -40,6 +55,11 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     const shouldResetErrorData = () => {
         dispatch(storeSimsRequestReset());
         dispatch(storeNextSimsRequestReset());
+        dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllCompaniesRequestReset());
+        dispatch(storeAllSimsTypesRequestReset());
+        dispatch(storeAllOperatorsRequestReset());
+        dispatch(storeAllCollectorsRequestReset());
     };
 
     // Fetch next sims data to enhance infinite scroll

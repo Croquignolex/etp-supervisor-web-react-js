@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import React, {useEffect, useMemo, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
+import {emitNewSim} from "../../redux/sims/actions";
 import ButtonComponent from "../form/ButtonComponent";
 import SelectComponent from "../form/SelectComponent";
 import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitAddOperatorSims} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
@@ -16,8 +16,8 @@ import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function SimNewComponent({request, agents, simsTypes, companies, collectors,dispatch, handleClose,
-                         allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests}) {
+function SimNewComponent({request, agents, simsTypes, companies, collectors, operators, dispatch, handleClose,
+                         allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests, allOperatorsRequests}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
     const [agent, setAgent] = useState(DEFAULT_FORM_DATA);
@@ -64,11 +64,6 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         setName({...name, isValid: true, data})
     }
 
-    const handleOperatorInput = (data) => {
-        shouldResetErrorData();
-        setOperator({...operator, isValid: true, data})
-    }
-
     const handleNumberInput = (data) => {
         shouldResetErrorData();
         setNumber({...number, isValid: true, data})
@@ -106,6 +101,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         setCollector({...collector,  isValid: true, data})
     }
 
+    const handleOperatorSelect = (data) => {
+        shouldResetErrorData();
+        setOperator({...operator, isValid: true, data})
+    }
+
     // Build select options
     const typeSelectOptions = useMemo(() => {
         return dataToArrayForSelect(simsTypes);
@@ -131,6 +131,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         return dataToArrayForSelect(collectors);
     }, [collectors]);
 
+    // Build select options
+    const operatorSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(operators);
+    }, [operators]);
+
     // Trigger user information form submit
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -141,6 +146,7 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         const _company = requiredChecker(company);
         const _resource= requiredChecker(resource);
         const _simsType = requiredChecker(simsType);
+        const _operator = requiredChecker(operator);
         const _collector = requiredChecker(collector);
         // Set value
         setName(_name);
@@ -149,10 +155,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         setCompany(_company);
         setSimsType(_simsType);
         setResource(_resource);
+        setOperator(_operator);
         setCollector(_collector);
 
         let reference;
-        let validationOK = _simsType.isValid && _name.isValid && _number.isValid;
+        let validationOK = _simsType.isValid && _name.isValid && _number.isValid && _operator.isValid;
 
         if(simsTypeData.needAgent) {
             validationOK = validationOK && _agent.isValid;
@@ -168,14 +175,14 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
 
         // Check
         if(validationOK) {
-            dispatch(emitAddOperatorSims({
+            dispatch(emitNewSim({
                 reference,
-                id: operator.id,
                 name: _name.data,
                 agent: _agent.data,
                 number: _number.data,
                 company: _company.data,
                 simType: _simsType.data,
+                operator: _operator.data,
                 resource: _resource.data,
                 collector: _collector.data,
                 description: description.data,
@@ -189,16 +196,6 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
         <div>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             <form onSubmit={handleSubmit}>
-                <div className="row">
-                    <div className='col-sm-6'>
-                        <InputComponent type='text'
-                                        input={operator}
-                                        label='Opérateur'
-                                        id='inputoperator'
-                                        handleInput={handleOperatorInput}
-                        />
-                    </div>
-                </div>
                 <div className="row">
                     <div className='col-sm-6'>
                         <SelectComponent label='Type'
@@ -279,6 +276,16 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors,disp
                 </div>
                 <div className='row'>
                     <div className='col-sm-6'>
+                        <SelectComponent input={operator}
+                                         label='Opérateur'
+                                         id='inputOperator'
+                                         title='Choisir un opérateur'
+                                         options={operatorSelectOptions}
+                                         handleInput={handleOperatorSelect}
+                                         requestProcessing={requestLoading(allOperatorsRequests)}
+                        />
+                    </div>
+                    <div className='col-sm-6'>
                         <TextareaComponent label='Description'
                                            input={description}
                                            id='inputDescription'
@@ -301,11 +308,13 @@ SimNewComponent.propTypes = {
     request: PropTypes.object.isRequired,
     simsTypes: PropTypes.array.isRequired,
     companies: PropTypes.array.isRequired,
+    operators: PropTypes.array.isRequired,
     collectors: PropTypes.array.isRequired,
     handleClose: PropTypes.func.isRequired,
     allAgentsRequests: PropTypes.object.isRequired,
     allSimsTypesRequests: PropTypes.object.isRequired,
     allCompaniesRequests: PropTypes.object.isRequired,
+    allOperatorsRequests: PropTypes.object.isRequired,
     allCollectorsRequests: PropTypes.object.isRequired,
 };
 

@@ -1,12 +1,14 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_SIM,
     EMIT_SIM_FETCH,
     storeSetSimData,
     EMIT_SIMS_FETCH,
     storeSetSimsData,
+    storeSetNewSimData,
     EMIT_ALL_SIMS_FETCH,
     EMIT_NEXT_SIMS_FETCH,
     storeSetNextSimsData,
@@ -15,12 +17,15 @@ import {
 import {
     storeSimsRequestInit,
     storeSimsRequestFailed,
+    storeAddSimRequestInit,
     storeShowSimRequestInit,
     storeSimsRequestSucceed,
     storeAllSimsRequestInit,
     storeNextSimsRequestInit,
+    storeAddSimRequestFailed,
     storeShowSimRequestFailed,
     storeAllSimsRequestFailed,
+    storeAddSimRequestSucceed,
     storeShowSimRequestSucceed,
     storeNextSimsRequestFailed,
     storeAllSimsRequestSucceed,
@@ -116,6 +121,48 @@ export function* emitSimFetch() {
     });
 }
 
+// New sim into API
+export function* emitNewSim() {
+    yield takeLatest(EMIT_NEW_SIM, function*({name, number, operator, agent, collector,
+                                                 reference, description, simType, company}) {
+        try {
+            // Fire event for request
+            yield put(storeAddSimRequestInit());
+            // From data
+            const data = {
+                reference,
+                nom: name,
+                description,
+                type: simType,
+                numero: number,
+                id_agent: agent,
+                id_flotte: operator,
+                id_corporate: company,
+                id_recouvreur: collector
+            }
+            // API request
+            const apiResponse = yield call(apiPostRequest, api.CREATE_SIM_API_PATH, data);
+            // Extract data
+            const sim = extractSimData(
+                apiResponse.data.puce,
+                apiResponse.data.type,
+                apiResponse.data.user,
+                apiResponse.data.agent,
+                apiResponse.data.corporate,
+                apiResponse.data.flote,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetNewSimData({sim}));
+            // Fire event for request
+            yield put(storeAddSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddSimRequestFailed({message}));
+        }
+    });
+}
+
 // Extract sim data
 function extractSimData(apiSim, apiType, apiUser, apiAgent, apiCompany, apiOperator, apiCollector) {
     let sim = {
@@ -190,6 +237,7 @@ function extractSimsData(apiSims) {
 // Combine to export all functions at once
 export default function* sagaSims() {
     yield all([
+        fork(emitNewSim),
         fork(emitSimFetch),
         fork(emitSimsFetch),
         fork(emitAllSimsFetch),

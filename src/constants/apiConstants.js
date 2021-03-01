@@ -31,6 +31,7 @@ export const DECLARE_CLEARANCE_API_PATH = `${API_URL}/reponse_demandes_destockag
 // Sims
 export const SIM_API_PATH = `${API_URL}/show_puce`;
 export const SIMS_API_PATH = `${API_URL}/puce_list`;
+export const CREATE_SIM_API_PATH = `${API_URL}/store_puce`;
 export const All_SIMS_API_PATH = `${API_URL}/puce_list_all`;
 
 // Agents
