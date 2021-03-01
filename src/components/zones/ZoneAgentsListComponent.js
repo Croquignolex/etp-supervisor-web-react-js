@@ -4,10 +4,12 @@ import React, {useMemo, useState} from 'react';
 import * as types from "../../constants/typeConstants";
 import FormModalComponent from "../modals/FormModalComponent";
 import ZoneAddAgentContainer from "../../containers/zones/ZoneAddAgentContainer";
+import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 
 // Component
 function ZoneAgentsListComponent({zone}) {
     // Local states
+    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: 'DETAIL DE LA AGENT', id: ''});
     const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: 'AJOUTER UN AGENT A ' + zone.name});
 
     // Show add sim modal form
@@ -18,6 +20,11 @@ function ZoneAgentsListComponent({zone}) {
     // Hide add sim modal form
     const handleAddAgentModalHide = () => {
         setAddAgentEditModal({...addAgentModal, show: false})
+    }
+
+    // Hide agent details modal form
+    const handleAgentDetailModalHide = () => {
+        setAgentDetailsModal({...agentDetailsModal, show: false})
     }
 
     const agentsData = useMemo(() => {
@@ -45,7 +52,12 @@ function ZoneAgentsListComponent({zone}) {
                             {agentsData.map((item, key) => {
                                 return (
                                     <tr key={key}>
-                                        <td>{item.name}</td>
+                                        <td>
+                                            <i className="fa fa-question-circle small mr-1 hand-cursor text-theme"
+                                               onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.id})}
+                                            />
+                                            {item.name}
+                                        </td>
                                         <td>{item.reference}</td>
                                         <td>{item.phone}</td>
                                     </tr>
@@ -67,6 +79,9 @@ function ZoneAgentsListComponent({zone}) {
             {/* Modal */}
             <FormModalComponent modal={addAgentModal} handleClose={handleAddAgentModalHide}>
                 <ZoneAddAgentContainer handleClose={handleAddAgentModalHide} />
+            </FormModalComponent>
+            <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailModalHide}>
+                <AgentDetailsContainer id={agentDetailsModal.id} />
             </FormModalComponent>
         </>
     )
