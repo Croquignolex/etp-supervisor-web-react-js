@@ -12,7 +12,7 @@ import {
     EMIT_ALL_SIMS_FETCH,
     EMIT_NEXT_SIMS_FETCH,
     storeSetNextSimsData,
-    storeStopInfiniteScrollSimData
+    storeStopInfiniteScrollSimData, EMIT_UPDATE_SIM
 } from "./actions";
 import {
     storeSimsRequestInit,
@@ -29,8 +29,14 @@ import {
     storeShowSimRequestSucceed,
     storeNextSimsRequestFailed,
     storeAllSimsRequestSucceed,
-    storeNextSimsRequestSucceed
+    storeNextSimsRequestSucceed, storeEditSimRequestInit, storeEditSimRequestSucceed, storeEditSimRequestFailed
 } from "../requests/sims/actions";
+import {EMIT_UPDATE_OPERATOR, storeSetOperatorData} from "../operators/actions";
+import {
+    storeEditOperatorRequestFailed,
+    storeEditOperatorRequestInit,
+    storeEditOperatorRequestSucceed
+} from "../requests/operators/actions";
 
 // Fetch all sims from API
 export function* emitAllSimsFetch() {
@@ -164,6 +170,35 @@ export function* emitNewSim() {
     });
 }
 
+// Update sim info
+export function* emitUpdateSim() {
+    yield takeLatest(EMIT_UPDATE_SIM, function*({id, name, description}) {
+        try {
+            // Fire event for request
+            yield put(storeEditSimRequestInit());
+            const data = {nom: name, description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_SIM_API_PATH}/${id}`, data);
+            // Extract data
+            const sim = extractSimData(
+                apiResponse.data.puce,
+                apiResponse.data.type,
+                apiResponse.data.user,
+                apiResponse.data.agent,
+                apiResponse.data.corporate,
+                apiResponse.data.flote,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetSimData({sim, alsoInList: true}));
+            // Fire event for request
+            yield put(storeEditSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeEditSimRequestFailed({message}));
+        }
+    });
+}
+
 // Extract sim data
 function extractSimData(apiSim, apiType, apiUser, apiAgent, apiCompany, apiOperator, apiCollector) {
     let sim = {
@@ -240,6 +275,7 @@ export default function* sagaSims() {
     yield all([
         fork(emitNewSim),
         fork(emitSimFetch),
+        fork(emitUpdateSim),
         fork(emitSimsFetch),
         fork(emitAllSimsFetch),
         fork(emitNextSimsFetch),

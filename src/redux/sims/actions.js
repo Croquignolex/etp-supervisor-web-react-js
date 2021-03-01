@@ -11,6 +11,7 @@ export const STORE_STOP_INFINITE_SCROLL_SIMS_DATA = 'STORE_STOP_INFINITE_SCROLL_
 // Middleware action types
 export const EMIT_NEW_SIM = 'EMIT_NEW_SIM';
 export const EMIT_SIM_FETCH = 'EMIT_SIM_FETCH';
+export const EMIT_UPDATE_SIM = 'EMIT_UPDATE_SIM';
 export const EMIT_SIMS_FETCH = 'EMIT_SIMS_FETCH';
 export const EMIT_ALL_SIMS_FETCH = 'EMIT_ALL_SIMS_FETCH';
 export const EMIT_NEXT_SIMS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
@@ -25,8 +26,9 @@ export const storeSetSimsData = ({sims, hasMoreData, page}) => ({
 });
 
 // Set sim data in store
-export const storeSetSimData = ({sim}) => ({
+export const storeSetSimData = ({sim, alsoInList = false}) => ({
     sim,
+    alsoInList,
     type: STORE_SET_SIM_DATA
 });
 
@@ -86,4 +88,12 @@ export const emitNewSim = ({name, simType, number, operator, agent, resource,
     collector,
     description,
     type: EMIT_NEW_SIM
+});
+
+// Emit update sim
+export const emitUpdateSim = ({id, name, description}) => ({
+    id,
+    name,
+    description,
+    type: EMIT_UPDATE_SIM
 });

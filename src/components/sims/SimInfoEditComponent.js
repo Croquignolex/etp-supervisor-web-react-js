@@ -3,14 +3,15 @@ import React, {useEffect, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
+import {emitUpdateSim} from "../../redux/sims/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
-import {emitUpdateOperator} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {storeEditSimRequestReset} from "../../redux/requests/sims/actions";
 
 // Component
 function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
@@ -39,7 +40,7 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeEditOperatorRequestReset());
+        dispatch(storeEditSimRequestReset());
     };
 
     const handleNameInput = (data) => {
@@ -62,7 +63,7 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateOperator({
+            dispatch(emitUpdateSim({
                 id: sim.id,
                 name: _name.data,
                 description: description.data
