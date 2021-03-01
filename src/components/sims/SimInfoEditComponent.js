@@ -15,8 +15,8 @@ import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../
 // Component
 function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: operator.name});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: operator.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: sim.name});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: sim.description});
 
     // Local effects
     useEffect(() => {
@@ -63,7 +63,7 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
         // Check
         if(validationOK) {
             dispatch(emitUpdateOperator({
-                id: operator.id,
+                id: sim.id,
                 name: _name.data,
                 description: description.data
             }));
@@ -77,7 +77,7 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             <form onSubmit={handleSubmit}>
                 <div className='row'>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-12'>
                         <InputComponent label='Nom'
                                         type='text'
                                         input={name}
@@ -85,7 +85,7 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
                                         handleInput={handleNameInput}
                         />
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-lg-12'>
                         <TextareaComponent label='Description'
                                            input={description}
                                            id='inputDescription'

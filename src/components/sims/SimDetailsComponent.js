@@ -9,15 +9,16 @@ import FormModalComponent from "../modals/FormModalComponent";
 import {simTypeBadgeColor} from "../../functions/typeFunctions";
 import {storeShowSimRequestReset} from "../../redux/requests/sims/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
+import SimInfoEditContainer from "../../containers/sims/SimInfoEditContainer";
 
 // Component
-function SimDetailsComponent({id, sim, dispatch, request}) { console.log({sim})
+function SimDetailsComponent({id, sim, dispatch, request}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + sim.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: ''});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
-        setInfoEditModal({...infoEditModal, show: true})
+        setInfoEditModal({...infoEditModal, show: true, header: 'MODIFIER LES INFO DE ' + sim.name})
     }
 
     // Hide info edit modal form
@@ -61,7 +62,7 @@ function SimDetailsComponent({id, sim, dispatch, request}) { console.log({sim})
                 )
             )}
             {/* Modal */}
-            <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
+            <FormModalComponent small={true} modal={infoEditModal} handleClose={handleInfoEditModalHide}>
                 <SimInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
