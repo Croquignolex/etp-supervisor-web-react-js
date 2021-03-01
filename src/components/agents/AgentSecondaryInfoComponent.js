@@ -2,12 +2,14 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
+import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 import AgentDocEditContainer from "../../containers/agents/AgentDocEditContainer";
 import AgentZoneEditContainer from "../../containers/agents/AgentZoneEditContainer";
 
 // Component
 function AgentSecondaryInfoComponent({agent}) {
-    // Local states;
+    // Local states
+    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
     const [zoneEditModal, setZoneEditModal] = useState({show: false, header: 'MODIFIER LA ZONE DE ' + agent.name});
     const [docEditModal, setDocEditModal] = useState({show: false, header: 'MODIFIER LE DOSSIER DE ' + agent.name});
 
@@ -29,6 +31,11 @@ function AgentSecondaryInfoComponent({agent}) {
     // Hide doc edit modal form
     const handleDocEditModalHide = () => {
         setDocEditModal({...docEditModal, show: false})
+    }
+
+    // Hide zone details modal form
+    const handleZoneDetailModalHide = () => {
+        setZoneDetailsModal({...zoneDetailsModal, show: false})
     }
 
     // Render
@@ -57,7 +64,12 @@ function AgentSecondaryInfoComponent({agent}) {
                         </li>
                         <li className="list-group-item">
                             <b>Zone</b>
-                            <span className="float-right">{agent.zone.name}</span>
+                            <span className="float-right">
+                                {agent.zone.name}
+                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: agent.zone.id})}
+                                />
+                            </span>
                         </li>
                         <li className="list-group-item">
                             <b>Address</b>
@@ -83,6 +95,9 @@ function AgentSecondaryInfoComponent({agent}) {
             </FormModalComponent>
             <FormModalComponent modal={docEditModal} handleClose={handleDocEditModalHide}>
                 <AgentDocEditContainer handleClose={handleDocEditModalHide} />
+            </FormModalComponent>
+            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailModalHide}>
+                <ZoneDetailsContainer id={zoneDetailsModal.id} />
             </FormModalComponent>
         </>
     )

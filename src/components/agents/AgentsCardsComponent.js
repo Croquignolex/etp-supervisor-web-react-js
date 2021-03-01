@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import LoaderComponent from "../LoaderComponent";
+import FormModalComponent from "../modals/FormModalComponent";
 import {agentTypeBadgeColor} from "../../functions/typeFunctions";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 
 // Component
 function AgentsCardsComponent({agents, handleBlock, handleBlockModalShow, handleAgentDetailsModalShow}) {
+    // Local states
+    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
+
+    // Hide zone details modal form
+    const handleZoneDetailModalHide = () => {
+        setZoneDetailsModal({...zoneDetailsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -56,7 +66,12 @@ function AgentsCardsComponent({agents, handleBlock, handleBlockModalShow, handle
                                         </li>
                                         <li className="list-group-item">
                                             <b>Zone</b>
-                                            <span className="float-right">{item.zone.name}</span>
+                                            <span className="float-right">
+                                                {item.zone.name}
+                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: item.zone.id})}
+                                                />
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Solde total</b>
@@ -80,6 +95,10 @@ function AgentsCardsComponent({agents, handleBlock, handleBlockModalShow, handle
                     </div>
                 }
             </div>
+            {/* Modal */}
+            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailModalHide}>
+                <ZoneDetailsContainer id={zoneDetailsModal.id} />
+            </FormModalComponent>
         </>
     )
 }

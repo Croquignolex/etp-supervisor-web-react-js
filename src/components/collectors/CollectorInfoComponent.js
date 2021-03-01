@@ -3,12 +3,14 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 import CollectorInfoEditContainer from "../../containers/collectors/CollectorInfoEditContainer";
 import CollectorZoneEditContainer from "../../containers/collectors/CollectorZoneEditContainer";
 
 // Component
 function CollectorInfoComponent({collector}) {
     // Local states
+    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
     const [zoneEditModal, setZoneEditModal] = useState({show: false, header: 'MODIFIER LA ZONE DE ' + collector.name});
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + collector.name});
 
@@ -30,6 +32,11 @@ function CollectorInfoComponent({collector}) {
     // Hide info edit modal form
     const handleInfoEditModalHide = () => {
         setInfoEditModal({...infoEditModal, show: false})
+    }
+
+    // Hide zone details modal form
+    const handleZoneDetailModalHide = () => {
+        setZoneDetailsModal({...zoneDetailsModal, show: false})
     }
 
     // Render
@@ -78,7 +85,12 @@ function CollectorInfoComponent({collector}) {
                         </li>
                         <li className="list-group-item">
                             <b>Zone</b>
-                            <span className="float-right">{collector.zone.name}</span>
+                            <span className="float-right">
+                                {collector.zone.name}
+                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: collector.zone.id})}
+                                />
+                            </span>
                         </li>
                         <li className="list-group-item">
                             <b>Adresse</b>
@@ -97,6 +109,9 @@ function CollectorInfoComponent({collector}) {
             </FormModalComponent>
             <FormModalComponent modal={zoneEditModal} handleClose={handleZoneEditModalHide}>
                 <CollectorZoneEditContainer handleClose={handleZoneEditModalHide} />
+            </FormModalComponent>
+            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailModalHide}>
+                <ZoneDetailsContainer id={zoneDetailsModal.id} />
             </FormModalComponent>
         </>
     )
