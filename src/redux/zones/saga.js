@@ -11,6 +11,7 @@ import {
     storeSetZonesData,
     storeSetNewZoneData,
     EMIT_ALL_ZONES_FETCH,
+    EMIT_ADD_ZONE_AGENTS,
     storeSetNextZonesData,
     EMIT_NEXT_ZONES_FETCH,
     storeStopInfiniteScrollZoneData
@@ -33,7 +34,10 @@ import {
     storeNextZonesRequestFailed,
     storeAllZonesRequestSucceed,
     storeEditZoneRequestSucceed,
-    storeNextZonesRequestSucceed
+    storeNextZonesRequestSucceed,
+    storeZoneAddAgentRequestInit,
+    storeZoneAddAgentRequestFailed,
+    storeZoneAddAgentRequestSucceed
 } from "../requests/zones/actions";
 
 // Fetch all zones from API
@@ -155,7 +159,7 @@ export function* emitUpdateZone() {
             // Fire event for request
             yield put(storeEditZoneRequestInit());
             const data = {name, reference,  description};
-            const apiResponse = yield call(apiPostRequest, `${api.EDIT_ZONE_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.ZONE_ADD_AGENT_API_PATH}/${id}`, data);
             // Extract data
             const zone = extractZoneData(
                 apiResponse.data.zone,
@@ -169,6 +173,45 @@ export function* emitUpdateZone() {
         } catch (message) {
             // Fire event for request
             yield put(storeEditZoneRequestFailed({message}));
+        }
+    });
+}
+
+// Add zone agent
+export function* emitAddZoneAgents() {
+    yield takeLatest(EMIT_ADD_ZONE_AGENTS, function*({id, name, address, phone, reference, email,
+                                                         town, country, password, description,
+                                                         backIDCard, frontIDCard, document}) {
+        try {
+            // Fire event for request
+            yield put(storeZoneAddAgentRequestInit());
+            const data = new FormData();
+            data.append('name', name);
+            data.append('ville', town);
+            data.append('phone', phone);
+            data.append('email', email);
+            data.append('pays', country);
+            data.append('adresse', address);
+            data.append('document', document);
+            data.append('password', password);
+            data.append('reference', reference);
+            data.append('description', description);
+            data.append('base_64_image', frontIDCard);
+            data.append('base_64_image_back', backIDCard);
+            const apiResponse = yield call(apiPostRequest, `${api.AGENT_ADD_SIM}/${id}`, data);
+            // Extract data
+            const zone = extractZoneData(
+                apiResponse.data.zone,
+                apiResponse.data.agents,
+                apiResponse.data.recouvreur
+            );
+            // Fire event to redux
+            yield put(storeSetZoneData({zone, alsoInList: true}));
+            // Fire event for request
+            yield put(storeZoneAddAgentRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeZoneAddAgentRequestFailed({message}));
         }
     });
 }
@@ -236,6 +279,7 @@ export default function* sagaZones() {
         fork(emitZoneFetch),
         fork(emitUpdateZone),
         fork(emitZonesFetch),
+        fork(emitAddZoneAgents),
         fork(emitAllZonesFetch),
         fork(emitNextZonesFetch),
     ]);

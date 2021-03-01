@@ -168,7 +168,7 @@ export const storeEditZoneRequestReset = () => ({
 });
 // ======================================================== Zone add agent
 // Set zone add agent init data into store
-export const storeZoneAddSAgentRequestInit = () => ({
+export const storeZoneAddAgentRequestInit = () => ({
     type: STORE_ZONE_ADD_AGENT_REQUEST_INIT
 });
 

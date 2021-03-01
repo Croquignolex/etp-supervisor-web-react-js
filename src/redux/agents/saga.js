@@ -144,7 +144,6 @@ export function* emitNewAgent() {
             data.append('description', description);
             data.append('base_64_image', frontIDCard);
             data.append('base_64_image_back', backIDCard);
-            data.append('base_64_image_back', backIDCard);
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_AGENT_API_PATH, data);
             // Extract data

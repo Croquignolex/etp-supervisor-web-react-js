@@ -10,7 +10,7 @@ export const EMIT_NEW_ZONE = 'EMIT_NEW_ZONE';
 export const EMIT_ZONE_FETCH = 'EMIT_ZONE_FETCH';
 export const EMIT_UPDATE_ZONE = 'EMIT_UPDATE_ZONE';
 export const EMIT_ZONES_FETCH = 'EMIT_ZONES_FETCH';
-export const EMIT_ADD_ZONE_SIMS = 'EMIT_ADD_ZONE_SIMS';
+export const EMIT_ADD_ZONE_AGENTS = 'EMIT_ADD_ZONE_AGENTS';
 export const EMIT_ALL_ZONES_FETCH = 'EMIT_ALL_ZONES_FETCH';
 export const EMIT_NEXT_ZONES_FETCH = 'EMIT_NEXT_ZONES_FETCH';
 
@@ -90,16 +90,21 @@ export const emitUpdateZone = ({id, name, reference, description}) => ({
 });
 
 // Emit add zone agents
-export const emitAddZoneAgents = ({id, simType, name, number, description, agent, company, collector, resource, reference}) => ({
+export const emitAddZoneAgents = ({id, name, address, phone, reference, email,
+                                      town, country, password, description,
+                                      backIDCard, frontIDCard, document}) => ({
     id,
     name,
-    agent,
-    number,
-    simType,
-    company,
-    resource,
-    collector,
+    town,
+    phone,
+    email,
+    address,
+    country,
+    password,
+    document,
     reference,
+    backIDCard,
+    frontIDCard,
     description,
-    type: EMIT_ADD_ZONE_SIMS
+    type: EMIT_ADD_ZONE_AGENTS
 });

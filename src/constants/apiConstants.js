@@ -46,9 +46,6 @@ export const EDIT_AGENT_DOC_API_PATH = `${API_URL}/edit_folder`;
 export const AGENT_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_agent`;
 export const TOGGLE_AGENT_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
 
-// Zones
-export const All_ZONES_API_PATH = `${API_URL}/zone_list_all`;
-
 // Collectors
 export const COLLECTORS_API_PATH = `${API_URL}/recouvreurs`;
 export const EDIT_COLLECTOR_API_PATH = `${API_URL}/edit_user`;
@@ -75,6 +72,8 @@ export const ZONES_API_PATH = `${API_URL}/zone_list`;
 export const EDIT_ZONE_API_PATH = `${API_URL}/edit_zone`;
 export const CREATE_ZONE_API_PATH = `${API_URL}/store_zone`;
 export const ZONES_DETAILS_API_PATH = `${API_URL}/show_zone`;
+export const All_ZONES_API_PATH = `${API_URL}/zone_list_all`;
+export const ZONE_ADD_AGENT_API_PATH = `${API_URL}/ajouter_agent_zone`;
 
 // Companies
 export const COMPANY_API_PATH = `${API_URL}/show_corporate`;
