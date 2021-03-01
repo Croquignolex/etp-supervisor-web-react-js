@@ -6,7 +6,6 @@ import ZoneInfoComponent from "./ZoneInfoComponent";
 import {emitZoneFetch} from "../../redux/zones/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import ZoneAgentsListComponent from "./ZoneAgentsListComponent";
-import ZoneResourcesListComponent from "./ZoneResourcesListComponent";
 import {storeShowZoneRequestReset} from "../../redux/requests/zones/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -39,9 +38,6 @@ function ZoneDetailsComponent({id, zone, dispatch, request}) {
                         </div>
                         <div className="col-lg-12 col-md-12">
                             <ZoneAgentsListComponent zone={zone} />
-                        </div>
-                        <div className="col-lg-12 col-md-12">
-                            <ZoneResourcesListComponent zone={zone} />
                         </div>
                     </div>
                 )

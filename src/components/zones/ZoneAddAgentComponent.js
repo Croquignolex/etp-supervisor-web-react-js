@@ -5,7 +5,6 @@ import DisabledInput from "../form/DisabledInput";
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {AGENT_TYPE} from "../../constants/typeConstants";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitAddZoneAgents} from "../../redux/zones/actions";
 import FileImageComponent from "../form/FileImageComponent";
@@ -17,7 +16,7 @@ import {fileChecker, imageChecker, phoneChecker, requiredChecker} from "../../fu
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ZoneAddAgentComponent({request, zone, dispatch, handleClose}) {
+function ZoneAddAgentComponent({type, request, zone, dispatch, handleClose}) {
     // Local state
     const [doc, setDoc] = useState(constants.DEFAULT_FORM_DATA);
     const [name, setName] = useState(constants.DEFAULT_FORM_DATA);
@@ -115,11 +114,11 @@ function ZoneAddAgentComponent({request, zone, dispatch, handleClose}) {
         if(validationOK)
             dispatch(emitAddZoneAgents({
                 id: zone.id,
+                reference: type,
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
-                reference: AGENT_TYPE,
                 document: _document.data,
                 town: constants.DEFAULT_TOWN,
                 description: description.data,
@@ -224,6 +223,7 @@ function ZoneAddAgentComponent({request, zone, dispatch, handleClose}) {
 // Prop types to ensure destroyed props data type
 ZoneAddAgentComponent.propTypes = {
     zone: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,

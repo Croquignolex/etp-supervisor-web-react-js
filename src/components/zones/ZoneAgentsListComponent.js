@@ -1,20 +1,25 @@
 import PropTypes from "prop-types";
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 
-import * as types from "../../constants/typeConstants";
 import FormModalComponent from "../modals/FormModalComponent";
+import {AGENT_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
 import ZoneAddAgentContainer from "../../containers/zones/ZoneAddAgentContainer";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 
 // Component
 function ZoneAgentsListComponent({zone}) {
     // Local states
+    const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: '', type: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: 'DETAIL DE LA AGENT', id: ''});
-    const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: 'AJOUTER UN AGENT A ' + zone.name});
 
-    // Show add sim modal form
+    // Show add agent modal form
     const handleAddAgentModalShow = () => {
-        setAddAgentEditModal({...addAgentModal, show: true})
+        setAddAgentEditModal({addAgentModal, type: AGENT_TYPE, header: 'AJOUTER UN AGENT A ' + zone.name, show: true})
+    }
+
+    // Show add resource modal form
+    const handleAddResourceModalShow = () => {
+        setAddAgentEditModal({addAgentModal, type: RESOURCE_TYPE, header:  'AJOUTER UNE RESSOURCE A ' + zone.name, show: true})
     }
 
     // Hide add sim modal form
@@ -27,16 +32,14 @@ function ZoneAgentsListComponent({zone}) {
         setAgentDetailsModal({...agentDetailsModal, show: false})
     }
 
-    const agentsData = useMemo(() => {
-        return zone.agents.filter(agent => types.AGENT_TYPE === agent.reference)
-        // eslint-disable-next-line
-    }, [zone]);
-
     // Render
     return (
         <>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleAddAgentModalShow}>
+            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleAddAgentModalShow}>
                 <i className="fa fa-plus" /> Ajouter un agent
+            </button>
+            <button type="button" className="btn btn-theme mb-1" onClick={handleAddResourceModalShow}>
+                <i className="fa fa-plus" /> Ajouter une ressource
             </button>
             <div className="card">
                 <div className="table-responsive">
@@ -49,7 +52,7 @@ function ZoneAgentsListComponent({zone}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {agentsData.map((item, key) => {
+                            {zone.agents.map((item, key) => {
                                 return (
                                     <tr key={key}>
                                         <td>
@@ -63,7 +66,7 @@ function ZoneAgentsListComponent({zone}) {
                                     </tr>
                                 )
                             })}
-                            {agentsData.length === 0 && (
+                            {zone.agents.length === 0 && (
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
@@ -78,7 +81,7 @@ function ZoneAgentsListComponent({zone}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addAgentModal} handleClose={handleAddAgentModalHide}>
-                <ZoneAddAgentContainer handleClose={handleAddAgentModalHide} />
+                <ZoneAddAgentContainer handleClose={handleAddAgentModalHide} type={addAgentModal.type} />
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
