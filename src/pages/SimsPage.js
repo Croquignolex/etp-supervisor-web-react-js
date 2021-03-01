@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {SIMS_PAGE} from "../constants/pageNameConstants";
 import LoaderComponent from "../components/LoaderComponent";
 import HeaderComponent from "../components/HeaderComponent";
+import SimNewContainer from "../containers/sims/SimNewContainer";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
@@ -117,7 +118,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={newSimModal} handleClose={handleNewSimModalHide}>
-                {/*<ZoneNewContainer handleClose={handleNewSimModalHide} />*/}
+                <SimNewContainer handleClose={handleNewSimModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
                 {/*<ZoneDetailsContainer id={simDetailsModal.id} />*/}

@@ -4,9 +4,11 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 // Partial global store for requests data management
 const initialState = {
     all: {failed: false, loading: false, succeeded: false, message: ""},
+    add: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
+    edit: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -64,22 +66,56 @@ function reduce(state = initialState, action) {
         case actions.STORE_ALL_SIMS_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
             return nextState || state;
-        // ======================================================== Sim
-        // Resolve event to set sim init request store data
-        case actions.STORE_SIM_REQUEST_INIT:
+        // ======================================================== Add sim
+        // Resolve event to set add sim init request store data
+        case actions.STORE_ADD_SIM_REQUEST_INIT:
+            nextState = {...state, add: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set add sim failed request store data
+        case actions.STORE_ADD_SIM_REQUEST_FAILED:
+            nextState = {...state, add: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add sim succeeded request store data
+        case actions.STORE_ADD_SIM_REQUEST_SUCCEEDED:
+            nextState = {...state, add: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add sim reset request store data
+        case actions.STORE_ADD_SIM_REQUEST_RESET:
+            nextState = {...state, add: initialState.add};
+            return nextState || state;
+        // ======================================================== Show sim
+        // Resolve event to set show sim init request store data
+        case actions.STORE_SHOW_SIM_REQUEST_INIT:
             nextState = {...state, show: requestInitValue()};
             return nextState || state;
-        // Resolve event to set sim failed request store data
-        case actions.STORE_SIM_REQUEST_FAILED:
+        // Resolve event to set show sim failed request store data
+        case actions.STORE_SHOW_SIM_REQUEST_FAILED:
             nextState = {...state, show: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set sim succeeded request store data
-        case actions.STORE_SIM_REQUEST_SUCCEEDED:
+        // Resolve event to set show sim succeeded request store data
+        case actions.STORE_SHOW_SIM_REQUEST_SUCCEEDED:
             nextState = {...state, show: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set sim reset request store data
-        case actions.STORE_SIM_REQUEST_RESET:
+        // Resolve event to set show sim reset request store data
+        case actions.STORE_SHOW_SIM_REQUEST_RESET:
             nextState = {...state, show: initialState.show};
+            return nextState || state;
+        // ======================================================== Edit sim
+        // Resolve event to set edit sim init request store data
+        case actions.STORE_EDIT_SIM_REQUEST_INIT:
+            nextState = {...state, edit: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set edit sim failed request store data
+        case actions.STORE_EDIT_SIM_REQUEST_FAILED:
+            nextState = {...state, edit: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set edit sim succeeded request store data
+        case actions.STORE_EDIT_SIM_REQUEST_SUCCEEDED:
+            nextState = {...state, edit: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set edit sim reset request store data
+        case actions.STORE_EDIT_SIM_REQUEST_RESET:
+            nextState = {...state, edit: initialState.edit};
             return nextState || state;
         // ========================================================
         // Unknown action

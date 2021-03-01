@@ -14,10 +14,20 @@ export const STORE_ALL_SIMS_REQUEST_RESET = 'STORE_ALL_SIMS_REQUEST_RESET';
 export const STORE_ALL_SIMS_REQUEST_FAILED = 'STORE_ALL_SIMS_REQUEST_FAILED';
 export const STORE_ALL_SIMS_REQUEST_SUCCEEDED = 'STORE_ALL_SIMS_REQUEST_SUCCEEDED';
 
-export const STORE_SIM_REQUEST_INIT = 'STORE_SIM_REQUEST_INIT';
-export const STORE_SIM_REQUEST_RESET = 'STORE_SIM_REQUEST_RESET';
-export const STORE_SIM_REQUEST_FAILED = 'STORE_SIM_REQUEST_FAILED';
-export const STORE_SIM_REQUEST_SUCCEEDED = 'STORE_SIM_REQUEST_SUCCEEDED';
+export const STORE_ADD_SIM_REQUEST_INIT = 'STORE_ADD_SIM_REQUEST_INIT';
+export const STORE_ADD_SIM_REQUEST_RESET = 'STORE_ADD_SIM_REQUEST_RESET';
+export const STORE_ADD_SIM_REQUEST_FAILED = 'STORE_ADD_SIM_REQUEST_FAILED';
+export const STORE_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_ADD_SIM_REQUEST_SUCCEEDED';
+
+export const STORE_SHOW_SIM_REQUEST_INIT = 'STORE_SHOW_SIM_REQUEST_INIT';
+export const STORE_SHOW_SIM_REQUEST_RESET = 'STORE_SHOW_SIM_REQUEST_RESET';
+export const STORE_SHOW_SIM_REQUEST_FAILED = 'STORE_SHOW_SIM_REQUEST_FAILED';
+export const STORE_SHOW_SIM_REQUEST_SUCCEEDED = 'STORE_SHOW_SIM_REQUEST_SUCCEEDED';
+
+export const STORE_EDIT_SIM_REQUEST_INIT = 'STORE_EDIT_SIM_REQUEST_INIT';
+export const STORE_EDIT_SIM_REQUEST_RESET = 'STORE_EDIT_SIM_REQUEST_RESET';
+export const STORE_EDIT_SIM_REQUEST_FAILED = 'STORE_EDIT_SIM_REQUEST_FAILED';
+export const STORE_EDIT_SIM_REQUEST_SUCCEEDED = 'STORE_EDIT_SIM_REQUEST_SUCCEEDED';
 
 // ======================================================== Sims
 // Set sims init data into store
@@ -85,25 +95,69 @@ export const storeAllSimsRequestSucceed = ({message}) => ({
 export const storeAllSimsRequestReset = () => ({
     type: STORE_ALL_SIMS_REQUEST_RESET
 });
-// ======================================================== Sim
-// Set sim init data into store
-export const storeSimRequestInit = () => ({
-    type: STORE_SIM_REQUEST_INIT
+// ======================================================== Add sim
+// Set add sim init data into store
+export const storeAddSimRequestInit = () => ({
+    type: STORE_ADD_SIM_REQUEST_INIT
 });
 
-// Set sim failed data into store
-export const storeSimRequestFailed = ({message}) => ({
+// Set add sim failed data into store
+export const storeAddSimRequestFailed = ({message}) => ({
     message,
-    type: STORE_SIM_REQUEST_FAILED
+    type: STORE_ADD_SIM_REQUEST_FAILED
 });
 
-// Set sim succeeded data into store
-export const storeSimRequestSucceed = ({message}) => ({
+// Set add sim succeeded data into store
+export const storeAddSimRequestSucceed = ({message}) => ({
     message,
-    type: STORE_SIM_REQUEST_SUCCEEDED
+    type: STORE_ADD_SIM_REQUEST_SUCCEEDED
 });
 
-// Set sim reset data into store
-export const storeSimRequestReset = () => ({
-    type: STORE_SIM_REQUEST_RESET
+// Set add sim reset data into store
+export const storeAddSimRequestReset = () => ({
+    type: STORE_ADD_SIM_REQUEST_RESET
+});
+// ======================================================== Show sim
+// Set show sim init data into store
+export const storeShowSimRequestInit = () => ({
+    type: STORE_SHOW_SIM_REQUEST_INIT
+});
+
+// Set show sim failed data into store
+export const storeShowSimRequestFailed = ({message}) => ({
+    message,
+    type: STORE_SHOW_SIM_REQUEST_FAILED
+});
+
+// Set show sim succeeded data into store
+export const storeShowSimRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_SHOW_SIM_REQUEST_SUCCEEDED
+});
+
+// Set show sim reset data into store
+export const storeShowSimRequestReset = () => ({
+    type: STORE_SHOW_SIM_REQUEST_RESET
+});
+// ======================================================== Edit sim
+// Set edit sim init data into store
+export const storeEditSimRequestInit = () => ({
+    type: STORE_EDIT_SIM_REQUEST_INIT
+});
+
+// Set edit sim failed data into store
+export const storeEditSimRequestFailed = ({message}) => ({
+    message,
+    type: STORE_EDIT_SIM_REQUEST_FAILED
+});
+
+// Set edit sim succeeded data into store
+export const storeEditSimRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_EDIT_SIM_REQUEST_SUCCEEDED
+});
+
+// Set edit sim reset data into store
+export const storeEditSimRequestReset = () => ({
+    type: STORE_EDIT_SIM_REQUEST_RESET
 });
