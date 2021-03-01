@@ -114,6 +114,7 @@ function ZoneAddAgentComponent({request, zone, dispatch, handleClose}) {
         // Check
         if(validationOK)
             dispatch(emitAddZoneAgents({
+                id: zone.id,
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,

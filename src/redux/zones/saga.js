@@ -196,9 +196,9 @@ export function* emitAddZoneAgents() {
             data.append('password', password);
             data.append('reference', reference);
             data.append('description', description);
-            data.append('base_64_image', frontIDCard);
-            data.append('base_64_image_back', backIDCard);
-            const apiResponse = yield call(apiPostRequest, `${api.AGENT_ADD_SIM}/${id}`, data);
+            frontIDCard && data.append('base_64_image', frontIDCard);
+            backIDCard && data.append('base_64_image_back', backIDCard);
+            const apiResponse = yield call(apiPostRequest, `${api.ZONE_ADD_AGENT_API_PATH}/${id}`, data);
             // Extract data
             const zone = extractZoneData(
                 apiResponse.data.zone,
