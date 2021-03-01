@@ -10,6 +10,7 @@ import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import {emitNextSimsFetch, emitSimsFetch} from "../redux/sims/actions";
 import SimsCardsComponent from "../components/sims/SimsCardsComponent";
+import FormModalComponent from "../components/modals/FormModalComponent";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 
@@ -17,6 +18,8 @@ import {dateToString, needleSearch, requestFailed, requestLoading} from "../func
 function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [newSimModal, setNewSimModal] = useState({show: false, header: ''});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
 
     // Local effects
     useEffect(() => {
@@ -43,6 +46,26 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
         dispatch(emitNextSimsFetch({page}));
     }
 
+    // Show new sim modal form
+    const handleNewSimModalShow = () => {
+        setNewSimModal({newSimModal, header: "NOUVELLE PUCE", show: true})
+    }
+
+    // Hide new sim modal form
+    const handleNewSimModalHide = () => {
+        setNewSimModal({...newSimModal, show: false})
+    }
+
+    // Show sim details modal form
+    const handleSimDetailsModalShow = ({id}) => {
+        setSimDetailsModal({...simDetailsModal, show: true, id})
+    }
+
+    // Hide sim details modal form
+    const handleSimDetailsModalHide = () => {
+        setSimDetailsModal({...simDetailsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -64,9 +87,15 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                             {/* Error message */}
                                             {requestFailed(simsRequests.list) && <ErrorAlertComponent message={simsRequests.list.message} />}
                                             {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
+                                            <button type="button"
+                                                    className="btn btn-theme mr-2 mb-2"
+                                                    onClick={handleNewSimModalShow}
+                                            >
+                                                <i className="fa fa-plus" /> Nouvelle puce
+                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} />
+                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
                                                 : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         dataLength={sims.length}
@@ -74,7 +103,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                                                         loader={<LoaderComponent />}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <SimsCardsComponent sims={sims} />
+                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
                                                         </InfiniteScroll>
                                                 )
                                             }
@@ -86,6 +115,13 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                     </section>
                 </div>
             </AppLayoutContainer>
+            {/* Modal */}
+            <FormModalComponent modal={newSimModal} handleClose={handleNewSimModalHide}>
+                {/*<ZoneNewContainer handleClose={handleNewSimModalHide} />*/}
+            </FormModalComponent>
+            <FormModalComponent modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
+                {/*<ZoneDetailsContainer id={simDetailsModal.id} />*/}
+            </FormModalComponent>
         </>
     )
 }
