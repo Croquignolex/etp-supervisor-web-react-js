@@ -2,26 +2,26 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {emitAllZonesFetch} from "../redux/zones/actions";
-import HeaderComponent from "../components/HeaderComponent";
-import LoaderComponent from "../components/LoaderComponent";
-import {emitAllOperatorsFetch} from "../redux/operators/actions";
-import AppLayoutContainer from "../containers/AppLayoutContainer";
-import ErrorAlertComponent from "../components/ErrorAlertComponent";
-import TableSearchComponent from "../components/TableSearchComponent";
-import FormModalComponent from "../components/modals/FormModalComponent";
-import {storeAllZonesRequestReset} from "../redux/requests/zones/actions";
-import BlockModalComponent from "../components/modals/BlockModalComponent";
-import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
-import CollectorNewContainer from "../containers/collectors/CollectorNewContainer";
-import CollectorsCardsComponent from "../components/collectors/CollectorsCardsComponent";
-import CollectorDetailsContainer from "../containers/collectors/CollectorDetailsContainer";
-import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../redux/collectors/actions";
-import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
-import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../redux/requests/collectors/actions";
+import {emitAllZonesFetch} from "../../redux/zones/actions";
+import HeaderComponent from "../../components/HeaderComponent";
+import LoaderComponent from "../../components/LoaderComponent";
+import {emitAllOperatorsFetch} from "../../redux/operators/actions";
+import AppLayoutContainer from "../../containers/AppLayoutContainer";
+import ErrorAlertComponent from "../../components/ErrorAlertComponent";
+import TableSearchComponent from "../../components/TableSearchComponent";
+import FormModalComponent from "../../components/modals/FormModalComponent";
+import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
+import BlockModalComponent from "../../components/modals/BlockModalComponent";
+import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
+import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
+import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
+import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
+import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../../redux/collectors/actions";
+import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../../redux/requests/collectors/actions";
 
 // Component
-function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispatch, location}) {
+function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
@@ -198,7 +198,7 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagersPage.propTypes = {
+CollectorsPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
@@ -207,4 +207,4 @@ ManagersPage.propTypes = {
     collectorsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(ManagersPage);
+export default React.memo(CollectorsPage);

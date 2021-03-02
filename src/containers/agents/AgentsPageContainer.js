@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import AgentsPage from "../../pages/AgentsPage";
+import AgentsPage from "../../pages/users/AgentsPage";
 import {AGENTS} from "../../constants/pageNameConstants";
 import {setPageTitle} from "../../functions/generalFunctions";
 

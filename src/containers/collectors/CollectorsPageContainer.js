@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import CollectorsPage from "../../pages/CollectorsPage";
+import CollectorsPage from "../../pages/users/CollectorsPage";
 import {COLLECTORS} from "../../constants/pageNameConstants";
 import {setPageTitle} from "../../functions/generalFunctions";
 
