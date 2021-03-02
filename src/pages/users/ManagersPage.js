@@ -2,37 +2,29 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {emitAllZonesFetch} from "../../redux/zones/actions";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
-import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
-import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
-import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
-import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
-import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
-import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../../redux/collectors/actions";
+import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
+import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../../redux/requests/collectors/actions";
+import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
 
 // Component
-function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispatch, location}) {
+function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
-    const [newCollectorModal, setNewCollectorModal] = useState({show: false, header: ''});
-    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+    const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
+    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorsFetch());
-        dispatch(emitAllZonesFetch());
-        dispatch(emitAllOperatorsFetch());
+        dispatch(emitManagersFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,11 +35,11 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
     // Local effects
     useEffect(() => {
         // Reset inputs while toast (well done) into current scope
-        if(requestSucceeded(collectorsRequests.status)) {
-            applySuccess(collectorsRequests.status.message);
+        if(requestSucceeded(managersRequests.status)) {
+            applySuccess(managersRequests.status.message);
         }
         // eslint-disable-next-line
-    }, [collectorsRequests.status]);
+    }, [managersRequests.status]);
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
@@ -55,41 +47,39 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAllZonesRequestReset());
-        dispatch(storeCollectorsRequestReset());
-        dispatch(storeAllOperatorsRequestReset());
-        dispatch(storeNextCollectorsRequestReset());
-        dispatch(storeCollectorStatusToggleRequestReset());
+        dispatch(storeManagersRequestReset());
+        dispatch(storeNextManagersRequestReset());
+        dispatch(storeManagerStatusToggleRequestReset());
     };
 
-    // Fetch next collector data to enhance infinite scroll
-    const handleNextCollectorsData = () => {
-        dispatch(emitNextCollectorsFetch({page}));
+    // Fetch next manager data to enhance infinite scroll
+    const handleNextManagersData = () => {
+        dispatch(emitNextManagersFetch({page}));
     }
 
-    // Show new collector modal form
-    const handleNewCollectorModalShow = () => {
-        setNewCollectorModal({newCollectorModal, header: "NOUVEAU RESPONSABLE DE ZONE", show: true})
+    // Show new manager modal form
+    const handleNewManagerModalShow = () => {
+        setNewManagerModal({newManagerModal, header: "NOUVELLE GESTIONNAIRE DE FLOTTE", show: true})
     }
 
-    // Hide new collector modal form
-    const handleNewCollectorModalHide = () => {
-        setNewCollectorModal({...newCollectorModal, show: false})
+    // Hide new manager modal form
+    const handleNewManagerModalHide = () => {
+        setNewManagerModal({...newManagerModal, show: false})
     }
 
-    // Show collector details modal form
-    const handleCollectorDetailsModalShow = ({id}) => {
-        setCollectorDetailsModal({...collectorDetailsModal, show: true, id})
+    // Show manager details modal form
+    const handleManagerDetailsModalShow = ({id}) => {
+        setManagerDetailsModal({...managerDetailsModal, show: true, id})
     }
 
-    // Hide collector details modal form
-    const handleCollectorDetailsModalHide = () => {
-        setCollectorDetailsModal({...collectorDetailsModal, show: false})
+    // Hide manager details modal form
+    const handleManagerDetailsModalHide = () => {
+        setManagerDetailsModal({...managerDetailsModal, show: false})
     }
 
     // Trigger when user block status confirmed on modal
     const handleBlockModalShow = ({id, name}) => {
-        setBlockModal({...blockModal, show: true, id, body: `Bloquer le responsable de zone ${name}?`})
+        setBlockModal({...blockModal, show: true, id, body: `Bloquer la gestionnaire de flotte ${name}?`})
     };
 
     // Hide block confirmation modal
@@ -100,7 +90,7 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
     // Trigger when user change status confirmed on modal
     const handleBlock = (id) => {
         handleBlockModalHide();
-        dispatch(emitToggleCollectorStatus({id}));
+        dispatch(emitToggleManagerStatus({id}));
     };
 
     // Render
@@ -108,7 +98,7 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Responsables de zones" icon={'fa fa-user-clock'} />
+                    <HeaderComponent title="Gestinnaires de flottes" icon={'fa fa-user-work'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -122,33 +112,33 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(collectorsRequests.list) && <ErrorAlertComponent message={collectorsRequests.list.message} />}
-                                            {requestFailed(collectorsRequests.next) && <ErrorAlertComponent message={collectorsRequests.next.message} />}
-                                            {requestFailed(collectorsRequests.status) && <ErrorAlertComponent message={collectorsRequests.status.message} />}
+                                            {requestFailed(managersRequests.list) && <ErrorAlertComponent message={managersRequests.list.message} />}
+                                            {requestFailed(managersRequests.next) && <ErrorAlertComponent message={managersRequests.next.message} />}
+                                            {requestFailed(managersRequests.status) && <ErrorAlertComponent message={managersRequests.status.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mr-2 mb-2"
-                                                    onClick={handleNewCollectorModalShow}
+                                                    onClick={handleNewManagerModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouveau responsable
+                                                <i className="fa fa-plus" /> Nouvelle gestionnaire
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <CollectorsCardsComponent handleBlock={handleBlock}
-                                                                            handleBlockModalShow={handleBlockModalShow}
-                                                                            collectors={searchEngine(collectors, needle)}
-                                                                            handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
+                                                ? <ManagersCardsComponent handleBlock={handleBlock}
+                                                                          managers={searchEngine(managers, needle)}
+                                                                          handleBlockModalShow={handleBlockModalShow}
+                                                                          handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                 />
-                                                : (requestLoading(collectorsRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(managersRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={collectors.length}
-                                                                        next={handleNextCollectorsData}
                                                                         loader={<LoaderComponent />}
+                                                                        dataLength={managers.length}
+                                                                        next={handleNextManagersData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <CollectorsCardsComponent collectors={collectors}
-                                                                                      handleBlock={handleBlock}
-                                                                                      handleBlockModalShow={handleBlockModalShow}
-                                                                                      handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
+                                                            <ManagersCardsComponent managers={managers}
+                                                                                    handleBlock={handleBlock}
+                                                                                    handleBlockModalShow={handleBlockModalShow}
+                                                                                    handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -166,11 +156,11 @@ function ManagersPage({collectors, collectorsRequests, hasMoreData, page, dispat
                                  handleBlock={handleBlock}
                                  handleClose={handleBlockModalHide}
             />
-            <FormModalComponent modal={newCollectorModal} handleClose={handleNewCollectorModalHide}>
-                <CollectorNewContainer type={newCollectorModal.type} handleClose={handleNewCollectorModalHide} />
+            <FormModalComponent modal={newManagerModal} handleClose={handleNewManagerModalHide}>
+                {/*<ManagerNewContainer type={newManagerModal.type} handleClose={handleNewManagerModalHide} />*/}
             </FormModalComponent>
-            <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
-                <CollectorDetailsContainer id={collectorDetailsModal.id} />
+            <FormModalComponent modal={managerDetailsModal} handleClose={handleManagerDetailsModalHide}>
+                {/*<ManagerDetailsContainer id={managerDetailsModal.id} />*/}
             </FormModalComponent>
         </>
     )
@@ -186,9 +176,6 @@ function searchEngine(data, _needle) {
                 needleSearch(item.name, _needle) ||
                 needleSearch(item.phone, _needle) ||
                 needleSearch(item.email, _needle) ||
-                needleSearch(item.zone.name, _needle) ||
-                needleSearch(item.sims.length, _needle) ||
-                needleSearch(item.zone.reference, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )
         });
@@ -202,9 +189,9 @@ ManagersPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    collectors: PropTypes.array.isRequired,
+    managers: PropTypes.array.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    collectorsRequests: PropTypes.object.isRequired,
+    managersRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(ManagersPage);

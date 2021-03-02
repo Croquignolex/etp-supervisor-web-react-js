@@ -7,20 +7,12 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 
 // Component
-function ManagersCardsComponent({collectors, handleBlock, handleBlockModalShow, handleCollectorDetailsModalShow}) {
-    // Local states
-    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
-
-    // Hide zone details modal form
-    const handleZoneDetailModalHide = () => {
-        setZoneDetailsModal({...zoneDetailsModal, show: false})
-    }
-
+function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow, handleManagerDetailsModalShow}) {
     // Render
     return (
         <>
             <div className="row m-1">
-                {collectors.map((item, key) => {
+                {managers.map((item, key) => {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
@@ -30,7 +22,7 @@ function ManagersCardsComponent({collectors, handleBlock, handleBlockModalShow, 
                                         <button type="button"
                                                 title="Détails"
                                                 className=" btn-tool btn"
-                                                onClick={() => handleCollectorDetailsModalShow(item)}
+                                                onClick={() => handleManagerDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" />
                                         </button>
@@ -62,15 +54,6 @@ function ManagersCardsComponent({collectors, handleBlock, handleBlockModalShow, 
                                             <span className="float-right">{item.phone}</span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Zone</b>
-                                            <span className="float-right">
-                                                {item.zone.name}
-                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: item.zone.id})}
-                                                />
-                                            </span>
-                                        </li>
-                                        <li className="list-group-item">
                                             <b>Solde total</b>
                                             <span className="float-right text-success text-bold">{formatNumber(item.account.balance)}</span>
                                         </li>
@@ -80,28 +63,24 @@ function ManagersCardsComponent({collectors, handleBlock, handleBlockModalShow, 
                         </div>
                     )
                 })}
-                {collectors.length === 0 &&
+                {managers.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas de responsable de zone
+                            Pas de gestionnaires de flottes
                         </div>
                     </div>
                 }
             </div>
-            {/* Modal */}
-            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailModalHide}>
-                <ZoneDetailsContainer id={zoneDetailsModal.id} />
-            </FormModalComponent>
         </>
     )
 }
 
 // Prop types to ensure destroyed props data type
 ManagersCardsComponent.propTypes = {
-    collectors: PropTypes.array.isRequired,
+    managers: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
-    handleCollectorDetailsModalShow: PropTypes.func.isRequired,
+    handleManagerDetailsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(ManagersCardsComponent);

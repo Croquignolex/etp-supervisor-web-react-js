@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 
-import CollectorsPage from "../../pages/users/CollectorsPage";
-import {COLLECTORS} from "../../constants/pageNameConstants";
+import ManagersPage from "../../pages/users/ManagersPage";
+import {MANAGERS} from "../../constants/pageNameConstants";
 import {setPageTitle} from "../../functions/generalFunctions";
 
-setPageTitle(COLLECTORS);
+setPageTitle(MANAGERS);
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    page: state.collectors.page,
-    collectors: state.collectors.list,
-    collectorsRequests: state.collectorsRequests,
-    hasMoreData: state.collectors.hasMoreData,
+    page: state.managers.page,
+    managers: state.managers.list,
+    hasMoreData: state.managers.hasMoreData,
+    managersRequests: state.managersRequests,
 });
 
 // Map dispatch function to component props
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(CollectorsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManagersPage);
