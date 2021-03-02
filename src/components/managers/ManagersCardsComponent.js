@@ -31,7 +31,7 @@ function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow, ha
                                 <div className="card-body">
                                     <div className="text-center mb-3">
                                         <img src={item.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
-                                        <div className="float-lg-right">
+                                        <div className="float-right">
                                             {item.actionLoader ? <LoaderComponent little={true} /> :(
                                                 item.status
                                                     ? <i onClick={() => handleBlockModalShow(item)}
