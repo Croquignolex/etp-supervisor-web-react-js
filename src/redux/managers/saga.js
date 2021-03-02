@@ -3,13 +3,16 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
-import {apiGetRequest, getImageFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_MANAGERS_FETCH,
     storeSetManagersData,
     EMIT_ALL_MANAGERS_FETCH,
     EMIT_NEXT_MANAGERS_FETCH,
     storeSetNextManagersData,
+    storeSetManagerActionData,
+    storeSetManagerToggleData,
+    EMIT_TOGGLE_MANAGER_STATUS,
     storeStopInfiniteScrollManagerData
 } from "./actions";
 import {
@@ -21,7 +24,10 @@ import {
     storeAllManagersRequestFailed,
     storeAllManagersRequestSucceed,
     storeNextManagersRequestFailed,
-    storeNextManagersRequestSucceed
+    storeNextManagersRequestSucceed,
+    storeManagerStatusToggleRequestInit,
+    storeManagerStatusToggleRequestFailed,
+    storeManagerStatusToggleRequestSucceed
 } from "../requests/managers/actions";
 
 // Fetch all managers from API
@@ -85,6 +91,27 @@ export function* emitNextManagersFetch() {
     });
 }
 
+// Toggle manager status into API
+export function* emitToggleManagerStatus() {
+    yield takeLatest(EMIT_TOGGLE_MANAGER_STATUS, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeSetManagerActionData({id}));
+            yield put(storeManagerStatusToggleRequestInit());
+            const apiResponse = yield call(apiPostRequest, `${api.TOGGLE_MANAGER_STATUS_API_PATH}/${id}`);
+            // Fire event to redux
+            yield put(storeSetManagerToggleData({id}));
+            // Fire event for request
+            yield put(storeManagerStatusToggleRequestSucceed({message: apiResponse.message}));
+            yield put(storeSetManagerActionData({id}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSetManagerActionData({id}));
+            yield put(storeManagerStatusToggleRequestFailed({message}));
+        }
+    });
+}
+
 // Extract manager data
 function extractManagerData(apiManager, apiAccount) {
     let manager = {
@@ -135,5 +162,6 @@ export default function* sagaManagers() {
         fork(emitManagersFetch),
         fork(emitAllManagersFetch),
         fork(emitNextManagersFetch),
+        fork(emitToggleManagerStatus),
     ]);
 }
