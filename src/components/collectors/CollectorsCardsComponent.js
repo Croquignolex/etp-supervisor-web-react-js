@@ -37,16 +37,20 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                     </div>
                                 </div>
                                 <div className="card-body">
-                                    <div className="text-right">
-                                        {item.actionLoader ? <LoaderComponent little={true} /> :(
-                                            item.status
-                                                ? <i onClick={() => handleBlockModalShow(item)}
-                                                     className='fa fa-lock-open text-success hand-cursor'
-                                                />
-                                                : <i className='fa fa-lock text-danger hand-cursor'
-                                                     onClick={() => handleBlock(item.id)}
-                                                />
-                                        )}
+                                    <div className="text-center mb-3">
+                                        <img src={item.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                                        <div className="float-lg-right">
+                                            {item.actionLoader ? <LoaderComponent little={true} /> :(
+                                                item.status
+                                                    ? <i onClick={() => handleBlockModalShow(item)}
+
+                                                         className='fa fa-lock-open text-success hand-cursor'
+                                                    />
+                                                    : <i className='fa fa-lock text-danger hand-cursor'
+                                                         onClick={() => handleBlock(item.id)}
+                                                    />
+                                            )}
+                                        </div>
                                     </div>
                                     <ul className="list-group list-group-unbordered">
                                         <li className="list-group-item">

@@ -18,11 +18,7 @@ import CollectorsCardsComponent from "../components/collectors/CollectorsCardsCo
 import CollectorDetailsContainer from "../containers/collectors/CollectorDetailsContainer";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../redux/collectors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
-import {
-    storeCollectorsRequestReset,
-    storeNextCollectorsRequestReset,
-    storeCollectorStatusToggleRequestReset,
-} from "../redux/requests/collectors/actions";
+import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../redux/requests/collectors/actions";
 
 // Component
 function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, dispatch, location}) {
@@ -59,10 +55,10 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorsRequestReset());
         dispatch(storeAllZonesRequestReset());
-        dispatch(storeNextCollectorsRequestReset());
+        dispatch(storeCollectorsRequestReset());
         dispatch(storeAllOperatorsRequestReset());
+        dispatch(storeNextCollectorsRequestReset());
         dispatch(storeCollectorStatusToggleRequestReset());
     };
 
