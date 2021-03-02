@@ -1,23 +1,20 @@
 import PropTypes from "prop-types";
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
-import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import * as constants from "../../constants/defaultConstants";
 import {emitNewCollector} from "../../redux/collectors/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
-import {dataToArrayForSelect, mappedZones} from "../../functions/arrayFunctions";
-import {storeAddCollectorRequestReset} from "../../redux/requests/collectors/actions";
+import {storeAddManagerRequestReset} from "../../redux/requests/managers/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handleClose}) {
+function ManagerNewComponent({request, dispatch, handleClose}) {
     // Local state
-    const [zone, setZone] = useState(constants.DEFAULT_FORM_DATA);
     const [name, setName] = useState(constants.DEFAULT_FORM_DATA);
     const [phone, setPhone] = useState(constants.DEFAULT_FORM_DATA);
     const [email, setEmail] = useState(constants.DEFAULT_FORM_DATA);
@@ -68,19 +65,9 @@ function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handle
         setDescription({...description, isValid: true, data})
     }
 
-    const handleZoneSelect = (data) => {
-        shouldResetErrorData();
-        setZone({...zone, isValid: true, data})
-    }
-
-    // Build select options
-    const zoneSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedZones(zones))
-    }, [zones]);
-
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddCollectorRequestReset());
+        dispatch(storeAddManagerRequestReset());
     };
 
     // Trigger new agent form submit
@@ -89,17 +76,14 @@ function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handle
         shouldResetErrorData();
         const _phone = phoneChecker(phone);
         const _name = requiredChecker(name);
-        const _zone = requiredChecker(zone);
         // Set value
         setName(_name);
-        setZone(_zone);
         setPhone(_phone);
-        const validationOK = (_name.isValid && _phone.isValid && _zone.isValid);
+        const validationOK = (_name.isValid && _phone.isValid);
         // Check
         if(validationOK)
             dispatch(emitNewCollector({
                 name: _name.data,
-                zone: _zone.data,
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
@@ -113,7 +97,6 @@ function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handle
     return (
         <div>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
-            {requestFailed(allZonesRequests) && <ErrorAlertComponent message={allZonesRequests.message} />}
             <div className="row">
                 <div className="col">
                     <form onSubmit={handleSubmit}>
@@ -142,16 +125,6 @@ function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handle
                                                 input={email}
                                                 id='inputEmail'
                                                 handleInput={handleEmailInput}
-                                />
-                            </div>
-                            <div className='col-sm-6'>
-                                <SelectComponent label='Zone'
-                                                 input={zone}
-                                                 id='inputZone'
-                                                 title='Choisir une zone'
-                                                 options={zoneSelectOptions}
-                                                 handleInput={handleZoneSelect}
-                                                 requestProcessing={requestLoading(allZonesRequests)}
                                 />
                             </div>
                         </div>
@@ -183,11 +156,9 @@ function ManagerNewComponent({zones, request, allZonesRequests, dispatch, handle
 
 // Prop types to ensure destroyed props data type
 ManagerNewComponent.propTypes = {
-    zones: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    handleClose: PropTypes.func.isRequired,
-    allZonesRequests: PropTypes.object.isRequired,
+    handleClose: PropTypes.func.isRequired
 };
 
 export default React.memo(ManagerNewComponent);

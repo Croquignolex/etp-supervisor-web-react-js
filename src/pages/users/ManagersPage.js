@@ -9,6 +9,7 @@ import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
+import ManagerNewContainer from "../../containers/managers/ManagerNewContainer";
 import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
 import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
@@ -157,7 +158,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                  handleClose={handleBlockModalHide}
             />
             <FormModalComponent modal={newManagerModal} handleClose={handleNewManagerModalHide}>
-                {/*<ManagerNewContainer type={newManagerModal.type} handleClose={handleNewManagerModalHide} />*/}
+                <ManagerNewContainer type={newManagerModal.type} handleClose={handleNewManagerModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={managerDetailsModal} handleClose={handleManagerDetailsModalHide}>
                 {/*<ManagerDetailsContainer id={managerDetailsModal.id} />*/}
