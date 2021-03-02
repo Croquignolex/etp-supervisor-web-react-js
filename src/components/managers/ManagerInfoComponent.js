@@ -3,26 +3,12 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
-import CollectorInfoEditContainer from "../../containers/collectors/CollectorInfoEditContainer";
-import CollectorZoneEditContainer from "../../containers/collectors/CollectorZoneEditContainer";
+import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
 
 // Component
-function ManagerInfoComponent({collector}) {
+function ManagerInfoComponent({manager}) {
     // Local states
-    const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
-    const [zoneEditModal, setZoneEditModal] = useState({show: false, header: 'MODIFIER LA ZONE DE ' + collector.name});
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + collector.name});
-
-    // Show zone edit modal form
-    const handleZoneEditModalShow = () => {
-        setZoneEditModal({...zoneEditModal, show: true})
-    }
-
-    // Hide zone edit modal form
-    const handleZoneEditModalHide = () => {
-        setZoneEditModal({...zoneEditModal, show: false})
-    }
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -34,25 +20,17 @@ function ManagerInfoComponent({collector}) {
         setInfoEditModal({...infoEditModal, show: false})
     }
 
-    // Hide zone details modal form
-    const handleZoneDetailModalHide = () => {
-        setZoneDetailsModal({...zoneDetailsModal, show: false})
-    }
-
     // Render
     return (
         <>
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleZoneEditModalShow}>
-                <i className="fa fa-pencil" /> Modifier la zone
-            </button>
             <div className="card">
                 <div className="card-header bg-secondary">
-                    <h3 className="card-title">{collector.name}</h3>
+                    <h3 className="card-title">{manager.name}</h3>
                     <div className="card-tools">
-                        {collector.status
+                        {manager.status
                             ?  <span className="badge badge-success">Activé</span>
                             :  <span className="badge badge-danger">Bloqué</span>
                         }
@@ -60,58 +38,43 @@ function ManagerInfoComponent({collector}) {
                 </div>
                 <div className="card-body">
                     <div className="text-center mb-2">
-                        <img src={collector.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <img src={manager.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
                     </div>
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(collector.creation)}</span>
+                            <span className="float-right">{dateToString(manager.creation)}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Nom</b>
-                            <span className="float-right">{collector.name}</span>
+                            <span className="float-right">{manager.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Téléphone</b>
-                            <span className="float-right">{collector.phone}</span>
+                            <span className="float-right">{manager.phone}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Email</b>
-                            <span className="float-right">{collector.email}</span>
+                            <span className="float-right">{manager.email}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Solde total</b>
-                            <span className="float-right text-success text-bold">{formatNumber(collector.account.balance)}</span>
-                        </li>
-                        <li className="list-group-item">
-                            <b>Zone</b>
-                            <span className="float-right">
-                                {collector.zone.name}
-                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: collector.zone.id})}
-                                />
-                            </span>
+                            <span className="float-right text-success text-bold">{formatNumber(manager.account.balance)}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Adresse</b>
-                            <p>{collector.address}</p>
+                            <p>{manager.address}</p>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>
-                            <p>{collector.description}</p>
+                            <p>{manager.description}</p>
                         </li>
                     </ul>
                 </div>
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <CollectorInfoEditContainer handleClose={handleInfoEditModalHide} />
-            </FormModalComponent>
-            <FormModalComponent modal={zoneEditModal} handleClose={handleZoneEditModalHide}>
-                <CollectorZoneEditContainer handleClose={handleZoneEditModalHide} />
-            </FormModalComponent>
-            <FormModalComponent modal={zoneDetailsModal} handleClose={handleZoneDetailModalHide}>
-                <ZoneDetailsContainer id={zoneDetailsModal.id} />
+                <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
     )
@@ -119,7 +82,7 @@ function ManagerInfoComponent({collector}) {
 
 // Prop types to ensure destroyed props data type
 ManagerInfoComponent.propTypes = {
-    collector: PropTypes.object.isRequired
+    manager: PropTypes.object.isRequired
 };
 
 export default React.memo(ManagerInfoComponent);

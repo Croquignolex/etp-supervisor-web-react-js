@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import CollectorInfoEditComponent from "../../components/collectors/CollectorInfoEditComponent";
+import ManagerInfoEditComponent from "../../components/managers/ManagerInfoEditComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    collector: state.collectors.current,
-    request: state.collectorsRequests.edit.info,
+    manager: state.managers.current,
+    request: state.managersRequests.edit.info,
 });
 
 // Map dispatch function to component props
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(CollectorInfoEditComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerInfoEditComponent);

@@ -7,18 +7,18 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
+import {emitUpdateManagerInfo} from "../../redux/managers/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {emitUpdateCollectorInfo} from "../../redux/collectors/actions";
-import {storeCollectorEditInfoRequestReset} from "../../redux/requests/collectors/actions";
+import {storeManagerEditInfoRequestReset} from "../../redux/requests/managers/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ManagerInfoEditComponent({request, collector, dispatch, handleClose}) {
+function ManagerInfoEditComponent({request, manager, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: collector.name});
-    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: collector.email});
-    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: collector.address});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: collector.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: manager.name});
+    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: manager.email});
+    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: manager.address});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: manager.description});
 
     // Local effects
     useEffect(() => {
@@ -41,7 +41,7 @@ function ManagerInfoEditComponent({request, collector, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorEditInfoRequestReset());
+        dispatch(storeManagerEditInfoRequestReset());
     };
 
     const handleNameInput = (data) => {
@@ -74,8 +74,8 @@ function ManagerInfoEditComponent({request, collector, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateCollectorInfo({
-                id: collector.id,
+            dispatch(emitUpdateManagerInfo({
+                id: manager.id,
                 name: _name.data,
                 email: email.data,
                 address: address.data,
@@ -136,7 +136,7 @@ function ManagerInfoEditComponent({request, collector, dispatch, handleClose}) {
 ManagerInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    collector: PropTypes.object.isRequired,
+    manager: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 

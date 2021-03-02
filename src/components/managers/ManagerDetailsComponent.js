@@ -3,17 +3,16 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import CollectorInfoComponent from "./ManagerInfoComponent";
-import {emitCollectorFetch} from "../../redux/collectors/actions";
-import CollectorSimsListComponent from "./CollectorSimsListComponent";
+import ManagerInfoComponent from "./ManagerInfoComponent";
+import {emitManagerFetch} from "../../redux/managers/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeCollectorRequestReset} from "../../redux/requests/collectors/actions";
+import {storeManagerRequestReset} from "../../redux/requests/managers/actions";
 
 // Component
-function ManagerDetailsComponent({id, collector, dispatch, request}) {
+function ManagerDetailsComponent({id, manager, dispatch, request}) {
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorFetch({id}));
+        dispatch(emitManagerFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -23,7 +22,7 @@ function ManagerDetailsComponent({id, collector, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorRequestReset());
+        dispatch(storeManagerRequestReset());
     };
 
     // Render
@@ -33,10 +32,7 @@ function ManagerDetailsComponent({id, collector, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <CollectorInfoComponent collector={collector} />
-                        </div>
-                        <div className="col-lg-12 col-md-12">
-                            <CollectorSimsListComponent collector={collector} />
+                            <ManagerInfoComponent manager={manager} />
                         </div>
                     </div>
                 )
@@ -50,7 +46,7 @@ ManagerDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    collector: PropTypes.object.isRequired,
+    manager: PropTypes.object.isRequired,
 };
 
 export default React.memo(ManagerDetailsComponent);
