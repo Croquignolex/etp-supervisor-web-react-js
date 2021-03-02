@@ -21,9 +21,7 @@ function SideBarComponent({user, pathname}) {
             // buildRequestsMenu(),
             // buildOperationsMenu(),
             // buildRecoveriesMenu(),
-            // buildUsersMenu(),
-            buildAgentsMenu(),
-            buildCollectorsMenu(),
+            buildUsersMenu(),
             buildZonesMenu(),
             buildSimsMenu(),
             buildCompaniesMenu(),
@@ -172,27 +170,20 @@ function buildRecoveriesMenu() {
             {name: page.RECOVERIES_CASH_PAGE, path: path.RECOVERIES_CASH_PAGE_PATH},
             {name: page.RECOVERIES_FLEET_PAGE, path: path.RECOVERIES_FLEETS_PAGE_PATH},
         ]
+    };
+}
+
+// Build users menu
+function buildUsersMenu() {
+    return {
+        name: page.USERS,
+        icon: 'fa fa-users',
+        sub: [
+            {name: page.MANAGERS, path: path.MANAGERS_PAGE_PATH},
+            {name: page.COLLECTORS, path: path.COLLECTORS_PAGE_PATH},
+            {name: page.AGENTS, path: path.AGENTS_PAGE_PATH},
+        ]
     }
-}
-
-// Build agents menu
-function buildAgentsMenu() {
-    return {
-        name: page.AGENTS,
-        path: path.AGENTS_PAGE_PATH,
-        icon: 'fa fa-user-cog',
-        sub: []
-    };
-}
-
-// Build collectors menu
-function buildCollectorsMenu() {
-    return {
-        name: page.COLLECTORS,
-        path: path.COLLECTORS_PAGE_PATH,
-        icon: 'fa fa-user-clock',
-        sub: []
-    };
 }
 
 // Build corporates menu

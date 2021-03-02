@@ -8,6 +8,7 @@ export const NOTIFICATIONS_PAGE_PATH = "/notifications";
 export const SIMS_PAGE_PATH = "/sims";
 export const ZONES_PAGE_PATH = "/zones";
 export const AGENTS_PAGE_PATH = "/agents";
+export const MANAGERS_PAGE_PATH = "/managers";
 export const COMPANIES_PAGE_PATH = "/companies";
 export const RESOURCES_PAGE_PATH = "/resources";
 export const OPERATORS_PAGE_PATH = "/operators";
