@@ -9,12 +9,8 @@ const initialState = {
     hasMoreData: false,
 
     current: {
-        id: '', name: '', address: '',
-        salePoint: '', frontIDCard: '', backIDCard: '',
-        description: '', phone: '', email: '', creation: '',
-        avatar: '', status: '', reference: '', town: '', country: '',
+        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
-        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
@@ -65,7 +61,7 @@ function reduce(state = initialState, action) {
                 })
             };
             return nextState || state;
-        // Resolve event to set sim action data
+        // Resolve event to set collector action data
         case actions.STORE_SET_COLLECTOR_ACTION_DATA:
             nextState = {
                 ...state,
