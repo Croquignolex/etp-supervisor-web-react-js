@@ -59,15 +59,12 @@ export const COLLECTOR_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_user`;
 export const TOGGLE_COLLECTOR_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 
 // Managers
-export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
 export const MANAGERS_API_PATH = `${API_URL}/gestionnaires`;
-export const TOGGLE_MANAGER_STATUS_API_PATH = `${API_URL}/edit_user_status`;
-export const CREATE_MANAGER_API_PATH = `${API_URL}/create_gestionnaire`;
-
-
-
 export const EDIT_MANAGER_API_PATH = `${API_URL}/edit_user`;
 export const MANAGER_DETAILS_API_PATH = `${API_URL}/details_user`;
+export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
+export const CREATE_MANAGER_API_PATH = `${API_URL}/create_gestionnaire`;
+export const TOGGLE_MANAGER_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;

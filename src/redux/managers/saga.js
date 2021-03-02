@@ -5,39 +5,44 @@ import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
 import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_MANAGER,
+    EMIT_MANAGER_FETCH,
+    storeSetManagerData,
     EMIT_MANAGERS_FETCH,
     storeSetManagersData,
+    storeSetNewManagerData,
     EMIT_ALL_MANAGERS_FETCH,
     EMIT_NEXT_MANAGERS_FETCH,
     storeSetNextManagersData,
+    EMIT_UPDATE_MANAGER_INFO,
     storeSetManagerActionData,
     storeSetManagerToggleData,
     EMIT_TOGGLE_MANAGER_STATUS,
-    storeStopInfiniteScrollManagerData, EMIT_NEW_MANAGER, storeSetNewManagerData
+    storeStopInfiniteScrollManagerData
 } from "./actions";
 import {
+    storeManagerRequestInit,
     storeManagersRequestInit,
+    storeManagerRequestFailed,
+    storeAddManagerRequestInit,
     storeManagersRequestFailed,
+    storeManagerRequestSucceed,
     storeManagersRequestSucceed,
     storeAllManagersRequestInit,
     storeNextManagersRequestInit,
+    storeAddManagerRequestFailed,
     storeAllManagersRequestFailed,
+    storeAddManagerRequestSucceed,
     storeAllManagersRequestSucceed,
     storeNextManagersRequestFailed,
+    storeManagerEditInfoRequestInit,
     storeNextManagersRequestSucceed,
+    storeManagerEditInfoRequestFailed,
+    storeManagerEditInfoRequestSucceed,
     storeManagerStatusToggleRequestInit,
     storeManagerStatusToggleRequestFailed,
-    storeManagerStatusToggleRequestSucceed,
-    storeAddManagerRequestInit,
-    storeAddManagerRequestSucceed,
-    storeAddManagerRequestFailed
+    storeManagerStatusToggleRequestSucceed
 } from "../requests/managers/actions";
-import {EMIT_NEW_COLLECTOR, storeSetNewCollectorData} from "../collectors/actions";
-import {
-    storeAddCollectorRequestFailed,
-    storeAddCollectorRequestInit,
-    storeAddCollectorRequestSucceed
-} from "../requests/collectors/actions";
 
 // Fetch all managers from API
 export function* emitAllManagersFetch() {
@@ -147,6 +152,53 @@ export function* emitNewManager() {
     });
 }
 
+// Fetch manager from API
+export function* emitManagerFetch() {
+    yield takeLatest(EMIT_MANAGER_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeManagerRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_DETAILS_API_PATH}/${id}`);
+            // Extract data
+            const manager = extractManagerData(
+                apiResponse.data.user,
+                apiResponse.data.caisse,
+            );
+            // Fire event to redux
+            yield put(storeSetManagerData({manager}));
+            // Fire event for request
+            yield put(storeManagerRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeManagerRequestFailed({message}));
+        }
+    });
+}
+
+// Update manager info
+export function* emitUpdateManagerInfo() {
+    yield takeLatest(EMIT_UPDATE_MANAGER_INFO, function*({id, email, name, address, description}) {
+        try {
+            // Fire event for request
+            yield put(storeManagerEditInfoRequestInit());
+            const data = {email, name, adresse: address, description};
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_MANAGER_API_PATH}/${id}`, data);
+            // Extract data
+            const manager = extractManagerData(
+                apiResponse.data.user,
+                apiResponse.data.caisse,
+            );
+            // Fire event to redux
+            yield put(storeSetManagerData({manager, alsoInList: true}));
+            // Fire event for request
+            yield put(storeManagerEditInfoRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeManagerEditInfoRequestFailed({message}));
+        }
+    });
+}
+
 // Extract manager data
 function extractManagerData(apiManager, apiAccount) {
     let manager = {
@@ -195,8 +247,10 @@ function extractManagersData(apiManagers) {
 export default function* sagaManagers() {
     yield all([
         fork(emitNewManager),
+        fork(emitManagerFetch),
         fork(emitManagersFetch),
         fork(emitAllManagersFetch),
+        fork(emitUpdateManagerInfo),
         fork(emitNextManagersFetch),
         fork(emitToggleManagerStatus),
     ]);
