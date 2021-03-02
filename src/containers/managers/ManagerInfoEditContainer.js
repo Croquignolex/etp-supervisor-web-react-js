@@ -5,7 +5,7 @@ import ManagerInfoEditComponent from "../../components/managers/ManagerInfoEditC
 // Map state function to component props
 const mapStateToProps = (state) => ({
     manager: state.managers.current,
-    request: state.managersRequests.edit.info,
+    request: state.managersRequests.edit,
 });
 
 // Map dispatch function to component props

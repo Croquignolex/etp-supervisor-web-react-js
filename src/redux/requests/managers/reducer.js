@@ -121,7 +121,7 @@ function reduce(state = initialState, action) {
         // ======================================================== Manager edit info
         // Resolve event to set manager edit info init request store data
         case actions.STORE_MANAGER_EDIT_INFO_REQUEST_INIT:
-            nextState = {...state, info: requestInitValue()};
+            nextState = {...state, edit: requestInitValue()};
             return nextState || state;
         // Resolve event to set manager edit info failed request store data
         case actions.STORE_MANAGER_EDIT_INFO_REQUEST_FAILED:
