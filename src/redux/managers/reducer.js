@@ -23,22 +23,22 @@ function reduce(state = initialState, action) {
         case actions.STORE_SET_MANAGERS_DATA:
             nextState = {...state, list: action.managers, page: action.page, hasMoreData: action.hasMoreData};
             return nextState || state;
-        // Resolve event to set collector data
+        // Resolve event to set manager data
         case actions.STORE_SET_MANAGER_DATA:
-            nextState = {...state, current: action.collector};
+            nextState = {...state, current: action.manager};
             if(action.alsoInList) {
                 nextState = {
                     ...nextState,
                     list: Lodash.map(nextState.list, (item) => {
-                        if(item.id === action.collector.id) item = action.collector;
+                        if(item.id === action.manager.id) item = action.manager;
                         return item;
                     })
                 };
             }
             return nextState || state;
-        // Resolve event to set new collector data
+        // Resolve event to set new manager data
         case actions.STORE_SET_NEW_MANAGER_DATA:
-            nextState = {...state, list: [action.collector, ...state.list]}
+            nextState = {...state, list: [action.manager, ...state.list]}
             return nextState || state;
         // Resolve event to set next managers data
         case actions.STORE_SET_NEXT_MANAGERS_DATA:
@@ -48,7 +48,7 @@ function reduce(state = initialState, action) {
         case actions.STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA:
             nextState = {...state, hasMoreData: false};
             return nextState || state;
-        // Resolve event to toggle collector status data,
+        // Resolve event to toggle manager status data,
         case actions.STORE_SET_MANAGER_TOGGLE_DATA:
             nextState = {
                 ...state,

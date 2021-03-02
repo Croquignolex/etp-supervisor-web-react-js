@@ -5,8 +5,8 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitNewManager} from "../../redux/managers/actions";
 import * as constants from "../../constants/defaultConstants";
-import {emitNewCollector} from "../../redux/collectors/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAddManagerRequestReset} from "../../redux/requests/managers/actions";
@@ -82,7 +82,7 @@ function ManagerNewComponent({request, dispatch, handleClose}) {
         const validationOK = (_name.isValid && _phone.isValid);
         // Check
         if(validationOK)
-            dispatch(emitNewCollector({
+            dispatch(emitNewManager({
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,

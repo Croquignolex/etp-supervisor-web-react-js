@@ -95,9 +95,8 @@ export const emitToggleManagerStatus = ({id}) => ({
 });
 
 // Emit new manager fetch
-export const emitNewManager = ({name, address, phone, zone, email, password,  description}) => ({
+export const emitNewManager = ({name, address, phone, email, password,  description}) => ({
     name,
-    zone,
     phone,
     email,
     address,
