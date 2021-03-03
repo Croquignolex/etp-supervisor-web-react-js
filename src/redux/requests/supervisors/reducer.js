@@ -8,132 +8,96 @@ const initialState = {
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
-    edit: {failed: false, loading: false, succeeded: false, message: ""},
-    status: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
 function reduce(state = initialState, action) {
     let nextState;
     switch (action.type) {
-        // ======================================================== Managers
-        // Resolve event to set managers init request store data
-        case actions.STORE_MANAGERS_REQUEST_INIT:
+        // ======================================================== Supervisors
+        // Resolve event to set supervisors init request store data
+        case actions.STORE_SUPERVISORS_REQUEST_INIT:
             nextState = {...state, list: requestInitValue()};
             return nextState || state;
-        // Resolve event to set managers failed request store data
-        case actions.STORE_MANAGERS_REQUEST_FAILED:
+        // Resolve event to set supervisors failed request store data
+        case actions.STORE_SUPERVISORS_REQUEST_FAILED:
             nextState = {...state, list: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set managers succeeded request store data
-        case actions.STORE_MANAGERS_REQUEST_SUCCEEDED:
+        // Resolve event to set supervisors succeeded request store data
+        case actions.STORE_SUPERVISORS_REQUEST_SUCCEEDED:
             nextState = {...state, list: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set managers reset request store data
-        case actions.STORE_MANAGERS_REQUEST_RESET:
+        // Resolve event to set supervisors reset request store data
+        case actions.STORE_SUPERVISORS_REQUEST_RESET:
             nextState = {...state, list: initialState.list};
             return nextState || state;
-        // ======================================================== Next managers
-        // Resolve event to set next managers init request store data
-        case actions.STORE_NEXT_MANAGERS_REQUEST_INIT:
+        // ======================================================== Next supervisors
+        // Resolve event to set next supervisors init request store data
+        case actions.STORE_NEXT_SUPERVISORS_REQUEST_INIT:
             nextState = {...state, next: requestInitValue()};
             return nextState || state;
-        // Resolve event to set next managers failed request store data
-        case actions.STORE_NEXT_MANAGERS_REQUEST_FAILED:
+        // Resolve event to set next supervisors failed request store data
+        case actions.STORE_NEXT_SUPERVISORS_REQUEST_FAILED:
             nextState = {...state, next: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set next managers succeeded request store data
-        case actions.STORE_NEXT_MANAGERS_REQUEST_SUCCEEDED:
+        // Resolve event to set next supervisors succeeded request store data
+        case actions.STORE_NEXT_SUPERVISORS_REQUEST_SUCCEEDED:
             nextState = {...state, next: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set next managers reset request store data
-        case actions.STORE_NEXT_MANAGERS_REQUEST_RESET:
+        // Resolve event to set next supervisors reset request store data
+        case actions.STORE_NEXT_SUPERVISORS_REQUEST_RESET:
             nextState = {...state, next: initialState.next};
             return nextState || state;
-        // ======================================================== All managers
-        // Resolve event to set all managers init request store data
-        case actions.STORE_ALL_MANAGERS_REQUEST_INIT:
+        // ======================================================== All supervisors
+        // Resolve event to set all supervisors init request store data
+        case actions.STORE_ALL_SUPERVISORS_REQUEST_INIT:
             nextState = {...state, all: requestInitValue()};
             return nextState || state;
-        // Resolve event to set all managers failed request store data
-        case actions.STORE_ALL_MANAGERS_REQUEST_FAILED:
+        // Resolve event to set all supervisors failed request store data
+        case actions.STORE_ALL_SUPERVISORS_REQUEST_FAILED:
             nextState = {...state, all: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set all managers succeeded request store data
-        case actions.STORE_ALL_MANAGERS_REQUEST_SUCCEEDED:
+        // Resolve event to set all supervisors succeeded request store data
+        case actions.STORE_ALL_SUPERVISORS_REQUEST_SUCCEEDED:
             nextState = {...state, all: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set all managers reset request store data
-        case actions.STORE_ALL_MANAGERS_REQUEST_RESET:
+        // Resolve event to set all supervisors reset request store data
+        case actions.STORE_ALL_SUPERVISORS_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
             return nextState || state;
-        // ======================================================== Add manager
-        // Resolve event to set add manager init request store data
-        case actions.STORE_ADD_MANAGER_REQUEST_INIT:
+        // ======================================================== Add supervisor
+        // Resolve event to set add supervisor init request store data
+        case actions.STORE_ADD_SUPERVISOR_REQUEST_INIT:
             nextState = {...state, add: requestInitValue()};
             return nextState || state;
-        // Resolve event to set add manager failed request store data
-        case actions.STORE_ADD_MANAGER_REQUEST_FAILED:
+        // Resolve event to set add supervisor failed request store data
+        case actions.STORE_ADD_SUPERVISOR_REQUEST_FAILED:
             nextState = {...state, add: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set add manager succeeded request store data
-        case actions.STORE_ADD_MANAGER_REQUEST_SUCCEEDED:
+        // Resolve event to set add supervisor succeeded request store data
+        case actions.STORE_ADD_SUPERVISOR_REQUEST_SUCCEEDED:
             nextState = {...state, add: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set add manager reset request store data
-        case actions.STORE_ADD_MANAGER_REQUEST_RESET:
+        // Resolve event to set add supervisor reset request store data
+        case actions.STORE_ADD_SUPERVISOR_REQUEST_RESET:
             nextState = {...state, add: initialState.add};
             return nextState || state;
-        // ======================================================== Manager
-        // Resolve event to set manager init request store data
-        case actions.STORE_MANAGER_REQUEST_INIT:
+        // ======================================================== Supervisor
+        // Resolve event to set supervisor init request store data
+        case actions.STORE_SUPERVISOR_REQUEST_INIT:
             nextState = {...state, show: requestInitValue()};
             return nextState || state;
-        // Resolve event to set manager failed request store data
-        case actions.STORE_MANAGER_REQUEST_FAILED:
+        // Resolve event to set supervisor failed request store data
+        case actions.STORE_SUPERVISOR_REQUEST_FAILED:
             nextState = {...state, show: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set manager succeeded request store data
-        case actions.STORE_MANAGER_REQUEST_SUCCEEDED:
+        // Resolve event to set supervisor succeeded request store data
+        case actions.STORE_SUPERVISOR_REQUEST_SUCCEEDED:
             nextState = {...state, show: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set manager reset request store data
-        case actions.STORE_MANAGER_REQUEST_RESET:
+        // Resolve event to set supervisor reset request store data
+        case actions.STORE_SUPERVISOR_REQUEST_RESET:
             nextState = {...state, show: initialState.show};
-            return nextState || state;
-        // ======================================================== Manager status toggle
-        // Resolve event to set manager status toggle init request store data
-        case actions.STORE_MANAGER_STATUS_TOGGLE_REQUEST_INIT:
-            nextState = {...state, status: requestInitValue()};
-            return nextState || state;
-        // Resolve event to set manager status toggle failed request store data
-        case actions.STORE_MANAGER_STATUS_TOGGLE_REQUEST_FAILED:
-            nextState = {...state, status: requestFailedValue(action.message)};
-            return nextState || state;
-        // Resolve event to set manager status toggle succeeded request store data
-        case actions.STORE_MANAGER_STATUS_TOGGLE_REQUEST_SUCCEEDED:
-            nextState = {...state, status: requestSucceededValue(action.message)};
-            return nextState || state;
-        // Resolve event to set manager status toggle reset request store data
-        case actions.STORE_MANAGER_STATUS_TOGGLE_REQUEST_RESET:
-            nextState = {...state, status: initialState.status};
-            return nextState || state;
-        // ======================================================== Manager edit info
-        // Resolve event to set manager edit info init request store data
-        case actions.STORE_MANAGER_EDIT_INFO_REQUEST_INIT:
-            nextState = {...state, edit: requestInitValue()};
-            return nextState || state;
-        // Resolve event to set manager edit info failed request store data
-        case actions.STORE_MANAGER_EDIT_INFO_REQUEST_FAILED:
-            nextState = {...state, edit: requestFailedValue(action.message)};
-            return nextState || state;
-        // Resolve event to set manager edit info succeeded request store data
-        case actions.STORE_MANAGER_EDIT_INFO_REQUEST_SUCCEEDED:
-            nextState = {...state, edit: requestSucceededValue(action.message)};
-            return nextState || state;
-        // Resolve event to set manager edit info reset request store data
-        case actions.STORE_MANAGER_EDIT_INFO_REQUEST_RESET:
-            nextState = {...state, edit: initialState.edit};
             return nextState || state;
         // ========================================================
         // Unknown action
