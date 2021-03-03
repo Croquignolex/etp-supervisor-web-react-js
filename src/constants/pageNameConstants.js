@@ -13,6 +13,7 @@ export const SIMS_PAGE = 'Puces';
 export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
 export const OPERATORS = 'Opérateurs';
+export const ADMINS = 'Administrateurs';
 export const AGENTS = 'Agents/Resources';
 export const SUPERVISORS = 'Superviseurs';
 export const MANAGERS = 'Gestionnaires...';

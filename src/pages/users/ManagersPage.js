@@ -100,7 +100,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Gestinnaires de flottes" icon={'fa fa-user-work'} />
+                    <HeaderComponent title="Gestinnaires de flottes" icon={'fa fa-user-tag'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">

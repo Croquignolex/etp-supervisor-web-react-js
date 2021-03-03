@@ -12,6 +12,7 @@ export const OPERATORS_PAGE_PATH = "/operators";
 
 // Users
 export const AGENTS_PAGE_PATH = "/users/agents";
+export const ADMINS_PAGE_PATH = "/users/admins";
 export const MANAGERS_PAGE_PATH = "/users/managers";
 export const COLLECTORS_PAGE_PATH = "/users/collectors";
 export const SUPERVISORS_PAGE_PATH = "/users/supervisors";
