@@ -1,18 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 
-import LoaderComponent from "../LoaderComponent";
-import FormModalComponent from "../modals/FormModalComponent";
-import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
+import LoaderComponent from "../LoaderComponent"; 
+import {dateToString, formatNumber} from "../../functions/generalFunctions"; 
 
 // Component
-function SupervisorsCardsComponent({managers, handleBlock, handleBlockModalShow, handleManagerDetailsModalShow}) {
+function SupervisorsCardsComponent({supervisors, handleBlock, handleBlockModalShow, handleSupervisorDetailsModalShow}) {
     // Render
     return (
         <>
             <div className="row m-1">
-                {managers.map((item, key) => {
+                {supervisors.map((item, key) => {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
@@ -22,7 +20,7 @@ function SupervisorsCardsComponent({managers, handleBlock, handleBlockModalShow,
                                         <button type="button"
                                                 title="Détails"
                                                 className=" btn-tool btn"
-                                                onClick={() => handleManagerDetailsModalShow(item)}
+                                                onClick={() => handleSupervisorDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" />
                                         </button>
@@ -63,10 +61,10 @@ function SupervisorsCardsComponent({managers, handleBlock, handleBlockModalShow,
                         </div>
                     )
                 })}
-                {managers.length === 0 &&
+                {supervisors.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas de gestionnaires de flottes
+                            Pas de superviseurs
                         </div>
                     </div>
                 }
@@ -77,10 +75,10 @@ function SupervisorsCardsComponent({managers, handleBlock, handleBlockModalShow,
 
 // Prop types to ensure destroyed props data type
 SupervisorsCardsComponent.propTypes = {
-    managers: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
+    supervisors: PropTypes.array.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
-    handleManagerDetailsModalShow: PropTypes.func.isRequired,
+    handleSupervisorDetailsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(SupervisorsCardsComponent);

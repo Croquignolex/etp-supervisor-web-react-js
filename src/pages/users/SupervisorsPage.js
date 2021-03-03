@@ -2,31 +2,28 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import {SUPERVISORS} from "../../constants/pageNameConstants";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
-import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import ManagerNewContainer from "../../containers/managers/ManagerNewContainer";
-import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
-import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsContainer";
-import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
-import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
+import SupervisorsCardsComponent from "../../components/supervisors/SupervisorsCardsComponent";
+import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/supervisors/actions";
+import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
+import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function SupervisorsPage({managers, managersRequests, hasMoreData, page, dispatch, location}) {
+function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
-    const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
-    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+    const [newSupervisorModal, setNewSupervisorModal] = useState({show: false, header: ''});
+    const [supervisorDetailsModal, setSupervisorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitManagersFetch());
+        dispatch(emitSupervisorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -34,73 +31,47 @@ function SupervisorsPage({managers, managersRequests, hasMoreData, page, dispatc
         // eslint-disable-next-line
     }, []);
 
-    // Local effects
-    useEffect(() => {
-        // Reset inputs while toast (well done) into current scope
-        if(requestSucceeded(managersRequests.status)) {
-            applySuccess(managersRequests.status.message);
-        }
-        // eslint-disable-next-line
-    }, [managersRequests.status]);
-
     const handleNeedleInput = (data) => {
         setNeedle(data)
     }
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeManagersRequestReset());
-        dispatch(storeNextManagersRequestReset());
-        dispatch(storeManagerStatusToggleRequestReset());
+        dispatch(storeSupervisorsRequestReset());
+        dispatch(storeNextSupervisorsRequestReset());
     };
 
-    // Fetch next manager data to enhance infinite scroll
-    const handleNextManagersData = () => {
-        dispatch(emitNextManagersFetch({page}));
+    // Fetch next supervisor data to enhance infinite scroll
+    const handleNextSupervisorsData = () => {
+        dispatch(emitNextSupervisorsFetch({page}));
     }
 
-    // Show new manager modal form
-    const handleNewManagerModalShow = () => {
-        setNewManagerModal({newManagerModal, header: "NOUVELLE GESTIONNAIRE DE FLOTTE", show: true})
+    // Show new supervisor modal form
+    const handleNewSupervisorModalShow = () => {
+        setNewSupervisorModal({newSupervisorModal, header: "NOUVEAU SUPERVISEUR", show: true})
     }
 
-    // Hide new manager modal form
-    const handleNewManagerModalHide = () => {
-        setNewManagerModal({...newManagerModal, show: false})
+    // Hide new supervisor modal form
+    const handleNewSupervisorModalHide = () => {
+        setNewSupervisorModal({...newSupervisorModal, show: false})
     }
 
-    // Show manager details modal form
-    const handleManagerDetailsModalShow = ({id}) => {
-        setManagerDetailsModal({...managerDetailsModal, show: true, id})
+    // Show supervisor details modal form
+    const handleSupervisorDetailsModalShow = ({id}) => {
+        setSupervisorDetailsModal({...supervisorDetailsModal, show: true, id})
     }
 
-    // Hide manager details modal form
-    const handleManagerDetailsModalHide = () => {
-        setManagerDetailsModal({...managerDetailsModal, show: false})
+    // Hide supervisor details modal form
+    const handleSupervisorDetailsModalHide = () => {
+        setSupervisorDetailsModal({...supervisorDetailsModal, show: false})
     }
-
-    // Trigger when user block status confirmed on modal
-    const handleBlockModalShow = ({id, name}) => {
-        setBlockModal({...blockModal, show: true, id, body: `Bloquer la gestionnaire de flotte ${name}?`})
-    };
-
-    // Hide block confirmation modal
-    const handleBlockModalHide = () => {
-        setBlockModal({...blockModal, show: false})
-    }
-
-    // Trigger when user change status confirmed on modal
-    const handleBlock = (id) => {
-        handleBlockModalHide();
-        dispatch(emitToggleManagerStatus({id}));
-    };
 
     // Render
     return (
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Gestinnaires de flottes" icon={'fa fa-user-work'} />
+                    <HeaderComponent title={SUPERVISORS} icon={'fa fa-user-work'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -114,33 +85,28 @@ function SupervisorsPage({managers, managersRequests, hasMoreData, page, dispatc
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(managersRequests.list) && <ErrorAlertComponent message={managersRequests.list.message} />}
-                                            {requestFailed(managersRequests.next) && <ErrorAlertComponent message={managersRequests.next.message} />}
-                                            {requestFailed(managersRequests.status) && <ErrorAlertComponent message={managersRequests.status.message} />}
+                                            {requestFailed(supervisorsRequests.list) && <ErrorAlertComponent message={supervisorsRequests.list.message} />}
+                                            {requestFailed(supervisorsRequests.next) && <ErrorAlertComponent message={supervisorsRequests.next.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mr-2 mb-2"
-                                                    onClick={handleNewManagerModalShow}
+                                                    onClick={handleNewSupervisorModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouvelle gestionnaire
+                                                <i className="fa fa-plus" /> Nouveau superviseur
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <ManagersCardsComponent handleBlock={handleBlock}
-                                                                          managers={searchEngine(managers, needle)}
-                                                                          handleBlockModalShow={handleBlockModalShow}
-                                                                          handleManagerDetailsModalShow={handleManagerDetailsModalShow}
+                                                ? <SupervisorsCardsComponent supervisors={searchEngine(supervisors, needle)}
+                                                                             handleSupervisorDetailsModalShow={handleSupervisorDetailsModalShow}
                                                 />
-                                                : (requestLoading(managersRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(supervisorsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={managers.length}
-                                                                        next={handleNextManagersData}
+                                                                        dataLength={supervisors.length}
+                                                                        next={handleNextSupervisorsData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <ManagersCardsComponent managers={managers}
-                                                                                    handleBlock={handleBlock}
-                                                                                    handleBlockModalShow={handleBlockModalShow}
-                                                                                    handleManagerDetailsModalShow={handleManagerDetailsModalShow}
+                                                            <SupervisorsCardsComponent supervisors={supervisors}
+                                                                                       handleSupervisorDetailsModalShow={handleSupervisorDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -154,15 +120,11 @@ function SupervisorsPage({managers, managersRequests, hasMoreData, page, dispatc
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
-            <BlockModalComponent modal={blockModal}
-                                 handleBlock={handleBlock}
-                                 handleClose={handleBlockModalHide}
-            />
-            <FormModalComponent modal={newManagerModal} handleClose={handleNewManagerModalHide}>
-                <ManagerNewContainer type={newManagerModal.type} handleClose={handleNewManagerModalHide} />
+            <FormModalComponent modal={newSupervisorModal} handleClose={handleNewSupervisorModalHide}>
+                {/*<SupervisorNewContainer type={newSupervisorModal.type} handleClose={handleNewSupervisorModalHide} />*/}
             </FormModalComponent>
-            <FormModalComponent modal={managerDetailsModal} handleClose={handleManagerDetailsModalHide}>
-                <ManagerDetailsContainer id={managerDetailsModal.id} />
+            <FormModalComponent modal={supervisorDetailsModal} handleClose={handleSupervisorDetailsModalHide}>
+                {/*<SupervisorDetailsContainer id={supervisorDetailsModal.id} />*/}
             </FormModalComponent>
         </>
     )
@@ -191,9 +153,9 @@ SupervisorsPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    managers: PropTypes.array.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    managersRequests: PropTypes.object.isRequired,
+    supervisors: PropTypes.array.isRequired,
+    supervisorsRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(SupervisorsPage);
