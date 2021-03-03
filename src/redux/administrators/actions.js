@@ -1,82 +1,63 @@
 // Reducer action types
-export const STORE_SET_SUPERVISOR_DATA = 'STORE_SET_SUPERVISOR_DATA';
-export const STORE_SET_SUPERVISORS_DATA = 'STORE_SET_SUPERVISORS_DATA';
-export const STORE_SET_NEW_SUPERVISOR_DATA = 'STORE_SET_NEW_SUPERVISOR_DATA';
-export const STORE_SET_NEXT_SUPERVISORS_DATA = 'STORE_SET_NEXT_SUPERVISORS_DATA';
-export const STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA = 'STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA';
+export const STORE_SET_ADMINISTRATOR_DATA = 'STORE_SET_ADMINISTRATOR_DATA';
+export const STORE_SET_ADMINISTRATORS_DATA = 'STORE_SET_ADMINISTRATORS_DATA';
+export const STORE_SET_NEXT_ADMINISTRATORS_DATA = 'STORE_SET_NEXT_ADMINISTRATORS_DATA';
+export const STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA';
 
 // Middleware action types
-export const EMIT_NEW_SUPERVISOR = 'EMIT_NEW_SUPERVISOR';
-export const EMIT_SUPERVISOR_FETCH = 'EMIT_SUPERVISOR_FETCH';
-export const EMIT_SUPERVISORS_FETCH = 'EMIT_SUPERVISORS_FETCH'; 
-export const EMIT_NEXT_SUPERVISORS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
-export const EMIT_ALL_SUPERVISORS_FETCH = 'EMIT_ALL_SUPERVISORS_FETCH'; 
+export const EMIT_ADMINISTRATOR_FETCH = 'EMIT_ADMINISTRATOR_FETCH';
+export const EMIT_ADMINISTRATORS_FETCH = 'EMIT_ADMINISTRATORS_FETCH'; 
+export const EMIT_NEXT_ADMINISTRATORS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
+export const EMIT_ALL_ADMINISTRATORS_FETCH = 'EMIT_ALL_ADMINISTRATORS_FETCH'; 
 
 //====================== Reducer trigger actions
-// Set supervisors data in store
-export const storeSetSupervisorsData = ({supervisors, hasMoreData, page}) => ({
+// Set administrators data in store
+export const storeSetAdministratorsData = ({administrators, hasMoreData, page}) => ({
     page,
-    supervisors,
+    administrators,
     hasMoreData,
-    type: STORE_SET_SUPERVISORS_DATA
+    type: STORE_SET_ADMINISTRATORS_DATA
 });
 
-// Set new supervisor data in store
-export const storeSetNewSupervisorData = ({supervisor}) => ({
-    supervisor,
-    type: STORE_SET_NEW_SUPERVISOR_DATA
-});
-
-// Set supervisor data in store
-export const storeSetSupervisorData = ({supervisor, alsoInList = false}) => ({
-    supervisor,
+// Set administrator data in store
+export const storeSetAdministratorData = ({administrator, alsoInList = false}) => ({
+    administrator,
     alsoInList,
-    type: STORE_SET_SUPERVISOR_DATA
+    type: STORE_SET_ADMINISTRATOR_DATA
 });
 
-// Set next supervisors data in store
-export const storeSetNextSupervisorsData = ({supervisors, hasMoreData, page}) => ({
+// Set next administrators data in store
+export const storeSetNextAdministratorsData = ({administrators, hasMoreData, page}) => ({
     page,
-    supervisors,
+    administrators,
     hasMoreData,
-    type: STORE_SET_NEXT_SUPERVISORS_DATA
+    type: STORE_SET_NEXT_ADMINISTRATORS_DATA
 });
 
 // Stop infinite scroll
-export const storeStopInfiniteScrollSupervisorData = () => ({
-    type: STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA
+export const storeStopInfiniteScrollAdministratorData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA
 });
 
 //====================== Middleware trigger actions
-// Emit supervisors fetch
-export const emitSupervisorsFetch = () => ({
-    type: EMIT_SUPERVISORS_FETCH
+// Emit administrators fetch
+export const emitAdministratorsFetch = () => ({
+    type: EMIT_ADMINISTRATORS_FETCH
 });
 
-// Emit next supervisors fetch
-export const emitNextSupervisorsFetch = ({page}) => ({
+// Emit next administrators fetch
+export const emitNextAdministratorsFetch = ({page}) => ({
     page,
-    type: EMIT_NEXT_SUPERVISORS_FETCH
+    type: EMIT_NEXT_ADMINISTRATORS_FETCH
 });
 
-// Emit all supervisors fetch
-export const emitAllSupervisorsFetch = () => ({
-    type: EMIT_ALL_SUPERVISORS_FETCH
+// Emit all administrators fetch
+export const emitAllAdministratorsFetch = () => ({
+    type: EMIT_ALL_ADMINISTRATORS_FETCH
 });
 
-// Emit supervisor fetch
-export const emitSupervisorFetch = ({id}) => ({
+// Emit administrator fetch
+export const emitAdministratorFetch = ({id}) => ({
     id,
-    type: EMIT_SUPERVISOR_FETCH
-});
- 
-// Emit new supervisor fetch
-export const emitNewSupervisor = ({name, address, phone, email, password,  description}) => ({
-    name,
-    phone,
-    email,
-    address,
-    password,
-    description,
-    type: EMIT_NEW_SUPERVISOR
+    type: EMIT_ADMINISTRATOR_FETCH
 });
