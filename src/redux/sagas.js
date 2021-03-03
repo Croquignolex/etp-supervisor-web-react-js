@@ -18,6 +18,7 @@ import simsTypes from './simsTypes/saga';
 import clearances from './clearances/saga';
 import collectors from './collectors/saga';
 import recoveries from './recoveries/saga';
+import supervisors from './supervisors/saga';
 import notifications from './notifications/saga';
 import networkSupplies from './networkSupplies/saga';
 
@@ -42,6 +43,7 @@ export default function* sagas() {
         clearances(),
         recoveries(),
         collectors(),
+        supervisors(),
         notifications(),
         networkSupplies(),
     ]);

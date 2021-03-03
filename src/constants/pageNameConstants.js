@@ -14,10 +14,10 @@ export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
 export const OPERATORS = 'Opérateurs';
 export const AGENTS = 'Agents/Resources';
+export const SUPERVISORS = 'Superviseurs';
 export const MANAGERS = 'Gestionnaires...';
 export const COLLECTORS = 'Responsables...';
 export const COMPANIES_PAGE = 'Entreprises';
-export const SUPERVISORS = 'Superviseurs...';
 
 // Operations
 export const OPERATIONS = 'Opérations';
