@@ -21,6 +21,7 @@ import userRequests from './requests/user/reducer';
 import simsRequests from './requests/sims/reducer';
 import notifications from './notifications/reducer';
 import zonesRequests from './requests/zones/reducer';
+import administrators from './administrators/reducer';
 import agentsRequests from './requests/agents/reducer';
 import fleetsRequests from './requests/fleets/reducer';
 import networkSupplies from './networkSupplies/reducer';
@@ -39,6 +40,7 @@ import clearancesRequests from './requests/clearances/reducer';
 import recoveriesRequests from './requests/recoveries/reducer';
 import supervisorsRequests from './requests/supervisors/reducer';
 import notificationsRequests from './requests/notifications/reducer';
+import administratorsRequests from './requests/administrators/reducer';
 import networkSuppliesRequests from './requests/networkSupplies/reducer';
 
 // Combine all reducers
@@ -68,6 +70,7 @@ export default {
     notifications,
     fleetsRequests,
     agentsRequests,
+    administrators,
     networkSupplies,
     returnsRequests,
     refuelsRequests,
@@ -84,5 +87,6 @@ export default {
     collectorsRequests,
     supervisorsRequests,
     notificationsRequests,
+    administratorsRequests,
     networkSuppliesRequests,
 };
