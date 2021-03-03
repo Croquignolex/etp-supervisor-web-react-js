@@ -7,12 +7,14 @@ export const NOTIFICATIONS_PAGE_PATH = "/notifications";
 // Commons
 export const SIMS_PAGE_PATH = "/sims";
 export const ZONES_PAGE_PATH = "/zones";
-export const AGENTS_PAGE_PATH = "/agents";
-export const MANAGERS_PAGE_PATH = "/managers";
 export const COMPANIES_PAGE_PATH = "/companies";
-export const RESOURCES_PAGE_PATH = "/resources";
 export const OPERATORS_PAGE_PATH = "/operators";
-export const COLLECTORS_PAGE_PATH = "/collectors";
+
+// Users
+export const AGENTS_PAGE_PATH = "/users/agents";
+export const MANAGERS_PAGE_PATH = "/users/managers";
+export const COLLECTORS_PAGE_PATH = "/users/collectors";
+export const SUPERVISORS_PAGE_PATH = "/users/supervisors";
 
 // Operations
 export const OPERATIONS_FLEETS_PAGE_PATH = "/operations/fleets";

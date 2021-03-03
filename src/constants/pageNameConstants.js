@@ -17,6 +17,7 @@ export const AGENTS = 'Agents/Resources';
 export const MANAGERS = 'Gestionnaires...';
 export const COLLECTORS = 'Responsables...';
 export const COMPANIES_PAGE = 'Entreprises';
+export const SUPERVISORS = 'Superviseurs...';
 
 // Operations
 export const OPERATIONS = 'Opérations';
