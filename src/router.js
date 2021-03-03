@@ -36,6 +36,7 @@ function AppRoutes({history}) {
                 <RestrictedRouteContainer exact path={path.MANAGERS_PAGE_PATH} component={asyncComponent(() => import('./containers/managers/ManagersPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.COLLECTORS_PAGE_PATH} component={asyncComponent(() => import('./containers/collectors/CollectorsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.SUPERVISORS_PAGE_PATH} component={asyncComponent(() => import('./containers/supervisors/SupervisorsPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.ADMINS_PAGE_PATH} component={asyncComponent(() => import('./containers/administrators/AdministratorsPageContainer'))} />
                 {/* Other pages */}
                 <RestrictedRouteContainer exact path={path.SIMS_PAGE_PATH} component={asyncComponent(() => import('./containers/sims/SimsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.ZONES_PAGE_PATH} component={asyncComponent(() => import('./containers/zones/ZonesPageContainer'))} />
