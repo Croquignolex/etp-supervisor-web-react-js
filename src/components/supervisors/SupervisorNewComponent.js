@@ -5,11 +5,11 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitNewManager} from "../../redux/managers/actions";
 import * as constants from "../../constants/defaultConstants";
+import {emitNewSupervisor} from "../../redux/supervisors/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
-import {storeAddManagerRequestReset} from "../../redux/requests/managers/actions";
+import {storeAddSupervisorRequestReset} from "../../redux/requests/supervisors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -67,7 +67,7 @@ function SupervisorNewComponent({request, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddManagerRequestReset());
+        dispatch(storeAddSupervisorRequestReset());
     };
 
     // Trigger new agent form submit
@@ -82,7 +82,7 @@ function SupervisorNewComponent({request, dispatch, handleClose}) {
         const validationOK = (_name.isValid && _phone.isValid);
         // Check
         if(validationOK)
-            dispatch(emitNewManager({
+            dispatch(emitNewSupervisor({
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,

@@ -13,6 +13,7 @@ import SupervisorsCardsComponent from "../../components/supervisors/SupervisorsC
 import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/supervisors/actions";
 import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import SupervisorNewContainer from "../../containers/supervisors/SupervisorNewContainer";
 
 // Component
 function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {
@@ -121,7 +122,7 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={newSupervisorModal} handleClose={handleNewSupervisorModalHide}>
-                {/*<SupervisorNewContainer type={newSupervisorModal.type} handleClose={handleNewSupervisorModalHide} />*/}
+                <SupervisorNewContainer type={newSupervisorModal.type} handleClose={handleNewSupervisorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={supervisorDetailsModal} handleClose={handleSupervisorDetailsModalHide}>
                 {/*<SupervisorDetailsContainer id={supervisorDetailsModal.id} />*/}

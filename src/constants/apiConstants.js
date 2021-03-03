@@ -70,7 +70,7 @@ export const TOGGLE_MANAGER_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 export const SUPERVISORS_API_PATH = `${API_URL}/superviseurs`;
 export const SUPERVISOR_DETAILS_API_PATH = `${API_URL}/details_user`;
 export const ALL_SUPERVISORS_API_PATH = `${API_URL}/gestionnaires_all`;
-export const CREATE_SUPERVISOR_API_PATH = `${API_URL}/create_gestionnaire`;
+export const CREATE_SUPERVISOR_API_PATH = `${API_URL}/create_superviseur`;
 
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;
