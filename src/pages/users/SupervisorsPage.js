@@ -9,18 +9,19 @@ import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
+import SupervisorNewContainer from "../../containers/supervisors/SupervisorNewContainer";
 import SupervisorsCardsComponent from "../../components/supervisors/SupervisorsCardsComponent";
 import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/supervisors/actions";
+import SupervisorDetailsContainer from "../../containers/supervisors/SupervisorDetailsContainer";
 import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
-import SupervisorNewContainer from "../../containers/supervisors/SupervisorNewContainer";
 
 // Component
 function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [newSupervisorModal, setNewSupervisorModal] = useState({show: false, header: ''});
-    const [supervisorDetailsModal, setSupervisorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+    const [supervisorDetailsModal, setSupervisorDetailsModal] = useState({show: false, header: "DETAIL DU SUPERVISEUR", id: ''});
 
     // Local effects
     useEffect(() => {
@@ -125,7 +126,7 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
                 <SupervisorNewContainer type={newSupervisorModal.type} handleClose={handleNewSupervisorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={supervisorDetailsModal} handleClose={handleSupervisorDetailsModalHide}>
-                {/*<SupervisorDetailsContainer id={supervisorDetailsModal.id} />*/}
+                <SupervisorDetailsContainer id={supervisorDetailsModal.id} />
             </FormModalComponent>
         </>
     )

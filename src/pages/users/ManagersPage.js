@@ -22,7 +22,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
-    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DE LA GESTIONNAIRE DE FLOTTE", id: ''});
 
     // Local effects
     useEffect(() => {
