@@ -19,54 +19,34 @@ const initialState = {
 function reduce(state = initialState, action) {
     let nextState;
     switch (action.type) {
-        // Resolve event to set managers data
-        case actions.STORE_SET_MANAGERS_DATA:
-            nextState = {...state, list: action.managers, page: action.page, hasMoreData: action.hasMoreData};
+        // Resolve event to set supervisors data
+        case actions.STORE_SET_SUPERVISORS_DATA:
+            nextState = {...state, list: action.supervisors, page: action.page, hasMoreData: action.hasMoreData};
             return nextState || state;
-        // Resolve event to set manager data
-        case actions.STORE_SET_MANAGER_DATA:
-            nextState = {...state, current: action.manager};
+        // Resolve event to set supervisor data
+        case actions.STORE_SET_SUPERVISOR_DATA:
+            nextState = {...state, current: action.supervisor};
             if(action.alsoInList) {
                 nextState = {
                     ...nextState,
                     list: Lodash.map(nextState.list, (item) => {
-                        if(item.id === action.manager.id) item = action.manager;
+                        if(item.id === action.supervisor.id) item = action.supervisor;
                         return item;
                     })
                 };
             }
             return nextState || state;
-        // Resolve event to set new manager data
-        case actions.STORE_SET_NEW_MANAGER_DATA:
-            nextState = {...state, list: [action.manager, ...state.list]}
+        // Resolve event to set new supervisor data
+        case actions.STORE_SET_NEW_SUPERVISOR_DATA:
+            nextState = {...state, list: [action.supervisor, ...state.list]}
             return nextState || state;
-        // Resolve event to set next managers data
-        case actions.STORE_SET_NEXT_MANAGERS_DATA:
-            nextState = {...state, list: [...state.list, ...action.managers], page: action.page, hasMoreData: action.hasMoreData};
+        // Resolve event to set next supervisors data
+        case actions.STORE_SET_NEXT_SUPERVISORS_DATA:
+            nextState = {...state, list: [...state.list, ...action.supervisors], page: action.page, hasMoreData: action.hasMoreData};
             return nextState || state;
-        // Resolve event to stop infinite scroll managers data,
-        case actions.STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA:
+        // Resolve event to stop infinite scroll supervisors data,
+        case actions.STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA:
             nextState = {...state, hasMoreData: false};
-            return nextState || state;
-        // Resolve event to toggle manager status data,
-        case actions.STORE_SET_MANAGER_TOGGLE_DATA:
-            nextState = {
-                ...state,
-                list: Lodash.map(state.list, (item) => {
-                    if(item.id === action.id) item.status = !item.status;
-                    return item;
-                })
-            };
-            return nextState || state;
-        // Resolve event to set manager action data
-        case actions.STORE_SET_MANAGER_ACTION_DATA:
-            nextState = {
-                ...state,
-                list: Lodash.map(state.list, (item) => {
-                    if(item.id === action.id) item.actionLoader = !item.actionLoader;
-                    return item;
-                })
-            };
             return nextState || state;
         // Unknown action
         default: return state;

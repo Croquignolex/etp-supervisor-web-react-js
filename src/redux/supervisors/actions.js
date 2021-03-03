@@ -1,116 +1,82 @@
 // Reducer action types
-export const STORE_SET_MANAGER_DATA = 'STORE_SET_MANAGER_DATA';
-export const STORE_SET_MANAGERS_DATA = 'STORE_SET_MANAGERS_DATA';
-export const STORE_SET_NEW_MANAGER_DATA = 'STORE_SET_NEW_MANAGER_DATA';
-export const STORE_SET_NEXT_MANAGERS_DATA = 'STORE_SET_NEXT_MANAGERS_DATA';
-export const STORE_SET_MANAGER_ACTION_DATA = 'STORE_SET_MANAGER_ACTION_DATA';
-export const STORE_SET_MANAGER_TOGGLE_DATA = 'STORE_SET_MANAGER_TOGGLE_DATA';
-export const STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA = 'STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA';
+export const STORE_SET_SUPERVISOR_DATA = 'STORE_SET_SUPERVISOR_DATA';
+export const STORE_SET_SUPERVISORS_DATA = 'STORE_SET_SUPERVISORS_DATA';
+export const STORE_SET_NEW_SUPERVISOR_DATA = 'STORE_SET_NEW_SUPERVISOR_DATA';
+export const STORE_SET_NEXT_SUPERVISORS_DATA = 'STORE_SET_NEXT_SUPERVISORS_DATA';
+export const STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA = 'STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA';
 
 // Middleware action types
-export const EMIT_NEW_MANAGER = 'EMIT_NEW_MANAGER';
-export const EMIT_MANAGER_FETCH = 'EMIT_MANAGER_FETCH';
-export const EMIT_MANAGERS_FETCH = 'EMIT_MANAGERS_FETCH';
-export const EMIT_ADD_MANAGER_SIMS = 'EMIT_ADD_MANAGER_SIMS';
-export const EMIT_NEXT_MANAGERS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
-export const EMIT_ALL_MANAGERS_FETCH = 'EMIT_ALL_MANAGERS_FETCH';
-export const EMIT_UPDATE_MANAGER_ZONE = 'EMIT_UPDATE_MANAGER_ZONE';
-export const EMIT_UPDATE_MANAGER_INFO = 'EMIT_UPDATE_MANAGER_INFO';
-export const EMIT_TOGGLE_MANAGER_STATUS = 'EMIT_TOGGLE_MANAGER_STATUS';
+export const EMIT_NEW_SUPERVISOR = 'EMIT_NEW_SUPERVISOR';
+export const EMIT_SUPERVISOR_FETCH = 'EMIT_SUPERVISOR_FETCH';
+export const EMIT_SUPERVISORS_FETCH = 'EMIT_SUPERVISORS_FETCH'; 
+export const EMIT_NEXT_SUPERVISORS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
+export const EMIT_ALL_SUPERVISORS_FETCH = 'EMIT_ALL_SUPERVISORS_FETCH'; 
 
 //====================== Reducer trigger actions
-// Set managers data in store
-export const storeSetManagersData = ({managers, hasMoreData, page}) => ({
+// Set supervisors data in store
+export const storeSetSupervisorsData = ({supervisors, hasMoreData, page}) => ({
     page,
-    managers,
+    supervisors,
     hasMoreData,
-    type: STORE_SET_MANAGERS_DATA
+    type: STORE_SET_SUPERVISORS_DATA
 });
 
-// Set new manager data in store
-export const storeSetNewManagerData = ({manager}) => ({
-    manager,
-    type: STORE_SET_NEW_MANAGER_DATA
+// Set new supervisor data in store
+export const storeSetNewSupervisorData = ({supervisor}) => ({
+    supervisor,
+    type: STORE_SET_NEW_SUPERVISOR_DATA
 });
 
-// Set manager data in store
-export const storeSetManagerData = ({manager, alsoInList = false}) => ({
-    manager,
+// Set supervisor data in store
+export const storeSetSupervisorData = ({supervisor, alsoInList = false}) => ({
+    supervisor,
     alsoInList,
-    type: STORE_SET_MANAGER_DATA
+    type: STORE_SET_SUPERVISOR_DATA
 });
 
-// Set next managers data in store
-export const storeSetNextManagersData = ({managers, hasMoreData, page}) => ({
+// Set next supervisors data in store
+export const storeSetNextSupervisorsData = ({supervisors, hasMoreData, page}) => ({
     page,
-    managers,
+    supervisors,
     hasMoreData,
-    type: STORE_SET_NEXT_MANAGERS_DATA
+    type: STORE_SET_NEXT_SUPERVISORS_DATA
 });
 
 // Stop infinite scroll
-export const storeStopInfiniteScrollManagerData = () => ({
-    type: STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA
-});
-
-// Set sim action data in store
-export const storeSetManagerActionData = ({id}) => ({
-    id,
-    type: STORE_SET_MANAGER_ACTION_DATA
-});
-
-// Set manager toggle data in store
-export const storeSetManagerToggleData = ({id}) => ({
-    id,
-    type: STORE_SET_MANAGER_TOGGLE_DATA
+export const storeStopInfiniteScrollSupervisorData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA
 });
 
 //====================== Middleware trigger actions
-// Emit managers fetch
-export const emitManagersFetch = () => ({
-    type: EMIT_MANAGERS_FETCH
+// Emit supervisors fetch
+export const emitSupervisorsFetch = () => ({
+    type: EMIT_SUPERVISORS_FETCH
 });
 
-// Emit next managers fetch
-export const emitNextManagersFetch = ({page}) => ({
+// Emit next supervisors fetch
+export const emitNextSupervisorsFetch = ({page}) => ({
     page,
-    type: EMIT_NEXT_MANAGERS_FETCH
+    type: EMIT_NEXT_SUPERVISORS_FETCH
 });
 
-// Emit all managers fetch
-export const emitAllManagersFetch = () => ({
-    type: EMIT_ALL_MANAGERS_FETCH
+// Emit all supervisors fetch
+export const emitAllSupervisorsFetch = () => ({
+    type: EMIT_ALL_SUPERVISORS_FETCH
 });
 
-// Emit manager fetch
-export const emitManagerFetch = ({id}) => ({
+// Emit supervisor fetch
+export const emitSupervisorFetch = ({id}) => ({
     id,
-    type: EMIT_MANAGER_FETCH
+    type: EMIT_SUPERVISOR_FETCH
 });
-
-// Emit toggle manager status
-export const emitToggleManagerStatus = ({id}) => ({
-    id,
-    type: EMIT_TOGGLE_MANAGER_STATUS
-});
-
-// Emit new manager fetch
-export const emitNewManager = ({name, address, phone, email, password,  description}) => ({
+ 
+// Emit new supervisor fetch
+export const emitNewSupervisor = ({name, address, phone, email, password,  description}) => ({
     name,
     phone,
     email,
     address,
     password,
     description,
-    type: EMIT_NEW_MANAGER
-});
-
-// Emit update manager info
-export const emitUpdateManagerInfo = ({id, email, name, address, description}) => ({
-    id,
-    name,
-    email,
-    address,
-    description,
-    type: EMIT_UPDATE_MANAGER_INFO
+    type: EMIT_NEW_SUPERVISOR
 });
