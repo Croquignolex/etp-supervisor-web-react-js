@@ -9,9 +9,9 @@ import {emitAddTransfer} from "../../redux/transfers/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {FLEET_COLLECTOR_TYPE, MASTER_TYPE} from "../../constants/typeConstants";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAddTransferRequestReset} from "../../redux/requests/transfers/actions";
-import {FLEET_MASTER_COLLECTOR_TYPE, MASTER_TYPE} from "../../constants/typeConstants";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -57,7 +57,7 @@ function OperationsTransfersAddTransferComponent({request, user, sims, allSimsRe
 
     // Build select options
     const incomingSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedSims(sims.filter(item => FLEET_MASTER_COLLECTOR_TYPE.includes(item.type.name))))
+        return dataToArrayForSelect(mappedSims(sims.filter(item => FLEET_COLLECTOR_TYPE.includes(item.type.name))))
     }, [sims]);
 
     // Build select options

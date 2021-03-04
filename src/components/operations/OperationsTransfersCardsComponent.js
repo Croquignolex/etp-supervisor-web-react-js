@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import FormModalComponent from "../modals/FormModalComponent";
+import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 
 // Component
 function OperationsTransfersCardsComponent({transfers}) {
+    // Local states
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
+
+    // Hide sim details modal form
+    const handleSimDetailModalHide = () => {
+        setSimDetailsModal({...simDetailsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -26,11 +36,21 @@ function OperationsTransfersCardsComponent({transfers}) {
                                         </li>
                                         <li className="list-group-item">
                                             <b>Puce émetrice</b>
-                                            <span className="float-right">{item.sim_outgoing.number}</span>
+                                            <span className="float-right">
+                                                {item.sim_outgoing.number}
+                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_outgoing.id})}
+                                                />
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Puce receptrice</b>
-                                            <span className="float-right">{item.sim_incoming.number}</span>
+                                            <span className="float-right">
+                                                {item.sim_incoming.number}
+                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_incoming.id})}
+                                                />
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Emetteur</b>
@@ -50,6 +70,10 @@ function OperationsTransfersCardsComponent({transfers}) {
                     </div>
                 }
             </div>
+            {/* Modal */}
+            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailModalHide}>
+                <SimDetailsContainer id={simDetailsModal.id} />
+            </FormModalComponent>
         </>
     )
 }

@@ -40,7 +40,7 @@ function SimDetailsComponent({id, sim, dispatch, request}) {
     const shouldResetErrorData = () => {
         dispatch(storeShowSimRequestReset());
     };
-console.log({sim, request})
+
     // Render
     return (
         <>
