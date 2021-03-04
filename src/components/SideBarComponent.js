@@ -19,7 +19,7 @@ function SideBarComponent({user, pathname}) {
             buildDashboardMenu(),
             // buildNetworkMenu(),
             // buildRequestsMenu(),
-            // buildOperationsMenu(),
+            buildOperationsMenu(),
             buildRecoveriesMenu(),
             buildUsersMenu(),
             buildZonesMenu(),
