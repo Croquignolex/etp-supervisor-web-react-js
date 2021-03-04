@@ -41,12 +41,3 @@ export const emitNextReturnsFetch = ({page}) => ({
     page,
     type: EMIT_NEXT_RETURNS_FETCH
 });
-
-// Emit new return
-export const emitNewReturn = ({supply, amount, agentSim, managerSim}) => ({
-    supply,
-    amount,
-    agentSim,
-    managerSim,
-    type: EMIT_NEW_RETURN
-});
