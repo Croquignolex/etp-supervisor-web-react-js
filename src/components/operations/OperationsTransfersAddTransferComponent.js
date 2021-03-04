@@ -6,18 +6,13 @@ import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddTransfer} from "../../redux/transfers/actions";
-import {FLEET_MASTER_TYPE} from "../../constants/typeConstants";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAddTransferRequestReset} from "../../redux/requests/transfers/actions";
-import {
-    applySuccess,
-    requestFailed,
-    requestLoading,
-    requestSucceeded
-} from "../../functions/generalFunctions";
+import {FLEET_MASTER_COLLECTOR_TYPE, MASTER_TYPE} from "../../constants/typeConstants";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function OperationsTransfersAddTransferComponent({request, user, sims, allSimsRequests, dispatch, handleClose}) {
@@ -62,12 +57,12 @@ function OperationsTransfersAddTransferComponent({request, user, sims, allSimsRe
 
     // Build select options
     const incomingSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedSims(sims.filter(item => FLEET_MASTER_TYPE.includes(item.type.name))))
+        return dataToArrayForSelect(mappedSims(sims.filter(item => FLEET_MASTER_COLLECTOR_TYPE.includes(item.type.name))))
     }, [sims]);
 
     // Build select options
     const outgoingSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedSims(sims.filter(item => item.collector.id === user.id)))
+        return dataToArrayForSelect(mappedSims(sims.filter(item => MASTER_TYPE === item.type.name)))
     }, [sims, user.id]);
 
     // Reset error alert

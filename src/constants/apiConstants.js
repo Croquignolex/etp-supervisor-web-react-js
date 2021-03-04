@@ -108,8 +108,8 @@ export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
 export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
 
 // Transfers
+export const NEW_TRANSFERS_API_PATH = `${API_URL}/flottage_interne_rz`;
 export const TRANSFERS_API_PATH = `${API_URL}/list_all_flottage_interne`;
-export const NEW_TRANSFERS_API_PATH = `${API_URL}/flottage_interne_rz_gf`;
 
 // Supplies
 export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
