@@ -2,41 +2,25 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {emitAllSimsFetch} from "../../redux/sims/actions";
-import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import {OPERATIONS_FLEETS_PAGE} from "../../constants/pageNameConstants";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
-import FormModalComponent from "../../components/modals/FormModalComponent";
-import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
 import {emitNextSuppliesFetch, emitSuppliesFetch} from "../../redux/supplies/actions";
 import OperationsFleetsCardsComponent from "../../components/operations/OperationsFleetsCardsComponent";
-import OperationsFleetsReturnContainer from "../../containers/operations/OperationsFleetsReturnContainer";
-import OperationsCashRecoveryContainer from "../../containers/operations/OperationsCashRecoveryContainer";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextSuppliesRequestReset, storeSuppliesRequestReset} from "../../redux/requests/supplies/actions";
-import {
-    dateToString,
-    needleSearch,
-    requestFailed,
-    requestLoading,
-} from "../../functions/generalFunctions";
 
 // Component
 function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [returnModal, setReturnModal] = useState({show: false, header: 'EFFECTUER UN RETOUR FLOTTE', item: {}});
-    const [recoveryModal, setRecoveryModal] = useState({show: false, header: "EFFECTUER UN RECOUVREMENT D'ESPECE", item: {}});
 
     // Local effects
     useEffect(() => {
         dispatch(emitSuppliesFetch());
-        dispatch(emitAllSimsFetch());
-        dispatch(emitAllAgentsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -50,35 +34,13 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAllSimsRequestReset());
         dispatch(storeSuppliesRequestReset());
-        dispatch(storeAllAgentsRequestReset());
         dispatch(storeNextSuppliesRequestReset());
     };
 
     // Fetch next supplies data to enhance infinite scroll
     const handleNextSuppliesData = () => {
         dispatch(emitNextSuppliesFetch({page}));
-    }
-
-    // Show return modal form
-    const handleReturnModalShow = (item) => {
-        setReturnModal({...returnModal, item, show: true})
-    }
-
-    // Hide return modal form
-    const handleReturnModalHide = () => {
-        setReturnModal({...returnModal, show: false})
-    }
-
-    // Show recovery modal form
-    const handleRecoveryModalShow = (item) => {
-        setRecoveryModal({...recoveryModal, item, show: true})
-    }
-
-    // Hide recovery modal form
-    const handleRecoveryModalHide = () => {
-        setRecoveryModal({...recoveryModal, show: false})
     }
 
     // Render
@@ -104,10 +66,7 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                                             {requestFailed(suppliesRequests.next) && <ErrorAlertComponent message={suppliesRequests.next.message} />}
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <OperationsFleetsCardsComponent supplies={searchEngine(supplies, needle)}
-                                                                                  handleCashRecoveryModalShow={handleRecoveryModalShow}
-                                                                                  handleFleetRecoveryModalShow={handleReturnModalShow}
-                                                />
+                                                ? <OperationsFleetsCardsComponent supplies={searchEngine(supplies, needle)} />
                                                 : (requestLoading(suppliesRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
@@ -115,10 +74,7 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                                                                         next={handleNextSuppliesData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <OperationsFleetsCardsComponent supplies={supplies}
-                                                                                            handleCashRecoveryModalShow={handleRecoveryModalShow}
-                                                                                            handleFleetRecoveryModalShow={handleReturnModalShow}
-                                                            />
+                                                            <OperationsFleetsCardsComponent supplies={supplies} />
                                                         </InfiniteScroll>
                                                 )
                                             }
@@ -130,17 +86,6 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={returnModal} handleClose={handleReturnModalHide}>
-                <OperationsFleetsReturnContainer supply={returnModal.item}
-                                                 handleClose={handleReturnModalHide}
-                />
-            </FormModalComponent>
-            <FormModalComponent modal={recoveryModal} handleClose={handleRecoveryModalHide}>
-                <OperationsCashRecoveryContainer supply={recoveryModal.item}
-                                                 handleClose={handleRecoveryModalHide}
-                />
-            </FormModalComponent>
         </>
     )
 }
