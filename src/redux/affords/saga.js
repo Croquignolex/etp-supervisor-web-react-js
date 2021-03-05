@@ -7,9 +7,12 @@ import {
     EMIT_ADD_AFFORD,
     EMIT_AFFORDS_FETCH,
     storeSetAffordsData,
+    EMIT_CONFIRM_AFFORD,
+    storeUpdateAffordData,
     storeSetNewAffordData,
     storeSetNextAffordsData,
     EMIT_NEXT_AFFORDS_FETCH,
+    storeSetAffordActionData,
     storeStopInfiniteScrollAffordData
 } from "./actions";
 import {
@@ -21,7 +24,10 @@ import {
     storeAddAffordRequestFailed,
     storeAddAffordRequestSucceed,
     storeNextAffordsRequestFailed,
+    storeConfirmAffordRequestInit,
     storeNextAffordsRequestSucceed,
+    storeConfirmAffordRequestFailed,
+    storeConfirmAffordRequestSucceed,
 } from "../requests/affords/actions";
 
 // Fetch affords from API
@@ -91,6 +97,29 @@ export function* emitAddAfford() {
     });
 }
 
+// Confirm afford from API
+export function* emitConfirmAfford() {
+    yield takeLatest(EMIT_CONFIRM_AFFORD, function*({id}) {
+        try {
+            // Fire event at redux to toggle action loader
+            yield put(storeSetAffordActionData({id}));
+            // Fire event for request
+            yield put(storeConfirmAffordRequestInit());
+            const apiResponse = yield call(apiPostRequest, `${api.CONFIRM_AFFORD_API_PATH}/${id}`);
+            // Fire event to redux
+            yield put(storeUpdateAffordData({id}));
+            // Fire event at redux to toggle action loader
+            yield put(storeSetAffordActionData({id}));
+            // Fire event for request
+            yield put(storeConfirmAffordRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSetAffordActionData({id}));
+            yield put(storeConfirmAffordRequestFailed({message}));
+        }
+    });
+}
+
 // Extract afford data
 function extractAffordData(apiAfford) {
     let afford = {
@@ -142,6 +171,7 @@ export default function* sagaAffords() {
     yield all([
         fork(emitAddAfford),
         fork(emitAffordsFetch),
+        fork(emitConfirmAfford),
         fork(emitNextAffordsFetch),
     ]);
 }

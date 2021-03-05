@@ -1,4 +1,7 @@
+import Lodash from "lodash";
+
 import * as actions from "./actions";
+import {DONE} from "../../constants/typeConstants";
 
 // Partial global store for users data management
 const initialState = {
@@ -23,8 +26,31 @@ function reduce(state = initialState, action) {
         case actions.STORE_STOP_INFINITE_SCROLL_AFFORD_DATA:
             nextState = {...state, hasMoreData: false};
             return nextState || state;
+        // Resolve event to new afford action data
         case actions.STORE_SET_NEW_AFFORD_DATA:
             nextState = {...state, list: [action.afford, ...state.list]}
+            return nextState || state;
+        // Resolve event to update afford data
+        case actions.STORE_UPDATE_AFFORD_DATA:
+            nextState = {
+                ...state,
+                list: Lodash.map(state.list, (item) => {
+                    if(item.id === action.id) {
+                        item.status = DONE;
+                    }
+                    return item;
+                })
+            };
+            return nextState || state;
+        // Resolve event to set afford action data
+        case actions.STORE_SET_AFFORD_ACTION_DATA:
+            nextState = {
+                ...state,
+                list: Lodash.map(state.list, (item) => {
+                    if(item.id === action.id) item.actionLoader = !item.actionLoader;
+                    return item;
+                })
+            };
             return nextState || state;
         // Unknown action
         default: return state;
