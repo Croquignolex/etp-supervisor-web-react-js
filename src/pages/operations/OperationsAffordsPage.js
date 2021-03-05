@@ -13,17 +13,9 @@ import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import {emitAffordsFetch, emitNextAffordsFetch} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {storeAffordsRequestReset, storeNextAffordsRequestReset} from "../../redux/requests/affords/actions";
 import OperationsAffordsAddAffordContainer from "../../containers/operations/OperationsAffordsAddAffordContainer";
-import {
-    storeAffordsRequestReset,
-    storeNextAffordsRequestReset
-} from "../../redux/requests/affords/actions";
-import {
-    dateToString,
-    needleSearch,
-    requestFailed,
-    requestLoading,
-} from "../../functions/generalFunctions";
 
 // Component
 function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dispatch, location}) {
