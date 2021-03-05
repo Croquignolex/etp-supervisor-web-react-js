@@ -13,15 +13,9 @@ import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import {emitAffordsFetch, emitNextAffordsFetch} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
-import {
-    dateToString,
-    formatNumber,
-    needleSearch,
-    requestFailed,
-    requestLoading
-} from "../../functions/generalFunctions";
 import {storeAffordsRequestReset, storeNextAffordsRequestReset} from "../../redux/requests/affords/actions";
 import OperationsAffordsAddAffordContainer from "../../containers/operations/OperationsAffordsAddAffordContainer";
+import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dispatch, location}) {
@@ -78,6 +72,12 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
         setConfirmModal({...confirmModal, show: false})
     }
 
+    // Trigger when afford confirm confirmed on modal
+    const handleConfirm = (id) => {
+        handleConfirmModalHide();
+        dispatch(emitConfirmAfford({id}));
+    };
+
     // Render
     return (
         <>
@@ -99,6 +99,7 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                             {/* Error message */}
                                             {requestFailed(affordsRequests.list) && <ErrorAlertComponent message={affordsRequests.list.message} />}
                                             {requestFailed(affordsRequests.next) && <ErrorAlertComponent message={affordsRequests.next.message} />}
+                                            {requestFailed(affordsRequests.apply) && <ErrorAlertComponent message={affordsRequests.apply.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mb-2"
                                                     onClick={handleAffordModalShow}
@@ -135,6 +136,10 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
             <FormModalComponent modal={affordModal} handleClose={handleAffordModalHide}>
                 <OperationsAffordsAddAffordContainer handleClose={handleAffordModalHide} />
             </FormModalComponent>
+            <ConfirmModalComponent modal={confirmModal}
+                                   handleModal={handleConfirm}
+                                   handleClose={handleConfirmModalHide}
+            />
         </>
     )
 }
