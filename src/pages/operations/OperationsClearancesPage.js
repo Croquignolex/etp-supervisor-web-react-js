@@ -10,14 +10,12 @@ import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
-import FormModalComponent from "../../components/modals/FormModalComponent";
 import {OPERATIONS_CLEARANCES_PAGE} from "../../constants/pageNameConstants";
 import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
 import {emitNextRefuelsFetch, emitRefuelsFetch} from "../../redux/refuels/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeRefuelsRequestReset, storeNextRefuelsRequestReset} from "../../redux/requests/refuels/actions";
 import OperationsClearancesCardsComponent from "../../components/operations/OperationsClearancesCardsComponent";
-import OperationsClearancesAddRefuelContainer from "../../containers/operations/OperationsClearancesAddRefuelContainer";
 
 // Component
 function OperationsClearancesPage({refuels, refuelsRequests, hasMoreData, page, dispatch, location}) {
@@ -85,12 +83,6 @@ function OperationsClearancesPage({refuels, refuelsRequests, hasMoreData, page, 
                                             {/* Error message */}
                                             {requestFailed(refuelsRequests.list) && <ErrorAlertComponent message={refuelsRequests.list.message} />}
                                             {requestFailed(refuelsRequests.next) && <ErrorAlertComponent message={refuelsRequests.next.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handleRefuelModalShow}
-                                            >
-                                                <i className="fa fa-plus" /> Effectuer un déstockage
-                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <OperationsClearancesCardsComponent refuels={searchEngine(refuels, needle)} />
@@ -113,10 +105,6 @@ function OperationsClearancesPage({refuels, refuelsRequests, hasMoreData, page, 
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={refuelModal} handleClose={handleRefuelModalHide}>
-                <OperationsClearancesAddRefuelContainer handleClose={handleRefuelModalHide} />
-            </FormModalComponent>
         </>
     )
 }

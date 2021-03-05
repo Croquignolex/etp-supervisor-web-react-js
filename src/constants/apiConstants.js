@@ -119,8 +119,8 @@ export const NEW_NETWORK_SUPPLY_API_PATH = `${API_URL}/flottage_by_rz`;
 export const NETWORK_SUPPLIES_API_PATH = `${API_URL}/list_flottage_rz_by_rz`;
 
 // Refuels
+export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
 export const NEW_REFUEL_API_PATH = `${API_URL}/approvisionnement_etp`;
-export const REFUELS_API_PATH = `${API_URL}/list_destockage_collector`;
 
 // Affords
-export const AFFORDS_API_PATH = `${API_URL}/list_approvisionnement_collector`;
+export const AFFORDS_API_PATH = `${API_URL}/list_approvisionnement`;
