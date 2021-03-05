@@ -13,7 +13,13 @@ import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import {emitAffordsFetch, emitNextAffordsFetch} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
-import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {
+    dateToString,
+    formatNumber,
+    needleSearch,
+    requestFailed,
+    requestLoading
+} from "../../functions/generalFunctions";
 import {storeAffordsRequestReset, storeNextAffordsRequestReset} from "../../redux/requests/affords/actions";
 import OperationsAffordsAddAffordContainer from "../../containers/operations/OperationsAffordsAddAffordContainer";
 
@@ -21,6 +27,7 @@ import OperationsAffordsAddAffordContainer from "../../containers/operations/Ope
 function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [confirmModal, setConfirmModal] = useState({show: false, body: '', id: 0});
     const [affordModal, setAffordModal] = useState({show: false, header: 'EFFECTUER UN APPROVISIONNEMENT'});
 
     // Local effects
@@ -43,6 +50,7 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
         dispatch(storeAffordsRequestReset());
         dispatch(storeAllSimsRequestReset());
         dispatch(storeNextAffordsRequestReset());
+        dispatch(storeConfirmAffordRequestReset());
     };
 
     // Fetch next affords data to enhance infinite scroll
@@ -58,6 +66,16 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
     // Hide afford modal form
     const handleAffordModalHide = () => {
         setAffordModal({...affordModal, show: false})
+    }
+
+    // Show confirm modal form
+    const handleConfirmModalShow = ({id, amount}) => {
+        setConfirmModal({...confirmModal, id, body: `Confirmer l'approvisionnement de ${formatNumber(amount)}?`, show: true})
+    }
+
+    // Hide confirm modal form
+    const handleConfirmModalHide = () => {
+        setConfirmModal({...confirmModal, show: false})
     }
 
     // Render
@@ -89,7 +107,9 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)} />
+                                                ? <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)}
+                                                                                   handleConfirmModalShow={handleConfirmModalShow}
+                                                />
                                                 : (requestLoading(affordsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         dataLength={affords.length}
@@ -97,7 +117,9 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                                                         next={handleNextAffordsData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <OperationsAffordsCardsComponent affords={affords} />
+                                                            <OperationsAffordsCardsComponent affords={affords}
+                                                                                             handleConfirmModalShow={handleConfirmModalShow}
+                                                            />
                                                         </InfiniteScroll>
                                                 )
                                             }
