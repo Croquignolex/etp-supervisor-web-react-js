@@ -9,9 +9,8 @@ import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeEditSimRequestReset} from "../../redux/requests/sims/actions";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function SimInfoEditComponent({request, sim, dispatch, handleClose}) {

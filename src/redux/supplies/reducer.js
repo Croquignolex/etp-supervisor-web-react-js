@@ -1,5 +1,3 @@
-import Lodash from "lodash";
-
 import * as actions from "./actions";
 
 // Partial global store for users data management

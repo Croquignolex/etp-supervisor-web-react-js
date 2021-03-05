@@ -13,8 +13,8 @@ import SupervisorNewContainer from "../../containers/supervisors/SupervisorNewCo
 import SupervisorsCardsComponent from "../../components/supervisors/SupervisorsCardsComponent";
 import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/supervisors/actions";
 import SupervisorDetailsContainer from "../../containers/supervisors/SupervisorDetailsContainer";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
-import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {

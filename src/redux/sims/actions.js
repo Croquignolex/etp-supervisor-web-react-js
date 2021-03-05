@@ -1,6 +1,4 @@
 // Reducer action types
-import {STORE_SET_NEW_OPERATOR_DATA} from "../operators/actions";
-
 export const STORE_SET_SIM_DATA = 'STORE_SET_SIM_DATA';
 export const STORE_SET_SIMS_DATA = 'STORE_SET_SIMS_DATA';
 export const STORE_SET_NEW_SIM_DATA = 'STORE_SET_NEW_SIM_DATA';

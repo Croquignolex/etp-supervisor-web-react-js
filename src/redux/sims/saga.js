@@ -6,13 +6,14 @@ import {
     EMIT_NEW_SIM,
     EMIT_SIM_FETCH,
     storeSetSimData,
+    EMIT_UPDATE_SIM,
     EMIT_SIMS_FETCH,
     storeSetSimsData,
     storeSetNewSimData,
     EMIT_ALL_SIMS_FETCH,
     EMIT_NEXT_SIMS_FETCH,
     storeSetNextSimsData,
-    storeStopInfiniteScrollSimData, EMIT_UPDATE_SIM
+    storeStopInfiniteScrollSimData
 } from "./actions";
 import {
     storeSimsRequestInit,
@@ -21,22 +22,19 @@ import {
     storeShowSimRequestInit,
     storeSimsRequestSucceed,
     storeAllSimsRequestInit,
+    storeEditSimRequestInit,
     storeNextSimsRequestInit,
     storeAddSimRequestFailed,
     storeShowSimRequestFailed,
     storeAllSimsRequestFailed,
     storeAddSimRequestSucceed,
+    storeEditSimRequestFailed,
     storeShowSimRequestSucceed,
     storeNextSimsRequestFailed,
     storeAllSimsRequestSucceed,
-    storeNextSimsRequestSucceed, storeEditSimRequestInit, storeEditSimRequestSucceed, storeEditSimRequestFailed
+    storeEditSimRequestSucceed,
+    storeNextSimsRequestSucceed
 } from "../requests/sims/actions";
-import {EMIT_UPDATE_OPERATOR, storeSetOperatorData} from "../operators/actions";
-import {
-    storeEditOperatorRequestFailed,
-    storeEditOperatorRequestInit,
-    storeEditOperatorRequestSucceed
-} from "../requests/operators/actions";
 
 // Fetch all sims from API
 export function* emitAllSimsFetch() {

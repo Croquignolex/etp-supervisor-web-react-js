@@ -21,7 +21,6 @@ import OperationsClearancesCardsComponent from "../../components/operations/Oper
 function OperationsClearancesPage({refuels, refuelsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [refuelModal, setRefuelModal] = useState({show: false, header: 'EFFECTUER UN DESTOCKAGE'});
 
     // Local effects
     useEffect(() => {
@@ -50,16 +49,6 @@ function OperationsClearancesPage({refuels, refuelsRequests, hasMoreData, page, 
     // Fetch next refuels data to enhance infinite scroll
     const handleNextRefuelsData = () => {
         dispatch(emitNextRefuelsFetch({page}));
-    }
-
-    // Show refuel modal form
-    const handleRefuelModalShow = (item) => {
-        setRefuelModal({...refuelModal, item, show: true})
-    }
-
-    // Hide refuel modal form
-    const handleRefuelModalHide = () => {
-        setRefuelModal({...refuelModal, show: false})
     }
 
     // Render

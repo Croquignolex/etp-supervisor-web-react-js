@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {ADMINS, SUPERVISORS} from "../../constants/pageNameConstants";
+import {ADMINS} from "../../constants/pageNameConstants";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
@@ -12,8 +12,8 @@ import FormModalComponent from "../../components/modals/FormModalComponent";
 import AdministratorsCardsComponent from "../../components/administrators/AdministratorsCardsComponent";
 import {emitAdministratorsFetch, emitNextAdministratorsFetch} from "../../redux/administrators/actions";
 import AdministratorDetailsContainer from "../../containers/administrators/AdministratorDetailsContainer";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeAdministratorsRequestReset, storeNextAdministratorsRequestReset} from "../../redux/requests/administrators/actions";
-import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function AdministratorsPage({administrators, administratorsRequests, hasMoreData, page, dispatch, location}) {

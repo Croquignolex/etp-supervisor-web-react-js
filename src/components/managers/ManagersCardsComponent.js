@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 
 import LoaderComponent from "../LoaderComponent";
-import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 
 // Component
 function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow, handleManagerDetailsModalShow}) {

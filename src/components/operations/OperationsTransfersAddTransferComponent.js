@@ -63,7 +63,7 @@ function OperationsTransfersAddTransferComponent({request, user, sims, allSimsRe
     // Build select options
     const outgoingSelectOptions = useMemo(() => {
         return dataToArrayForSelect(mappedSims(sims.filter(item => MASTER_TYPE === item.type.name)))
-    }, [sims, user.id]);
+    }, [sims]);
 
     // Reset error alert
     const shouldResetErrorData = () => {

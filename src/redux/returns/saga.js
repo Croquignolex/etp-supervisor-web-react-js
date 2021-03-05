@@ -3,7 +3,6 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
 import {
-    EMIT_NEW_RETURN,
     EMIT_RETURNS_FETCH,
     storeSetReturnsData,
     EMIT_NEXT_RETURNS_FETCH,

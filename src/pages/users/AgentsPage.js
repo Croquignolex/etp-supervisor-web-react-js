@@ -19,19 +19,8 @@ import AgentsCardsComponent from "../../components/agents/AgentsCardsComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {emitAgentsFetch, emitNextAgentsFetch, emitToggleAgentStatus} from "../../redux/agents/actions";
-import {
-    applySuccess,
-    dateToString,
-    needleSearch,
-    requestFailed,
-    requestLoading,
-    requestSucceeded
-} from "../../functions/generalFunctions";
-import {
-    storeAgentsRequestReset,
-    storeNextAgentsRequestReset,
-    storeAgentStatusToggleRequestReset
-} from "../../redux/requests/agents/actions";
+import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {storeAgentsRequestReset, storeNextAgentsRequestReset, storeAgentStatusToggleRequestReset} from "../../redux/requests/agents/actions";
 
 // Component
 function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, location}) {

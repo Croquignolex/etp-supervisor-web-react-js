@@ -222,7 +222,7 @@ function ZoneAddAgentComponent({type, request, zone, dispatch, handleClose}) {
 
 // Prop types to ensure destroyed props data type
 ZoneAddAgentComponent.propTypes = {
-    zone: PropTypes.array.isRequired,
+    zone: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
