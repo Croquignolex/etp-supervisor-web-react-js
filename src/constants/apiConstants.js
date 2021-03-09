@@ -74,6 +74,7 @@ export const CREATE_SUPERVISOR_API_PATH = `${API_URL}/create_superviseur`;
 // Administrators
 export const ADMINISTRATORS_API_PATH = `${API_URL}/administrateurs`;
 export const ADMINISTRATOR_DETAILS_API_PATH = `${API_URL}/details_user`;
+export const ALL_ADMINISTRATORS_API_PATH = `${API_URL}/administrateurs`;
 
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;

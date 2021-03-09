@@ -3,7 +3,7 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 
 // Partial global store for requests data management
 const initialState = {
-    all: {failed: false, loading: false, succeeded: false, message: ""}, 
+    all: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
@@ -63,7 +63,7 @@ function reduce(state = initialState, action) {
         // Resolve event to set all administrators reset request store data
         case actions.STORE_ALL_ADMINISTRATORS_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
-            return nextState || state; 
+            return nextState || state;
         // ======================================================== Administrator
         // Resolve event to set administrator init request store data
         case actions.STORE_ADMINISTRATOR_REQUEST_INIT:
