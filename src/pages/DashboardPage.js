@@ -8,6 +8,7 @@ import {emitAllZonesFetch} from "../redux/zones/actions";
 import * as setting from "../constants/settingsConstants";
 import {formatNumber} from "../functions/generalFunctions";
 import {emitAllAgentsFetch} from "../redux/agents/actions";
+import {emitFetchUserBalance} from "../redux/user/actions";
 import HeaderComponent from "../components/HeaderComponent";
 import {DASHBOARD_PAGE} from "../constants/pageNameConstants";
 import {emitAllManagersFetch} from "../redux/managers/actions";
@@ -21,6 +22,7 @@ import {storeAllZonesRequestReset} from "../redux/requests/zones/actions";
 import {emitAllAdministratorsFetch} from "../redux/administrators/actions";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
 import {storeAllManagersRequestReset} from "../redux/requests/managers/actions";
+import {storeUserBalanceFetchRequestReset} from "../redux/requests/user/actions";
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
 import DashboardCardComponent from "../components/dashboard/DashboardCardComponent";
@@ -30,15 +32,17 @@ import {storeAllAdministratorsRequestReset} from "../redux/requests/administrato
 
 // Component
 function DashboardPage({agents, settings, dispatch, location, administrators, supervisors,
-                           managers, collectors, companies, sims, zones, operators,
+                           managers, collectors, companies, sims, zones, operators, user,
                            allAgentsRequests, allAdministratorsRequests, allSupervisorsRequests,
                            allManagersRequests, allCollectorsRequests, allCompaniesRequests,
-                           allSimsRequests, allZonesRequests, allOperatorsRequests}) {
+                           allSimsRequests, allZonesRequests, allOperatorsRequests,
+                           balanceUserRequests}) {
     // Local effects
     useEffect(() => {
         dispatch(emitAllSimsFetch());
         dispatch(emitAllZonesFetch());
         dispatch(emitAllAgentsFetch());
+        dispatch(emitFetchUserBalance());
         dispatch(emitAllManagersFetch());
         dispatch(emitAllCompaniesFetch());
         dispatch(emitAllOperatorsFetch());
@@ -62,6 +66,7 @@ function DashboardPage({agents, settings, dispatch, location, administrators, su
         dispatch(storeAllOperatorsRequestReset());
         dispatch(storeAllCollectorsRequestReset());
         dispatch(storeAllSupervisorsRequestReset());
+        dispatch(storeUserBalanceFetchRequestReset());
         dispatch(storeAllAdministratorsRequestReset());
     };
 
@@ -80,115 +85,126 @@ function DashboardPage({agents, settings, dispatch, location, administrators, su
                 <section className="content">
                     <div className='container-fluid'>
                         <div className="row">
+                            {cardsData.includes(setting.CARD_BALANCE) &&
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-dark'
+                                                            icon='fa fa-coin'
+                                                            url={path.PROFILE_PAGE_PATH}
+                                                            label={setting.LABEL_BALANCE}
+                                                            request={balanceUserRequests}
+                                                            data={formatNumber(user.balance)}
+                                    />
+                                </div>
+                            }
                             {cardsData.includes(setting.CARD_ADMINS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-danger'
-                                                        icon='fa fa-user-secret'
-                                                        url={path.ADMINS_PAGE_PATH}
-                                                        label={setting.LABEL_ADMINS}
-                                                        data={administrators.length}
-                                                        request={allAdministratorsRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-danger'
+                                                            icon='fa fa-user-secret'
+                                                            url={path.ADMINS_PAGE_PATH}
+                                                            label={setting.LABEL_ADMINS}
+                                                            data={administrators.length}
+                                                            request={allAdministratorsRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_SUPERVISORS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-warning'
-                                                        data={supervisors.length}
-                                                        icon='fa fa-user-astronaut'
-                                                        url={path.SUPERVISORS_PAGE_PATH}
-                                                        label={setting.LABEL_SUPERVISORS}
-                                                        request={allSupervisorsRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-warning'
+                                                            data={supervisors.length}
+                                                            icon='fa fa-user-astronaut'
+                                                            url={path.SUPERVISORS_PAGE_PATH}
+                                                            label={setting.LABEL_SUPERVISORS}
+                                                            request={allSupervisorsRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_MANAGERS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-success'
-                                                        icon='fa fa-user-tag'
-                                                        data={managers.length}
-                                                        url={path.MANAGERS_PAGE_PATH}
-                                                        label={setting.LABEL_MANAGERS}
-                                                        request={allManagersRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-success'
+                                                            icon='fa fa-user-tag'
+                                                            data={managers.length}
+                                                            url={path.MANAGERS_PAGE_PATH}
+                                                            label={setting.LABEL_MANAGERS}
+                                                            request={allManagersRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_COLLECTORS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-dark'
-                                                        icon='fa fa-user-clock'
-                                                        data={collectors.length}
-                                                        url={path.COLLECTORS_PAGE_PATH}
-                                                        label={setting.LABEL_COLLECTORS}
-                                                        request={allCollectorsRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-info'
+                                                            icon='fa fa-user-clock'
+                                                            data={collectors.length}
+                                                            url={path.COLLECTORS_PAGE_PATH}
+                                                            label={setting.LABEL_COLLECTORS}
+                                                            request={allCollectorsRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_AGENTS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-primary'
-                                                        icon='fa fa-user-cog'
-                                                        request={allAgentsRequests}
-                                                        url={path.AGENTS_PAGE_PATH}
-                                                        label={setting.LABEL_AGENTS}
-                                                        data={agents.length - resourcesData}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-primary'
+                                                            icon='fa fa-user-cog'
+                                                            request={allAgentsRequests}
+                                                            url={path.AGENTS_PAGE_PATH}
+                                                            label={setting.LABEL_AGENTS}
+                                                            data={agents.length - resourcesData}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_RESOURCES) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-info'
-                                                        data={resourcesData}
-                                                        icon='fa fa-user-clock'
-                                                        url={path.AGENTS_PAGE_PATH}
-                                                        request={allAgentsRequests}
-                                                        label={setting.LABEL_RESOURCES}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-info'
+                                                            data={resourcesData}
+                                                            icon='fa fa-user-lock'
+                                                            url={path.AGENTS_PAGE_PATH}
+                                                            request={allAgentsRequests}
+                                                            label={setting.LABEL_RESOURCES}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_COMPANIES) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-danger'
-                                                        data={companies.length}
-                                                        icon='fa fa-university'
-                                                        url={path.COMPANIES_PAGE_PATH}
-                                                        label={setting.LABEL_COMPANIES}
-                                                        request={allCompaniesRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-danger'
+                                                            data={companies.length}
+                                                            icon='fa fa-university'
+                                                            url={path.COMPANIES_PAGE_PATH}
+                                                            label={setting.LABEL_COMPANIES}
+                                                            request={allCompaniesRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_SIMS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-warning'
-                                                        data={sims.length}
-                                                        icon='fa fa-sim-card'
-                                                        url={path.SIMS_PAGE_PATH}
-                                                        label={setting.LABEL_SIMS}
-                                                        request={allSimsRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-warning'
+                                                            data={sims.length}
+                                                            icon='fa fa-sim-card'
+                                                            url={path.SIMS_PAGE_PATH}
+                                                            label={setting.LABEL_SIMS}
+                                                            request={allSimsRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_ZONES) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent icon='fa fa-map'
-                                                        color='bg-success'
-                                                        data={zones.length}
-                                                        url={path.ZONES_PAGE_PATH}
-                                                        label={setting.LABEL_ZONES}
-                                                        request={allZonesRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent icon='fa fa-map'
+                                                            color='bg-success'
+                                                            data={zones.length}
+                                                            url={path.ZONES_PAGE_PATH}
+                                                            label={setting.LABEL_ZONES}
+                                                            request={allZonesRequests}
+                                    />
+                                </div>
                             }
                             {cardsData.includes(setting.CARD_OPERATORS) &&
-                            <div className="col-lg-3 col-md-4 col-sm-6">
-                                <DashboardCardComponent color='bg-primary'
-                                                        icon='fa fa-globe'
-                                                        data={operators.length}
-                                                        url={path.OPERATORS_PAGE_PATH}
-                                                        label={setting.LABEL_OPERATORS}
-                                                        request={allOperatorsRequests}
-                                />
-                            </div>
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-primary'
+                                                            icon='fa fa-globe'
+                                                            data={operators.length}
+                                                            url={path.OPERATORS_PAGE_PATH}
+                                                            label={setting.LABEL_OPERATORS}
+                                                            request={allOperatorsRequests}
+                                    />
+                                </div>
                             }
                         </div>
                     </div>
@@ -216,6 +232,7 @@ DashboardPage.propTypes = {
     allSimsRequests: PropTypes.object.isRequired,
     allZonesRequests: PropTypes.object.isRequired,
     allAgentsRequests: PropTypes.object.isRequired,
+    balanceUserRequests: PropTypes.object.isRequired,
     allManagersRequests: PropTypes.object.isRequired,
     allCompaniesRequests: PropTypes.object.isRequired,
     allOperatorsRequests: PropTypes.object.isRequired,
