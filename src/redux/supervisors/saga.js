@@ -13,7 +13,7 @@ import {
     storeSetNewSupervisorData,
     EMIT_NEXT_SUPERVISORS_FETCH,
     storeSetNextSupervisorsData,
-    storeStopInfiniteScrollSupervisorData
+    storeStopInfiniteScrollSupervisorData, EMIT_ALL_SUPERVISORS_FETCH
 } from "./actions";
 import {
     storeSupervisorRequestInit,
@@ -28,7 +28,31 @@ import {
     storeAddSupervisorRequestSucceed,
     storeNextSupervisorsRequestFailed,
     storeNextSupervisorsRequestSucceed,
+    storeAllSupervisorsRequestInit,
+    storeAllSupervisorsRequestSucceed,
+    storeAllSupervisorsRequestFailed,
 } from "../requests/supervisors/actions";
+
+// Fetch all supervisors from API
+export function* emitAllSupervisorsFetch() {
+    yield takeLatest(EMIT_ALL_SUPERVISORS_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeAllSupervisorsRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.ALL_SUPERVISORS_API_PATH);
+            // Extract data
+            const supervisors = extractSupervisorsData(apiResponse.data.superviseurs);
+            // Fire event to redux
+            yield put(storeSetSupervisorsData({supervisors, hasMoreData: false, page: 0}));
+            // Fire event for request
+            yield put(storeAllSupervisorsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAllSupervisorsRequestFailed({message}));
+        }
+    });
+}
+
 
 // Fetch supervisors from API
 export function* emitSupervisorsFetch() {
@@ -170,6 +194,7 @@ export default function* sagaSupervisors() {
         fork(emitNewSupervisor),
         fork(emitSupervisorFetch),
         fork(emitSupervisorsFetch),
+        fork(emitAllSupervisorsFetch),
         fork(emitNextSupervisorsFetch),
     ]);
 }
