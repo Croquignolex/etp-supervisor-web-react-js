@@ -16,12 +16,7 @@ import TextareaComponent from "../components/form/TextareaComponent";
 import CheckBoxComponent from "../components/form/CheckBoxComponent";
 import {storeSettingsRequestReset} from "../redux/requests/settings/actions";
 import {DEFAULT_ARRAY_FORM_DATA, DEFAULT_FORM_DATA} from "../constants/defaultConstants";
-import {
-    applySuccess,
-    requestFailed,
-    requestLoading,
-    requestSucceeded
-} from "../functions/generalFunctions";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
 
 // Component
 function SettingsPage({settings, request, dispatch, location}) {
@@ -58,11 +53,15 @@ function SettingsPage({settings, request, dispatch, location}) {
             ],
             cards: [
                 {value: setting.CARD_AGENTS, label: setting.LABEL_AGENTS},
-                {value: setting.CARD_BALANCE, label: setting.LABEL_BALANCE},
                 {value: setting.CARD_RESOURCES, label: setting.LABEL_RESOURCES},
-                {value: setting.CARD_FLEETS_REQUESTS, label: setting.LABEL_FLEETS_REQUESTS},
-                {value: setting.CARD_FLEET_SIMS_FLEETS, label: setting.LABEL_FLEET_SIMS_FLEETS},
-                {value: setting.CARD_CLEARANCES_REQUEST, label: setting.LABEL_CLEARANCES_REQUEST}
+                {value: setting.CARD_ADMINS, label: setting.LABEL_ADMINS},
+                {value: setting.CARD_SUPERVISORS, label: setting.LABEL_SUPERVISORS},
+                {value: setting.CARD_MANAGERS, label: setting.LABEL_MANAGERS},
+                {value: setting.CARD_COLLECTORS, label: setting.LABEL_COLLECTORS},
+                {value: setting.CARD_COMPANIES, label: setting.LABEL_COMPANIES},
+                {value: setting.CARD_SIMS, label: setting.LABEL_SIMS},
+                {value: setting.CARD_ZONES, label: setting.LABEL_ZONES},
+                {value: setting.CARD_OPERATORS, label: setting.LABEL_OPERATORS},
             ],
             charts: [
                 // {value: 0, label: 'name'}

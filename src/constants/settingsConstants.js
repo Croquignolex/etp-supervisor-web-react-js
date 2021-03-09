@@ -1,15 +1,23 @@
 // Cards
+export const CARD_SIMS = 8;
+export const CARD_ZONES = 9;
 export const CARD_AGENTS = 1;
-export const CARD_BALANCE = 2;
+export const CARD_ADMINS = 2;
+export const CARD_MANAGERS = 5;
 export const CARD_RESOURCES = 3;
-export const CARD_FLEETS_REQUESTS = 4;
-export const CARD_FLEET_SIMS_FLEETS = 5;
-export const CARD_CLEARANCES_REQUEST = 6;
+export const CARD_COMPANIES = 7;
+export const CARD_OPERATORS = 10;
+export const CARD_COLLECTORS = 6;
+export const CARD_SUPERVISORS = 4;
 
 // Labels
-export const LABEL_AGENTS = "NOMBRE DES AGENTS";
-export const LABEL_BALANCE = "MON SOLDE ESPECES";
-export const LABEL_RESOURCES = "NOMBRE DES RESSOURCES";
-export const LABEL_FLEET_SIMS_FLEETS = "TOTAL FLOTTES DE MES PUCES";
-export const LABEL_FLEETS_REQUESTS = "NOMBRE DES DEMANDES DE FLOTTES";
-export const LABEL_CLEARANCES_REQUEST = "NOMBRE DES DEMANDES DE DESTOCKAGES";
+export const LABEL_SIMS = "PUCES";
+export const LABEL_ZONES = "ZONES";
+export const LABEL_AGENTS = "AGENTS";
+export const LABEL_RESOURCES = "RESSOURCES";
+export const LABEL_OPERATORS = "OPERATEURS";
+export const LABEL_COMPANIES = "ENTREPRISES";
+export const LABEL_ADMINS = "ADMINISTRATEURS";
+export const LABEL_SUPERVISORS = "SUPERVISORS";
+export const LABEL_COLLECTORS = "RESPONSABLES DE ZONES";
+export const LABEL_MANAGERS = "GESTIONNAIRES DE FLOTTES";
