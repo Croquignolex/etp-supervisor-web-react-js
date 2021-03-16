@@ -1,190 +1,163 @@
 // Reducer action types
-export const STORE_OPERATORS_REQUEST_INIT = 'STORE_OPERATORS_REQUEST_INIT';
-export const STORE_OPERATORS_REQUEST_RESET = 'STORE_OPERATORS_REQUEST_RESET';
-export const STORE_OPERATORS_REQUEST_FAILED = 'STORE_OPERATORS_REQUEST_FAILED';
-export const STORE_OPERATORS_REQUEST_SUCCEEDED = 'STORE_OPERATORS_REQUEST_SUCCEEDED';
+export const STORE_VENDORS_REQUEST_INIT = 'STORE_VENDORS_REQUEST_INIT';
+export const STORE_VENDORS_REQUEST_RESET = 'STORE_VENDORS_REQUEST_RESET';
+export const STORE_VENDORS_REQUEST_FAILED = 'STORE_VENDORS_REQUEST_FAILED';
+export const STORE_VENDORS_REQUEST_SUCCEEDED = 'STORE_VENDORS_REQUEST_SUCCEEDED';
 
-export const STORE_NEXT_OPERATORS_REQUEST_INIT = 'STORE_NEXT_OPERATORS_REQUEST_INIT';
-export const STORE_NEXT_OPERATORS_REQUEST_RESET = 'STORE_NEXT_OPERATORS_REQUEST_RESET';
-export const STORE_NEXT_OPERATORS_REQUEST_FAILED = 'STORE_NEXT_OPERATORS_REQUEST_FAILED';
-export const STORE_NEXT_OPERATORS_REQUEST_SUCCEEDED = 'STORE_NEXT_OPERATORS_REQUEST_SUCCEEDED';
+export const STORE_NEXT_VENDORS_REQUEST_INIT = 'STORE_NEXT_VENDORS_REQUEST_INIT';
+export const STORE_NEXT_VENDORS_REQUEST_RESET = 'STORE_NEXT_VENDORS_REQUEST_RESET';
+export const STORE_NEXT_VENDORS_REQUEST_FAILED = 'STORE_NEXT_VENDORS_REQUEST_FAILED';
+export const STORE_NEXT_VENDORS_REQUEST_SUCCEEDED = 'STORE_NEXT_VENDORS_REQUEST_SUCCEEDED';
 
-export const STORE_ALL_OPERATORS_REQUEST_INIT = 'STORE_ALL_OPERATORS_REQUEST_INIT';
-export const STORE_ALL_OPERATORS_REQUEST_RESET = 'STORE_ALL_OPERATORS_REQUEST_RESET';
-export const STORE_ALL_OPERATORS_REQUEST_FAILED = 'STORE_ALL_OPERATORS_REQUEST_FAILED';
-export const STORE_ALL_OPERATORS_REQUEST_SUCCEEDED = 'STORE_ALL_OPERATORS_REQUEST_SUCCEEDED';
+export const STORE_ALL_VENDORS_REQUEST_INIT = 'STORE_ALL_VENDORS_REQUEST_INIT';
+export const STORE_ALL_VENDORS_REQUEST_RESET = 'STORE_ALL_VENDORS_REQUEST_RESET';
+export const STORE_ALL_VENDORS_REQUEST_FAILED = 'STORE_ALL_VENDORS_REQUEST_FAILED';
+export const STORE_ALL_VENDORS_REQUEST_SUCCEEDED = 'STORE_ALL_VENDORS_REQUEST_SUCCEEDED';
 
-export const STORE_ADD_OPERATOR_REQUEST_INIT = 'STORE_ADD_OPERATOR_REQUEST_INIT';
-export const STORE_ADD_OPERATOR_REQUEST_RESET = 'STORE_ADD_OPERATOR_REQUEST_RESET';
-export const STORE_ADD_OPERATOR_REQUEST_FAILED = 'STORE_ADD_OPERATOR_REQUEST_FAILED';
-export const STORE_ADD_OPERATOR_REQUEST_SUCCEEDED = 'STORE_ADD_OPERATOR_REQUEST_SUCCEEDED';
+export const STORE_ADD_VENDOR_REQUEST_INIT = 'STORE_ADD_VENDOR_REQUEST_INIT';
+export const STORE_ADD_VENDOR_REQUEST_RESET = 'STORE_ADD_VENDOR_REQUEST_RESET';
+export const STORE_ADD_VENDOR_REQUEST_FAILED = 'STORE_ADD_VENDOR_REQUEST_FAILED';
+export const STORE_ADD_VENDOR_REQUEST_SUCCEEDED = 'STORE_ADD_VENDOR_REQUEST_SUCCEEDED';
 
-export const STORE_SHOW_OPERATOR_REQUEST_INIT = 'STORE_SHOW_OPERATOR_REQUEST_INIT';
-export const STORE_SHOW_OPERATOR_REQUEST_RESET = 'STORE_SHOW_OPERATOR_REQUEST_RESET';
-export const STORE_SHOW_OPERATOR_REQUEST_FAILED = 'STORE_SHOW_OPERATOR_REQUEST_FAILED';
-export const STORE_SHOW_OPERATOR_REQUEST_SUCCEEDED = 'STORE_SHOW_OPERATOR_REQUEST_SUCCEEDED';
+export const STORE_SHOW_VENDOR_REQUEST_INIT = 'STORE_SHOW_VENDOR_REQUEST_INIT';
+export const STORE_SHOW_VENDOR_REQUEST_RESET = 'STORE_SHOW_VENDOR_REQUEST_RESET';
+export const STORE_SHOW_VENDOR_REQUEST_FAILED = 'STORE_SHOW_VENDOR_REQUEST_FAILED';
+export const STORE_SHOW_VENDOR_REQUEST_SUCCEEDED = 'STORE_SHOW_VENDOR_REQUEST_SUCCEEDED';
 
-export const STORE_EDIT_OPERATOR_REQUEST_INIT = 'STORE_EDIT_OPERATOR_REQUEST_INIT';
-export const STORE_EDIT_OPERATOR_REQUEST_RESET = 'STORE_EDIT_OPERATOR_REQUEST_RESET';
-export const STORE_EDIT_OPERATOR_REQUEST_FAILED = 'STORE_EDIT_OPERATOR_REQUEST_FAILED';
-export const STORE_EDIT_OPERATOR_REQUEST_SUCCEEDED = 'STORE_EDIT_OPERATOR_REQUEST_SUCCEEDED';
+export const STORE_EDIT_VENDOR_REQUEST_INIT = 'STORE_EDIT_VENDOR_REQUEST_INIT';
+export const STORE_EDIT_VENDOR_REQUEST_RESET = 'STORE_EDIT_VENDOR_REQUEST_RESET';
+export const STORE_EDIT_VENDOR_REQUEST_FAILED = 'STORE_EDIT_VENDOR_REQUEST_FAILED';
+export const STORE_EDIT_VENDOR_REQUEST_SUCCEEDED = 'STORE_EDIT_VENDOR_REQUEST_SUCCEEDED';
 
-export const STORE_OPERATOR_ADD_SIM_REQUEST_INIT = 'STORE_OPERATOR_ADD_SIM_REQUEST_INIT';
-export const STORE_OPERATOR_ADD_SIM_REQUEST_RESET = 'STORE_OPERATOR_ADD_SIM_REQUEST_RESET';
-export const STORE_OPERATOR_ADD_SIM_REQUEST_FAILED = 'STORE_OPERATOR_ADD_SIM_REQUEST_FAILED';
-export const STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED';
-
-// ======================================================== Operators
-// Set operators init data into store
-export const storeOperatorsRequestInit = () => ({
-    type: STORE_OPERATORS_REQUEST_INIT
+// ======================================================== Vendors
+// Set vendors init data into store
+export const storeVendorsRequestInit = () => ({
+    type: STORE_VENDORS_REQUEST_INIT
 });
 
-// Set operators failed data into store
-export const storeOperatorsRequestFailed = ({message}) => ({
+// Set vendors failed data into store
+export const storeVendorsRequestFailed = ({message}) => ({
     message,
-    type: STORE_OPERATORS_REQUEST_FAILED
+    type: STORE_VENDORS_REQUEST_FAILED
 });
 
-// Set operators succeeded data into store
-export const storeOperatorsRequestSucceed = ({message}) => ({
+// Set vendors succeeded data into store
+export const storeVendorsRequestSucceed = ({message}) => ({
     message,
-    type: STORE_OPERATORS_REQUEST_SUCCEEDED
+    type: STORE_VENDORS_REQUEST_SUCCEEDED
 });
 
-// Set operators reset data into store
-export const storeOperatorsRequestReset = () => ({
-    type: STORE_OPERATORS_REQUEST_RESET
+// Set vendors reset data into store
+export const storeVendorsRequestReset = () => ({
+    type: STORE_VENDORS_REQUEST_RESET
 });
-// ======================================================== Next operators
-// Set next operators init data into store
-export const storeNextOperatorsRequestInit = () => ({
-    type: STORE_NEXT_OPERATORS_REQUEST_INIT
+// ======================================================== Next vendors
+// Set next vendors init data into store
+export const storeNextVendorsRequestInit = () => ({
+    type: STORE_NEXT_VENDORS_REQUEST_INIT
 });
 
-// Set next operators failed data into store
-export const storeNextOperatorsRequestFailed = ({message}) => ({
+// Set next vendors failed data into store
+export const storeNextVendorsRequestFailed = ({message}) => ({
     message,
-    type: STORE_NEXT_OPERATORS_REQUEST_FAILED
+    type: STORE_NEXT_VENDORS_REQUEST_FAILED
 });
 
-// Set next operators succeeded data into store
-export const storeNextOperatorsRequestSucceed = ({message}) => ({
+// Set next vendors succeeded data into store
+export const storeNextVendorsRequestSucceed = ({message}) => ({
     message,
-    type: STORE_NEXT_OPERATORS_REQUEST_SUCCEEDED
+    type: STORE_NEXT_VENDORS_REQUEST_SUCCEEDED
 });
 
-// Set next operators reset data into store
-export const storeNextOperatorsRequestReset = () => ({
-    type: STORE_NEXT_OPERATORS_REQUEST_RESET
+// Set next vendors reset data into store
+export const storeNextVendorsRequestReset = () => ({
+    type: STORE_NEXT_VENDORS_REQUEST_RESET
 });
-// ======================================================== All operators
-// Set all operators init data into store
-export const storeAllOperatorsRequestInit = () => ({
-    type: STORE_ALL_OPERATORS_REQUEST_INIT
+// ======================================================== All vendors
+// Set all vendors init data into store
+export const storeAllVendorsRequestInit = () => ({
+    type: STORE_ALL_VENDORS_REQUEST_INIT
 });
 
-// Set all operators failed data into store
-export const storeAllOperatorsRequestFailed = ({message}) => ({
+// Set all vendors failed data into store
+export const storeAllVendorsRequestFailed = ({message}) => ({
     message,
-    type: STORE_ALL_OPERATORS_REQUEST_FAILED
+    type: STORE_ALL_VENDORS_REQUEST_FAILED
 });
 
-// Set all operators succeeded data into store
-export const storeAllOperatorsRequestSucceed = ({message}) => ({
+// Set all vendors succeeded data into store
+export const storeAllVendorsRequestSucceed = ({message}) => ({
     message,
-    type: STORE_ALL_OPERATORS_REQUEST_SUCCEEDED
+    type: STORE_ALL_VENDORS_REQUEST_SUCCEEDED
 });
 
-// Set all operators reset data into store
-export const storeAllOperatorsRequestReset = () => ({
-    type: STORE_ALL_OPERATORS_REQUEST_RESET
+// Set all vendors reset data into store
+export const storeAllVendorsRequestReset = () => ({
+    type: STORE_ALL_VENDORS_REQUEST_RESET
 });
-// ======================================================== Add operator
-// Set add operator init data into store
-export const storeAddOperatorRequestInit = () => ({
-    type: STORE_ADD_OPERATOR_REQUEST_INIT
+// ======================================================== Add vendor
+// Set add vendor init data into store
+export const storeAddVendorRequestInit = () => ({
+    type: STORE_ADD_VENDOR_REQUEST_INIT
 });
 
-// Set add operator failed data into store
-export const storeAddOperatorRequestFailed = ({message}) => ({
+// Set add vendor failed data into store
+export const storeAddVendorRequestFailed = ({message}) => ({
     message,
-    type: STORE_ADD_OPERATOR_REQUEST_FAILED
+    type: STORE_ADD_VENDOR_REQUEST_FAILED
 });
 
-// Set add operator succeeded data into store
-export const storeAddOperatorRequestSucceed = ({message}) => ({
+// Set add vendor succeeded data into store
+export const storeAddVendorRequestSucceed = ({message}) => ({
     message,
-    type: STORE_ADD_OPERATOR_REQUEST_SUCCEEDED
+    type: STORE_ADD_VENDOR_REQUEST_SUCCEEDED
 });
 
-// Set add operator reset data into store
-export const storeAddOperatorRequestReset = () => ({
-    type: STORE_ADD_OPERATOR_REQUEST_RESET
+// Set add vendor reset data into store
+export const storeAddVendorRequestReset = () => ({
+    type: STORE_ADD_VENDOR_REQUEST_RESET
 });
-// ======================================================== Show operator
-// Set show operator init data into store
-export const storeShowOperatorRequestInit = () => ({
-    type: STORE_SHOW_OPERATOR_REQUEST_INIT
+// ======================================================== Show vendor
+// Set show vendor init data into store
+export const storeShowVendorRequestInit = () => ({
+    type: STORE_SHOW_VENDOR_REQUEST_INIT
 });
 
-// Set show operator failed data into store
-export const storeShowOperatorRequestFailed = ({message}) => ({
+// Set show vendor failed data into store
+export const storeShowVendorRequestFailed = ({message}) => ({
     message,
-    type: STORE_SHOW_OPERATOR_REQUEST_FAILED
+    type: STORE_SHOW_VENDOR_REQUEST_FAILED
 });
 
-// Set show operator succeeded data into store
-export const storeShowOperatorRequestSucceed = ({message}) => ({
+// Set show vendor succeeded data into store
+export const storeShowVendorRequestSucceed = ({message}) => ({
     message,
-    type: STORE_SHOW_OPERATOR_REQUEST_SUCCEEDED
+    type: STORE_SHOW_VENDOR_REQUEST_SUCCEEDED
 });
 
-// Set show operator reset data into store
-export const storeShowOperatorRequestReset = () => ({
-    type: STORE_SHOW_OPERATOR_REQUEST_RESET
+// Set show vendor reset data into store
+export const storeShowVendorRequestReset = () => ({
+    type: STORE_SHOW_VENDOR_REQUEST_RESET
 });
-// ======================================================== Edit operator
-// Set edit operator init data into store
-export const storeEditOperatorRequestInit = () => ({
-    type: STORE_EDIT_OPERATOR_REQUEST_INIT
+// ======================================================== Edit vendor
+// Set edit vendor init data into store
+export const storeEditVendorRequestInit = () => ({
+    type: STORE_EDIT_VENDOR_REQUEST_INIT
 });
 
-// Set edit operator failed data into store
-export const storeEditOperatorRequestFailed = ({message}) => ({
+// Set edit vendor failed data into store
+export const storeEditVendorRequestFailed = ({message}) => ({
     message,
-    type: STORE_EDIT_OPERATOR_REQUEST_FAILED
+    type: STORE_EDIT_VENDOR_REQUEST_FAILED
 });
 
-// Set edit operator succeeded data into store
-export const storeEditOperatorRequestSucceed = ({message}) => ({
+// Set edit vendor succeeded data into store
+export const storeEditVendorRequestSucceed = ({message}) => ({
     message,
-    type: STORE_EDIT_OPERATOR_REQUEST_SUCCEEDED
+    type: STORE_EDIT_VENDOR_REQUEST_SUCCEEDED
 });
 
-// Set edit operator reset data into store
-export const storeEditOperatorRequestReset = () => ({
-    type: STORE_EDIT_OPERATOR_REQUEST_RESET
-});
-// ======================================================== Operator add sim
-// Set operator add sim init data into store
-export const storeOperatorAddSimRequestInit = () => ({
-    type: STORE_OPERATOR_ADD_SIM_REQUEST_INIT
-});
-
-// Set operator add sim failed data into store
-export const storeOperatorAddSimRequestFailed = ({message}) => ({
-    message,
-    type: STORE_OPERATOR_ADD_SIM_REQUEST_FAILED
-});
-
-// Set operator add sim succeeded data into store
-export const storeOperatorAddSimRequestSucceed = ({message}) => ({
-    message,
-    type: STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED
-});
-
-// Set operator add sim reset data into store
-export const storeOperatorAddSimRequestReset = () => ({
-    type: STORE_OPERATOR_ADD_SIM_REQUEST_RESET
+// Set edit vendor reset data into store
+export const storeEditVendorRequestReset = () => ({
+    type: STORE_EDIT_VENDOR_REQUEST_RESET
 });
