@@ -6,7 +6,7 @@ import {dateToString} from "../../functions/generalFunctions";
 import OperatorInfoEditContainer from "../../containers/operators/VendorInfoEditContainer";
 
 // Component
-function OperatorInfoComponent({operator}) {
+function VendorInfoComponent({operator}) {
     // Local states
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + operator.name});
 
@@ -52,8 +52,8 @@ function OperatorInfoComponent({operator}) {
 }
 
 // Prop types to ensure destroyed props data type
-OperatorInfoComponent.propTypes = {
+VendorInfoComponent.propTypes = {
     operator: PropTypes.object.isRequired
 };
 
-export default React.memo(OperatorInfoComponent);
+export default React.memo(VendorInfoComponent);

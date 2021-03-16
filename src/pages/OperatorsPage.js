@@ -14,13 +14,13 @@ import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
-import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
+import OperatorNewContainer from "../containers/operators/VendorNewContainer";
 import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
 import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
-import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
+import OperatorDetailsContainer from "../containers/operators/VendorDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
 

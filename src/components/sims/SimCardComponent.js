@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import FormModalComponent from "../modals/FormModalComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
-import OperatorDetailsContainer from "../../containers/operators/OperatorDetailsContainer";
+import OperatorDetailsContainer from "../../containers/operators/VendorDetailsContainer";
 import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
 import {
