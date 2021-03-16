@@ -22,9 +22,10 @@ function SideBarComponent({user, pathname}) {
             buildOperationsMenu(),
             buildRecoveriesMenu(),
             buildUsersMenu(),
-            buildZonesMenu(),
-            buildSimsMenu(),
             buildCompaniesMenu(),
+            buildSimsMenu(),
+            buildZonesMenu(),
+            buildVendorsMenu(),
             buildOperatorsMenu(),
         ];
         // eslint-disable-next-line
@@ -191,9 +192,9 @@ function buildUsersMenu() {
 // Build corporates menu
 function buildCompaniesMenu() {
     return {
-        name: page.ZONES_PAGE,
-        path: path.ZONES_PAGE_PATH,
-        icon: 'fa fa-map',
+        name: page.COMPANIES_PAGE,
+        path: path.COMPANIES_PAGE_PATH,
+        icon: 'fa fa-university',
         sub: []
     };
 }
@@ -201,9 +202,9 @@ function buildCompaniesMenu() {
 // Build corporates menu
 function buildZonesMenu() {
     return {
-        name: page.COMPANIES_PAGE,
-        path: path.COMPANIES_PAGE_PATH,
-        icon: 'fa fa-university',
+        name: page.ZONES_PAGE,
+        path: path.ZONES_PAGE_PATH,
+        icon: 'fa fa-map',
         sub: []
     };
 }
@@ -214,6 +215,16 @@ function buildSimsMenu() {
         name: page.SIMS_PAGE,
         path: path.SIMS_PAGE_PATH,
         icon: 'fa fa-sim-card',
+        sub: []
+    };
+}
+
+// Build vendors menu
+function buildVendorsMenu() {
+    return {
+        name: page.VENDORS_PAGE,
+        path: path.VENDORS_PAGE_PATH,
+        icon: 'fa fa-user-ninja',
         sub: []
     };
 }
