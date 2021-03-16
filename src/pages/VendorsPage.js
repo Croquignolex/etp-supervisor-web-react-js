@@ -125,7 +125,7 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
             <FormModalComponent modal={newVendorModal} handleClose={handleNewVendorModalHide}>
                 <VendorNewContainer handleClose={handleNewVendorModalHide} />
             </FormModalComponent>
-            <FormModalComponent modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
+            <FormModalComponent small={true} modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
                 <VendorDetailsContainer id={vendorDetailsModal.id} />
             </FormModalComponent>
         </>

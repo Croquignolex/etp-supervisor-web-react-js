@@ -44,7 +44,7 @@ function VendorInfoComponent({vendor}) {
                 </div>
             </div>
             {/* Modal */}
-            <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
+            <FormModalComponent small={true} modal={infoEditModal} handleClose={handleInfoEditModalHide}>
                 <VendorInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>

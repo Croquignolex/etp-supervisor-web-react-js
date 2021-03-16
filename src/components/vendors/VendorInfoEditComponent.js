@@ -77,7 +77,7 @@ function VendorInfoEditComponent({request, vendor, dispatch, handleClose}) {
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             <form onSubmit={handleSubmit}>
                 <div className='row'>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-12'>
                         <InputComponent label='Nom'
                                         type='text'
                                         input={name}
@@ -85,7 +85,7 @@ function VendorInfoEditComponent({request, vendor, dispatch, handleClose}) {
                                         handleInput={handleNameInput}
                         />
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-12'>
                         <TextareaComponent label='Description'
                                            input={description}
                                            id='inputDescription'
