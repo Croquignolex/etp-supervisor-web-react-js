@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import {dateToString} from "../../functions/generalFunctions";
 
 // Component
-function VendorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
+function VendorsCardsComponent({vendors, handleVendorDetailsModalShow}) {
     // Render
     return (
         <>
             <div className="row m-1">
-                {operators.map((item, key) => {
+                {vendors.map((item, key) => {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
@@ -19,7 +19,7 @@ function VendorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
                                         <button type="button"
                                                 title="Détails"
                                                 className=" btn-tool btn"
-                                                onClick={() => handleOperatorDetailsModalShow(item)}
+                                                onClick={() => handleVendorDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" />
                                         </button>
@@ -37,10 +37,10 @@ function VendorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
                         </div>
                     )
                 })}
-                {operators.length === 0 &&
+                {vendors.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas d'opérateur
+                            Pas de fournisseur
                         </div>
                     </div>
                 }
@@ -51,8 +51,8 @@ function VendorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
 
 // Prop types to ensure destroyed props data type
 VendorsCardsComponent.propTypes = {
-    operators: PropTypes.array.isRequired,
-    handleOperatorDetailsModalShow: PropTypes.func.isRequired
+    vendors: PropTypes.array.isRequired,
+    handleVendorDetailsModalShow: PropTypes.func.isRequired
 };
 
 export default React.memo(VendorsCardsComponent);

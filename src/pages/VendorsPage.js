@@ -2,42 +2,28 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {OPERATORS} from "../constants/pageNameConstants";
-import {emitAllAgentsFetch} from "../redux/agents/actions";
+import {VENDORS_PAGE} from "../constants/pageNameConstants";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
-import {emitAllCompaniesFetch} from "../redux/companies/actions";
-import {emitAllSimsTypesFetch} from "../redux/simsTypes/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
-import {emitAllCollectorsFetch} from "../redux/collectors/actions";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
-import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
-import OperatorNewContainer from "../containers/operators/VendorNewContainer";
-import {storeAllSimsTypesRequestReset} from "../redux/requests/simsTypes/actions";
-import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
-import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
-import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
-import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
-import OperatorDetailsContainer from "../containers/operators/VendorDetailsContainer";
+import VendorsCardsComponent from "../components/vendors/VendorsCardsComponent";
+import {emitNextVendorsFetch, emitVendorsFetch} from "../redux/vendors/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
-import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
+import {storeNextVendorsRequestReset, storeVendorsRequestReset} from "../redux/requests/vendors/actions";
 
 // Component
-function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatch, location}) {
+function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [newOperatorModal, setNewOperatorModal] = useState({show: false, header: ''});
-    const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEEUR", id: ''});
+    const [newVendorModal, setNewVendorModal] = useState({show: false, header: ''});
+    const [vendorDetailsModal, setVendorDetailsModal] = useState({show: false, header: "DETAIL DU FOURNISSEUR", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorsFetch());
-        dispatch(emitAllAgentsFetch());
-        dispatch(emitAllCompaniesFetch());
-        dispatch(emitAllSimsTypesFetch());
-        dispatch(emitAllCollectorsFetch());
+        dispatch(emitVendorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -51,37 +37,33 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeOperatorsRequestReset());
-        dispatch(storeAllAgentsRequestReset());
-        dispatch(storeAllCompaniesRequestReset());
-        dispatch(storeAllSimsTypesRequestReset());
-        dispatch(storeAllCollectorsRequestReset());
-        dispatch(storeNextOperatorsRequestReset());
+        dispatch(storeVendorsRequestReset());
+        dispatch(storeNextVendorsRequestReset());
     };
 
-    // Fetch next operators data to enhance infinite scroll
-    const handleNextOperatorsData = () => {
-        dispatch(emitNextOperatorsFetch({page}));
+    // Fetch next vendors data to enhance infinite scroll
+    const handleNextVendorsData = () => {
+        dispatch(emitNextVendorsFetch({page}));
     }
 
-    // Show new operator modal form
-    const handleNewOperatorModalShow = () => {
-        setNewOperatorModal({newOperatorModal, header: "NOUVEL OPERATEUR", show: true})
+    // Show new vendor modal form
+    const handleNewVendorModalShow = () => {
+        setNewVendorModal({newVendorModal, header: "NOUVEAU FOURNISSEUR", show: true})
     }
 
-    // Hide new operator modal form
-    const handleNewOperatorModalHide = () => {
-        setNewOperatorModal({...newOperatorModal, show: false})
+    // Hide new vendor modal form
+    const handleNewVendorModalHide = () => {
+        setNewVendorModal({...newVendorModal, show: false})
     }
 
-    // Show operator details modal form
-    const handleOperatorDetailsModalShow = ({id}) => {
-        setOperatorDetailsModal({...operatorDetailsModal, show: true, id})
+    // Show vendor details modal form
+    const handleVendorDetailsModalShow = ({id}) => {
+        setVendorDetailsModal({...vendorDetailsModal, show: true, id})
     }
 
-    // Hide operator details modal form
-    const handleOperatorDetailsModalHide = () => {
-        setOperatorDetailsModal({...operatorDetailsModal, show: false})
+    // Hide vendor details modal form
+    const handleVendorDetailsModalHide = () => {
+        setVendorDetailsModal({...vendorDetailsModal, show: false})
     }
 
     // Render
@@ -89,7 +71,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={OPERATORS} icon={'fa fa-globe'} />
+                    <HeaderComponent title={VENDORS_PAGE} icon={'fa fa-user-ninja'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -103,28 +85,28 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(operatorsRequests.list) && <ErrorAlertComponent message={operatorsRequests.list.message} />}
-                                            {requestFailed(operatorsRequests.next) && <ErrorAlertComponent message={operatorsRequests.next.message} />}
+                                            {requestFailed(vendorsRequests.list) && <ErrorAlertComponent message={vendorsRequests.list.message} />}
+                                            {requestFailed(vendorsRequests.next) && <ErrorAlertComponent message={vendorsRequests.next.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mr-2 mb-2"
-                                                    onClick={handleNewOperatorModalShow}
+                                                    onClick={handleNewVendorModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouvel opérateur
+                                                <i className="fa fa-plus" /> Nouveau fournisseur
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <OperatorsCardsComponent operators={searchEngine(operators, needle)}
-                                                                           handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
+                                                ? <VendorsCardsComponent vendors={searchEngine(vendors, needle)}
+                                                                         handleVendorDetailsModalShow={handleVendorDetailsModalShow}
                                                 />
-                                                : (requestLoading(operatorsRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(vendorsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={operators.length}
-                                                                        next={handleNextOperatorsData}
+                                                                        dataLength={vendors.length}
+                                                                        next={handleNextVendorsData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <OperatorsCardsComponent operators={operators}
-                                                                                     handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
+                                                            <VendorsCardsComponent vendors={vendors}
+                                                                                   handleVendorDetailsModalShow={handleVendorDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -138,11 +120,11 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
-            <FormModalComponent modal={newOperatorModal} handleClose={handleNewOperatorModalHide}>
-                <OperatorNewContainer handleClose={handleNewOperatorModalHide} />
+            <FormModalComponent modal={newVendorModal} handleClose={handleNewVendorModalHide}>
+                {/*<VendorNewContainer handleClose={handleNewVendorModalHide} />*/}
             </FormModalComponent>
-            <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
-                <OperatorDetailsContainer id={operatorDetailsModal.id} />
+            <FormModalComponent modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
+                {/*<VendorDetailsContainer id={vendorDetailsModal.id} />*/}
             </FormModalComponent>
         </>
     )
@@ -166,13 +148,13 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-OperatorsPage.propTypes = {
+VendorsPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
+    vendors: PropTypes.array.isRequired,
     location: PropTypes.object.isRequired,
-    operators: PropTypes.array.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    operatorsRequests: PropTypes.object.isRequired,
+    vendorsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(OperatorsPage);
+export default React.memo(VendorsPage);
