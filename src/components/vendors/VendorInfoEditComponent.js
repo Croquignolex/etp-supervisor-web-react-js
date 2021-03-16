@@ -6,17 +6,17 @@ import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
-import {emitUpdateOperator} from "../../redux/operators/actions";
+import {emitUpdateVendor} from "../../redux/vendors/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeEditOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeEditVendorRequestReset} from "../../redux/requests/vendors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function VendorInfoEditComponent({request, operator, dispatch, handleClose}) {
+function VendorInfoEditComponent({request, vendor, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: operator.name});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: operator.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: vendor.name});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: vendor.description});
 
     // Local effects
     useEffect(() => {
@@ -39,7 +39,7 @@ function VendorInfoEditComponent({request, operator, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeEditOperatorRequestReset());
+        dispatch(storeEditVendorRequestReset());
     };
 
     const handleNameInput = (data) => {
@@ -62,8 +62,8 @@ function VendorInfoEditComponent({request, operator, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateOperator({
-                id: operator.id,
+            dispatch(emitUpdateVendor({
+                id: vendor.id,
                 name: _name.data,
                 description: description.data
             }));
@@ -105,7 +105,7 @@ function VendorInfoEditComponent({request, operator, dispatch, handleClose}) {
 VendorInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
+    vendor: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 

@@ -11,6 +11,7 @@ import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import VendorsCardsComponent from "../components/vendors/VendorsCardsComponent";
 import {emitNextVendorsFetch, emitVendorsFetch} from "../redux/vendors/actions";
+import VendorDetailsContainer from "../containers/vendors/VendorDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 import {storeNextVendorsRequestReset, storeVendorsRequestReset} from "../redux/requests/vendors/actions";
 
@@ -124,7 +125,7 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
                 {/*<VendorNewContainer handleClose={handleNewVendorModalHide} />*/}
             </FormModalComponent>
             <FormModalComponent modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
-                {/*<VendorDetailsContainer id={vendorDetailsModal.id} />*/}
+                <VendorDetailsContainer id={vendorDetailsModal.id} />
             </FormModalComponent>
         </>
     )

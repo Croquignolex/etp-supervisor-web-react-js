@@ -2,19 +2,18 @@ import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
+import VendorInfoComponent from "./VendorInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import OperatorInfoComponent from "./VendorInfoComponent";
-import {emitOperatorFetch} from "../../redux/operators/actions";
-import OperatorSimsListComponent from "./OperatorSimsListComponent";
+import {emitVendorFetch} from "../../redux/vendors/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeShowOperatorRequestReset} from "../../redux/requests/operators/actions";
+import {storeShowVendorRequestReset} from "../../redux/requests/vendors/actions";
 
 // Component
-function VendorDetailsComponent({id, operator, dispatch, request}) {
+function VendorDetailsComponent({id, vendor, dispatch, request}) {
 
     // Local effects
     useEffect(() => {
-        dispatch(emitOperatorFetch({id}));
+        dispatch(emitVendorFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -24,7 +23,7 @@ function VendorDetailsComponent({id, operator, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeShowOperatorRequestReset());
+        dispatch(storeShowVendorRequestReset());
     };
 
     // Render
@@ -34,10 +33,7 @@ function VendorDetailsComponent({id, operator, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <OperatorInfoComponent operator={operator} />
-                        </div>
-                        <div className="col-lg-12 col-md-12">
-                            <OperatorSimsListComponent operator={operator} />
+                            <VendorInfoComponent vendor={vendor} />
                         </div>
                     </div>
                 )
@@ -49,9 +45,9 @@ function VendorDetailsComponent({id, operator, dispatch, request}) {
 // Prop types to ensure destroyed props data type
 VendorDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
+    vendor: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    operator: PropTypes.object.isRequired,
 };
 
 export default React.memo(VendorDetailsComponent);
