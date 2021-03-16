@@ -4,8 +4,8 @@ import VendorDetailsComponent from "../../components/vendors/VendorDetailsCompon
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    operator: state.operators.current,
-    request: state.operatorsRequests.show,
+    vendor: state.vendors.current,
+    request: state.vendorsRequests.show,
 });
 
 // Map dispatch function to component props
