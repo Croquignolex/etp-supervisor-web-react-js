@@ -8,6 +8,7 @@ import fleets from './fleets/saga';
 import returns from './returns/saga';
 import refuels from './refuels/saga';
 import affords from './affords/saga';
+import vendors from './vendors/saga';
 import settings from './settings/saga';
 import managers from './managers/saga';
 import supplies from './supplies/saga';
@@ -34,6 +35,7 @@ export default function* sagas() {
         returns(),
         refuels(),
         affords(),
+        vendors(),
         supplies(),
         managers(),
         settings(),

@@ -60,6 +60,7 @@ export function* emitAllVendorsFetch() {
 export function* emitVendorsFetch() {
     yield takeLatest(EMIT_VENDORS_FETCH, function*() {
         try {
+            console.log('here')
             // Fire event for request
             yield put(storeVendorsRequestInit());
             const apiResponse = yield call(apiGetRequest, `${api.VENDORS_API_PATH}?page=1`);

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
-import OperatorInfoEditContainer from "../../containers/operators/VendorInfoEditContainer";
+import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
 
 // Component
 function OperatorInfoComponent({operator}) {
