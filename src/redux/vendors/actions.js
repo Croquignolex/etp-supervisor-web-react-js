@@ -1,103 +1,87 @@
 // Reducer action types
-export const STORE_SET_OPERATOR_DATA = 'STORE_SET_OPERATOR_DATA';
-export const STORE_SET_OPERATORS_DATA = 'STORE_SET_OPERATORS_DATA';
-export const STORE_SET_NEW_OPERATOR_DATA = 'STORE_SET_NEW_OPERATOR_DATA';
-export const STORE_SET_NEXT_OPERATORS_DATA = 'STORE_SET_NEXT_OPERATORS_DATA';
-export const STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA';
+export const STORE_SET_VENDOR_DATA = 'STORE_SET_VENDOR_DATA';
+export const STORE_SET_VENDORS_DATA = 'STORE_SET_VENDORS_DATA';
+export const STORE_SET_NEW_VENDOR_DATA = 'STORE_SET_NEW_VENDOR_DATA';
+export const STORE_SET_NEXT_VENDORS_DATA = 'STORE_SET_NEXT_VENDORS_DATA';
+export const STORE_STOP_INFINITE_SCROLL_VENDORS_DATA = 'STORE_STOP_INFINITE_SCROLL_VENDORS_DATA';
 
 // Middleware action types
-export const EMIT_NEW_OPERATOR = 'EMIT_NEW_OPERATOR';
-export const EMIT_OPERATOR_FETCH = 'EMIT_OPERATOR_FETCH';
-export const EMIT_UPDATE_OPERATOR = 'EMIT_UPDATE_OPERATOR';
-export const EMIT_OPERATORS_FETCH = 'EMIT_OPERATORS_FETCH';
-export const EMIT_ADD_OPERATOR_SIMS = 'EMIT_ADD_OPERATOR_SIMS';
-export const EMIT_ALL_OPERATORS_FETCH = 'EMIT_ALL_OPERATORS_FETCH';
-export const EMIT_NEXT_OPERATORS_FETCH = 'EMIT_NEXT_OPERATORS_FETCH';
+export const EMIT_NEW_VENDOR = 'EMIT_NEW_VENDOR';
+export const EMIT_VENDOR_FETCH = 'EMIT_VENDOR_FETCH';
+export const EMIT_UPDATE_VENDOR = 'EMIT_UPDATE_VENDOR';
+export const EMIT_VENDORS_FETCH = 'EMIT_VENDORS_FETCH';
+export const EMIT_ALL_VENDORS_FETCH = 'EMIT_ALL_VENDORS_FETCH';
+export const EMIT_NEXT_VENDORS_FETCH = 'EMIT_NEXT_VENDORS_FETCH';
 
 //====================== Reducer trigger actions
-// Set operators data in store
-export const storeSetOperatorsData = ({operators, hasMoreData, page}) => ({
+// Set vendors data in store
+export const storeSetVendorsData = ({vendors, hasMoreData, page}) => ({
     page,
-    operators,
+    vendors,
     hasMoreData,
-    type: STORE_SET_OPERATORS_DATA
+    type: STORE_SET_VENDORS_DATA
 });
 
-// Set operator data in store
-export const storeSetOperatorData = ({operator, alsoInList = false}) => ({
-    operator,
+// Set vendor data in store
+export const storeSetVendorData = ({vendor, alsoInList = false}) => ({
+    vendor,
     alsoInList,
-    type: STORE_SET_OPERATOR_DATA
+    type: STORE_SET_VENDOR_DATA
 });
 
-// Set next operators data in store
-export const storeSetNextOperatorsData = ({operators, hasMoreData, page}) => ({
+// Set next vendors data in store
+export const storeSetNextVendorsData = ({vendors, hasMoreData, page}) => ({
     page,
-    operators,
+    vendors,
     hasMoreData,
-    type: STORE_SET_NEXT_OPERATORS_DATA
+    type: STORE_SET_NEXT_VENDORS_DATA
 });
 
 // Stop infinite scroll
-export const storeStopInfiniteScrollOperatorData = () => ({
-    type: STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA
+export const storeStopInfiniteScrollVendorData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_VENDORS_DATA
 });
 
-// Set new operator data in store
-export const storeSetNewOperatorData = ({operator}) => ({
-    operator,
-    type: STORE_SET_NEW_OPERATOR_DATA
+// Set new vendor data in store
+export const storeSetNewVendorData = ({vendor}) => ({
+    vendor,
+    type: STORE_SET_NEW_VENDOR_DATA
 });
 
 //====================== Middleware trigger actions
-// Emit operators fetch
-export const emitOperatorsFetch = () => ({
-    type: EMIT_OPERATORS_FETCH
+// Emit vendors fetch
+export const emitVendorsFetch = () => ({
+    type: EMIT_VENDORS_FETCH
 });
 
-// Emit next operators fetch
-export const emitNextOperatorsFetch = ({page}) => ({
+// Emit next vendors fetch
+export const emitNextVendorsFetch = ({page}) => ({
     page,
-    type: EMIT_NEXT_OPERATORS_FETCH
+    type: EMIT_NEXT_VENDORS_FETCH
 });
 
-// Emit all operators fetch
-export const emitAllOperatorsFetch = () => ({
-    type: EMIT_ALL_OPERATORS_FETCH
+// Emit all vendors fetch
+export const emitAllVendorsFetch = () => ({
+    type: EMIT_ALL_VENDORS_FETCH
 });
 
-// Emit operator fetch
-export const emitOperatorFetch = ({id}) => ({
+// Emit vendor fetch
+export const emitVendorFetch = ({id}) => ({
     id,
-    type: EMIT_OPERATOR_FETCH
+    type: EMIT_VENDOR_FETCH
 });
 
-// Emit new operator
-export const emitNewOperator = ({name, description}) => ({
+// Emit new vendor
+export const emitNewVendor = ({name, description}) => ({
     name,
     description,
-    type: EMIT_NEW_OPERATOR
+    type: EMIT_NEW_VENDOR
 });
 
-// Emit update operator
-export const emitUpdateOperator = ({id, name, description}) => ({
+// Emit update vendor
+export const emitUpdateVendor = ({id, name, description}) => ({
     id,
     name,
     description,
-    type: EMIT_UPDATE_OPERATOR
-});
-
-// Emit add operator sims
-export const emitAddOperatorSims = ({id, simType, name, number, description, agent, company, collector, resource, reference}) => ({
-    id,
-    name,
-    agent,
-    number,
-    simType,
-    company,
-    resource,
-    collector,
-    reference,
-    description,
-    type: EMIT_ADD_OPERATOR_SIMS
+    type: EMIT_UPDATE_VENDOR
 });

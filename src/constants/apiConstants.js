@@ -72,6 +72,13 @@ export const ALL_SUPERVISORS_API_PATH = `${API_URL}/superviseurs`;
 export const SUPERVISOR_DETAILS_API_PATH = `${API_URL}/details_user`;
 export const CREATE_SUPERVISOR_API_PATH = `${API_URL}/create_superviseur`;
 
+// Vendors
+export const VENDORS_API_PATH = `${API_URL}/vendors`;
+export const ALL_VENDORS_API_PATH = `${API_URL}/all_vendors`;
+export const EDIT_VENDOR_API_PATH = `${API_URL}/edit_vendor`;
+export const CREATE_VENDOR_API_PATH = `${API_URL}/new_vendor`;
+export const VENDOR_DETAILS_API_PATH = `${API_URL}/show_vendor`;
+
 // Administrators
 export const ADMINISTRATORS_API_PATH = `${API_URL}/administrateurs`;
 export const ADMINISTRATOR_DETAILS_API_PATH = `${API_URL}/details_user`;

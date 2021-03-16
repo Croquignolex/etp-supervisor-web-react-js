@@ -3,259 +3,204 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
-    EMIT_NEW_OPERATOR,
-    EMIT_OPERATOR_FETCH,
-    EMIT_OPERATORS_FETCH,
-    storeSetOperatorData,
-    EMIT_UPDATE_OPERATOR,
-    storeSetOperatorsData,
-    EMIT_ADD_OPERATOR_SIMS,
-    storeSetNewOperatorData,
-    EMIT_ALL_OPERATORS_FETCH,
-    storeSetNextOperatorsData,
-    EMIT_NEXT_OPERATORS_FETCH,
-    storeStopInfiniteScrollOperatorData
+    EMIT_NEW_VENDOR,
+    EMIT_VENDOR_FETCH,
+    EMIT_VENDORS_FETCH,
+    EMIT_UPDATE_VENDOR,
+    storeSetVendorData,
+    storeSetVendorsData,
+    EMIT_ALL_VENDORS_FETCH,
+    storeSetNewVendorData,
+    EMIT_NEXT_VENDORS_FETCH,
+    storeSetNextVendorsData,
+    storeStopInfiniteScrollVendorData
 } from "./actions";
 import {
-    storeOperatorsRequestInit,
-    storeOperatorsRequestFailed,
-    storeAddOperatorRequestInit,
-    storeShowOperatorRequestInit,
-    storeAllOperatorsRequestInit,
-    storeOperatorsRequestSucceed,
-    storeEditOperatorRequestInit,
-    storeNextOperatorsRequestInit,
-    storeAddOperatorRequestFailed,
-    storeAllOperatorsRequestFailed,
-    storeShowOperatorRequestFailed,
-    storeAddOperatorRequestSucceed,
-    storeEditOperatorRequestFailed,
-    storeOperatorAddSimRequestInit,
-    storeNextOperatorsRequestFailed,
-    storeAllOperatorsRequestSucceed,
-    storeShowOperatorRequestSucceed,
-    storeEditOperatorRequestSucceed,
-    storeNextOperatorsRequestSucceed,
-    storeOperatorAddSimRequestFailed,
-    storeOperatorAddSimRequestSucceed,
-} from "../requests/operators/actions";
+    storeVendorsRequestInit,
+    storeVendorsRequestFailed,
+    storeAddVendorRequestInit,
+    storeShowVendorRequestInit,
+    storeAllVendorsRequestInit,
+    storeVendorsRequestSucceed,
+    storeEditVendorRequestInit,
+    storeNextVendorsRequestInit,
+    storeAddVendorRequestFailed,
+    storeAllVendorsRequestFailed,
+    storeShowVendorRequestFailed,
+    storeAddVendorRequestSucceed,
+    storeEditVendorRequestFailed,
+    storeNextVendorsRequestFailed,
+    storeAllVendorsRequestSucceed,
+    storeShowVendorRequestSucceed,
+    storeEditVendorRequestSucceed,
+    storeNextVendorsRequestSucceed,
+} from "../requests/vendors/actions";
 
-// Fetch all operators from API
-export function* emitAllOperatorsFetch() {
-    yield takeLatest(EMIT_ALL_OPERATORS_FETCH, function*() {
+// Fetch all vendors from API
+export function* emitAllVendorsFetch() {
+    yield takeLatest(EMIT_ALL_VENDORS_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeAllOperatorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, api.All_OPERATORS_API_PATH);
+            yield put(storeAllVendorsRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.ALL_VENDORS_API_PATH);
             // Extract data
-            const operators = extractOperatorsData(apiResponse.data.flotes);
+            const vendors = extractVendorsData(apiResponse.data.vendors);
             // Fire event to redux
-            yield put(storeSetOperatorsData({operators, hasMoreData: false, page: 0}));
+            yield put(storeSetVendorsData({vendors, hasMoreData: false, page: 0}));
             // Fire event for request
-            yield put(storeAllOperatorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeAllVendorsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAllOperatorsRequestFailed({message}));
+            yield put(storeAllVendorsRequestFailed({message}));
         }
     });
 }
 
-// Fetch operators from API
-export function* emitOperatorsFetch() {
-    yield takeLatest(EMIT_OPERATORS_FETCH, function*() {
+// Fetch vendors from API
+export function* emitVendorsFetch() {
+    yield takeLatest(EMIT_VENDORS_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeOperatorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.OPERATORS_API_PATH}?page=1`);
+            yield put(storeVendorsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.VENDORS_API_PATH}?page=1`);
             // Extract data
-            const operators = extractOperatorsData(apiResponse.data.flotes);
+            const vendors = extractVendorsData(apiResponse.data.vendors);
             // Fire event to redux
-            yield put(storeSetOperatorsData({operators, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            yield put(storeSetVendorsData({vendors, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
             // Fire event for request
-            yield put(storeOperatorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeVendorsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeOperatorsRequestFailed({message}));
+            yield put(storeVendorsRequestFailed({message}));
         }
     });
 }
 
-// Fetch next operators from API
-export function* emitNextOperatorsFetch() {
-    yield takeLatest(EMIT_NEXT_OPERATORS_FETCH, function*({page}) {
+// Fetch next vendors from API
+export function* emitNextVendorsFetch() {
+    yield takeLatest(EMIT_NEXT_VENDORS_FETCH, function*({page}) {
         try {
             // Fire event for request
-            yield put(storeNextOperatorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.OPERATORS_API_PATH}?page=${page}`);
+            yield put(storeNextVendorsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.VENDORS_API_PATH}?page=${page}`);
             // Extract data
-            const operators = extractOperatorsData(apiResponse.data.flotes);
+            const vendors = extractVendorsData(apiResponse.data.vendors);
             // Fire event to redux
-            yield put(storeSetNextOperatorsData({operators, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
+            yield put(storeSetNextVendorsData({vendors, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
             // Fire event for request
-            yield put(storeNextOperatorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeNextVendorsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeNextOperatorsRequestFailed({message}));
-            yield put(storeStopInfiniteScrollOperatorData());
+            yield put(storeNextVendorsRequestFailed({message}));
+            yield put(storeStopInfiniteScrollVendorData());
         }
     });
 }
 
-// New operator into API
-export function* emitNewOperator() {
-    yield takeLatest(EMIT_NEW_OPERATOR, function*({name, description}) {
+// New vendor into API
+export function* emitNewVendor() {
+    yield takeLatest(EMIT_NEW_VENDOR, function*({name, description}) {
         try {
             // Fire event for request
-            yield put(storeAddOperatorRequestInit());
+            yield put(storeAddVendorRequestInit());
             // From data
             const data = {name, description}
             // API request
-            const apiResponse = yield call(apiPostRequest, api.CREATE_OPERATOR_API_PATH, data);
+            const apiResponse = yield call(apiPostRequest, api.CREATE_VENDOR_API_PATH, data);
             // Extract data
-            const operator = extractOperatorData(apiResponse.data.flote);
+            const vendor = extractVendorData(apiResponse.data.vendor);
             // Fire event to redux
-            yield put(storeSetNewOperatorData({operator}));
+            yield put(storeSetNewVendorData({vendor}));
             // Fire event for request
-            yield put(storeAddOperatorRequestSucceed({message: apiResponse.message}));
+            yield put(storeAddVendorRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAddOperatorRequestFailed({message}));
+            yield put(storeAddVendorRequestFailed({message}));
         }
     });
 }
 
-// Fetch operator from API
-export function* emitOperatorFetch() {
-    yield takeLatest(EMIT_OPERATOR_FETCH, function*({id}) {
+// Fetch vendor from API
+export function* emitVendorFetch() {
+    yield takeLatest(EMIT_VENDOR_FETCH, function*({id}) {
         try {
             // Fire event for request
-            yield put(storeShowOperatorRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.OPERATOR_API_PATH}/${id}`);
+            yield put(storeShowVendorRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.VENDOR_DETAILS_API_PATH}/${id}`);
             // Extract data
-            const operator = extractOperatorData(
-                apiResponse.data.flote,
-                apiResponse.data.puces,
+            const vendor = extractVendorData(
+                apiResponse.data.vendor
             );
             // Fire event to redux
-            yield put(storeSetOperatorData({operator}));
+            yield put(storeSetVendorData({vendor}));
             // Fire event for request
-            yield put(storeShowOperatorRequestSucceed({message: apiResponse.message}));
+            yield put(storeShowVendorRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeShowOperatorRequestFailed({message}));
+            yield put(storeShowVendorRequestFailed({message}));
         }
     });
 }
 
-// Update operator info
-export function* emitUpdateOperator() {
-    yield takeLatest(EMIT_UPDATE_OPERATOR, function*({id, name, description}) {
+// Update vendor info
+export function* emitUpdateVendor() {
+    yield takeLatest(EMIT_UPDATE_VENDOR, function*({id, name, description}) {
         try {
             // Fire event for request
-            yield put(storeEditOperatorRequestInit());
+            yield put(storeEditVendorRequestInit());
             const data = {name, description};
-            const apiResponse = yield call(apiPostRequest, `${api.EDIT_OPERATOR_INFO_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_VENDOR_API_PATH}/${id}`, data);
             // Extract data
-            const operator = extractOperatorData(
-                apiResponse.data.flote,
-                apiResponse.data.puces,
+            const vendor = extractVendorData(
+                apiResponse.data.vendor
             );
             // Fire event to redux
-            yield put(storeSetOperatorData({operator, alsoInList: true}));
+            yield put(storeSetVendorData({vendor, alsoInList: true}));
             // Fire event for request
-            yield put(storeEditOperatorRequestSucceed({message: apiResponse.message}));
+            yield put(storeEditVendorRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeEditOperatorRequestFailed({message}));
-        }
-    });
-}
-
-// Add agent sim
-export function* emitAddOperatorSims() {
-    yield takeLatest(EMIT_ADD_OPERATOR_SIMS, function*({id, simType, name, number, description, agent, company, collector, resource, reference}) {
-        try {
-            // Fire event for request
-            yield put(storeOperatorAddSimRequestInit());
-            const data = {
-                reference,
-                nom: name,
-                description,
-                type: simType,
-                numero: number,
-                id_agent: agent,
-                id_rz: collector,
-                id_corporate: company,
-                id_ressource: resource,
-            }
-            const apiResponse = yield call(apiPostRequest, `${api.OPERATOR_ADD_SIM}/${id}`, data);
-            // Extract data
-            const operator = extractOperatorData(
-                apiResponse.data.flote,
-                apiResponse.data.puces,
-            );
-            // Fire event to redux
-            yield put(storeSetOperatorData({operator, alsoInList: true}));
-            // Fire event for request
-            yield put(storeOperatorAddSimRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeOperatorAddSimRequestFailed({message}));
+            yield put(storeEditVendorRequestFailed({message}));
         }
     });
 }
 
 // Extract zone data
-function extractOperatorData(apiOperator, apiSims) {
-    let operator = {
+function extractVendorData(apiVendor) {
+    let vendor = {
         id: '', name: '', description: '', creation: '',
-
-        sims: []
     };
-    if(apiSims) {
-        apiSims.forEach(data => {
-            operator.sims.push({
-                name: data.nom,
-                number: data.numero,
-                balance: data.solde,
-                id: data.id.toString(),
-                creation: data.created_at
-            })
-        });
+    if(apiVendor) {
+        vendor.actionLoader = false;
+        vendor.name = apiVendor.nom;
+        vendor.id = apiVendor.id.toString();
+        vendor.creation = apiVendor.created_at;
+        vendor.description = apiVendor.description;
     }
-    if(apiOperator) {
-        operator.actionLoader = false;
-        operator.name = apiOperator.nom;
-        operator.id = apiOperator.id.toString();
-        operator.creation = apiOperator.created_at;
-        operator.description = apiOperator.description;
-    }
-    return operator;
+    return vendor;
 }
 
 // Extract zones data
-function extractOperatorsData(apiOperators) {
-    const operators = [];
-    if(apiOperators) {
-        apiOperators.forEach(data => {
-            operators.push(extractOperatorData(
-                data.flote,
-                data.puces,
+function extractVendorsData(apiVendors) {
+    const vendors = [];
+    if(apiVendors) {
+        apiVendors.forEach(data => {
+            vendors.push(extractVendorData(
+                data.vendor
             ));
         });
     }
-    return operators;
+    return vendors;
 }
 
 // Combine to export all functions at once
-export default function* sagaOperators() {
+export default function* sagaVendors() {
     yield all([
-        fork(emitNewOperator),
-        fork(emitOperatorFetch),
-        fork(emitUpdateOperator),
-        fork(emitOperatorsFetch),
-        fork(emitAddOperatorSims),
-        fork(emitAllOperatorsFetch),
-        fork(emitNextOperatorsFetch),
+        fork(emitNewVendor),
+        fork(emitVendorFetch),
+        fork(emitUpdateVendor),
+        fork(emitVendorsFetch),
+        fork(emitAllVendorsFetch),
+        fork(emitNextVendorsFetch),
     ]);
 }
