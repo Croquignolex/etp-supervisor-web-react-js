@@ -9,6 +9,7 @@ import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
+import VendorNewContainer from "../containers/vendors/VendorNewContainer";
 import VendorsCardsComponent from "../components/vendors/VendorsCardsComponent";
 import {emitNextVendorsFetch, emitVendorsFetch} from "../redux/vendors/actions";
 import VendorDetailsContainer from "../containers/vendors/VendorDetailsContainer";
@@ -122,7 +123,7 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={newVendorModal} handleClose={handleNewVendorModalHide}>
-                {/*<VendorNewContainer handleClose={handleNewVendorModalHide} />*/}
+                <VendorNewContainer handleClose={handleNewVendorModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
                 <VendorDetailsContainer id={vendorDetailsModal.id} />

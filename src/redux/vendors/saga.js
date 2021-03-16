@@ -172,7 +172,7 @@ function extractVendorData(apiVendor) {
     };
     if(apiVendor) {
         vendor.actionLoader = false;
-        vendor.name = apiVendor.nom;
+        vendor.name = apiVendor.name;
         vendor.id = apiVendor.id.toString();
         vendor.creation = apiVendor.created_at;
         vendor.description = apiVendor.description;
