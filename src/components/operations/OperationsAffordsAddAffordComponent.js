@@ -22,7 +22,7 @@ import {
 } from "../../functions/generalFunctions";
 
 // Component
-function OperationsAffordsAddAffordComponent({request, sims, allSimsRequests, dispatch, handleClose}) {
+function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendorsRequests, allSimsRequests, dispatch, handleClose}) {
     // Local state
     const [amount, setAmount] = useState(DEFAULT_FORM_DATA);
     const [doc, setDoc] = useState(constants.DEFAULT_FORM_DATA);
@@ -75,8 +75,8 @@ function OperationsAffordsAddAffordComponent({request, sims, allSimsRequests, di
 
     // Build vendor options
     const agentVendorOptions = useMemo(() => {
-        return dataToArrayForSelect(VENDORS)
-    }, []);
+        return dataToArrayForSelect(vendors)
+    }, [vendors]);
 
     // Reset error alert
     const shouldResetErrorData = () => {
@@ -170,9 +170,11 @@ function OperationsAffordsAddAffordComponent({request, sims, allSimsRequests, di
 OperationsAffordsAddAffordComponent.propTypes = {
     sims: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
+    vendors: PropTypes.array.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
-    allSimsRequests: PropTypes.object.isRequired
+    allSimsRequests: PropTypes.object.isRequired,
+    allVendorsRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(OperationsAffordsAddAffordComponent);

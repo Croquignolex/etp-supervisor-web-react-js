@@ -6,15 +6,22 @@ import FormModalComponent from "../modals/FormModalComponent";
 import {DONE, PROCESSING} from "../../constants/typeConstants";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import VendorDetailsContainer from "../../containers/vendors/VendorDetailsContainer";
 
 // Component
 function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
     // Local states
+    const [vendorDetailsModal, setVendorSimDetailsModal] = useState({show: false, header: 'DETAIL DU FOURNISSEUR', id: ''});
     const [outgoingSimDetailsModal, setOutgoingSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE DE FLOTTAGE', id: ''});
 
     // Hide outgoing sim details modal form
     const handleOutgoingSimDetailModalHide = () => {
         setOutgoingSimDetailsModal({...outgoingSimDetailsModal, show: false})
+    }
+
+    // Hide vendor details modal form
+    const handleVendorSimDetailModalHide = () => {
+        setVendorSimDetailsModal({...vendorDetailsModal, show: false})
     }
 
     // Render
@@ -51,7 +58,12 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
                                         </li>
                                         <li className="list-group-item">
                                             <b>Fournisseur</b>
-                                            <span className="float-right">{item.vendor}</span>
+                                            <span className="float-right">
+                                                {item.vendor.name}
+                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                   onClick={() => setVendorSimDetailsModal({...vendorDetailsModal, show: true, id: item.vendor.id})}
+                                                />
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Puce réceptrice</b>
@@ -85,17 +97,20 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
                         </div>
                     )
                 })}
-                {affords.length === 0 &&
-                <div className="col-12">
-                    <div className='alert custom-active text-center'>
-                        Pas d'approvisionnement
+                {affords.length === 0 && (
+                    <div className="col-12">
+                        <div className='alert custom-active text-center'>
+                            Pas d'approvisionnement
+                        </div>
                     </div>
-                </div>
-                }
+                )}
             </div>
             {/* Modal */}
             <FormModalComponent small={true} modal={outgoingSimDetailsModal} handleClose={handleOutgoingSimDetailModalHide}>
                 <SimDetailsContainer id={outgoingSimDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent small={true} modal={vendorDetailsModal} handleClose={handleVendorSimDetailModalHide}>
+                <VendorDetailsContainer id={vendorDetailsModal.id} />
             </FormModalComponent>
         </>
     )
