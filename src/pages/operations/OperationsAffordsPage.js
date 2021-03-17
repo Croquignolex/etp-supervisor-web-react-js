@@ -17,8 +17,16 @@ import ConfirmModalComponent from "../../components/modals/ConfirmModalComponent
 import {emitAffordsFetch, emitConfirmAfford, emitNextAffordsFetch} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
 import OperationsAffordsAddAffordContainer from "../../containers/operations/OperationsAffordsAddAffordContainer";
-import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeAffordsRequestReset, storeConfirmAffordRequestReset, storeNextAffordsRequestReset} from "../../redux/requests/affords/actions";
+import {
+    applySuccess,
+    dateToString,
+    formatNumber,
+    needleSearch,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dispatch, location}) {
@@ -38,6 +46,15 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
         };
         // eslint-disable-next-line
     }, []);
+
+    // Local effects
+    useEffect(() => {
+        // Reset inputs while toast (well done) into current scope
+        if(requestSucceeded(affordsRequests.apply)) {
+            applySuccess(affordsRequests.apply.message);
+        }
+        // eslint-disable-next-line
+    }, [affordsRequests.apply]);
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
