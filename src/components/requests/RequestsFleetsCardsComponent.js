@@ -54,6 +54,10 @@ function RequestsFleetsCardsComponent({fleets}) {
                                                 />
                                             </span>
                                         </li>
+                                        <li className="list-group-item">
+                                            <b>Demandeur</b>
+                                            <span className="float-right">{item.claimant.name}</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
