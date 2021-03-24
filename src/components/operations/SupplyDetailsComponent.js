@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
+import SupplyInfoComponent from "./SupplyInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {storeReturnsRequestReset} from "../../redux/requests/returns/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
@@ -12,6 +13,7 @@ function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequest
 
     // Local effects
     useEffect(() => {
+        // dispatch(emitReturnsFetch());
         // dispatch(emitReturnsFetch());
         // dispatch(emitRecoveriesFetch());
         // Cleaner error alert while component did unmount without store dependency
@@ -31,7 +33,7 @@ function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequest
     return (
         <div className="row">
             <div className="col-lg-12 col-md-12">
-                {/*<ZoneInfoComponent zone={zone} />*/}
+                <SupplyInfoComponent supply={supply} />
             </div>
             <div className="col-lg-12 col-md-12">
                 {requestLoading(recoveriesRequests)  ? <LoaderComponent /> : (

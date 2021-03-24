@@ -4,8 +4,8 @@ import SupplyDetailsComponent from "../../components/operations/SupplyDetailsCom
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    supply: state.supplies.current,
     returns: state.returns.list,
+    supply: state.supplies.current,
     recoveries: state.recoveries.list,
     returnsRequests: state.returnsRequests,
     recoveriesRequests: state.recoveriesRequests
