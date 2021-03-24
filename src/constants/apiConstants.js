@@ -110,8 +110,9 @@ export const EDIT_COMPANY_DOC_API_PATH = `${API_URL}/edit_corporate_folder`;
 export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
 
 // Recoveries
-export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
 export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
+export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
+export const SUPPLY_FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_flottage_retour_flotte`;
 
 // Transfers
 export const NEW_TRANSFERS_API_PATH = `${API_URL}/flottage_interne_rz`;

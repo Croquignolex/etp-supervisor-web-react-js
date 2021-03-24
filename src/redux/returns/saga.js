@@ -6,6 +6,7 @@ import {
     EMIT_RETURNS_FETCH,
     storeSetReturnsData,
     EMIT_NEXT_RETURNS_FETCH,
+    EMIT_SUPPLY_RETURNS_FETCH,
     storeSetNextReturnsData,
     storeStopInfiniteScrollReturnData
 } from "./actions";
@@ -29,6 +30,26 @@ export function* emitReturnsFetch() {
             const returns = extractReturnsData(apiResponse.data.recouvrements);
             // Fire event to redux
             yield put(storeSetReturnsData({returns, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeReturnsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeReturnsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch supply returns from API
+export function* emitSupplyReturnsFetch() {
+    yield takeLatest(EMIT_SUPPLY_RETURNS_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeReturnsRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.SUPPLY_FLEET_RECOVERIES_API_PATH);
+            // Extract data
+            const returns = extractReturnsData(apiResponse.data.recouvrements);
+            // Fire event to redux
+            yield put(storeSetReturnsData({returns, hasMoreData: false, page: 0}));
             // Fire event for request
             yield put(storeReturnsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
@@ -129,5 +150,6 @@ export default function* sagaReturns() {
     yield all([
         fork(emitReturnsFetch),
         fork(emitNextReturnsFetch),
+        fork(emitSupplyReturnsFetch),
     ]);
 }

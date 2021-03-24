@@ -7,6 +7,7 @@ export const STORE_STOP_INFINITE_SCROLL_RETURNS_DATA = 'STORE_STOP_INFINITE_SCRO
 export const EMIT_NEW_RETURN = 'EMIT_NEW_RETURN';
 export const EMIT_RETURNS_FETCH = 'EMIT_RETURNS_FETCH';
 export const EMIT_NEXT_RETURNS_FETCH = 'EMIT_NEXT_RETURNS_FETCH';
+export const EMIT_SUPPLY_RETURNS_FETCH = 'EMIT_SUPPLY_RETURNS_FETCH';
 
 //====================== Reducer trigger actions
 // Set returns data in store
@@ -34,6 +35,12 @@ export const storeStopInfiniteScrollReturnData = () => ({
 // Emit returns fetch
 export const emitReturnsFetch = () => ({
     type: EMIT_RETURNS_FETCH
+});
+
+// Emit supply returns fetch
+export const emitSupplyReturnsFetch = ({id}) => ({
+    id,
+    type: EMIT_SUPPLY_RETURNS_FETCH
 });
 
 // Emit next returns fetch

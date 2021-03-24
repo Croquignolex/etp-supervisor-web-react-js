@@ -4,6 +4,7 @@ import React, {useEffect} from 'react';
 import LoaderComponent from "../LoaderComponent";
 import SupplyInfoComponent from "./SupplyInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import {emitSupplyReturnsFetch} from "../../redux/returns/actions";
 import SupplyReturnsListComponent from "./SupplyReturnsListComponent";
 import SupplyRecoveriesListComponent from "./SupplyRecoveriesListComponent";
 import {storeReturnsRequestReset} from "../../redux/requests/returns/actions";
@@ -15,7 +16,8 @@ function SupplyDetailsComponent({supply, returns, recoveries, returnsRequests, r
 
     // Local effects
     useEffect(() => {
-        // dispatch(emitReturnsFetch());
+        const {id} = supply;
+        dispatch(emitSupplyReturnsFetch({id}));
         // dispatch(emitRecoveriesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
