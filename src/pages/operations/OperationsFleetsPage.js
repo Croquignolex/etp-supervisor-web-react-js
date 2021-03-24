@@ -19,7 +19,7 @@ import {storeNextSuppliesRequestReset, storeSuppliesRequestReset} from "../../re
 function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [supplyDetailsModal, setSupplyDetailsModal] = useState({show: false, header: "DETAIL DU FLOTTAGE AGENT", id: ''});
+    const [supplyDetailsModal, setSupplyDetailsModal] = useState({show: false, header: "DETAIL DU FLOTTAGE AGENT", supply: ''});
 
     // Local effects
     useEffect(() => {
@@ -47,8 +47,8 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
     }
 
     // Show supply details modal form
-    const handleSupplyDetailsModalShow = ({id}) => {
-        setSupplyDetailsModal({...supplyDetailsModal, show: true, id})
+    const handleSupplyDetailsModalShow = (supply) => {
+        setSupplyDetailsModal({...supplyDetailsModal, show: true, supply})
     }
 
     // Hide supply details modal form
@@ -105,7 +105,7 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={supplyDetailsModal} handleClose={handleSupplyDetailsModalHide}>
-                <SupplyDetailsContainer id={supplyDetailsModal.id} />
+                <SupplyDetailsContainer supply={supplyDetailsModal.supply} />
             </FormModalComponent>
         </>
     )

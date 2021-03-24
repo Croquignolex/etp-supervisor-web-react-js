@@ -9,11 +9,10 @@ import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeRecoveriesRequestReset} from "../../redux/requests/recoveries/actions";
 
 // Component
-function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequests, recoveriesRequests, dispatch}) {
+function SupplyDetailsComponent({supply, returns, recoveries, returnsRequests, recoveriesRequests, dispatch}) {
 
     // Local effects
     useEffect(() => {
-        // dispatch(emitReturnsFetch());
         // dispatch(emitReturnsFetch());
         // dispatch(emitRecoveriesFetch());
         // Cleaner error alert while component did unmount without store dependency
@@ -38,14 +37,14 @@ function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequest
             <div className="col-lg-12 col-md-12">
                 {requestLoading(recoveriesRequests)  ? <LoaderComponent /> : (
                     requestFailed(recoveriesRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-
+                        <br/>
                     )
                 )}
             </div>
             <div className="col-lg-12 col-md-12">
                 {requestLoading(returnsRequests)  ? <LoaderComponent /> : (
                     requestFailed(returnsRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-
+                        <br/>
                     )
                 )}
             </div>
@@ -55,7 +54,6 @@ function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequest
 
 // Prop types to ensure destroyed props data type
 SupplyDetailsComponent.propTypes = {
-    id: PropTypes.string.isRequired,
     supply: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     returns: PropTypes.array.isRequired,

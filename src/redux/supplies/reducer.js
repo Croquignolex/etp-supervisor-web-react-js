@@ -5,16 +5,7 @@ import Lodash from "lodash";
 const initialState = {
     page: 1,
     list: [],
-    hasMoreData: false,
-
-    current: {
-        id: '', amount: '', creation: '', remaining: '', status: '',
-
-        agent: {id: '', name: ''},
-        supplier: {id: '', name: ''},
-        sim_outgoing: {id: '', name: '', number: ''},
-        sim_incoming: {id: '', name: '', number: ''},
-    },
+    hasMoreData: false
 };
 
 // Reduce
