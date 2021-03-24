@@ -16,6 +16,8 @@ function SupplyReturnsListComponent({returns}) {
                             <tr>
                                 <th>DATE</th>
                                 <th>MONTANT</th>
+                                <th>EMETTEUR</th>
+                                <th>RECEPTEUR</th>
                                 <th>RESPONSABLE</th>
                             </tr>
                         </thead>
@@ -25,13 +27,15 @@ function SupplyReturnsListComponent({returns}) {
                                     <tr key={key}>
                                         <td>{item.creation}</td>
                                         <td className='text-right'>{formatNumber(item.amount)}</td>
+                                        <td>{item.sim_outgoing.number}</td>
+                                        <td>{item.sim_incoming.number}</td>
                                         <td>{item.collector.name}</td>
                                     </tr>
                                 )
                             })}
                             {returns.length === 0 && (
                                 <tr>
-                                    <td colSpan={3}>
+                                    <td colSpan={5}>
                                         <div className='alert custom-active text-center'>
                                             Pas de retours flottes
                                         </div>

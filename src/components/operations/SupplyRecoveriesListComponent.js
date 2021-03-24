@@ -14,21 +14,18 @@ function SupplyRecoveriesListComponent({recoveries}) {
                     <table className="table table-hover text-nowrap table-bordered">
                         <thead>
                             <tr>
-                                <th>NOM</th>
-                                <th>NUMERO</th>
-                                <th>SOLDE</th>
+                                <th>DATE</th>
+                                <th>MONTANT</th>
+                                <th>RESPONSABLE</th>
                             </tr>
                         </thead>
                         <tbody>
                             {recoveries.map((item, key) => {
                                 return (
                                     <tr key={key}>
-                                        <td>
-
-                                            {item.name}
-                                        </td>
-                                        <td>{item.number}</td>
-                                        <td className='text-right'>{formatNumber(item.balance)}</td>
+                                        <td>{item.creation}</td>
+                                        <td className='text-right'>{formatNumber(item.amount)}</td>
+                                        <td>{item.collector.name}</td>
                                     </tr>
                                 )
                             })}
