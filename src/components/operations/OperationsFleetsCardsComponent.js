@@ -9,7 +9,7 @@ import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer
 import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsContainer";
 
 // Component
-function OperationsFleetsCardsComponent({supplies}) {
+function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}) {
     // Local states
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
@@ -42,6 +42,15 @@ function OperationsFleetsCardsComponent({supplies}) {
                                     <h3 className="card-title text-bold">
                                         <i className="fa fa-phone" /> {formatNumber(item.amount)}
                                     </h3>
+                                    <div className="card-tools">
+                                        <button type="button"
+                                                title="Détails"
+                                                className=" btn-tool btn"
+                                                onClick={() => handleSupplyDetailsModalShow(item)}
+                                        >
+                                            <i className="fa fa-eye" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="card-body">
                                     <ul className="list-group list-group-unbordered">
@@ -119,7 +128,8 @@ function OperationsFleetsCardsComponent({supplies}) {
 
 // Prop types to ensure destroyed props data type
 OperationsFleetsCardsComponent.propTypes = {
-    supplies: PropTypes.array.isRequired
+    supplies: PropTypes.array.isRequired,
+    handleSupplyDetailsModalShow: PropTypes.func.isRequired
 };
 
 export default React.memo(OperationsFleetsCardsComponent);

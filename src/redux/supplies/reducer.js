@@ -14,10 +14,6 @@ const initialState = {
         supplier: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
-
-
-        returns: [],
-        recoveries: []
     },
 };
 

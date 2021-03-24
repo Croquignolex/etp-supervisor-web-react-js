@@ -12,11 +12,15 @@ import {emitNextSuppliesFetch, emitSuppliesFetch} from "../../redux/supplies/act
 import OperationsFleetsCardsComponent from "../../components/operations/OperationsFleetsCardsComponent";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextSuppliesRequestReset, storeSuppliesRequestReset} from "../../redux/requests/supplies/actions";
+import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
+import FormModalComponent from "../../components/modals/FormModalComponent";
+import ZonesCardsComponent from "../../components/zones/ZonesCardsComponent";
 
 // Component
 function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [supplyDetailsModal, setSupplyDetailsModal] = useState({show: false, header: "DETAIL DU FLOTTAGE AGENT", id: ''});
 
     // Local effects
     useEffect(() => {
@@ -43,6 +47,16 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
         dispatch(emitNextSuppliesFetch({page}));
     }
 
+    // Show supply details modal form
+    const handleSupplyDetailsModalShow = ({id}) => {
+        setSupplyDetailsModal({...supplyDetailsModal, show: true, id})
+    }
+
+    // Hide supply details modal form
+    const handleSupplyDetailsModalHide = () => {
+        setSupplyDetailsModal({...supplyDetailsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -66,7 +80,9 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                                             {requestFailed(suppliesRequests.next) && <ErrorAlertComponent message={suppliesRequests.next.message} />}
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <OperationsFleetsCardsComponent supplies={searchEngine(supplies, needle)} />
+                                                ? <OperationsFleetsCardsComponent supplies={searchEngine(supplies, needle)}
+                                                                                  handleSupplyDetailsModalShow={handleSupplyDetailsModalShow}
+                                                />
                                                 : (requestLoading(suppliesRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
@@ -74,7 +90,9 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                                                                         next={handleNextSuppliesData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <OperationsFleetsCardsComponent supplies={supplies} />
+                                                            <OperationsFleetsCardsComponent supplies={supplies}
+                                                                                            handleSupplyDetailsModalShow={handleSupplyDetailsModalShow}
+                                                            />
                                                         </InfiniteScroll>
                                                 )
                                             }
@@ -86,6 +104,10 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
                     </section>
                 </div>
             </AppLayoutContainer>
+            {/* Modal */}
+            <FormModalComponent modal={supplyDetailsModal} handleClose={handleSupplyDetailsModalHide}>
+                <ZoneDetailsContainer id={supplyDetailsModal.id} />
+            </FormModalComponent>
         </>
     )
 }

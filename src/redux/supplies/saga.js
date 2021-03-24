@@ -5,8 +5,8 @@ import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_SUPPLIES_FETCH,
     storeSetSuppliesData,
-    storeSetNextSuppliesData,
     EMIT_NEXT_SUPPLIES_FETCH,
+    storeSetNextSuppliesData,
     storeStopInfiniteScrollSupplyData
 } from "./actions";
 import {
@@ -60,7 +60,7 @@ export function* emitNextSuppliesFetch() {
 }
 
 // Extract supply data
-function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply, apiRecoveries, apiReturns) {
+function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply) {
     let supply = {
         id: '', amount: '', creation: '', remaining: '', status: '',
 
@@ -68,10 +68,6 @@ function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, ap
         supplier: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
-
-
-        returns: [],
-        recoveries: []
     };
     if(apiAgent && apiUser) {
         supply.agent = {
