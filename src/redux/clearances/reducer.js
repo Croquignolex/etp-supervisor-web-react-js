@@ -1,7 +1,4 @@
-import Lodash from "lodash";
-
 import * as actions from "./actions";
-import {DONE, PROCESSING} from "../../constants/typeConstants";
 
 // Partial global store for users data management
 const initialState = {

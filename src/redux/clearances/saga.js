@@ -1,7 +1,7 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_CLEARANCES_FETCH,
     storeSetClearancesData,

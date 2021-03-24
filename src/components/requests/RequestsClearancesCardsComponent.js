@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import FormModalComponent from "../modals/FormModalComponent";
 import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
-import {PENDING, PROCESSING} from "../../constants/typeConstants";
-import LoaderComponent from "../LoaderComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
 
 // Component

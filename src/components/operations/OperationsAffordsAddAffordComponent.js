@@ -8,18 +8,13 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import {MASTER_TYPE} from "../../constants/typeConstants";
 import {emitAddAfford} from "../../redux/affords/actions";
 import * as constants from "../../constants/defaultConstants";
+import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import FileDocumentComponent from "../form/FileDocumentComponent";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {DEFAULT_FORM_DATA, VENDORS} from "../../constants/defaultConstants";
 import {storeAddAffordRequestReset} from "../../redux/requests/affords/actions";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {requiredChecker, requiredFileChecker} from "../../functions/checkerFunctions";
-import {
-    applySuccess,
-    requestFailed,
-    requestLoading,
-    requestSucceeded
-} from "../../functions/generalFunctions";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
 function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendorsRequests, allSimsRequests, dispatch, handleClose}) {
