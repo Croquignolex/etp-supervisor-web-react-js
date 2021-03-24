@@ -34,8 +34,10 @@ function SupplyInfoComponent({supply}) {
     return (
         <>
             <div className="card">
-                <div  className={`card-header ${supply.item.status === DONE ? 'bg-secondary' : 'bg-primary'}`}>
-                    <h3 className="card-title">{supply.amount}</h3>
+                <div  className={`card-header ${supply.status === DONE ? 'bg-secondary' : 'bg-primary'}`}>
+                    <h3 className="card-title text-bold">
+                        <i className="fa fa-phone" /> {formatNumber(supply.amount)}
+                    </h3>
                 </div>
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
