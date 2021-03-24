@@ -3,14 +3,17 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import {storeReturnsRequestReset} from "../../redux/requests/returns/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {storeRecoveriesRequestReset} from "../../redux/requests/recoveries/actions";
 
 // Component
-function SupplyDetailsComponent({id, supply, dispatch}) {
+function SupplyDetailsComponent({id, supply, returns, recoveries, returnsRequests, recoveriesRequests, dispatch}) {
 
     // Local effects
     useEffect(() => {
-        // dispatch(emitZoneFetch({id}));
+        // dispatch(emitReturnsFetch());
+        // dispatch(emitRecoveriesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -20,25 +23,31 @@ function SupplyDetailsComponent({id, supply, dispatch}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        // dispatch(storeShowZoneRequestReset());
+        dispatch(storeReturnsRequestReset());
+        dispatch(storeRecoveriesRequestReset());
     };
 
     // Render
     return (
-        <>
-            {requestLoading(request)  ? <LoaderComponent /> : (
-                requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
-                    <div className="row">
-                        <div className="col-lg-12 col-md-12">
-                            {/*<ZoneInfoComponent zone={zone} />*/}
-                        </div>
-                        <div className="col-lg-12 col-md-12">
-                            {/*<ZoneAgentsListComponent zone={zone} />*/}
-                        </div>
-                    </div>
-                )
-            )}
-        </>
+        <div className="row">
+            <div className="col-lg-12 col-md-12">
+                {/*<ZoneInfoComponent zone={zone} />*/}
+            </div>
+            <div className="col-lg-12 col-md-12">
+                {requestLoading(recoveriesRequests)  ? <LoaderComponent /> : (
+                    requestFailed(recoveriesRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
+
+                    )
+                )}
+            </div>
+            <div className="col-lg-12 col-md-12">
+                {requestLoading(returnsRequests)  ? <LoaderComponent /> : (
+                    requestFailed(returnsRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
+
+                    )
+                )}
+            </div>
+        </div>
     )
 }
 
@@ -47,6 +56,10 @@ SupplyDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     supply: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
+    returns: PropTypes.array.isRequired,
+    recoveries: PropTypes.array.isRequired,
+    returnsRequests: PropTypes.object.isRequired,
+    recoveriesRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(SupplyDetailsComponent);

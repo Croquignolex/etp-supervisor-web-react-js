@@ -5,7 +5,10 @@ import SupplyDetailsComponent from "../../components/operations/SupplyDetailsCom
 // Map state function to component props
 const mapStateToProps = (state) => ({
     supply: state.supplies.current,
-    // request: state.zonesRequests.show,
+    returns: state.returns.list,
+    recoveries: state.recoveries.list,
+    returnsRequests: state.returnsRequests,
+    recoveriesRequests: state.recoveriesRequests
 });
 
 // Map dispatch function to component props
