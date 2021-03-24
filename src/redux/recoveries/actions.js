@@ -6,6 +6,7 @@ export const STORE_STOP_INFINITE_SCROLL_RECOVERIES_DATA = 'STORE_STOP_INFINITE_S
 // Middleware action types
 export const EMIT_RECOVERIES_FETCH = 'EMIT_RECOVERIES_FETCH';
 export const EMIT_NEXT_RECOVERIES_FETCH = 'EMIT_NEXT_RECOVERIES_FETCH';
+export const EMIT_SUPPLY_RECOVERIES_FETCH = 'EMIT_SUPPLY_RECOVERIES_FETCH';
 
 //====================== Reducer trigger actions
 // Set recoveries data in store
@@ -39,4 +40,10 @@ export const emitRecoveriesFetch = () => ({
 export const emitNextRecoveriesFetch = ({page}) => ({
     page,
     type: EMIT_NEXT_RECOVERIES_FETCH
+});
+
+// Emit supply recoveries fetch
+export const emitSupplyRecoveriesFetch = ({id}) => ({
+    id,
+    type: EMIT_SUPPLY_RECOVERIES_FETCH
 });

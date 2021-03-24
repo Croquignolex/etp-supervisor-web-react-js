@@ -6,6 +6,7 @@ import {
     EMIT_RECOVERIES_FETCH,
     storeSetRecoveriesData,
     EMIT_NEXT_RECOVERIES_FETCH,
+    EMIT_SUPPLY_RECOVERIES_FETCH,
     storeSetNextRecoveriesData,
     storeStopInfiniteScrollRecoveryData
 } from "./actions";
@@ -29,6 +30,26 @@ export function* emitRecoveriesFetch() {
             const recoveries = extractRecoveriesData(apiResponse.data.recouvrements);
             // Fire event to redux
             yield put(storeSetRecoveriesData({recoveries, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeRecoveriesRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeRecoveriesRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch supply recoveries from API
+export function* emitSupplyRecoveriesFetch() {
+    yield takeLatest(EMIT_SUPPLY_RECOVERIES_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeRecoveriesRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.SUPPLY_CASH_RECOVERIES_API_PATH}/${id}`);
+            // Extract data
+            const recoveries = extractRecoveriesData(apiResponse.data.recouvrements);
+            // Fire event to redux
+            yield put(storeSetRecoveriesData({recoveries, hasMoreData: false, page: 0}));
             // Fire event for request
             yield put(storeRecoveriesRequestSucceed({message: apiResponse.message}));
         } catch (message) {
@@ -110,5 +131,6 @@ export default function* sagaRecoveries() {
     yield all([
         fork(emitRecoveriesFetch),
         fork(emitNextRecoveriesFetch),
+        fork(emitSupplyRecoveriesFetch),
     ]);
 }
