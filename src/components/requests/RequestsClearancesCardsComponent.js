@@ -7,15 +7,29 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import {PENDING, PROCESSING} from "../../constants/typeConstants";
 import LoaderComponent from "../LoaderComponent";
+import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
 
 // Component
 function RequestsClearancesCardsComponent({clearances}) {
     // Local states
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
+    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
     // Hide agent details modal form
     const handleAgentDetailsModalHide = () => {
         setAgentDetailsModal({...agentDetailsModal, show: false})
+    }
+
+    // Hide sim details modal form
+    const handleSimDetailsModalHide = () => {
+        setSimDetailsModal({...simDetailsModal, show: false})
+    }
+
+    // Hide collector details modal form
+    const handleCollectorDetailsModalHide = () => {
+        setCollectorDetailsModal({...collectorDetailsModal, show: false})
     }
 
     // Render
@@ -45,7 +59,12 @@ function RequestsClearancesCardsComponent({clearances}) {
                                         </li>
                                         <li className="list-group-item">
                                             <b>Puce à déstocker</b>
-                                            <span className="float-right">{item.sim.number}</span>
+                                            <span className="float-right">
+                                                {item.sim.number}
+                                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim.id})}
+                                                />
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Agent/Ressource</b>
@@ -58,7 +77,17 @@ function RequestsClearancesCardsComponent({clearances}) {
                                         </li>
                                         <li className="list-group-item">
                                             <b>Demandeur</b>
-                                            <span className="float-right">{item.claimant.name}</span>
+                                            <span className="float-right">
+                                                {item.claimant.name}
+                                                {(item.claimant.id === item.agent.id)
+                                                    ? <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                         onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.agent.id})}
+                                                    />
+                                                    : <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                                         onClick={() => setCollectorDetailsModal({...collectorDetailsModal, show: true, id: item.claimant.id})}
+                                                    />
+                                                }
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
@@ -77,6 +106,12 @@ function RequestsClearancesCardsComponent({clearances}) {
             {/* Modal */}
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
+                <SimDetailsContainer id={simDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
+                <CollectorDetailsContainer id={collectorDetailsModal.id} />
             </FormModalComponent>
         </>
     )

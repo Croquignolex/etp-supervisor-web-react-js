@@ -20,19 +20,9 @@ function RequestsFleetsCardsComponent({fleets}) {
         setAgentDetailsModal({...agentDetailsModal, show: false})
     }
 
-    // Show sim details modal form
-    const handleSimDetailsModalShow = ({id}) => {
-        setSimDetailsModal({...simDetailsModal, show: true, id})
-    }
-
     // Hide sim details modal form
     const handleSimDetailsModalHide = () => {
         setSimDetailsModal({...simDetailsModal, show: false})
-    }
-
-    // Show collector details modal form
-    const handleCollectorDetailsModalShow = ({id}) => {
-        setCollectorDetailsModal({...collectorDetailsModal, show: true, id})
     }
 
     // Hide collector details modal form
