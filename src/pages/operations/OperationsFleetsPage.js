@@ -8,13 +8,12 @@ import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import {OPERATIONS_FLEETS_PAGE} from "../../constants/pageNameConstants";
 import TableSearchComponent from "../../components/TableSearchComponent";
+import FormModalComponent from "../../components/modals/FormModalComponent";
 import {emitNextSuppliesFetch, emitSuppliesFetch} from "../../redux/supplies/actions";
+import SupplyDetailsContainer from "../../containers/operations/SupplyDetailsContainer";
 import OperationsFleetsCardsComponent from "../../components/operations/OperationsFleetsCardsComponent";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextSuppliesRequestReset, storeSuppliesRequestReset} from "../../redux/requests/supplies/actions";
-import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
-import FormModalComponent from "../../components/modals/FormModalComponent";
-import ZonesCardsComponent from "../../components/zones/ZonesCardsComponent";
 
 // Component
 function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, dispatch, location}) {
@@ -106,7 +105,7 @@ function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, di
             </AppLayoutContainer>
             {/* Modal */}
             <FormModalComponent modal={supplyDetailsModal} handleClose={handleSupplyDetailsModalHide}>
-                <ZoneDetailsContainer id={supplyDetailsModal.id} />
+                <SupplyDetailsContainer id={supplyDetailsModal.id} />
             </FormModalComponent>
         </>
     )
