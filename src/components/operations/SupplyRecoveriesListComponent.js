@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-import {formatNumber} from "../../functions/generalFunctions";
+import LoaderComponent from "../LoaderComponent";
+import ErrorAlertComponent from "../ErrorAlertComponent";
+import {dateToString, formatNumber, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function SupplyRecoveriesListComponent({recoveries}) {
+function SupplyRecoveriesListComponent({recoveries, recoveriesRequestsList}) {
     // Render
     return (
         <>
@@ -20,23 +22,29 @@ function SupplyRecoveriesListComponent({recoveries}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {recoveries.map((item, key) => {
-                                return (
-                                    <tr key={key}>
-                                        <td>{item.creation}</td>
-                                        <td className='text-right'>{formatNumber(item.amount)}</td>
-                                        <td>{item.collector.name}</td>
-                                    </tr>
+                            {requestLoading(recoveriesRequestsList)  ? <tr><td colSpan={5}><LoaderComponent /></td></tr> : (
+                                requestFailed(recoveriesRequestsList) ? <tr><td colSpan={5}><ErrorAlertComponent message={recoveriesRequestsList.message} /></td></tr> : (
+                                   <>
+                                       {recoveries.map((item, key) => {
+                                           return (
+                                               <tr key={key}>
+                                                   <td>{dateToString(item.creation)}</td>
+                                                   <td className='text-right'>{formatNumber(item.amount)}</td>
+                                                   <td>{item.collector.name}</td>
+                                               </tr>
+                                           )
+                                       })}
+                                       {recoveries.length === 0 && (
+                                           <tr>
+                                               <td colSpan={3}>
+                                                   <div className='alert custom-active text-center'>
+                                                       Pas de recouvrements d'espèces
+                                                   </div>
+                                               </td>
+                                           </tr>
+                                       )}
+                                   </>
                                 )
-                            })}
-                            {recoveries.length === 0 && (
-                                <tr>
-                                    <td colSpan={3}>
-                                        <div className='alert custom-active text-center'>
-                                            Pas de recouvrements d'espèces
-                                        </div>
-                                    </td>
-                                </tr>
                             )}
                         </tbody>
                     </table>
@@ -48,7 +56,8 @@ function SupplyRecoveriesListComponent({recoveries}) {
 
 // Prop types to ensure destroyed props data type
 SupplyRecoveriesListComponent.propTypes = {
-    recoveries: PropTypes.array.isRequired
+    recoveries: PropTypes.array.isRequired,
+    recoveriesRequestsList: PropTypes.object.isRequired,
 };
 
 export default React.memo(SupplyRecoveriesListComponent);

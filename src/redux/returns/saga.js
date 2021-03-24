@@ -45,7 +45,7 @@ export function* emitSupplyReturnsFetch() {
         try {
             // Fire event for request
             yield put(storeReturnsRequestInit());
-            const apiResponse = yield call(apiGetRequest, api.SUPPLY_FLEET_RECOVERIES_API_PATH);
+            const apiResponse = yield call(apiGetRequest, `${api.SUPPLY_FLEET_RECOVERIES_API_PATH}/${id}`);
             // Extract data
             const returns = extractReturnsData(apiResponse.data.recouvrements);
             // Fire event to redux

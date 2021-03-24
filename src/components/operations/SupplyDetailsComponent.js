@@ -1,19 +1,15 @@
 import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
-import LoaderComponent from "../LoaderComponent";
 import SupplyInfoComponent from "./SupplyInfoComponent";
-import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitSupplyReturnsFetch} from "../../redux/returns/actions";
 import SupplyReturnsListComponent from "./SupplyReturnsListComponent";
 import SupplyRecoveriesListComponent from "./SupplyRecoveriesListComponent";
 import {storeReturnsRequestReset} from "../../redux/requests/returns/actions";
-import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeRecoveriesRequestReset} from "../../redux/requests/recoveries/actions";
 
 // Component
 function SupplyDetailsComponent({supply, returns, recoveries, returnsRequests, recoveriesRequests, dispatch}) {
-
     // Local effects
     useEffect(() => {
         const {id} = supply;
@@ -39,18 +35,14 @@ function SupplyDetailsComponent({supply, returns, recoveries, returnsRequests, r
                 <SupplyInfoComponent supply={supply} />
             </div>
             <div className="col-lg-12 col-md-12">
-                {requestLoading(recoveriesRequests)  ? <LoaderComponent /> : (
-                    requestFailed(recoveriesRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-                        <SupplyRecoveriesListComponent recoveries={recoveries} />
-                    )
-                )}
+                <SupplyRecoveriesListComponent recoveries={recoveries}
+                                               recoveriesRequestsList={recoveriesRequests.list}
+                />
             </div>
             <div className="col-lg-12 col-md-12">
-                {requestLoading(returnsRequests)  ? <LoaderComponent /> : (
-                    requestFailed(returnsRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-                        <SupplyReturnsListComponent returns={returns} />
-                    )
-                )}
+                <SupplyReturnsListComponent returns={returns}
+                                            returnsRequestsList={returnsRequests.list}
+                />
             </div>
         </div>
     )

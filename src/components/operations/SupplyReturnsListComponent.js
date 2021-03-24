@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-import {formatNumber} from "../../functions/generalFunctions";
+import LoaderComponent from "../LoaderComponent";
+import ErrorAlertComponent from "../ErrorAlertComponent";
+import {dateToString, formatNumber, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function SupplyReturnsListComponent({returns}) {
+function SupplyReturnsListComponent({returns, returnsRequestsList}) {
     // Render
     return (
         <>
@@ -22,25 +24,31 @@ function SupplyReturnsListComponent({returns}) {
                             </tr>
                         </thead>
                         <tbody>
-                            {returns.map((item, key) => {
-                                return (
-                                    <tr key={key}>
-                                        <td>{item.creation}</td>
-                                        <td className='text-right'>{formatNumber(item.amount)}</td>
-                                        <td>{item.sim_outgoing.number}</td>
-                                        <td>{item.sim_incoming.number}</td>
-                                        <td>{item.collector.name}</td>
-                                    </tr>
+                            {requestLoading(returnsRequestsList) ? <tr><td colSpan={5}><LoaderComponent /></td></tr> : (
+                                requestFailed(returnsRequestsList) ? <tr><td colSpan={5}><ErrorAlertComponent message={returnsRequestsList.message} /></td></tr> : (
+                                    <>
+                                        {returns.map((item, key) => {
+                                            return (
+                                                <tr key={key}>
+                                                    <td>{dateToString(item.creation)}</td>
+                                                    <td className='text-right'>{formatNumber(item.amount)}</td>
+                                                    <td>{item.sim_outgoing.number}</td>
+                                                    <td>{item.sim_incoming.number}</td>
+                                                    <td>{item.collector.name}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                        {returns.length === 0 && (
+                                            <tr>
+                                                <td colSpan={5}>
+                                                    <div className='alert custom-active text-center'>
+                                                        Pas de retours flottes
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </>
                                 )
-                            })}
-                            {returns.length === 0 && (
-                                <tr>
-                                    <td colSpan={5}>
-                                        <div className='alert custom-active text-center'>
-                                            Pas de retours flottes
-                                        </div>
-                                    </td>
-                                </tr>
                             )}
                         </tbody>
                     </table>
@@ -52,7 +60,8 @@ function SupplyReturnsListComponent({returns}) {
 
 // Prop types to ensure destroyed props data type
 SupplyReturnsListComponent.propTypes = {
-    returns: PropTypes.array.isRequired
+    returns: PropTypes.array.isRequired,
+    returnsRequestsList: PropTypes.object.isRequired,
 };
 
 export default React.memo(SupplyReturnsListComponent);
