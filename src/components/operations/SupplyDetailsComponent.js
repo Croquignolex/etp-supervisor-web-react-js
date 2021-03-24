@@ -4,6 +4,8 @@ import React, {useEffect} from 'react';
 import LoaderComponent from "../LoaderComponent";
 import SupplyInfoComponent from "./SupplyInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import SupplyReturnsListComponent from "./SupplyReturnsListComponent";
+import SupplyRecoveriesListComponent from "./SupplyRecoveriesListComponent";
 import {storeReturnsRequestReset} from "../../redux/requests/returns/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeRecoveriesRequestReset} from "../../redux/requests/recoveries/actions";
@@ -37,14 +39,14 @@ function SupplyDetailsComponent({supply, returns, recoveries, returnsRequests, r
             <div className="col-lg-12 col-md-12">
                 {requestLoading(recoveriesRequests)  ? <LoaderComponent /> : (
                     requestFailed(recoveriesRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-                        <br/>
+                        <SupplyRecoveriesListComponent recoveries={recoveries} />
                     )
                 )}
             </div>
             <div className="col-lg-12 col-md-12">
                 {requestLoading(returnsRequests)  ? <LoaderComponent /> : (
                     requestFailed(returnsRequests) ? <ErrorAlertComponent message={recoveriesRequests.message} /> : (
-                        <br/>
+                        <SupplyReturnsListComponent returns={returns} />
                     )
                 )}
             </div>
