@@ -60,15 +60,18 @@ export function* emitNextSuppliesFetch() {
 }
 
 // Extract supply data
-function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply) {
+function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply, apiRecoveries, apiReturns) {
     let supply = {
         id: '', amount: '', creation: '', remaining: '', status: '',
 
-        request: {id: ''},
         agent: {id: '', name: ''},
         supplier: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
+
+
+        returns: [],
+        recoveries: []
     };
     if(apiAgent && apiUser) {
         supply.agent = {
