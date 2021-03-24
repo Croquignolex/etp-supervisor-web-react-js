@@ -3,7 +3,6 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 
 // Partial global store for requests data management
 const initialState = {
-    add: {failed: false, loading: false, succeeded: false, message: ""},
     all: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
@@ -63,23 +62,6 @@ function reduce(state = initialState, action) {
         // Resolve event to set all fleets reset request store data
         case actions.STORE_ALL_FLEETS_REQUEST_RESET:
             nextState = {...state, all: initialState.all};
-            return nextState || state;
-        // ======================================================== Add fleet
-        // Resolve event to set add fleet init request store data
-        case actions.STORE_ADD_FLEET_REQUEST_INIT:
-            nextState = {...state, add: requestInitValue()};
-            return nextState || state;
-        // Resolve event to set add fleet failed request store data
-        case actions.STORE_ADD_FLEET_REQUEST_FAILED:
-            nextState = {...state, add: requestFailedValue(action.message)};
-            return nextState || state;
-        // Resolve event to set add fleet succeeded request store data
-        case actions.STORE_ADD_FLEET_REQUEST_SUCCEEDED:
-            nextState = {...state, add: requestSucceededValue(action.message)};
-            return nextState || state;
-        // Resolve event to set add fleet reset request store data
-        case actions.STORE_ADD_FLEET_REQUEST_RESET:
-            nextState = {...state, add: initialState.add};
             return nextState || state;
         // ========================================================
         // Unknown action

@@ -3,10 +3,8 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
-    EMIT_ADD_FLEET,
     EMIT_FLEETS_FETCH,
     storeSetFleetsData,
-    storeSetNewFleetData,
     EMIT_ALL_FLEETS_FETCH,
     EMIT_NEXT_FLEETS_FETCH,
     storeSetNextFleetsData,
@@ -15,13 +13,10 @@ import {
 import {
     storeFleetsRequestInit,
     storeFleetsRequestFailed,
-    storeAddFleetRequestInit,
     storeFleetsRequestSucceed,
     storeAllFleetsRequestInit,
-    storeAddFleetRequestFailed,
     storeNextFleetsRequestInit,
     storeAllFleetsRequestFailed,
-    storeAddFleetRequestSucceed,
     storeNextFleetsRequestFailed,
     storeAllFleetsRequestSucceed,
     storeNextFleetsRequestSucceed
@@ -88,33 +83,6 @@ export function* emitAllFleetsFetch() {
     });
 }
 
-// New fleet from API
-export function* emitAddFleet() {
-    yield takeLatest(EMIT_ADD_FLEET, function*({sim, amount, agent}) {
-        try {
-            // Fire event for request
-            yield put(storeAddFleetRequestInit());
-            const data = {id_puce: sim, id_agent: agent, montant: amount};
-            const apiResponse = yield call(apiPostRequest, api.NEW_FLEET_API_PATH, data);
-            // Extract data
-            const fleet = extractFleetData(
-                apiResponse.data.puce,
-                apiResponse.data.user,
-                apiResponse.data.agent,
-                apiResponse.data.demandeur,
-                apiResponse.data.demande
-            );
-            // Fire event to redux
-            yield put(storeSetNewFleetData({fleet}))
-            // Fire event for request
-            yield put(storeAddFleetRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeAddFleetRequestFailed({message}));
-        }
-    });
-}
-
 // Extract fleet data
 function extractFleetData(apiSim, apiUser, apiAgent, apiClaimer, apiFleet) {
     let fleet = {
@@ -176,7 +144,6 @@ function extractFleetsData(apiFleets) {
 // Combine to export all functions at once
 export default function* sagaFleets() {
     yield all([
-        fork(emitAddFleet),
         fork(emitFleetsFetch),
         fork(emitAllFleetsFetch),
         fork(emitNextFleetsFetch),
