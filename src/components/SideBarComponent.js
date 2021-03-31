@@ -204,7 +204,11 @@ function buildSimsMenu() {
         icon: 'fa fa-sim-card',
         sub: [
             {name: page.ALL_SIMS, path: path.ALL_SIMS_PAGE_PATH},
+            {name: page.MASTERS_SIMS, path: path.MASTERS_SIMS_PAGE_PATH},
             // {name: page.FLEETS_SIMS, path: path.SIMS_PAGE_PATH},
+            // {name: page.COLLECTORS_SIMS, path: path.SIMS_PAGE_PATH},
+            // {name: page.AGENTS_SIMS, path: path.SIMS_PAGE_PATH},
+            // {name: page.RESOURCES_SIMS, path: path.SIMS_PAGE_PATH},
         ]
     }
 }

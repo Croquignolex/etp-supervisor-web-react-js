@@ -16,11 +16,18 @@ export const OPERATORS = 'Opérateurs';
 export const ADMINS = 'Administrateurs';
 export const AGENTS = 'Agents/Resources';
 export const SUPERVISORS = 'Superviseurs';
-export const ALL_SIMS = 'Toutes les puces';
 export const VENDORS_PAGE = 'Fournisseurs';
 export const MANAGERS = 'Gestionnaires...';
 export const COLLECTORS = 'Responsables...';
 export const COMPANIES_PAGE = 'Entreprises';
+
+// Sims
+export const AGENTS_SIMS = 'Puces agent';
+export const COLLECTORS_SIMS = 'Puces RZ';
+export const ALL_SIMS = 'Toutes les puces';
+export const MASTERS_SIMS = 'Puces master';
+export const FLEETS_SIMS = 'Puces de flottage';
+export const RESOURCES_SIMS = 'Puces ressource';
 
 // Operations
 export const OPERATIONS = 'Opérations';
