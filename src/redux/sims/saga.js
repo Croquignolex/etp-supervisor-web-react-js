@@ -191,7 +191,7 @@ export function* emitCollectorsSimsFetch() {
         try {
             // Fire event for request
             yield put(storeSimsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.FLEETS_SIMS_API_PATH}?page=1`);
+            const apiResponse = yield call(apiGetRequest, `${api.COLLECTORS_SIMS_API_PATH}?page=1`);
             // Extract data
             const sims = extractSimsData(apiResponse.data.puces);
             // Fire event to redux
@@ -211,7 +211,7 @@ export function* emitNextCollectorsSimsFetch() {
         try {
             // Fire event for request
             yield put(storeNextSimsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.FLEETS_SIMS_API_PATH}?page=${page}`);
+            const apiResponse = yield call(apiGetRequest, `${api.COLLECTORS_SIMS_API_PATH}?page=${page}`);
             // Extract data
             const sims = extractSimsData(apiResponse.data.puces);
             // Fire event to redux
@@ -409,6 +409,8 @@ export default function* sagaSims() {
         fork(emitFleetsSimsFetch),
         fork(emitMastersSimsFetch),
         fork(emitNextFleetsSimsFetch),
+        fork(emitCollectorsSimsFetch),
         fork(emitNextMastersSimsFetch),
+        fork(emitNextCollectorsSimsFetch),
     ]);
 }

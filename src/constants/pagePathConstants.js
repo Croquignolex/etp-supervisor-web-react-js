@@ -13,7 +13,10 @@ export const OPERATORS_PAGE_PATH = "/operators";
 // Sims
 export const ALL_SIMS_PAGE_PATH = "/sims/all";
 export const FLEETS_SIMS_PAGE_PATH = "/sims/fleet";
+export const AGENTS_SIMS_PAGE_PATH = "/sims/agent";
 export const MASTERS_SIMS_PAGE_PATH = "/sims/master";
+export const RESOURCES_SIMS_PAGE_PATH = "/sims/resource";
+export const COLLECTORS_SIMS_PAGE_PATH = "/sims/collector";
 
 // Users
 export const AGENTS_PAGE_PATH = "/users/agents";

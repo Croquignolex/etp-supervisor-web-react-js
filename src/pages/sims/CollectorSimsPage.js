@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {FLEETS_SIMS} from "../../constants/pageNameConstants";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
+import {COLLECTORS_SIMS} from "../../constants/pageNameConstants";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import {emitFleetsSimsFetch, emitNextFleetsSimsFetch} from "../../redux/sims/actions";
+import {emitCollectorsSimsFetch, emitNextCollectorsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -23,7 +23,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
 
     // Local effects
     useEffect(() => {
-        dispatch(emitFleetsSimsFetch());
+        dispatch(emitCollectorsSimsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,7 +43,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
 
     // Fetch next sims data to enhance infinite scroll
     const handleNextSimsData = () => {
-        dispatch(emitNextFleetsSimsFetch({page}));
+        dispatch(emitNextCollectorsSimsFetch({page}));
     }
 
     // Show sim details modal form
@@ -61,7 +61,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={FLEETS_SIMS} icon={'fa fa-sim-card'} />
+                    <HeaderComponent title={COLLECTORS_SIMS} icon={'fa fa-sim-card'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
