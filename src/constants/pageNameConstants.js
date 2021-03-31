@@ -9,7 +9,6 @@ export const MY_NETWORK = 'Mon réseau';
 export const MY_NETWORK_FLEET = 'Flottages';
 
 // Commons
-export const SIMS_PAGE = 'Puces';
 export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
 export const OPERATORS = 'Opérateurs';
@@ -22,6 +21,7 @@ export const COLLECTORS = 'Responsables...';
 export const COMPANIES_PAGE = 'Entreprises';
 
 // Sims
+export const SIMS_PAGE = 'Puces';
 export const AGENTS_SIMS = 'Puces agent';
 export const COLLECTORS_SIMS = 'Puces RZ';
 export const ALL_SIMS = 'Toutes les puces';
