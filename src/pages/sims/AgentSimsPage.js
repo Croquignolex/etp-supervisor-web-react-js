@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import {AGENTS_SIMS} from "../../constants/pageNameConstants";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
-import {COLLECTORS_SIMS} from "../../constants/pageNameConstants";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
@@ -16,7 +16,7 @@ import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requ
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
+function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
@@ -61,7 +61,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={COLLECTORS_SIMS} icon={'fa fa-sim-card'} />
+                    <HeaderComponent title={AGENTS_SIMS} icon={'fa fa-sim-card'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -129,7 +129,7 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-MasterSimsPage.propTypes = {
+AgentSimsPage.propTypes = {
     sims: PropTypes.array.isRequired,
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -138,4 +138,4 @@ MasterSimsPage.propTypes = {
     simsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(MasterSimsPage);
+export default React.memo(AgentSimsPage);

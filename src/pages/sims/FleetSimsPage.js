@@ -16,7 +16,7 @@ import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requ
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
+function FleetSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
@@ -129,7 +129,7 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-MasterSimsPage.propTypes = {
+FleetSimsPage.propTypes = {
     sims: PropTypes.array.isRequired,
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -138,4 +138,4 @@ MasterSimsPage.propTypes = {
     simsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(MasterSimsPage);
+export default React.memo(FleetSimsPage);

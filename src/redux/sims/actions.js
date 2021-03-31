@@ -14,10 +14,14 @@ export const EMIT_SIMS_FETCH = 'EMIT_SIMS_FETCH';
 export const EMIT_ALL_SIMS_FETCH = 'EMIT_ALL_SIMS_FETCH';
 export const EMIT_NEXT_SIMS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
 export const EMIT_FLEETS_SIMS_FETCH = 'EMIT_FLEETS_SIMS_FETCH';
+export const EMIT_AGENTS_SIMS_FETCH = 'EMIT_AGENTS_SIMS_FETCH';
 export const EMIT_MASTERS_SIMS_FETCH = 'EMIT_MASTERS_SIMS_FETCH';
+export const EMIT_RESOURCES_SIMS_FETCH = 'EMIT_RESOURCES_SIMS_FETCH';
 export const EMIT_COLLECTORS_SIMS_FETCH = 'EMIT_COLLECTORS_SIMS_FETCH';
 export const EMIT_NEXT_FLEETS_SIMS_FETCH = 'EMIT_NEXT_FLEETS_SIMS_FETCH';
+export const EMIT_NEXT_AGENTS_SIMS_FETCH = 'EMIT_NEXT_AGENTS_SIMS_FETCH';
 export const EMIT_NEXT_MASTERS_SIMS_FETCH = 'EMIT_NEXT_MASTERS_SIMS_FETCH';
+export const EMIT_NEXT_RESOURCES_SIMS_FETCH = 'EMIT_NEXT_RESOURCES_SIMS_FETCH';
 export const EMIT_NEXT_COLLECTORS_SIMS_FETCH = 'EMIT_NEXT_COLLECTORS_SIMS_FETCH';
 
 //====================== Reducer trigger actions
@@ -87,6 +91,28 @@ export const emitFleetsSimsFetch = () => ({
 export const emitNextFleetsSimsFetch = ({page}) => ({
     page,
     type: EMIT_NEXT_FLEETS_SIMS_FETCH
+});
+
+// Emit agents sims fetch
+export const emitAgentsSimsFetch = () => ({
+    type: EMIT_AGENTS_SIMS_FETCH
+});
+
+// Emit next agents sims fetch
+export const emitNextAgentsSimsFetch = ({page}) => ({
+    page,
+    type: EMIT_NEXT_AGENTS_SIMS_FETCH
+});
+
+// Emit resource sims fetch
+export const emitResourcesSimsFetch = () => ({
+    type: EMIT_RESOURCES_SIMS_FETCH
+});
+
+// Emit next resource sims fetch
+export const emitNextResourcesSimsFetch = ({page}) => ({
+    page,
+    type: EMIT_NEXT_RESOURCES_SIMS_FETCH
 });
 
 // Emit collectors sims fetch
