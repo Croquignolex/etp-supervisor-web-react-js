@@ -11,7 +11,7 @@ import TableSearchComponent from "../../components/TableSearchComponent";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import {emitCollectorsSimsFetch, emitNextCollectorsSimsFetch} from "../../redux/sims/actions";
+import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -23,7 +23,7 @@ function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorsSimsFetch());
+        dispatch(emitAgentsSimsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,7 +43,7 @@ function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
 
     // Fetch next sims data to enhance infinite scroll
     const handleNextSimsData = () => {
-        dispatch(emitNextCollectorsSimsFetch({page}));
+        dispatch(emitNextAgentsSimsFetch({page}));
     }
 
     // Show sim details modal form

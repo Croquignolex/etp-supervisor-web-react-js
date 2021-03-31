@@ -4,16 +4,16 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
+import {RESOURCES_SIMS} from "../../constants/pageNameConstants";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import {emitCollectorsSimsFetch, emitNextCollectorsSimsFetch} from "../../redux/sims/actions";
+import {emitNextResourcesSimsFetch, emitResourcesSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {RESOURCES_SIMS} from "../../constants/pageNameConstants";
 
 // Component
 function ResourceSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
@@ -23,7 +23,7 @@ function ResourceSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loca
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorsSimsFetch());
+        dispatch(emitResourcesSimsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,7 +43,7 @@ function ResourceSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loca
 
     // Fetch next sims data to enhance infinite scroll
     const handleNextSimsData = () => {
-        dispatch(emitNextCollectorsSimsFetch({page}));
+        dispatch(emitNextResourcesSimsFetch({page}));
     }
 
     // Show sim details modal form
