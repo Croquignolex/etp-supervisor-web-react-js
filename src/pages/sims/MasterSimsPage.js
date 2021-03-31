@@ -8,10 +8,10 @@ import HeaderComponent from "../../components/HeaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import {emitNextSimsFetch, emitSimsFetch} from "../../redux/sims/actions";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import {emitMastersSimsFetch, emitNextMastersSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -23,7 +23,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
 
     // Local effects
     useEffect(() => {
-        dispatch(emitSimsFetch());
+        dispatch(emitMastersSimsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,7 +43,7 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
 
     // Fetch next sims data to enhance infinite scroll
     const handleNextSimsData = () => {
-        dispatch(emitNextSimsFetch({page}));
+        dispatch(emitNextMastersSimsFetch({page}));
     }
 
     // Show sim details modal form

@@ -31,6 +31,7 @@ export const SIMS_API_PATH = `${API_URL}/puce_list`;
 export const EDIT_SIM_API_PATH = `${API_URL}/edit_puce`;
 export const CREATE_SIM_API_PATH = `${API_URL}/store_puce`;
 export const All_SIMS_API_PATH = `${API_URL}/puce_list_all`;
+export const MASTERS_SIMS_API_PATH = `${API_URL}/puce_list_master`;
 
 // Agents
 export const AGENT_API_PATH = `${API_URL}/show_agent`;
