@@ -80,7 +80,7 @@ function CollectorInfoComponent({collector}) {
                             <span className="float-right">{collector.email}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Solde total</b>
+                            <b>Trésorerie net</b>
                             <span className="float-right text-success text-bold">{formatNumber(collector.account.balance)}</span>
                         </li>
                         <li className="list-group-item">

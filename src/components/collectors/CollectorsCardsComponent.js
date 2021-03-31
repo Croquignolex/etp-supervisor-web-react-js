@@ -71,7 +71,7 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Solde total</b>
+                                            <b>Trésorerie net</b>
                                             <span className="float-right text-success text-bold">{formatNumber(item.account.balance)}</span>
                                         </li>
                                     </ul>
