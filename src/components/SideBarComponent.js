@@ -21,8 +21,8 @@ function SideBarComponent({user, pathname}) {
             buildOperationsMenu(),
             buildRecoveriesMenu(),
             buildUsersMenu(),
-            buildCompaniesMenu(),
             buildSimsMenu(),
+            buildCompaniesMenu(),
             buildZonesMenu(),
             buildVendorsMenu(),
             buildOperatorsMenu(),
@@ -201,10 +201,12 @@ function buildZonesMenu() {
 function buildSimsMenu() {
     return {
         name: page.SIMS_PAGE,
-        path: path.SIMS_PAGE_PATH,
         icon: 'fa fa-sim-card',
-        sub: []
-    };
+        sub: [
+            {name: page.ALL_SIMS, path: path.ALL_SIMS_PAGE_PATH},
+            // {name: page.FLEETS_SIMS, path: path.SIMS_PAGE_PATH},
+        ]
+    }
 }
 
 // Build vendors menu

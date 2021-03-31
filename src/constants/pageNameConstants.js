@@ -16,6 +16,7 @@ export const OPERATORS = 'Opérateurs';
 export const ADMINS = 'Administrateurs';
 export const AGENTS = 'Agents/Resources';
 export const SUPERVISORS = 'Superviseurs';
+export const ALL_SIMS = 'Toutes les puces';
 export const VENDORS_PAGE = 'Fournisseurs';
 export const MANAGERS = 'Gestionnaires...';
 export const COLLECTORS = 'Responsables...';

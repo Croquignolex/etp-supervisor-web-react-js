@@ -178,9 +178,9 @@ function DashboardPage({agents, settings, dispatch, location, administrators, su
                                     <DashboardCardComponent color='bg-warning'
                                                             data={sims.length}
                                                             icon='fa fa-sim-card'
-                                                            url={path.SIMS_PAGE_PATH}
-                                                            label={setting.LABEL_SIMS}
                                                             request={allSimsRequests}
+                                                            label={setting.LABEL_SIMS}
+                                                            url={path.ALL_SIMS_PAGE_PATH}
                                     />
                                 </div>
                             }
