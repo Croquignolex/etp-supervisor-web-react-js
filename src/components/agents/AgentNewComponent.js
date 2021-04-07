@@ -210,14 +210,14 @@ function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, ha
                         <div className='row'>
                             <FileImageComponent input={frontIDCard}
                                                 id='inputFrontIDCard'
-                                                label='Image avant CNI'
+                                                label='Image avant CNI (facultatif)'
                                                 handleInput={handleFrontIDCardInput}
                             />
                         </div>
                         <div className='row'>
                             <FileImageComponent input={backIDCard}
                                                 id='inputBackIDCard'
-                                                label='Image arrière CNI'
+                                                label='Image arrière CNI (facultatif)'
                                                 handleInput={handleBackIDCardInput}
                             />
                         </div>
@@ -225,7 +225,7 @@ function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, ha
                             <div className='col'>
                                 <FileDocumentComponent id='file'
                                                        input={doc}
-                                                       label='Dossier agent'
+                                                       label='Dossier (facultatif)'
                                                        handleInput={handleFileInput}
                                 />
                             </div>
