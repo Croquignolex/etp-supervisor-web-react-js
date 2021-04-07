@@ -31,12 +31,11 @@ import {storeAllSupervisorsRequestReset} from "../redux/requests/supervisors/act
 import {storeAllAdministratorsRequestReset} from "../redux/requests/administrators/actions";
 
 // Component
-function DashboardPage({agents, settings, dispatch, location, administrators, supervisors,
-                           managers, collectors, companies, sims, zones, operators, user,
-                           allAgentsRequests, allAdministratorsRequests, allSupervisorsRequests,
-                           allManagersRequests, allCollectorsRequests, allCompaniesRequests,
-                           allSimsRequests, allZonesRequests, allOperatorsRequests,
-                           balanceUserRequests}) {
+function DashboardPage({agents, settings, dispatch, location, administrators,
+                           supervisors, managers, collectors, companies, sims, zones,
+                           operators, user, allAgentsRequests, allAdministratorsRequests,
+                           allSupervisorsRequests, allManagersRequests, allCollectorsRequests,
+                           allCompaniesRequests, allSimsRequests, allZonesRequests, allOperatorsRequests, balanceUserRequests}) {
     // Local effects
     useEffect(() => {
         dispatch(emitAllSimsFetch());
@@ -73,7 +72,7 @@ function DashboardPage({agents, settings, dispatch, location, administrators, su
     // Data
     const cardsData = settings.cards;
     const resourcesData = useMemo(() => {
-        return formatNumber(agents.filter(agent => types.RESOURCE_TYPE === agent.reference).length)
+        return agents.filter(agent => types.RESOURCE_TYPE === agent.reference).length
         // eslint-disable-next-line
     }, [agents]);
 
