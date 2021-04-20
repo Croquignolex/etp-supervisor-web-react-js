@@ -10,18 +10,33 @@ import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import {AGENT_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
-import TableSearchComponent from "../../components/TableSearchComponent";
 import AgentNewContainer from "../../containers/agents/AgentNewContainer";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import AgentsCardsComponent from "../../components/agents/AgentsCardsComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
-import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
-import {emitAgentsFetch, emitNextAgentsFetch, emitToggleAgentStatus} from "../../redux/agents/actions";
-import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import {storeAgentsRequestReset, storeNextAgentsRequestReset, storeAgentStatusToggleRequestReset} from "../../redux/requests/agents/actions";
 import TableSearchWithButtonComponent from "../../TableSearchWithButtonComponent";
+import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
+import {
+    storeAgentsRequestReset,
+    storeNextAgentsRequestReset,
+    storeAgentStatusToggleRequestReset
+} from "../../redux/requests/agents/actions";
+import {
+    applySuccess,
+    dateToString,
+    needleSearch,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
+import {
+    emitAgentsFetch,
+    emitNextAgentsFetch,
+    emitSearchAgentsFetch,
+    emitToggleAgentStatus
+} from "../../redux/agents/actions";
 
 // Component
 function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, location}) {
@@ -57,7 +72,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     }
 
     const handleSearchInput = () => {
-        console.log('search')
+        dispatch(emitSearchAgentsFetch({needle}));
     }
 
     // Reset error alert
