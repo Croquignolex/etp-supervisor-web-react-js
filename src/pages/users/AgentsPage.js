@@ -21,6 +21,7 @@ import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/acti
 import {emitAgentsFetch, emitNextAgentsFetch, emitToggleAgentStatus} from "../../redux/agents/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeAgentsRequestReset, storeNextAgentsRequestReset, storeAgentStatusToggleRequestReset} from "../../redux/requests/agents/actions";
+import TableSearchWithButtonComponent from "../../TableSearchWithButtonComponent";
 
 // Component
 function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, location}) {
@@ -53,6 +54,10 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
+    }
+
+    const handleSearchInput = () => {
+        console.log('search')
     }
 
     // Reset error alert
@@ -124,7 +129,10 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                         {/* Search input */}
                                         <div className="card-header">
                                             <div className="card-tools">
-                                                <TableSearchComponent needle={needle} handleNeedle={handleNeedleInput} />
+                                                <TableSearchWithButtonComponent needle={needle}
+                                                                                handleNeedle={handleNeedleInput}
+                                                                                handleSearch={handleSearchInput}
+                                                />
                                             </div>
                                         </div>
                                         <div className="card-body">
