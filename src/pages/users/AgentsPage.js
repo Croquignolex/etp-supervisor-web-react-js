@@ -168,27 +168,29 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                                 <i className="fa fa-plus" /> Nouvelle ressource
                                             </button>
                                             {/* Search result & Infinite scroll */}
-                                            {(needle !== '' && needle !== undefined)
-                                                ? <AgentsCardsComponent handleBlock={handleBlock}
-                                                                        agents={searchEngine(agents, needle)}
-                                                                        handleBlockModalShow={handleBlockModalShow}
-                                                                        handleAgentDetailsModalShow={handleAgentDetailsModalShow}
-                                                />
-                                                : (requestLoading(agentsRequests.list) ? <LoaderComponent /> :
-                                                        <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={agents.length}
-                                                                        next={handleNextAgentsData}
-                                                                        loader={<LoaderComponent />}
-                                                                        style={{ overflow: 'hidden' }}
-                                                        >
-                                                            <AgentsCardsComponent agents={agents}
-                                                                                  handleBlock={handleBlock}
-                                                                                  handleBlockModalShow={handleBlockModalShow}
-                                                                                  handleAgentDetailsModalShow={handleAgentDetailsModalShow}
-                                                            />
-                                                        </InfiniteScroll>
+                                            {requestLoading(agentsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
+                                                (
+                                                    <AgentsCardsComponent handleBlock={handleBlock}
+                                                                          agents={searchEngine(agents, needle)}
+                                                                          handleBlockModalShow={handleBlockModalShow}
+                                                                          handleAgentDetailsModalShow={handleAgentDetailsModalShow}
+                                                    />
+                                                ) :
+                                                (
+                                                    <InfiniteScroll hasMore={hasMoreData}
+                                                                    dataLength={agents.length}
+                                                                    next={handleNextAgentsData}
+                                                                    loader={<LoaderComponent />}
+                                                                    style={{ overflow: 'hidden' }}
+                                                   >
+                                                        <AgentsCardsComponent agents={agents}
+                                                                              handleBlock={handleBlock}
+                                                                              handleBlockModalShow={handleBlockModalShow}
+                                                                              handleAgentDetailsModalShow={handleAgentDetailsModalShow}
+                                                        />
+                                                   </InfiniteScroll>
                                                 )
-                                            }
+                                            )}
                                         </div>
                                     </div>
                                 </div>

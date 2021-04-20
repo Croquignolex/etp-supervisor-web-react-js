@@ -9,7 +9,7 @@ function TableSearchWithButtonComponent({needle, handleNeedle, handleSearch}) {
     }
 
     const handleClick = () => {
-        handleSearch()
+        (needle !== '' && needle !== undefined) && handleSearch()
     }
 
     // Render
