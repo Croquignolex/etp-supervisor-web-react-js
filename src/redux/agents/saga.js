@@ -85,6 +85,7 @@ export function* emitAllAgentsFetch() {
         }
     });
 }
+
 // Fetch search agents from API
 export function* emitSearchAgentsFetch() {
     yield takeLatest(EMIT_SEARCH_AGENTS_FETCH, function*({needle}) {

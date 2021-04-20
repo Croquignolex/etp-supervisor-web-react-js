@@ -16,7 +16,7 @@ import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import AgentsCardsComponent from "../../components/agents/AgentsCardsComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
-import TableSearchWithButtonComponent from "../../TableSearchWithButtonComponent";
+import TableSearchWithButtonComponent from "../../components/TableSearchWithButtonComponent";
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {
     storeAgentsRequestReset,
@@ -169,27 +169,27 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {requestLoading(agentsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
-                                                (
-                                                    <AgentsCardsComponent handleBlock={handleBlock}
-                                                                          agents={searchEngine(agents, needle)}
-                                                                          handleBlockModalShow={handleBlockModalShow}
-                                                                          handleAgentDetailsModalShow={handleAgentDetailsModalShow}
-                                                    />
-                                                ) :
-                                                (
-                                                    <InfiniteScroll hasMore={hasMoreData}
-                                                                    dataLength={agents.length}
-                                                                    next={handleNextAgentsData}
-                                                                    loader={<LoaderComponent />}
-                                                                    style={{ overflow: 'hidden' }}
-                                                   >
-                                                        <AgentsCardsComponent agents={agents}
-                                                                              handleBlock={handleBlock}
+                                                    (
+                                                        <AgentsCardsComponent handleBlock={handleBlock}
+                                                                              agents={searchEngine(agents, needle)}
                                                                               handleBlockModalShow={handleBlockModalShow}
                                                                               handleAgentDetailsModalShow={handleAgentDetailsModalShow}
                                                         />
-                                                   </InfiniteScroll>
-                                                )
+                                                    ) :
+                                                    (
+                                                        <InfiniteScroll hasMore={hasMoreData}
+                                                                        dataLength={agents.length}
+                                                                        next={handleNextAgentsData}
+                                                                        loader={<LoaderComponent />}
+                                                                        style={{ overflow: 'hidden' }}
+                                                        >
+                                                            <AgentsCardsComponent agents={agents}
+                                                                                  handleBlock={handleBlock}
+                                                                                  handleBlockModalShow={handleBlockModalShow}
+                                                                                  handleAgentDetailsModalShow={handleAgentDetailsModalShow}
+                                                            />
+                                                        </InfiniteScroll>
+                                                    )
                                             )}
                                         </div>
                                     </div>
