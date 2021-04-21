@@ -10,19 +10,16 @@ import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
-import FormModalComponent from "../../components/modals/FormModalComponent";
 import {OPERATIONS_ANONYMOUS_FLEETS_PAGE} from "../../constants/pageNameConstants";
 import {emitAnonymousFetch, emitNextAnonymousFetch} from "../../redux/anonymous/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading,} from "../../functions/generalFunctions";
 import OperationsAnonymousCardsComponent from "../../components/operations/OperationsAnonymousCardsComponent";
 import {storeAnonymousRequestReset, storeNextAnonymousRequestReset} from "../../redux/requests/anonymous/actions";
-import OperationsAnonymousAddAnonymousContainer from "../../containers/operations/OperationsAnonymousAddAnonymousContainer";
 
 // Component
 function OperationsAnonymousPage({anonymous, anonymousRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [anonymousModal, setAnonymousModal] = useState({show: false, header: 'EFFECTUER UN FLOTTAGE ANONYME'});
 
     // Local effects
     useEffect(() => {
@@ -51,16 +48,6 @@ function OperationsAnonymousPage({anonymous, anonymousRequests, hasMoreData, pag
         dispatch(emitNextAnonymousFetch({page}));
     }
 
-    // Show anonymous modal form
-    const handleAnonymousModalShow = (item) => {
-        setAnonymousModal({...anonymousModal, item, show: true})
-    }
-
-    // Hide anonymous modal form
-    const handleAnonymousModalHide = () => {
-        setAnonymousModal({...anonymousModal, show: false})
-    }
-
     // Render
     return (
         <>
@@ -82,12 +69,6 @@ function OperationsAnonymousPage({anonymous, anonymousRequests, hasMoreData, pag
                                             {/* Error message */}
                                             {requestFailed(anonymousRequests.list) && <ErrorAlertComponent message={anonymousRequests.list.message} />}
                                             {requestFailed(anonymousRequests.next) && <ErrorAlertComponent message={anonymousRequests.next.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handleAnonymousModalShow}
-                                            >
-                                                <i className="fa fa-plus" /> Effectuer flottage anonyme
-                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <OperationsAnonymousCardsComponent anonymous={searchEngine(anonymous, needle)} />
@@ -110,10 +91,6 @@ function OperationsAnonymousPage({anonymous, anonymousRequests, hasMoreData, pag
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={anonymousModal} handleClose={handleAnonymousModalHide}>
-                <OperationsAnonymousAddAnonymousContainer handleClose={handleAnonymousModalHide} />
-            </FormModalComponent>
         </>
     )
 }
