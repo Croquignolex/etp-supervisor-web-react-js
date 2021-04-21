@@ -11,16 +11,16 @@ const initialState = {
 function reduce(state = initialState, action) {
     let nextState;
     switch (action.type) {
-        // Resolve event to set clearances data
-        case actions.STORE_SET_CLEARANCES_DATA:
-            nextState = {list: action.clearances, page: action.page, hasMoreData: action.hasMoreData};
+        // Resolve event to set anonymous data
+        case actions.STORE_SET_ANONYMOUS_DATA:
+            nextState = {list: action.anonymous, page: action.page, hasMoreData: action.hasMoreData};
             return nextState || state;
-        // Resolve event to set next clearances data
-        case actions.STORE_SET_NEXT_CLEARANCES_DATA:
-            nextState = {list: [...state.list, ...action.clearances], page: action.page, hasMoreData: action.hasMoreData};
+        // Resolve event to set next anonymous data
+        case actions.STORE_SET_NEXT_ANONYMOUS_DATA:
+            nextState = {list: [...state.list, ...action.anonymous], page: action.page, hasMoreData: action.hasMoreData};
             return nextState || state;
-        // Resolve event to stop infinite scroll clearances data
-        case actions.STORE_STOP_INFINITE_SCROLL_CLEARANCES_DATA:
+        // Resolve event to stop infinite scroll anonymous data
+        case actions.STORE_STOP_INFINITE_SCROLL_ANONYMOUS_DATA:
             nextState = {...state, hasMoreData: false};
             return nextState || state;
         // Unknown action

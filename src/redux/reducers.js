@@ -10,6 +10,7 @@ import affords from './affords/reducer';
 import settings from './settings/reducer';
 import managers from './managers/reducer';
 import supplies from './supplies/reducer';
+import anonymous from './anonymous/reducer';
 import operators from './operators/reducer';
 import transfers from './transfers/reducer';
 import companies from './companies/reducer';
@@ -33,6 +34,7 @@ import vendorsRequests from './requests/vendors/reducer';
 import settingsRequests from './requests/settings/reducer';
 import managersRequests from './requests/managers/reducer';
 import suppliesRequests from './requests/supplies/reducer';
+import anonymousRequests from './requests/anonymous/reducer';
 import operatorsRequests from './requests/operators/reducer';
 import transfersRequests from './requests/transfers/reducer';
 import simsTypesRequests from './requests/simsTypes/reducer';
@@ -59,6 +61,7 @@ export default {
     settings,
     managers,
     supplies,
+    anonymous,
     operators,
     transfers,
     simsTypes,
@@ -82,6 +85,7 @@ export default {
     suppliesRequests,
     managersRequests,
     settingsRequests,
+    anonymousRequests,
     simsTypesRequests,
     transfersRequests,
     operatorsRequests,

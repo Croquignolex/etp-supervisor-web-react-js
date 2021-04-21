@@ -1,151 +1,115 @@
-import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
+import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
-    EMIT_CLEARANCES_FETCH,
-    storeSetClearancesData,
-    EMIT_ALL_CLEARANCES_FETCH,
-    EMIT_NEXT_CLEARANCES_FETCH,
-    storeSetNextClearancesData,
-    storeStopInfiniteScrollClearanceData
+    EMIT_ANONYMOUS_FETCH,
+    storeSetAnonymousData,
+    EMIT_NEXT_ANONYMOUS_FETCH,
+    storeSetNextAnonymousData,
+    storeStopInfiniteScrollAnonymousData
 } from "./actions";
 import {
-    storeClearancesRequestInit,
-    storeClearancesRequestFailed,
-    storeClearancesRequestSucceed,
-    storeAllClearancesRequestInit,
-    storeNextClearancesRequestInit,
-    storeAllClearancesRequestFailed,
-    storeNextClearancesRequestFailed,
-    storeAllClearancesRequestSucceed,
-    storeNextClearancesRequestSucceed,
-} from "../requests/clearances/actions";
+    storeAnonymousRequestInit,
+    storeAnonymousRequestFailed,
+    storeAnonymousRequestSucceed,
+    storeNextAnonymousRequestInit,
+    storeNextAnonymousRequestFailed,
+    storeNextAnonymousRequestSucceed
+} from "../requests/anonymous/actions";
 
-// Fetch clearances from API
-export function* emitClearancesFetch() {
-    yield takeLatest(EMIT_CLEARANCES_FETCH, function*() {
+// Fetch anonymous from API
+export function* emitAnonymousFetch() {
+    yield takeLatest(EMIT_ANONYMOUS_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeClearancesRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.CLEARANCES_API_PATH}?page=1`);
+            yield put(storeAnonymousRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ANONYMOUS_FLEETS_API_PATH}?page=1`);
             // Extract data
-            const clearances = extractClearancesData(apiResponse.data.demandes);
+            const anonymous = extractAnonymousData(apiResponse.data.flottages);
             // Fire event to redux
-            yield put(storeSetClearancesData({clearances, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            yield put(storeSetAnonymousData({anonymous, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
             // Fire event for request
-            yield put(storeClearancesRequestSucceed({message: apiResponse.message}));
+            yield put(storeAnonymousRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeClearancesRequestFailed({message}));
+            yield put(storeAnonymousRequestFailed({message}));
         }
     });
 }
 
-// Fetch next clearances from API
-export function* emitNextClearancesFetch() {
-    yield takeLatest(EMIT_NEXT_CLEARANCES_FETCH, function*({page}) {
+// Fetch next anonymous from API
+export function* emitNextAnonymousFetch() {
+    yield takeLatest(EMIT_NEXT_ANONYMOUS_FETCH, function*({page}) {
         try {
             // Fire event for request
-            yield put(storeNextClearancesRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.CLEARANCES_API_PATH}?page=${page}`);
+            yield put(storeNextAnonymousRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ANONYMOUS_FLEETS_API_PATH}?page=${page}`);
             // Extract data
-            const clearances = extractClearancesData(apiResponse.data.demandes);
+            const anonymous = extractAnonymousData(apiResponse.data.flottages);
             // Fire event to redux
-            yield put(storeSetNextClearancesData({clearances, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
+            yield put(storeSetNextAnonymousData({anonymous, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
             // Fire event for request
-            yield put(storeNextClearancesRequestSucceed({message: apiResponse.message}));
+            yield put(storeNextAnonymousRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeNextClearancesRequestFailed({message}));
-            yield put(storeStopInfiniteScrollClearanceData());
+            yield put(storeNextAnonymousRequestFailed({message}));
+            yield put(storeStopInfiniteScrollAnonymousData());
         }
     });
 }
 
-// Fetch all clearances from API
-export function* emitAllClearancesFetch() {
-    yield takeLatest(EMIT_ALL_CLEARANCES_FETCH, function*() {
-        try {
-            // Fire event for request
-            yield put(storeAllClearancesRequestInit());
-            const apiResponse = yield call(apiGetRequest, api.ALL_CLEARANCES_API_PATH);
-            // Extract data
-            const clearances = extractClearancesData(apiResponse.data.demandes);
-            // Fire event to redux
-            yield put(storeSetClearancesData({clearances, hasMoreData: false, page: 0}));
-            // Fire event for request
-            yield put(storeAllClearancesRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeAllClearancesRequestFailed({message}));
-        }
-    });
-}
+// Extract anonymous data
+function extractAnoData(apiSim, apiUser, apiAnonymous) {
+    let anonymous = {
+        id: '', reference: '', amount: '', receiver: '', receiverSim: '', status: '', creation: '',
 
-// Extract clearance data
-function extractClearanceData(apiSim, apiUser, apiAgent, apiClaimer, apiFleet) {
-    let fleet = {
-        id: '', amount: '', status: '', creation: '',
-
-        agent: {id: '', name: ''},
-        sim: {id: '', name: '', number: ''},
         claimant: {id: '', name: '', phone: ''},
+        sim_outgoing: {id: '', name: '', number: ''},
     };
-
-    if(apiAgent && apiUser) {
-        fleet.agent = {
-            name: apiUser.name,
-            id: apiUser.id.toString()
-        };
-    }
     if(apiSim) {
-        fleet.sim = {
+        anonymous.sim_outgoing = {
             name: apiSim.nom,
             number: apiSim.numero,
             id: apiSim.id.toString()
         };
     }
-    if(apiClaimer) {
-        fleet.claimant = {
-            name: apiClaimer.name,
-            phone: apiClaimer.phone,
-            id: apiClaimer.id.toString(),
+    if(apiUser) {
+        anonymous.claimant = {
+            name: apiUser.name,
+            phone: apiUser.phone,
+            id: apiUser.id.toString(),
         }
     }
-    if(apiFleet) {
-        fleet.actionLoader = false;
-        fleet.status = apiFleet.statut;
-        fleet.amount = apiFleet.montant;
-        fleet.remaining = apiFleet.reste;
-        fleet.id = apiFleet.id.toString();
-        fleet.creation = apiFleet.created_at;
+    if(apiAnonymous) {
+        anonymous.actionLoader = false;
+        anonymous.status = apiAnonymous.statut;
+        anonymous.amount = apiAnonymous.montant;
+        anonymous.id = apiAnonymous.id.toString();
+        anonymous.receiver = apiAnonymous.nom_agent;
+        anonymous.creation = apiAnonymous.created_at;
+        anonymous.receiverSim = apiAnonymous.nro_sim_to;
     }
-    return fleet;
+    return anonymous;
 }
 
-// Extract clearances data
-function extractClearancesData(apiClearances) {
-    const clearances = [];
-    if(apiClearances) {
-        apiClearances.forEach(data => {
-            clearances.push(extractClearanceData(
-                data.puce,
-                data.user,
-                data.agent,
-                data.demandeur,
-                data.demande
-            ));
-        });
-    }
-    return clearances;
+// Extract anonymous data
+export function extractAnonymousData(apiAnonymous) {
+    const anonymous = [];
+    apiAnonymous.forEach(data => {
+        anonymous.push(extractAnoData(
+            data.puce_emetrice,
+            data.user,
+            data.flottage
+        ));
+    });
+    return anonymous;
 }
 
 // Combine to export all functions at once
-export default function* sagaClearances() {
+export default function* sagaAnonymous() {
     yield all([
-        fork(emitClearancesFetch),
-        fork(emitAllClearancesFetch),
-        fork(emitNextClearancesFetch),
+        fork(emitAnonymousFetch),
+        fork(emitNextAnonymousFetch),
     ]);
 }

@@ -94,6 +94,7 @@ export const OPERATOR_ADD_SIM = `${API_URL}/ajouter_puce_flote`;
 export const CREATE_OPERATOR_API_PATH = `${API_URL}/store_flote`;
 export const All_OPERATORS_API_PATH = `${API_URL}/flote_list_all`;
 export const EDIT_OPERATOR_INFO_API_PATH = `${API_URL}/edit_flote`;
+export const ANONYMOUS_FLEETS_API_PATH = `${API_URL}/list_flottage_anonyme`;
 
 // Zones
 export const ZONES_API_PATH = `${API_URL}/zone_list`;
