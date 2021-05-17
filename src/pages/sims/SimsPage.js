@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {SIMS_PAGE} from "../../constants/pageNameConstants";
+import {ALL_SIMS} from "../../constants/pageNameConstants";
 import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
@@ -13,8 +13,6 @@ import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
-import TableSearchComponent from "../../components/TableSearchComponent";
-import {emitNextSimsFetch, emitSimsFetch} from "../../redux/sims/actions";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
@@ -23,6 +21,8 @@ import {storeAllCompaniesRequestReset} from "../../redux/requests/companies/acti
 import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/actions";
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
+import TableSearchWithButtonComponent from "../../components/TableSearchWithButtonComponent";
+import {emitNextSimsFetch, emitSearchSimsFetch, emitSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
@@ -50,6 +50,10 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
+    }
+
+    const handleSearchInput = () => {
+        dispatch(emitSearchSimsFetch({needle}));
     }
 
     // Reset error alert
@@ -93,7 +97,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={SIMS_PAGE} icon={'fa fa-sim-card'} />
+                    <HeaderComponent title={ALL_SIMS} icon={'fa fa-sim-card'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -102,7 +106,10 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                         {/* Search input */}
                                         <div className="card-header">
                                             <div className="card-tools">
-                                                <TableSearchComponent needle={needle} handleNeedle={handleNeedleInput} />
+                                                <TableSearchWithButtonComponent needle={needle}
+                                                                                handleNeedle={handleNeedleInput}
+                                                                                handleSearch={handleSearchInput}
+                                                />
                                             </div>
                                         </div>
                                         <div className="card-body">
