@@ -162,7 +162,6 @@ export const emitUpdateSim = ({id, name, description}) => ({
     type: EMIT_UPDATE_SIM
 });
 
-
 // Emit search sims fetch
 export const emitSearchSimsFetch = ({needle}) => ({
     needle,

@@ -23,7 +23,7 @@ import {
     EMIT_NEXT_MASTERS_SIMS_FETCH,
     storeStopInfiniteScrollSimData,
     EMIT_NEXT_RESOURCES_SIMS_FETCH,
-    EMIT_NEXT_COLLECTORS_SIMS_FETCH
+    EMIT_NEXT_COLLECTORS_SIMS_FETCH, EMIT_SEARCH_SIMS_FETCH
 } from "./actions";
 import {
     storeSimsRequestInit,
@@ -118,6 +118,26 @@ export function* emitMastersSimsFetch() {
             const sims = extractSimsData(apiResponse.data.puces);
             // Fire event to redux
             yield put(storeSetSimsData({sims, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeSimsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSimsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch search sims from API
+export function* emitSearchSimsFetch() {
+    yield takeLatest(EMIT_SEARCH_SIMS_FETCH, function*({needle}) {
+        try {
+            // Fire event for request
+            yield put(storeSimsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.SEARCH_SIMS_API_PATH}?needle=${needle}`);
+            // Extract data
+            const sims = extractSimsData(apiResponse.data.puces);
+            // Fire event to redux
+            yield put(storeSetSimsData({sims, hasMoreData: false, page: 0}));
             // Fire event for request
             yield put(storeSimsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
@@ -492,6 +512,7 @@ export default function* sagaSims() {
         fork(emitSimsFetch),
         fork(emitAllSimsFetch),
         fork(emitNextSimsFetch),
+        fork(emitSearchSimsFetch),
         fork(emitFleetsSimsFetch),
         fork(emitAgentsSimsFetch),
         fork(emitMastersSimsFetch),
