@@ -123,19 +123,25 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                                 <i className="fa fa-plus" /> Nouvelle puce
                                             </button>
                                             {/* Search result & Infinite scroll */}
-                                            {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
-                                                : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
+                                            {requestLoading(simsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
+                                                    (
+                                                        <SimsCardsComponent sims={searchEngine(sims, needle)}
+                                                                            handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                        />
+                                                    ) :
+                                                    (
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         dataLength={sims.length}
                                                                         next={handleNextSimsData}
                                                                         loader={<LoaderComponent />}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
+                                                            <SimsCardsComponent sims={sims}
+                                                                                handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                            />
                                                         </InfiniteScroll>
-                                                )
-                                            }
+                                                    )
+                                            )}
                                         </div>
                                     </div>
                                 </div>
