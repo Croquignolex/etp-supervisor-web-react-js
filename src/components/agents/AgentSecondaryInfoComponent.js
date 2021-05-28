@@ -66,9 +66,11 @@ function AgentSecondaryInfoComponent({agent}) {
                             <b>Zone</b>
                             <span className="float-right">
                                 {agent.zone.name}
-                                <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                   onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: agent.zone.id})}
-                                />
+                                {agent.zone.id !== '' && (
+                                    <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
+                                       onClick={() => setZoneDetailsModal({...zoneDetailsModal, show: true, id: agent.zone.id})}
+                                    />
+                                )}
                             </span>
                         </li>
                         <li className="list-group-item">
