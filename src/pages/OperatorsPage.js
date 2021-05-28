@@ -29,7 +29,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     // Local states
     const [needle, setNeedle] = useState('');
     const [newOperatorModal, setNewOperatorModal] = useState({show: false, header: ''});
-    const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEEUR", id: ''});
+    const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEUR", id: ''});
 
     // Local effects
     useEffect(() => {

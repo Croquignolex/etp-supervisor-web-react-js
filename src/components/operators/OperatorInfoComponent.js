@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
+import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
 import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
 
 // Component
@@ -27,14 +28,16 @@ function OperatorInfoComponent({operator}) {
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{operator.name}</h3>
-                </div>
+                <div className={`${fleetTypeBadgeColor(operator.status).background} card-header`} />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
                             <span className="float-right">{dateToString(operator.creation)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Nom</b>
+                            <span className="float-right">{operator.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>

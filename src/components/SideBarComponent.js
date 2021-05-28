@@ -25,7 +25,7 @@ function SideBarComponent({user, pathname}) {
             // buildCompaniesMenu(),
             // buildZonesMenu(),
             // buildVendorsMenu(),
-            // buildOperatorsMenu(),
+            buildOperatorsMenu(),
         ];
         // eslint-disable-next-line
     }, [pathname]);
