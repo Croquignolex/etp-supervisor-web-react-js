@@ -4,12 +4,14 @@ import React, {useEffect, useMemo} from 'react';
 import * as types from "../constants/typeConstants";
 import * as path from "../constants/pagePathConstants";
 import {emitAllSimsFetch} from "../redux/sims/actions";
+import {MASTER_TYPE} from "../constants/typeConstants";
 import {emitAllZonesFetch} from "../redux/zones/actions";
 import * as setting from "../constants/settingsConstants";
 import {formatNumber} from "../functions/generalFunctions";
 import {emitAllAgentsFetch} from "../redux/agents/actions";
 import {emitFetchUserBalance} from "../redux/user/actions";
 import HeaderComponent from "../components/HeaderComponent";
+import {emitAllVendorsFetch} from "../redux/vendors/actions";
 import {DASHBOARD_PAGE} from "../constants/pageNameConstants";
 import {emitAllManagersFetch} from "../redux/managers/actions";
 import {emitAllCompaniesFetch} from "../redux/companies/actions";
@@ -21,6 +23,7 @@ import {storeAllSimsRequestReset} from "../redux/requests/sims/actions";
 import {storeAllZonesRequestReset} from "../redux/requests/zones/actions";
 import {emitAllAdministratorsFetch} from "../redux/administrators/actions";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
+import {storeAllVendorsRequestReset} from "../redux/requests/vendors/actions";
 import {storeAllManagersRequestReset} from "../redux/requests/managers/actions";
 import {storeUserBalanceFetchRequestReset} from "../redux/requests/user/actions";
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
@@ -29,10 +32,7 @@ import DashboardCardComponent from "../components/dashboard/DashboardCardCompone
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import {storeAllSupervisorsRequestReset} from "../redux/requests/supervisors/actions";
 import {storeAllAdministratorsRequestReset} from "../redux/requests/administrators/actions";
-import {emitAllVendorsFetch} from "../redux/vendors/actions";
-import {storeAllVendorsRequestReset} from "../redux/requests/vendors/actions";
-import {CARD_VENDORS, LABEL_VENDORS} from "../constants/settingsConstants";
-import {VENDORS_PAGE_PATH} from "../constants/pagePathConstants";
+import DashboardWithOperatorCardComponent from "../components/dashboard/DashboardWithOperatorCardComponent";
 
 // Component
 function DashboardPage({agents, settings, dispatch, location, vendors,
@@ -82,6 +82,19 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
         return agents.filter(agent => types.RESOURCE_TYPE === agent.reference).length
         // eslint-disable-next-line
     }, [agents]);
+    const mtnFleetSimsFleetsData = useMemo(() => {
+        const data = sims.filter(sim => ((sim.operator.id === '1') && (sim.type.name === MASTER_TYPE)));
+        const number = data.length
+        const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
+        return {number, value}
+    }, [sims]);
+    const orangeFleetSimsFleetsData = useMemo(() => {
+        const data = sims.filter(sim => ((sim.operator.id === '2') && (sim.type.name === MASTER_TYPE)));
+        const number = data.length
+        const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
+        return {number, value}
+    }, [sims]);
+
 
     // Render
     return (
@@ -102,6 +115,28 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
+                            {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_MTN) &&
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardWithOperatorCardComponent color='bg-secondary'
+                                                                        operator={{id: '1'}}
+                                                                        request={allSimsRequests}
+                                                                        url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                        data={formatNumber(mtnFleetSimsFleetsData.value)}
+                                                                        label={`${setting.LABEL_FLEET_SIMS_FLEETS_MTN} (${mtnFleetSimsFleetsData.number})`}
+                                    />
+                                </div>
+                            }
+                            {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_ORANGE) &&
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardWithOperatorCardComponent color='bg-secondary'
+                                                                        operator={{id: '2'}}
+                                                                        request={allSimsRequests}
+                                                                        url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                        data={formatNumber(orangeFleetSimsFleetsData.value)}
+                                                                        label={`${setting.LABEL_FLEET_SIMS_FLEETS_ORANGE} (${orangeFleetSimsFleetsData.number})`}
+                                    />
+                                </div>
+                            }
                             {cardsData.includes(setting.CARD_ADMINS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-danger'
@@ -118,9 +153,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-warning'
                                                             data={supervisors.length}
                                                             icon='fa fa-user-astronaut'
+                                                            request={allSupervisorsRequests}
                                                             url={path.SUPERVISORS_PAGE_PATH}
                                                             label={setting.LABEL_SUPERVISORS}
-                                                            request={allSupervisorsRequests}
                                     />
                                 </div>
                             }
@@ -129,9 +164,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-success'
                                                             icon='fa fa-user-tag'
                                                             data={managers.length}
+                                                            request={allManagersRequests}
                                                             url={path.MANAGERS_PAGE_PATH}
                                                             label={setting.LABEL_MANAGERS}
-                                                            request={allManagersRequests}
                                     />
                                 </div>
                             }
@@ -140,9 +175,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-warning'
                                                             icon='fa fa-user-clock'
                                                             data={collectors.length}
+                                                            request={allCollectorsRequests}
                                                             url={path.COLLECTORS_PAGE_PATH}
                                                             label={setting.LABEL_COLLECTORS}
-                                                            request={allCollectorsRequests}
                                     />
                                 </div>
                             }
@@ -173,9 +208,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-danger'
                                                             data={companies.length}
                                                             icon='fa fa-university'
+                                                            request={allCompaniesRequests}
                                                             url={path.COMPANIES_PAGE_PATH}
                                                             label={setting.LABEL_COMPANIES}
-                                                            request={allCompaniesRequests}
                                     />
                                 </div>
                             }
@@ -195,9 +230,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent icon='fa fa-map'
                                                             color='bg-success'
                                                             data={zones.length}
+                                                            request={allZonesRequests}
                                                             url={path.ZONES_PAGE_PATH}
                                                             label={setting.LABEL_ZONES}
-                                                            request={allZonesRequests}
                                     />
                                 </div>
                             }
@@ -206,9 +241,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-danger'
                                                             icon='fa fa-globe'
                                                             data={operators.length}
+                                                            request={allOperatorsRequests}
                                                             url={path.OPERATORS_PAGE_PATH}
                                                             label={setting.LABEL_OPERATORS}
-                                                            request={allOperatorsRequests}
                                     />
                                 </div>
                             }
@@ -217,9 +252,9 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     <DashboardCardComponent color='bg-info'
                                                             data={vendors.length}
                                                             icon='fa fa-user-ninja'
+                                                            request={allVendorsRequests}
                                                             url={path.VENDORS_PAGE_PATH}
                                                             label={setting.LABEL_VENDORS}
-                                                            request={allOperatorsRequests}
                                     />
                                 </div>
                             }

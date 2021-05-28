@@ -17,6 +17,11 @@ import CheckBoxComponent from "../components/form/CheckBoxComponent";
 import {storeSettingsRequestReset} from "../redux/requests/settings/actions";
 import {DEFAULT_ARRAY_FORM_DATA, DEFAULT_FORM_DATA} from "../constants/defaultConstants";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
+import {
+    CARD_FLEET_SIMS_FLEETS_MTN,
+    CARD_FLEET_SIMS_FLEETS_ORANGE,
+    LABEL_FLEET_SIMS_FLEETS_MTN, LABEL_FLEET_SIMS_FLEETS_ORANGE
+} from "../constants/settingsConstants";
 
 // Component
 function SettingsPage({settings, request, dispatch, location}) {
@@ -64,6 +69,8 @@ function SettingsPage({settings, request, dispatch, location}) {
                 {value: setting.CARD_OPERATORS, label: setting.LABEL_OPERATORS},
                 {value: setting.CARD_BALANCE, label: setting.LABEL_BALANCE},
                 {value: setting.CARD_VENDORS, label: setting.LABEL_VENDORS},
+                {value: setting.CARD_FLEET_SIMS_FLEETS_MTN, label: setting.LABEL_FLEET_SIMS_FLEETS_MTN},
+                {value: setting.CARD_FLEET_SIMS_FLEETS_ORANGE, label: setting.LABEL_FLEET_SIMS_FLEETS_ORANGE},
             ],
             charts: [
                 // {value: 0, label: 'name'}
