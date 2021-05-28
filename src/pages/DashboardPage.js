@@ -87,7 +87,7 @@ function DashboardPage({agents, settings, dispatch, location, administrators,
                             {cardsData.includes(setting.CARD_BALANCE) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-dark'
-                                                            icon='fa fa-coin'
+                                                            icon='fa fa-coins'
                                                             url={path.PROFILE_PAGE_PATH}
                                                             label={setting.LABEL_BALANCE}
                                                             request={balanceUserRequests}
@@ -130,7 +130,7 @@ function DashboardPage({agents, settings, dispatch, location, administrators,
                             }
                             {cardsData.includes(setting.CARD_COLLECTORS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
-                                    <DashboardCardComponent color='bg-info'
+                                    <DashboardCardComponent color='bg-warning'
                                                             icon='fa fa-user-clock'
                                                             data={collectors.length}
                                                             url={path.COLLECTORS_PAGE_PATH}
@@ -174,7 +174,7 @@ function DashboardPage({agents, settings, dispatch, location, administrators,
                             }
                             {cardsData.includes(setting.CARD_SIMS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
-                                    <DashboardCardComponent color='bg-warning'
+                                    <DashboardCardComponent color='bg-primary'
                                                             data={sims.length}
                                                             icon='fa fa-sim-card'
                                                             request={allSimsRequests}
