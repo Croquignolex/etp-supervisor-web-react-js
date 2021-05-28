@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 import LoaderComponent from "../LoaderComponent";
+import OperatorComponent from "../OperatorComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
-function DashboardCardComponent({request, label, color, data, url, icon}) {
+function DashboardCardComponent({request, operator, label, color, data, url}) {
     // Render
     return (
         <>
@@ -17,7 +18,7 @@ function DashboardCardComponent({request, label, color, data, url, icon}) {
                         <div className="inner">
                             <h4 className="text-right">
                                 <div className="float-left">
-                                    <i className={icon} />
+                                    <OperatorComponent operator={operator} />
                                 </div>
                                 {data}
                             </h4>
@@ -43,6 +44,7 @@ DashboardCardComponent.propTypes = {
     color: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     request: PropTypes.object.isRequired,
+    operator: PropTypes.object.isRequired,
 };
 
 export default React.memo(DashboardCardComponent);
