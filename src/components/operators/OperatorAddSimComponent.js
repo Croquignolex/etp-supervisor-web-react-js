@@ -8,12 +8,20 @@ import ButtonComponent from "../form/ButtonComponent";
 import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import {emitAddOperatorSims} from "../../redux/operators/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
+import {emitAllSimsTypesFetch} from "../../redux/simsTypes/actions";
+import {emitAllCompaniesFetch} from "../../redux/companies/actions";
+import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
+import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
+import {storeAllCompaniesRequestReset} from "../../redux/requests/companies/actions";
+import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/actions";
 import {storeOperatorAddSimRequestReset} from "../../redux/requests/operators/actions";
+import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -32,6 +40,10 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllAgentsFetch());
+        dispatch(emitAllCompaniesFetch());
+        dispatch(emitAllSimsTypesFetch());
+        dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -51,6 +63,10 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 
     // Reset error alert
     const shouldResetErrorData = () => {
+        dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllCompaniesRequestReset());
+        dispatch(storeAllSimsTypesRequestReset());
+        dispatch(storeAllCollectorsRequestReset());
         dispatch(storeOperatorAddSimRequestReset());
     };
 

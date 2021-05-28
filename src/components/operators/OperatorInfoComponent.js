@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
+import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
 import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
@@ -31,6 +32,7 @@ function OperatorInfoComponent({operator}) {
                 <div className={`${fleetTypeBadgeColor(operator.status).background} card-header`} />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
+                        <OperatorComponent operator={operator} />
                         <li className="list-group-item">
                             <b>Création</b>
                             <span className="float-right">{dateToString(operator.creation)}</span>

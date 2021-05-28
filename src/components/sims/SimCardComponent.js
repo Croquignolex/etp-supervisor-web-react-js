@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
+import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
@@ -47,6 +48,7 @@ function SimCardComponent({sim}) {
     return (
         <>
             <ul className="list-group list-group-unbordered">
+                <OperatorComponent operator={sim.operator} />
                 <li className="list-group-item">
                     <b>Création</b>
                     <span className="float-right">{dateToString(sim.creation)}</span>
@@ -61,15 +63,8 @@ function SimCardComponent({sim}) {
                 </li>
                 <li className="list-group-item">
                     <b>Solde flotte</b>
-                    <span className="float-right text-success text-bold">{formatNumber(sim.balance)}</span>
-                </li>
-                <li className="list-group-item">
-                    <b>Opérateur</b>
-                    <span className="float-right">
-                        {sim.operator.name}
-                        <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                           onClick={() => setOperatorDetailsModal({...operatorDetailsModal, show: true, id: sim.operator.id})}
-                        />
+                    <span className="float-right text-success text-bold">
+                        {formatNumber(sim.balance)}
                     </span>
                 </li>
                 {AGENT_RESOURCE_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) && (

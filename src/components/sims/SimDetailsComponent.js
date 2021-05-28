@@ -8,8 +8,8 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import {simTypeBadgeColor} from "../../functions/typeFunctions";
 import {storeShowSimRequestReset} from "../../redux/requests/sims/actions";
-import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import SimInfoEditContainer from "../../containers/sims/SimInfoEditContainer";
+import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function SimDetailsComponent({id, sim, dispatch, request}) {

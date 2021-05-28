@@ -54,7 +54,9 @@ function OperatorSimsListComponent({operator}) {
                                             {item.name}
                                         </td>
                                         <td>{item.number}</td>
-                                        <td className='text-right'>{formatNumber(item.balance)}</td>
+                                        <td className='text-right text-success text-bold'>
+                                            {formatNumber(item.balance)}
+                                        </td>
                                     </tr>
                                 )
                             })}
