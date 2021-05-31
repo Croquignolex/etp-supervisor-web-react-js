@@ -24,7 +24,7 @@ function SideBarComponent({user, pathname}) {
             // buildSimsMenu(),
             // buildCompaniesMenu(),
             // buildZonesMenu(),
-            // buildVendorsMenu(),
+            buildVendorsMenu(),
             buildOperatorsMenu(),
         ];
         // eslint-disable-next-line

@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString} from "../../functions/generalFunctions";
-import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
 import OperatorInfoEditContainer from "../../containers/operators/OperatorInfoEditContainer";
 
 // Component
@@ -29,7 +28,7 @@ function OperatorInfoComponent({operator}) {
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
             <div className="card">
-                <div className={`${fleetTypeBadgeColor(operator.status).background} card-header`} />
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <OperatorComponent operator={operator} />

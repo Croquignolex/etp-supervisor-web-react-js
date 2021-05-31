@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import OperatorComponent from "../OperatorComponent";
 import {dateToString} from "../../functions/generalFunctions";
-import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
 
 // Component
 function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
@@ -15,7 +14,7 @@ function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
-                                <div className={`${fleetTypeBadgeColor(item.status).background} card-header`} />
+                                <div className="card-header bg-secondary" />
                                 <div className="card-body">
                                     <ul className="list-group list-group-unbordered">
                                         <OperatorComponent operator={item} />
