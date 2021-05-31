@@ -91,12 +91,14 @@ export function* emitAddTransfer() {
 }
 
 // Extract transfer data
-function extractTransferData(apiSimOutgoing, apiSimIncoming, apiUser, apiTransfer) {
+function extractTransferData(apiSimOutgoing, apiSimIncoming, apiUser, apiTransfer, apiOperator, apiType) {
     let transfer = {
         id: '', reference: '', amount: '', creation: '',
         note: '', remaining: '', status: '',
 
         user: {id: '', name: ''},
+        type: {id: '', name: ''},
+        operator: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
     };
@@ -120,6 +122,18 @@ function extractTransferData(apiSimOutgoing, apiSimIncoming, apiUser, apiTransfe
             id: apiUser.id.toString()
         };
     }
+    if(apiOperator) {
+        transfer.operator = {
+            name: apiOperator.nom,
+            id: apiOperator.id.toString(),
+        }
+    }
+    if(apiType) {
+        transfer.type = {
+            name: apiType.name,
+            id: apiType.id.toString(),
+        }
+    }
     if(apiTransfer) {
         transfer.actionLoader = false;
         transfer.amount = apiTransfer.montant;
@@ -138,6 +152,8 @@ export function extractTransfersData(apiTransfers) {
             data.puce_receptrice,
             data.utilisateur,
             data.flottage,
+            data.operateur,
+            data.type_recepteur
         ));
     });
     return transfers;
