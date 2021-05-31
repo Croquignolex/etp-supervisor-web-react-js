@@ -6,8 +6,8 @@ import {
     EMIT_RETURNS_FETCH,
     storeSetReturnsData,
     EMIT_NEXT_RETURNS_FETCH,
-    EMIT_SUPPLY_RETURNS_FETCH,
     storeSetNextReturnsData,
+    EMIT_SUPPLY_RETURNS_FETCH,
     storeStopInfiniteScrollReturnData
 } from "./actions";
 import {
@@ -81,11 +81,12 @@ export function* emitNextReturnsFetch() {
 }
 
 // Extract recovery data
-function extractRecoveryData(apiRecovery, apiUser, apiAgent, apiCollector, apiSimOutgoing, apiSimIncoming) {
+function extractRecoveryData(apiRecovery, apiUser, apiAgent, apiCollector, apiSimOutgoing, apiSimIncoming, apiOperator) {
     let recovery = {
         id: '', amount: '', creation: '', receipt: '', status: '',
 
         agent: {id: '', name: ''},
+        operator: {id: '', name: ''},
         collector: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
@@ -116,6 +117,12 @@ function extractRecoveryData(apiRecovery, apiUser, apiAgent, apiCollector, apiSi
             id: apiSimIncoming.id.toString()
         };
     }
+    if(apiOperator) {
+        recovery.operator = {
+            name: apiOperator.nom,
+            id: apiOperator.id.toString(),
+        };
+    }
     if(apiRecovery) {
         recovery.actionLoader = false;
         recovery.status = apiRecovery.statut;
@@ -139,6 +146,7 @@ function extractReturnsData(apiReturns) {
                 data.recouvreur,
                 data.puce_agent,
                 data.puce_flottage,
+                data.operateur,
             ));
         });
     }

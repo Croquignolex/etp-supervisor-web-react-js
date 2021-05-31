@@ -8,7 +8,7 @@ export const NOTIFICATIONS_PAGE = 'Notifications';
 export const MY_NETWORK = 'Mon réseau';
 export const MY_NETWORK_FLEET = 'Flottages';
 
-// Commons
+// CommonsSa
 export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
 export const OPERATORS = 'Opérateurs';
@@ -38,15 +38,15 @@ export const OPERATIONS_TRANSFERS_PAGE = 'Tranferts de flotte';
 export const OPERATIONS_ANONYMOUS_FLEETS_PAGE = 'Flottages Anonyme';
 
 // Recoveries
-export const RECOVERIES = 'Recouvrement';
-export const RECOVERIES_FLEET_PAGE = 'Retour flotte';
-export const RECOVERIES_CASH_PAGE = "Recouvrement d'espèces";
+export const RECOVERIES = 'Recouvrements';
+export const RECOVERIES_FLEET_PAGE = 'Retours flotte';
+export const RECOVERIES_CASH_PAGE = "Recouvrements d'espèces";
 
 // Checkout
 export const CHECKOUT = 'Caisse';
-export const CHECKOUT_OUTlAYS_PAGE = 'Décaissement';
-export const CHECKOUT_PAYMENTS_PAGE = 'Encaissement';
-export const HANDING_OVER_PAGE = 'Passation des service';
+export const CHECKOUT_OUTlAYS_PAGE = 'Décaissements';
+export const CHECKOUT_PAYMENTS_PAGE = 'Encaissements';
+export const HANDING_OVER_PAGE = 'Passations des service';
 
 // Requests
 export const REQUESTS = 'Demandes';
