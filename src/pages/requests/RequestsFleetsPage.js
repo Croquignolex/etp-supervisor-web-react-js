@@ -101,6 +101,7 @@ function searchEngine(data, _needle) {
                 needleSearch(item.remaining, _needle) ||
                 needleSearch(item.sim.number, _needle) ||
                 needleSearch(item.agent.name, _needle) ||
+                needleSearch(item.operator.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle) ||
                 needleSearch(fleetTypeBadgeColor(item.status).text, _needle)
             )
