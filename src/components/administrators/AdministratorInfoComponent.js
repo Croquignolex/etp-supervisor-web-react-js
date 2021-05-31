@@ -9,18 +9,16 @@ function AdministratorInfoComponent({administrator}) {
     return (
         <>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{administrator.name}</h3>
-                    <div className="card-tools">
-                        {administrator.status
-                            ?  <span className="badge badge-success">Activé</span>
-                            :  <span className="badge badge-danger">Bloqué</span>
-                        }
-                    </div>
-                </div>
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <div className="text-center mb-2">
                         <img src={administrator.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <div className="float-right">
+                            {administrator.status
+                                ?  <span className="badge badge-success">Activé</span>
+                                :  <span className="badge badge-danger">Bloqué</span>
+                            }
+                        </div>
                     </div>
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">

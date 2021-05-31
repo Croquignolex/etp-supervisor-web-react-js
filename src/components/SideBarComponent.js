@@ -20,7 +20,7 @@ function SideBarComponent({user, pathname}) {
             // buildRequestsMenu(),
             // buildOperationsMenu(),
             // buildRecoveriesMenu(),
-            // buildUsersMenu(),
+            buildUsersMenu(),
             buildSimsMenu(),
             buildCompaniesMenu(),
             buildZonesMenu(),
