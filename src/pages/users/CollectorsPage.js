@@ -31,8 +31,6 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     // Local effects
     useEffect(() => {
         dispatch(emitCollectorsFetch());
-        dispatch(emitAllZonesFetch());
-        dispatch(emitAllOperatorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -57,7 +55,6 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const shouldResetErrorData = () => {
         dispatch(storeAllZonesRequestReset());
         dispatch(storeCollectorsRequestReset());
-        dispatch(storeAllOperatorsRequestReset());
         dispatch(storeNextCollectorsRequestReset());
         dispatch(storeCollectorStatusToggleRequestReset());
     };

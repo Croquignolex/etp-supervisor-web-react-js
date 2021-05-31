@@ -6,9 +6,11 @@ import ButtonComponent from "../form/ButtonComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitAllZonesFetch} from "../../redux/zones/actions";
 import * as constants from "../../constants/defaultConstants";
 import {emitNewCollector} from "../../redux/collectors/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {dataToArrayForSelect, mappedZones} from "../../functions/arrayFunctions";
 import {storeAddCollectorRequestReset} from "../../redux/requests/collectors/actions";
@@ -26,6 +28,7 @@ function CollectorNewComponent({zones, request, allZonesRequests, dispatch, hand
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllZonesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -80,6 +83,7 @@ function CollectorNewComponent({zones, request, allZonesRequests, dispatch, hand
 
     // Reset error alert
     const shouldResetErrorData = () => {
+        dispatch(storeAllZonesRequestReset());
         dispatch(storeAddCollectorRequestReset());
     };
 

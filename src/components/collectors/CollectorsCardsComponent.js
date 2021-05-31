@@ -24,18 +24,7 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
-                                <div className="card-header bg-secondary">
-                                    <h3 className="card-title">{item.name}</h3>
-                                    <div className="card-tools">
-                                        <button type="button"
-                                                title="Détails"
-                                                className=" btn-tool btn"
-                                                onClick={() => handleCollectorDetailsModalShow(item)}
-                                        >
-                                            <i className="fa fa-eye" />
-                                        </button>
-                                    </div>
-                                </div>
+                                <div className="card-header bg-secondary" />
                                 <div className="card-body">
                                     <div className="text-center mb-3">
                                         <img src={item.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
@@ -58,6 +47,10 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                             <span className="float-right">{dateToString(item.creation)}</span>
                                         </li>
                                         <li className="list-group-item">
+                                            <b>Name</b>
+                                            <span className="float-right">{item.name}</span>
+                                        </li>
+                                        <li className="list-group-item">
                                             <b>Téléphone</b>
                                             <span className="float-right">{item.phone}</span>
                                         </li>
@@ -75,6 +68,14 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                             <span className="float-right text-success text-bold">{formatNumber(item.account.balance)}</span>
                                         </li>
                                     </ul>
+                                    <div className="mt-3 text-right">
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleCollectorDetailsModalShow(item)}
+                                        >
+                                            <i className="fa fa-eye" /> Détails
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
