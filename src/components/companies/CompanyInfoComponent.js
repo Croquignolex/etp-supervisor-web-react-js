@@ -42,14 +42,16 @@ function CompanyInfoComponent({company}) {
                 <i className="fa fa-pencil" /> Modifier le dossier
             </button>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{company.name}</h3>
-                </div>
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
                             <span className="float-right">{dateToString(company.creation)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Nom</b>
+                            <span className="float-right">{company.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Responsable</b>

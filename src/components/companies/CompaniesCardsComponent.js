@@ -13,18 +13,7 @@ function CompaniesCardsComponent({companies, handleCompanyDetailsModalShow}) {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
-                                <div className="card-header bg-secondary">
-                                    <h3 className="card-title">{item.name}</h3>
-                                    <div className="card-tools">
-                                        <button type="button"
-                                                title="Détails"
-                                                className=" btn-tool btn"
-                                                onClick={() => handleCompanyDetailsModalShow(item)}
-                                        >
-                                            <i className="fa fa-eye" />
-                                        </button>
-                                    </div>
-                                </div>
+                                <div className="card-header bg-secondary" />
                                 <div className="card-body">
                                     <ul className="list-group list-group-unbordered">
                                         <li className="list-group-item">
@@ -44,6 +33,14 @@ function CompaniesCardsComponent({companies, handleCompanyDetailsModalShow}) {
                                             <span className="float-right">{item.phone}</span>
                                         </li>
                                     </ul>
+                                    <div className="mt-3 text-right">
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleCompanyDetailsModalShow(item)}
+                                        >
+                                            <i className="fa fa-eye" /> Détails
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
