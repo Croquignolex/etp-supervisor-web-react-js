@@ -9,18 +9,16 @@ function SupervisorInfoComponent({supervisor}) {
     return (
         <>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{supervisor.name}</h3>
-                    <div className="card-tools">
-                        {supervisor.status
-                            ?  <span className="badge badge-success">Activé</span>
-                            :  <span className="badge badge-danger">Bloqué</span>
-                        }
-                    </div>
-                </div>
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <div className="text-center mb-2">
                         <img src={supervisor.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <div className="float-right">
+                            {supervisor.status
+                                ?  <span className="badge badge-success">Activé</span>
+                                :  <span className="badge badge-danger">Bloqué</span>
+                            }
+                        </div>
                     </div>
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
@@ -40,7 +38,7 @@ function SupervisorInfoComponent({supervisor}) {
                             <span className="float-right">{supervisor.email}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Solde total</b>
+                            <b>Solde caisse</b>
                             <span className="float-right text-success text-bold">{formatNumber(supervisor.account.balance)}</span>
                         </li>
                         <li className="list-group-item">
