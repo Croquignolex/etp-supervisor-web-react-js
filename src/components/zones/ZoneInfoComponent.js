@@ -34,14 +34,16 @@ function ZoneInfoComponent({zone}) {
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{zone.name}</h3>
-                </div>
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
                             <span className="float-right">{dateToString(zone.creation)}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Nom</b>
+                            <span className="float-right">{zone.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Reference</b>

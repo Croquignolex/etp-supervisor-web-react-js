@@ -12,7 +12,7 @@ function SideBarComponent({user, pathname}) {
     // Local states
     const [toggle, setToggle] = useState({show: false, key: 0});
 
-    // Data
+    // DataC
     const {name, avatar} = user;
     const authorisedMenu = useMemo(() => {
         return [
@@ -23,7 +23,7 @@ function SideBarComponent({user, pathname}) {
             // buildUsersMenu(),
             // buildSimsMenu(),
             // buildCompaniesMenu(),
-            // buildZonesMenu(),
+            buildZonesMenu(),
             buildVendorsMenu(),
             buildOperatorsMenu(),
         ];
