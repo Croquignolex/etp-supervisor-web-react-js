@@ -45,7 +45,6 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     // Local effects
     useEffect(() => {
         dispatch(emitAgentsFetch());
-
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();

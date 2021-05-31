@@ -12,7 +12,9 @@ import {emitAddCompanySims} from "../../redux/companies/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
+import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {storeCompanyAddSimRequestReset} from "../../redux/requests/companies/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
@@ -26,6 +28,7 @@ function AgentAddSimComponent({request, company, operators, allOperatorsRequests
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllOperatorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -45,6 +48,7 @@ function AgentAddSimComponent({request, company, operators, allOperatorsRequests
 
     // Reset error alert
     const shouldResetErrorData = () => {
+        dispatch(storeAllOperatorsRequestReset());
         dispatch(storeCompanyAddSimRequestReset());
     };
 

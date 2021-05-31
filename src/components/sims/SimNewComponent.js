@@ -8,11 +8,21 @@ import SelectComponent from "../form/SelectComponent";
 import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
+import {emitAllCompaniesFetch} from "../../redux/companies/actions";
+import {emitAllSimsTypesFetch} from "../../redux/simsTypes/actions";
+import {emitAllOperatorsFetch} from "../../redux/operators/actions";
+import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import {storeAddSimRequestReset} from "../../redux/requests/sims/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
+import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
+import {storeAllCompaniesRequestReset} from "../../redux/requests/companies/actions";
+import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/actions";
+import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
+import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -32,6 +42,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllAgentsFetch());
+        dispatch(emitAllCompaniesFetch());
+        dispatch(emitAllSimsTypesFetch());
+        dispatch(emitAllOperatorsFetch());
+        dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -52,6 +67,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAddSimRequestReset());
+        dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllCompaniesRequestReset());
+        dispatch(storeAllSimsTypesRequestReset());
+        dispatch(storeAllOperatorsRequestReset());
+        dispatch(storeAllCollectorsRequestReset());
     };
 
     const handleDescriptionInput = (data) => {

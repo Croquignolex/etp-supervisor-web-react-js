@@ -4,14 +4,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
-import {emitAllOperatorsFetch} from "../redux/operators/actions";
+import {COMPANIES_PAGE} from "../constants/pageNameConstants";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
-import {COMPANIES_PAGE} from "../constants/pageNameConstants";
 import FormModalComponent from "../components/modals/FormModalComponent";
 import CompanyNewContainer from "../containers/companies/CompanyNewContainer";
-import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
 import {emitCompaniesFetch, emitNextCompaniesFetch} from "../redux/companies/actions";
 import CompaniesCardsComponent from "../components/companies/CompaniesCardsComponent";
 import CompanyDetailsContainer from "../containers/companies/CompanyDetailsContainer";
@@ -28,7 +26,6 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
     // Local effects
     useEffect(() => {
         dispatch(emitCompaniesFetch());
-        dispatch(emitAllOperatorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -43,7 +40,6 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeCompaniesRequestReset());
-        dispatch(storeAllOperatorsRequestReset());
         dispatch(storeNextCompaniesRequestReset());
     };
 
