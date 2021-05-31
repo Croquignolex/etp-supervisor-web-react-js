@@ -95,7 +95,6 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
         return {number, value}
     }, [sims]);
 
-
     // Render
     return (
         <AppLayoutContainer pathname={location.pathname}>

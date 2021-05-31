@@ -2,17 +2,13 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {emitAllZonesFetch} from "../../redux/zones/actions";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
-import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
-import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
@@ -53,7 +49,6 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAllZonesRequestReset());
         dispatch(storeCollectorsRequestReset());
         dispatch(storeNextCollectorsRequestReset());
         dispatch(storeCollectorStatusToggleRequestReset());

@@ -267,7 +267,7 @@ export function* emitAddCollectorSims() {
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
     let collector = {
-        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
+        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '', debt: '',
 
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
@@ -302,6 +302,7 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         collector.actionLoader = false;
         collector.toggleLoader = false;
         collector.name = apiCollector.name;
+        collector.debt = apiCollector.dette;
         collector.phone = apiCollector.phone;
         collector.email = apiCollector.email;
         collector.address = apiCollector.adresse;

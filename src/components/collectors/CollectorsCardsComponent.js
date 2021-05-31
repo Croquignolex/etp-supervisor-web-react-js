@@ -64,8 +64,10 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Trésorerie net</b>
-                                            <span className="float-right text-success text-bold">{formatNumber(item.account.balance)}</span>
+                                            <b>Dette</b>
+                                            <span className="float-right text-success text-bold">
+                                                {formatNumber(item.debt)}
+                                            </span>
                                         </li>
                                     </ul>
                                     <div className="mt-3 text-right">

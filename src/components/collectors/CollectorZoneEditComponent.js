@@ -4,10 +4,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 import SelectComponent from "../form/SelectComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import {emitAllZonesFetch} from "../../redux/zones/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {emitUpdateCollectorZone} from "../../redux/collectors/actions";
+import {storeAllZonesRequestReset} from "../../redux/requests/zones/actions";
 import {dataToArrayForSelect, mappedZones} from "../../functions/arrayFunctions";
 import {storeCollectorEditZoneRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
@@ -19,6 +21,7 @@ function CollectorZoneEditComponent({request, collector, zones, allZonesRequests
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllZonesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -38,6 +41,7 @@ function CollectorZoneEditComponent({request, collector, zones, allZonesRequests
 
     // Reset error alert
     const shouldResetErrorData = () => {
+        dispatch(storeAllZonesRequestReset());
         dispatch(storeCollectorEditZoneRequestReset());
     };
 

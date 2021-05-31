@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 import CollectorInfoEditContainer from "../../containers/collectors/CollectorInfoEditContainer";
 import CollectorZoneEditContainer from "../../containers/collectors/CollectorZoneEditContainer";
+import OperatorComponent from "../OperatorComponent";
+import {MASTER_TYPE} from "../../constants/typeConstants";
 
 // Component
 function CollectorInfoComponent({collector}) {
@@ -39,6 +41,10 @@ function CollectorInfoComponent({collector}) {
         setZoneDetailsModal({...zoneDetailsModal, show: false})
     }
 
+    const fleetSimsFleetsData = useMemo(() => {
+        return collector.sims.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
+    }, [collector.sims]);
+
     // Render
     return (
         <>
@@ -49,18 +55,16 @@ function CollectorInfoComponent({collector}) {
                 <i className="fa fa-pencil" /> Modifier la zone
             </button>
             <div className="card">
-                <div className="card-header bg-secondary">
-                    <h3 className="card-title">{collector.name}</h3>
-                    <div className="card-tools">
-                        {collector.status
-                            ?  <span className="badge badge-success">Activé</span>
-                            :  <span className="badge badge-danger">Bloqué</span>
-                        }
-                    </div>
-                </div>
+                <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <div className="text-center mb-2">
                         <img src={collector.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <div className="float-right">
+                            {collector.status
+                                ?  <span className="badge badge-success">Activé</span>
+                                :  <span className="badge badge-danger">Bloqué</span>
+                            }
+                        </div>
                     </div>
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
@@ -80,8 +84,22 @@ function CollectorInfoComponent({collector}) {
                             <span className="float-right">{collector.email}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Trésorerie net</b>
-                            <span className="float-right text-success text-bold">{formatNumber(collector.account.balance)}</span>
+                            <b>Dette</b>
+                            <span className="float-right text-danger text-bold">
+                                {formatNumber(collector.debt)}
+                            </span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Solde espèce</b>
+                            <span className="float-right text-success text-bold">
+                                {formatNumber(collector.account.balance)}
+                            </span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Solde flotte</b>
+                            <span className="float-right text-success text-bold">
+                                {formatNumber(fleetSimsFleetsData)}
+                            </span>
                         </li>
                         <li className="list-group-item">
                             <b>Zone</b>

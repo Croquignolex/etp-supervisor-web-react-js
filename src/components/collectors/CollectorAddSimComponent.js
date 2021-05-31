@@ -11,8 +11,10 @@ import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {emitAddCollectorSims} from "../../redux/collectors/actions";
+import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAgentAddSimRequestReset} from "../../redux/requests/agents/actions";
+import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -25,6 +27,7 @@ function CollectorAddSimComponent({request, collector, operators, allOperatorsRe
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllOperatorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -45,6 +48,7 @@ function CollectorAddSimComponent({request, collector, operators, allOperatorsRe
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAgentAddSimRequestReset());
+        dispatch(storeAllOperatorsRequestReset());
     };
 
     const handleDescriptionInput = (data) => {
