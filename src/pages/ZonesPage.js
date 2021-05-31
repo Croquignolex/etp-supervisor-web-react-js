@@ -81,7 +81,7 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={ZONES_PAGE} icon={'fa fa-map'} />
+                    <HeaderComponent title={ZONES_PAGE} icon={'fa fa-map-marked'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
