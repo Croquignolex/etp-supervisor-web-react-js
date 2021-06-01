@@ -10,11 +10,23 @@ import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import {OPERATIONS_TRANSFERS_PAGE} from "../../constants/pageNameConstants";
 import ConfirmModalComponent from "../../components/modals/ConfirmModalComponent";
-import {emitNextTransfersFetch, emitTransfersFetch} from "../../redux/transfers/actions";
+import {emitConfirmTransfer, emitNextTransfersFetch, emitTransfersFetch} from "../../redux/transfers/actions";
 import OperationsTransfersCardsComponent from "../../components/operations/OperationsTransfersCardsComponent";
-import {storeNextTransfersRequestReset, storeTransfersRequestReset} from "../../redux/requests/transfers/actions";
-import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import OperationsTransfersAddTransferContainer from "../../containers/operations/OperationsTransfersAddTransferContainer";
+import {
+    applySuccess,
+    dateToString,
+    formatNumber,
+    needleSearch,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
+import {
+    storeTransfersRequestReset,
+    storeNextTransfersRequestReset,
+    storeConfirmTransferRequestReset
+} from "../../redux/requests/transfers/actions";
 
 // Component
 function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, page, dispatch, location}) {
@@ -33,6 +45,15 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
         // eslint-disable-next-line
     }, []);
 
+    // Local effects
+    useEffect(() => {
+        // Reset inputs while toast (well done) into current scope
+        if(requestSucceeded(transfersRequests.apply)) {
+            applySuccess(transfersRequests.apply.message);
+        }
+        // eslint-disable-next-line
+    }, [transfersRequests.apply]);
+
     const handleNeedleInput = (data) => {
         setNeedle(data)
     }
@@ -41,7 +62,7 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
     const shouldResetErrorData = () => {
         dispatch(storeTransfersRequestReset());
         dispatch(storeNextTransfersRequestReset());
-        // dispatch(storeConfirmTransferRequestReset());
+        dispatch(storeConfirmTransferRequestReset());
     };
 
     // Fetch next transfers data to enhance infinite scroll
@@ -72,7 +93,7 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
     // Trigger when clearance confirm confirmed on modal
     const handleConfirm = (id) => {
         handleConfirmModalHide();
-        // dispatch(emitConfirmTransfer({id}));
+        dispatch(emitConfirmTransfer({id}));
     };
 
     // Render
@@ -96,6 +117,7 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
                                             {/* Error message */}
                                             {requestFailed(transfersRequests.list) && <ErrorAlertComponent message={transfersRequests.list.message} />}
                                             {requestFailed(transfersRequests.next) && <ErrorAlertComponent message={transfersRequests.next.message} />}
+                                            {requestFailed(transfersRequests.apply) && <ErrorAlertComponent message={transfersRequests.apply.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mb-2"
                                                     onClick={handleTransferModalShow}
