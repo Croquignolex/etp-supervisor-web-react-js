@@ -60,11 +60,12 @@ export function* emitNextSuppliesFetch() {
 }
 
 // Extract supply data
-function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply) {
+function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, apiSupplier, apiSupply, apiOperator) {
     let supply = {
         id: '', amount: '', creation: '', remaining: '', status: '',
 
         agent: {id: '', name: ''},
+        operator: {id: '', name: ''},
         supplier: {id: '', name: ''},
         sim_outgoing: {id: '', name: '', number: ''},
         sim_incoming: {id: '', name: '', number: ''},
@@ -95,6 +96,12 @@ function extractSupplyData(apiSimOutgoing, apiSimIncoming, apiUser, apiAgent, ap
             id: apiSupplier.id.toString()
         };
     }
+    if(apiOperator) {
+        supply.operator = {
+            name: apiOperator.nom,
+            id: apiOperator.id.toString(),
+        }
+    }
     if(apiSupply) {
         supply.actionLoader = false;
         supply.status = apiSupply.statut;
@@ -117,6 +124,7 @@ export function extractSuppliesData(apiSupplies) {
             data.agent,
             data.gestionnaire,
             data.approvisionnement,
+            data.operateur,
         ));
     });
     return supplies;

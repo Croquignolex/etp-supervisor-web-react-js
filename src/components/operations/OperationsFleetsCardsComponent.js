@@ -88,7 +88,7 @@ function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Gestionaire</b>
+                                            <b>Responsable</b>
                                             <span className="float-right">
                                                 {item.supplier.name}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
