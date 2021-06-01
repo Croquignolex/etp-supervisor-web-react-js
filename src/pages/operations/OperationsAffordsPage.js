@@ -2,17 +2,13 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {emitAllSimsFetch} from "../../redux/sims/actions";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
-import {emitAllVendorsFetch} from "../../redux/vendors/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import {OPERATIONS_AFFORDS_PAGE} from "../../constants/pageNameConstants";
-import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import FormModalComponent from "../../components/modals/FormModalComponent";
-import {storeAllVendorsRequestReset} from "../../redux/requests/vendors/actions";
 import ConfirmModalComponent from "../../components/modals/ConfirmModalComponent";
 import {emitAffordsFetch, emitConfirmAfford, emitNextAffordsFetch} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
@@ -38,8 +34,6 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
     // Local effects
     useEffect(() => {
         dispatch(emitAffordsFetch());
-        dispatch(emitAllSimsFetch());
-        dispatch(emitAllVendorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -63,8 +57,6 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAffordsRequestReset());
-        dispatch(storeAllSimsRequestReset());
-        dispatch(storeAllVendorsRequestReset());
         dispatch(storeNextAffordsRequestReset());
         dispatch(storeConfirmAffordRequestReset());
     };
@@ -176,6 +168,7 @@ function searchEngine(data, _needle) {
                 needleSearch(item.amount, _needle) ||
                 needleSearch(item.vendor, _needle) ||
                 needleSearch(item.sim.number, _needle) ||
+                needleSearch(item.operator.name, _needle) ||
                 needleSearch(item.collector.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )

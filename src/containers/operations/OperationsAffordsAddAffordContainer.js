@@ -6,8 +6,8 @@ import OperationsAffordsAddAffordComponent from "../../components/operations/Ope
 const mapStateToProps = (state) => ({
     sims: state.sims.list,
     vendors: state.vendors.list,
+    simsRequests: state.simsRequests,
     request: state.affordsRequests.add,
-    allSimsRequests: state.simsRequests.all,
     allVendorsRequests: state.vendorsRequests.all
 });
 

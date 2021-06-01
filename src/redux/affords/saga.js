@@ -2,7 +2,7 @@ import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {SUPPLY_BY_DIGITAL_PARTNER} from "../../constants/typeConstants";
-import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_ADD_AFFORD,
     EMIT_AFFORDS_FETCH,
@@ -73,16 +73,11 @@ export function* emitNextAffordsFetch() {
 
 // Fleets new afford from API
 export function* emitAddAfford() {
-    yield takeLatest(EMIT_ADD_AFFORD, function*({vendor, amount, sim, receipt}) {
+    yield takeLatest(EMIT_ADD_AFFORD, function*({vendor, amount, sim}) {
         try {
             // Fire event for request
             yield put(storeAddAffordRequestInit());
-            const data = new FormData();
-            data.append('id_puce', sim);
-            data.append('recu', receipt);
-            data.append('montant', amount);
-            data.append('id_fournisseur', vendor);
-            data.append('type', SUPPLY_BY_DIGITAL_PARTNER);
+            const data = {id_puce: sim, montant: amount, id_fournisseur: vendor, type: SUPPLY_BY_DIGITAL_PARTNER};
             const apiResponse = yield call(apiPostRequest, api.NEW_REFUEL_API_PATH, data);
             // Extract dataF
             const afford = extractAffordData(apiResponse.data);
@@ -123,7 +118,7 @@ export function* emitConfirmAfford() {
 // Extract afford data
 function extractAffordData(apiAfford) {
     let afford = {
-        id: '', amount: '', creation: '', receipt: '', status: '',
+        id: '', amount: '', creation: '', status: '',
 
         vendor: {id: '', name: ''},
         collector: {id: '', name: ''},
@@ -159,7 +154,6 @@ function extractAffordData(apiAfford) {
         afford.amount = apiAfford.montant;
         afford.id = apiAfford.id.toString();
         afford.creation = apiAfford.created_at;
-        afford.receipt = getFileFromServer(apiAfford.recu);
     }
     return afford;
 }
