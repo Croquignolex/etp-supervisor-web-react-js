@@ -68,7 +68,7 @@ function OperationsTransfersCardsComponent({transfers, handleConfirmModalShow}) 
                                             {item.status === PROCESSING && <b className="text-danger text-bold">En attente de confirmation</b>}
                                         </li>
                                     </ul>
-                                    {((item.status === PROCESSING) && (item.type.name === MASTER_TYPE)) && (
+                                    {((item.status === PROCESSING) && (item.type.includes('->' + MASTER_TYPE))) && (
                                         <div className="mt-3 text-right">
                                             {item.actionLoader ? <LoaderComponent little={true} /> : (
                                                 <button type="button"
