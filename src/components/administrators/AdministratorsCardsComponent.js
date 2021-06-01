@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import {dateToString} from "../../functions/generalFunctions";
-import LoaderComponent from "../LoaderComponent";
 
 // Component
 function AdministratorsCardsComponent({administrators, handleAdministratorDetailsModalShow}) {

@@ -6,8 +6,6 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 import CollectorInfoEditContainer from "../../containers/collectors/CollectorInfoEditContainer";
 import CollectorZoneEditContainer from "../../containers/collectors/CollectorZoneEditContainer";
-import OperatorComponent from "../OperatorComponent";
-import {MASTER_TYPE} from "../../constants/typeConstants";
 
 // Component
 function CollectorInfoComponent({collector}) {
