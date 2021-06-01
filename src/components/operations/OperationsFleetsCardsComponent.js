@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
-import {DONE} from "../../constants/typeConstants";
+import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
+import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
+import {DONE, PENDING, PROCESSING} from "../../constants/typeConstants";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
@@ -38,22 +40,10 @@ function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
-                                <div className={`card-header ${item.status === DONE ? 'bg-secondary' : 'bg-primary'}`}>
-                                    <h3 className="card-title text-bold">
-                                        <i className="fa fa-phone" /> {formatNumber(item.amount)}
-                                    </h3>
-                                    <div className="card-tools">
-                                        <button type="button"
-                                                title="Détails"
-                                                className=" btn-tool btn"
-                                                onClick={() => handleSupplyDetailsModalShow(item)}
-                                        >
-                                            <i className="fa fa-eye" />
-                                        </button>
-                                    </div>
-                                </div>
+                                <div className={`${fleetTypeBadgeColor(item.status).background} card-header`} />
                                 <div className="card-body">
                                     <ul className="list-group list-group-unbordered">
+                                        <OperatorComponent operator={item.operator} />
                                         <li className="list-group-item">
                                             <b>Création</b>
                                             <span className="float-right">{dateToString(item.creation)}</span>
@@ -86,8 +76,16 @@ function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}
                                             </span>
                                         </li>
                                         <li className="list-group-item">
+                                            <b>Monant flotté</b>
+                                            <span className="float-right text-success text-bold">
+                                                {formatNumber(item.amount)}
+                                            </span>
+                                        </li>
+                                        <li className="list-group-item">
                                             <b>Reste récouvrir</b>
-                                            <span className="float-right text-danger text-bold">{formatNumber(item.remaining)}</span>
+                                            <span className="float-right text-danger text-bold">
+                                                {formatNumber(item.remaining)}
+                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Gestionaire</b>
@@ -98,7 +96,20 @@ function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}
                                                 />
                                             </span>
                                         </li>
+                                        <li className="list-group-item">
+                                            {item.status === DONE && <b className="text-success text-bold">Recouvert totalement</b>}
+                                            {item.status === PROCESSING && <b className="text-primary text-bold">Recouvert partiellement</b>}
+                                            {item.status === PENDING && <b className="text-danger text-bold">En attente de recouvrement</b>}
+                                        </li>
                                     </ul>
+                                    <div className="mt-3 text-right">
+                                        <button type="button"
+                                                className="btn btn-theme btn-sm mb-2"
+                                                onClick={() => handleSupplyDetailsModalShow(item)}
+                                        >
+                                            <i className="fa fa-eye" /> Details
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

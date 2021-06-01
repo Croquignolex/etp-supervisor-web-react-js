@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
-import {DONE} from "../../constants/typeConstants";
+import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
+import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
@@ -34,13 +35,10 @@ function SupplyInfoComponent({supply}) {
     return (
         <>
             <div className="card">
-                <div  className={`card-header ${supply.status === DONE ? 'bg-secondary' : 'bg-primary'}`}>
-                    <h3 className="card-title text-bold">
-                        <i className="fa fa-phone" /> {formatNumber(supply.amount)}
-                    </h3>
-                </div>
+                <div className={`${fleetTypeBadgeColor(supply.status).background} card-header`} />
                 <div className="card-body">
                     <ul className="list-group list-group-unbordered mb-3">
+                        <OperatorComponent operator={supply.operator} />
                         <li className="list-group-item">
                             <b>Création</b>
                             <span className="float-right">{dateToString(supply.creation)}</span>
@@ -73,11 +71,17 @@ function SupplyInfoComponent({supply}) {
                             </span>
                         </li>
                         <li className="list-group-item">
+                            <b>Montant floté</b>
+                            <span className="float-right text-success text-bold">
+                                {formatNumber(supply.amount)}
+                            </span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Reste récouvrir</b>
                             <span className="float-right text-danger text-bold">{formatNumber(supply.remaining)}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Gestionaire</b>
+                            <b>Responsable</b>
                             <span className="float-right">
                                 {supply.supplier.name}
                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"

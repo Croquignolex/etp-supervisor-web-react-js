@@ -15,37 +15,39 @@ function SupplyRecoveriesListComponent({recoveries, recoveriesRequestsList}) {
                 <div className="table-responsive">
                     <table className="table table-hover text-nowrap table-bordered">
                         <thead>
-                            <tr>
-                                <th>DATE</th>
-                                <th>MONTANT</th>
-                                <th>RESPONSABLE</th>
-                            </tr>
+                        <tr>
+                            <th>DATE</th>
+                            <th>MONTANT</th>
+                            <th>RESPONSABLE</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {requestLoading(recoveriesRequestsList)  ? <tr><td colSpan={5}><LoaderComponent /></td></tr> : (
-                                requestFailed(recoveriesRequestsList) ? <tr><td colSpan={5}><ErrorAlertComponent message={recoveriesRequestsList.message} /></td></tr> : (
-                                   <>
-                                       {recoveries.map((item, key) => {
-                                           return (
-                                               <tr key={key}>
-                                                   <td>{dateToString(item.creation)}</td>
-                                                   <td className='text-right'>{formatNumber(item.amount)}</td>
-                                                   <td>{item.collector.name}</td>
-                                               </tr>
-                                           )
-                                       })}
-                                       {recoveries.length === 0 && (
-                                           <tr>
-                                               <td colSpan={3}>
-                                                   <div className='alert custom-active text-center'>
-                                                       Pas de recouvrements d'espèces
-                                                   </div>
-                                               </td>
-                                           </tr>
-                                       )}
-                                   </>
-                                )
-                            )}
+                        {requestLoading(recoveriesRequestsList)  ? <tr><td colSpan={5}><LoaderComponent /></td></tr> : (
+                            requestFailed(recoveriesRequestsList) ? <tr><td colSpan={5}><ErrorAlertComponent message={recoveriesRequestsList.message} /></td></tr> : (
+                                <>
+                                    {recoveries.map((item, key) => {
+                                        return (
+                                            <tr key={key}>
+                                                <td>{dateToString(item.creation)}</td>
+                                                <td className='text-right text-success text-bold'>
+                                                    {formatNumber(item.amount)}
+                                                </td>
+                                                <td>{item.collector.name}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    {recoveries.length === 0 && (
+                                        <tr>
+                                            <td colSpan={3}>
+                                                <div className='alert custom-active text-center'>
+                                                    Pas de recouvrements d'espèces
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </>
+                            )
+                        )}
                         </tbody>
                     </table>
                 </div>
