@@ -18,10 +18,11 @@ export const READ_NOTIFICATIONS_API_PATH = `${API_URL}/read_notifications`;
 export const UNREAD_NOTIFICATIONS_API_PATH = `${API_URL}/unread_notifications`;
 export const DELETE_NOTIFICATIONS_API_PATH = `${API_URL}/delete_notifications`;
 
-// Requests
+// Requests fleets
 export const FLEETS_API_PATH = `${API_URL}/list_demandes_flote_general`;
 export const ALL_FLEETS_API_PATH = `${API_URL}/list_demandes_flote_collector_all`;
 
+// Requests clearances
 export const CLEARANCES_API_PATH = `${API_URL}/list_demandes_destockage`;
 export const ALL_CLEARANCES_API_PATH = `${API_URL}/list_demandes_destockage_all`;
 
@@ -117,6 +118,12 @@ export const EDIT_COMPANY_DOC_API_PATH = `${API_URL}/edit_corporate_folder`;
 // Sims types
 export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
 
+// Supplies
+export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
+
+// Refuels
+export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
+
 // Recoveries
 export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
 export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
@@ -128,17 +135,11 @@ export const NEW_TRANSFERS_API_PATH = `${API_URL}/flottage_rz`;
 export const TRANSFERS_API_PATH = `${API_URL}/list_all_flottage_interne`;
 export const CONFIRM_TRANSFER_API_PATH = `${API_URL}/approuve_flottage_interne`;
 
-// Supplies
-export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
-
 // Network supplies
 export const NEW_NETWORK_SUPPLY_API_PATH = `${API_URL}/flottage_by_rz`;
 export const NETWORK_SUPPLIES_API_PATH = `${API_URL}/list_flottage_rz_by_rz`;
 
-// Refuels
-export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
-export const NEW_REFUEL_API_PATH = `${API_URL}/approvisionnement_etp`;
-
 // Affords
 export const AFFORDS_API_PATH = `${API_URL}/list_approvisionnement`;
+export const NEW_REFUEL_API_PATH = `${API_URL}/approvisionnement_etp`;
 export const CONFIRM_AFFORD_API_PATH = `${API_URL}/approuve_approvisionnement`;
