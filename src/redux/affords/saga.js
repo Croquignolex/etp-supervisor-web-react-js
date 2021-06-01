@@ -79,8 +79,10 @@ export function* emitAddAfford() {
             yield put(storeAddAffordRequestInit());
             const data = {id_puce: sim, montant: amount, id_fournisseur: vendor, type: SUPPLY_BY_DIGITAL_PARTNER};
             const apiResponse = yield call(apiPostRequest, api.NEW_REFUEL_API_PATH, data);
-            // Extract dataF
+            // Extract data
+            console.log({apiResponse})
             const afford = extractAffordData(apiResponse.data);
+            console.log({afford})
             // Fire event to redux
             yield put(storeSetNewAffordData({afford}))
             // Fire event for request
