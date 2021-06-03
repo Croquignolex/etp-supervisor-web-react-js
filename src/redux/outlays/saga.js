@@ -5,19 +5,14 @@ import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/
 import {
     storeOutlaysRequestInit,
     storeOutlaysRequestFailed,
-    storeAddOutlayRequestInit,
     storeOutlaysRequestSucceed,
-    storeAddOutlayRequestFailed,
     storeNextOutlaysRequestInit,
-    storeAddOutlayRequestSucceed,
     storeNextOutlaysRequestFailed,
     storeNextOutlaysRequestSucceed
 } from "../requests/outlays/actions";
 import {
-    EMIT_ADD_OUTLAY,
     EMIT_OUTLAYS_FETCH,
     storeSetOutlaysData,
-    storeSetNewOutlayData,
     storeSetNextOutlaysData,
     EMIT_NEXT_OUTLAYS_FETCH,
     storeStopInfiniteScrollOutlayData
@@ -60,34 +55,6 @@ export function* emitNextOutlaysFetch() {
             // Fire event for request
             yield put(storeNextOutlaysRequestFailed({message}));
             yield put(storeStopInfiniteScrollOutlayData());
-        }
-    });
-}
-
-// Fleets new payment from API
-export function* emitAddOutlay() {
-    yield takeLatest(EMIT_ADD_OUTLAY, function*({amount, collector, receipt}) {
-        try {
-            // Fire event for request
-            yield put(storeAddOutlayRequestInit());
-            const data = new FormData();
-            data.append('id_receveur', collector);
-            data.append('recu', receipt);
-            data.append('montant', amount);
-            const apiResponse = yield call(apiPostRequest, api.NEW_OUTLAY_API_PATH, data);
-            // Extract data
-            const outlay = extractOutlayData(
-                apiResponse.data.gestionnaire,
-                apiResponse.data.recouvreur,
-                apiResponse.data.versement
-            );
-            // Fire event to redux
-            yield put(storeSetNewOutlayData({outlay, alsoInList: true}))
-            // Fire event for request
-            yield put(storeAddOutlayRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeAddOutlayRequestFailed({message}));
         }
     });
 }
@@ -137,7 +104,6 @@ export function extractOutlaysData(apiOutlays) {
 // Combine to export all functions at once
 export default function* sagaOutlays() {
     yield all([
-        fork(emitAddOutlay),
         fork(emitOutlaysFetch),
         fork(emitNextOutlaysFetch),
     ]);

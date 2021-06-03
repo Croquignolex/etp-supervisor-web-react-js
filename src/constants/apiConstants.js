@@ -145,3 +145,14 @@ export const NETWORK_SUPPLIES_API_PATH = `${API_URL}/list_flottage_rz_by_rz`;
 export const AFFORDS_API_PATH = `${API_URL}/list_approvisionnement`;
 export const NEW_REFUEL_API_PATH = `${API_URL}/approvisionnement_etp`;
 export const CONFIRM_AFFORD_API_PATH = `${API_URL}/approuve_approvisionnement`;
+
+// Handovers
+export const HANDOVERS_API_PATH = `${API_URL}/passations_list`;
+
+// Outlay
+export const NEW_OUTLAY_API_PATH = `${API_URL}/decaissement`;
+export const OUTLAYS_API_PATH = `${API_URL}/decaissement_list`;
+
+// Payment
+export const PAYMENTS_API_PATH = `${API_URL}/encaissement_list`;
+export const CONFIRM_PAYMENT_API_PATH = `${API_URL}/approuve_encaissement`;
