@@ -1,12 +1,15 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_PAYMENTS_FETCH,
     storeSetPaymentsData,
-    storeSetNextPaymentsData,
+    EMIT_CONFIRM_PAYMENT,
+    storeUpdatePaymentData,
     EMIT_NEXT_PAYMENTS_FETCH,
+    storeSetNextPaymentsData,
+    storeSetPaymentActionData,
     storeStopInfiniteScrollPaymentData
 } from "./actions";
 import {
@@ -15,7 +18,10 @@ import {
     storePaymentsRequestSucceed,
     storeNextPaymentsRequestInit,
     storeNextPaymentsRequestFailed,
-    storeNextPaymentsRequestSucceed
+    storeConfirmPaymentRequestInit,
+    storeNextPaymentsRequestSucceed,
+    storeConfirmPaymentRequestFailed,
+    storeConfirmPaymentRequestSucceed
 } from "../requests/payments/actions";
 
 // Fetch payments from API
@@ -55,6 +61,29 @@ export function* emitNextPaymentsFetch() {
             // Fire event for request
             yield put(storeNextPaymentsRequestFailed({message}));
             yield put(storeStopInfiniteScrollPaymentData());
+        }
+    });
+}
+
+// Confirm payment from API
+export function* emitConfirmPayment() {
+    yield takeLatest(EMIT_CONFIRM_PAYMENT, function*({id}) {
+        try {
+            // Fire event at redux to toggle action loader
+            yield put(storeSetPaymentActionData({id}));
+            // Fire event for request
+            yield put(storeConfirmPaymentRequestInit());
+            const apiResponse = yield call(apiPostRequest, `${api.CONFIRM_PAYMENT_API_PATH}/${id}`);
+            // Fire event to redux
+            yield put(storeUpdatePaymentData({id}));
+            // Fire event at redux to toggle action loader
+            yield put(storeSetPaymentActionData({id}));
+            // Fire event for request
+            yield put(storeConfirmPaymentRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSetPaymentActionData({id}));
+            yield put(storeConfirmPaymentRequestFailed({message}));
         }
     });
 }
@@ -105,6 +134,7 @@ export function extractPaymentsData(apiPayments) {
 export default function* sagaPayments() {
     yield all([
         fork(emitPaymentsFetch),
+        fork(emitConfirmPayment),
         fork(emitNextPaymentsFetch),
     ]);
 }
