@@ -43,9 +43,9 @@ export const RECOVERIES_CASH_PAGE = "Recouvrements d'espèces";
 
 // Checkout
 export const CHECKOUT = 'Caisse';
-export const CHECKOUT_OUTlAYS_PAGE = 'Décaissements';
-export const CHECKOUT_PAYMENTS_PAGE = 'Encaissements';
-export const HANDING_OVER_PAGE = 'Passations des service';
+export const CHECKOUT_HANDING_OVER_PAGE = 'Passations de service';
+export const CHECKOUT_INTERNAL_OUTLAYS_PAGE = 'Décaissements internes';
+export const CHECKOUT_INTERNAL_PAYMENTS_PAGE = 'Encaissements internes';
 
 // Requests
 export const REQUESTS = 'Demandes';

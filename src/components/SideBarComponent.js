@@ -20,6 +20,7 @@ function SideBarComponent({user, pathname}) {
             buildRequestsMenu(),
             buildOperationsMenu(),
             buildRecoveriesMenu(),
+            buildCheckoutMenu(),
             buildUsersMenu(),
             buildSimsMenu(),
             buildCompaniesMenu(),
@@ -160,6 +161,19 @@ function buildRecoveriesMenu() {
             {name: page.RECOVERIES_FLEET_PAGE, path: path.RECOVERIES_FLEETS_PAGE_PATH},
         ]
     };
+}
+
+// Build checkout menu
+function buildCheckoutMenu() {
+    return {
+        name: page.CHECKOUT,
+        icon: 'fa fa-coins',
+        sub: [
+            {name: page.CHECKOUT_INTERNAL_OUTLAYS_PAGE, path: path.CHECKOUT_INTERNAL_OUTLAYS_PAGE_PATH},
+            {name: page.CHECKOUT_INTERNAL_PAYMENTS_PAGE, path: path.CHECKOUT_INTERNAL_PAYMENTS_PAGE_PATH},
+            {name: page.CHECKOUT_HANDING_OVER_PAGE, path: path.CHECKOUT_HANDING_OVER_PAGE_PATH},
+        ]
+    }
 }
 
 // Build users menu
