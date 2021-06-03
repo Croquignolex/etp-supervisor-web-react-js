@@ -5,6 +5,7 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 const initialState = {
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
+    apply: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
