@@ -1,7 +1,7 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_PAYMENTS_FETCH,
     storeSetPaymentsData,
@@ -62,7 +62,7 @@ export function* emitNextPaymentsFetch() {
 // Extract payment data
 function extractPaymentData(apiManager, apiCollector, apiPayment) {
     let payment = {
-        id: '',  amount: '', creation: '', receipt: '',
+        id: '',  amount: '', creation: '', status: '',
 
         manager: {id: '', name: ''},
         collector: {id: '', name: ''},
@@ -80,10 +80,10 @@ function extractPaymentData(apiManager, apiCollector, apiPayment) {
         };
     }
     if(apiPayment) {
+        payment.status = apiPayment.statut;
         payment.amount = apiPayment.montant;
         payment.id = apiPayment.id.toString();
         payment.creation = apiPayment.created_at;
-        payment.receipt = getFileFromServer(apiPayment.recu);
     }
     return payment;
 }

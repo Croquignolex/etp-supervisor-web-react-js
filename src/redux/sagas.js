@@ -12,6 +12,7 @@ import vendors from './vendors/saga';
 import settings from './settings/saga';
 import managers from './managers/saga';
 import supplies from './supplies/saga';
+import payments from './payments/saga';
 import operators from './operators/saga';
 import transfers from './transfers/saga';
 import companies from './companies/saga';
@@ -39,6 +40,7 @@ export default function* sagas() {
         vendors(),
         supplies(),
         managers(),
+        payments(),
         settings(),
         companies(),
         handovers(),
