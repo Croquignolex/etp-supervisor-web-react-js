@@ -6,15 +6,15 @@ import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddAfford} from "../../redux/affords/actions";
-import {emitMastersSimsFetch} from "../../redux/sims/actions";
+import {emitAllMasterSimsFetch} from "../../redux/sims/actions";
 import {emitAllVendorsFetch} from "../../redux/vendors/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {storeAddAffordRequestReset} from "../../redux/requests/affords/actions";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAllVendorsRequestReset} from "../../redux/requests/vendors/actions";
+import {storeAllMasterSimsRequestReset} from "../../redux/requests/sims/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -26,8 +26,8 @@ function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendors
 
     // Local effects
     useEffect(() => {
-        dispatch(emitMastersSimsFetch());
         dispatch(emitAllVendorsFetch());
+        dispatch(emitAllMasterSimsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -72,9 +72,9 @@ function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendors
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeSimsRequestReset());
         dispatch(storeAddAffordRequestReset());
         dispatch(storeAllVendorsRequestReset());
+        dispatch(storeAllMasterSimsRequestReset());
     };
 
     // Trigger add supply form submit

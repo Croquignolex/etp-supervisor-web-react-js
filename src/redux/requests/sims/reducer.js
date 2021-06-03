@@ -9,6 +9,7 @@ const initialState = {
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
     edit: {failed: false, loading: false, succeeded: false, message: ""},
+    master: {failed: false, loading: false, succeeded: false, message: ""},
     internal: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
