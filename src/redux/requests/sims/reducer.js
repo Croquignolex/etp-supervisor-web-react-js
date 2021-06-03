@@ -118,6 +118,23 @@ function reduce(state = initialState, action) {
         case actions.STORE_EDIT_SIM_REQUEST_RESET:
             nextState = {...state, edit: initialState.edit};
             return nextState || state;
+        // ======================================================== All master sims
+        // Resolve event to set all master sims init request store data
+        case actions.STORE_ALL_MASTER_SIMS_REQUEST_INIT:
+            nextState = {...state, master: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set all master sims failed request store data
+        case actions.STORE_ALL_MASTER_SIMS_REQUEST_FAILED:
+            nextState = {...state, master: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set all master sims succeeded request store data
+        case actions.STORE_ALL_MASTER_SIMS_REQUEST_SUCCEEDED:
+            nextState = {...state, master: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set all master sims reset request store data
+        case actions.STORE_ALL_MASTER_SIMS_REQUEST_RESET:
+            nextState = {...state, master: initialState.master};
+            return nextState || state;
         // ======================================================== All internal sims
         // Resolve event to set all internal sims init request store data
         case actions.STORE_ALL_INTERNAL_SIMS_REQUEST_INIT:

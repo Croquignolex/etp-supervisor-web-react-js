@@ -19,6 +19,7 @@ import {
     EMIT_MASTERS_SIMS_FETCH,
     EMIT_INTERNAL_SIMS_FETCH,
     EMIT_RESOURCES_SIMS_FETCH,
+    EMIT_ALL_MASTER_SIMS_FETCH,
     EMIT_COLLECTORS_SIMS_FETCH,
     EMIT_NEXT_AGENTS_SIMS_FETCH,
     EMIT_NEXT_FLEETS_SIMS_FETCH,
@@ -46,7 +47,10 @@ import {
     storeAllSimsRequestSucceed,
     storeEditSimRequestSucceed,
     storeNextSimsRequestSucceed,
+    storeAllMasterSimsRequestInit,
     storeAllInternalSimsRequestInit,
+    storeAllMasterSimsRequestFailed,
+    storeAllMasterSimsRequestSucceed,
     storeAllInternalSimsRequestFailed,
     storeAllInternalSimsRequestSucceed
 } from "../requests/sims/actions";
@@ -148,6 +152,27 @@ export function* emitMastersSimsFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeSimsRequestFailed({message}));
+        }
+    });
+}
+
+
+// Fetch all master sims from API
+export function* emitAllMasterSimsFetch() {
+    yield takeLatest(EMIT_ALL_MASTER_SIMS_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeAllMasterSimsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ALL_MASTERS_SIMS_API_PATH}?page=1`);
+            // Extract data
+            const sims = extractSimsData(apiResponse.data.puces);
+            // Fire event to redux
+            yield put(storeSetSimsData({sims, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeAllMasterSimsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAllMasterSimsRequestFailed({message}));
         }
     });
 }
@@ -541,6 +566,7 @@ export default function* sagaSims() {
         fork(emitFleetsSimsFetch),
         fork(emitAgentsSimsFetch),
         fork(emitMastersSimsFetch),
+        fork(emitAllMasterSimsFetch),
         fork(emitResourcesSimsFetch),
         fork(emitNextFleetsSimsFetch),
         fork(emitCollectorsSimsFetch),
