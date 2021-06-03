@@ -15,7 +15,9 @@ import {
     storeSetNextSimsData,
     EMIT_FLEETS_SIMS_FETCH,
     EMIT_AGENTS_SIMS_FETCH,
+    EMIT_SEARCH_SIMS_FETCH,
     EMIT_MASTERS_SIMS_FETCH,
+    EMIT_INTERNAL_SIMS_FETCH,
     EMIT_RESOURCES_SIMS_FETCH,
     EMIT_COLLECTORS_SIMS_FETCH,
     EMIT_NEXT_AGENTS_SIMS_FETCH,
@@ -23,7 +25,7 @@ import {
     EMIT_NEXT_MASTERS_SIMS_FETCH,
     storeStopInfiniteScrollSimData,
     EMIT_NEXT_RESOURCES_SIMS_FETCH,
-    EMIT_NEXT_COLLECTORS_SIMS_FETCH, EMIT_SEARCH_SIMS_FETCH
+    EMIT_NEXT_COLLECTORS_SIMS_FETCH
 } from "./actions";
 import {
     storeSimsRequestInit,
@@ -43,7 +45,10 @@ import {
     storeNextSimsRequestFailed,
     storeAllSimsRequestSucceed,
     storeEditSimRequestSucceed,
-    storeNextSimsRequestSucceed
+    storeNextSimsRequestSucceed,
+    storeAllInternalSimsRequestInit,
+    storeAllInternalSimsRequestFailed,
+    storeAllInternalSimsRequestSucceed
 } from "../requests/sims/actions";
 
 // Fetch all sims from API
@@ -62,6 +67,26 @@ export function* emitAllSimsFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeAllSimsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch internal sims from API
+export function* emitAllInternalSimsFetch() {
+    yield takeLatest(EMIT_INTERNAL_SIMS_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeAllInternalSimsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.All_INTERNAL_SIMS_API_PATH}?page=1`);
+            // Extract data
+            const sims = extractSimsData(apiResponse.data.puces);
+            // Fire event to redux
+            yield put(storeSetSimsData({sims, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeAllInternalSimsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAllInternalSimsRequestFailed({message}));
         }
     });
 }
@@ -520,6 +545,7 @@ export default function* sagaSims() {
         fork(emitNextFleetsSimsFetch),
         fork(emitCollectorsSimsFetch),
         fork(emitNextAgentsSimsFetch),
+        fork(emitAllInternalSimsFetch),
         fork(emitNextMastersSimsFetch),
         fork(emitNextResourcesSimsFetch),
         fork(emitNextCollectorsSimsFetch),

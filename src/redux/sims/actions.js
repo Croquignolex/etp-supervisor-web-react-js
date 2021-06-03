@@ -17,6 +17,7 @@ export const EMIT_FLEETS_SIMS_FETCH = 'EMIT_FLEETS_SIMS_FETCH';
 export const EMIT_AGENTS_SIMS_FETCH = 'EMIT_AGENTS_SIMS_FETCH';
 export const EMIT_SEARCH_SIMS_FETCH = 'EMIT_SEARCH_SIMS_FETCH';
 export const EMIT_MASTERS_SIMS_FETCH = 'EMIT_MASTERS_SIMS_FETCH';
+export const EMIT_INTERNAL_SIMS_FETCH = 'EMIT_INTERNAL_SIMS_FETCH';
 export const EMIT_RESOURCES_SIMS_FETCH = 'EMIT_RESOURCES_SIMS_FETCH';
 export const EMIT_COLLECTORS_SIMS_FETCH = 'EMIT_COLLECTORS_SIMS_FETCH';
 export const EMIT_NEXT_FLEETS_SIMS_FETCH = 'EMIT_NEXT_FLEETS_SIMS_FETCH';
@@ -166,4 +167,9 @@ export const emitUpdateSim = ({id, name, description}) => ({
 export const emitSearchSimsFetch = ({needle}) => ({
     needle,
     type: EMIT_SEARCH_SIMS_FETCH
+});
+
+// Emit all internal sims fetch
+export const emitAllInternalSimsFetch = () => ({
+    type: EMIT_INTERNAL_SIMS_FETCH
 });

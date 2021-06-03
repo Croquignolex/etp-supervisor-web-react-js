@@ -9,6 +9,7 @@ const initialState = {
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
     edit: {failed: false, loading: false, succeeded: false, message: ""},
+    internal: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -116,6 +117,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set edit sim reset request store data
         case actions.STORE_EDIT_SIM_REQUEST_RESET:
             nextState = {...state, edit: initialState.edit};
+            return nextState || state;
+        // ======================================================== All internal sims
+        // Resolve event to set all internal sims init request store data
+        case actions.STORE_ALL_INTERNAL_SIMS_REQUEST_INIT:
+            nextState = {...state, internal: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set all internal sims failed request store data
+        case actions.STORE_ALL_INTERNAL_SIMS_REQUEST_FAILED:
+            nextState = {...state, internal: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set all internal sims succeeded request store data
+        case actions.STORE_ALL_INTERNAL_SIMS_REQUEST_SUCCEEDED:
+            nextState = {...state, internal: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set all internal sims reset request store data
+        case actions.STORE_ALL_INTERNAL_SIMS_REQUEST_RESET:
+            nextState = {...state, internal: initialState.internal};
             return nextState || state;
         // ========================================================
         // Unknown action
