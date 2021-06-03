@@ -5,7 +5,6 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 const initialState = {
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
-    improve: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -45,23 +44,6 @@ function reduce(state = initialState, action) {
         // Resolve event to set next handovers reset request store data
         case actions.STORE_NEXT_HANDOVERS_REQUEST_RESET:
             nextState = {...state, next: initialState.next};
-            return nextState || state;
-        // ======================================================== Fleet supply
-        // Resolve event to set improve handover init request store data
-        case actions.STORE_IMPROVE_HANDOVER_REQUEST_INIT:
-            nextState = {...state, improve: requestInitValue()};
-            return nextState || state;
-        // Resolve event to set improve handover failed request store data
-        case actions.STORE_IMPROVE_HANDOVER_REQUEST_FAILED:
-            nextState = {...state, improve: requestFailedValue(action.message)};
-            return nextState || state;
-        // Resolve event to set improve handover succeeded request store data
-        case actions.STORE_IMPROVE_HANDOVER_REQUEST_SUCCEEDED:
-            nextState = {...state, improve: requestSucceededValue(action.message)};
-            return nextState || state;
-        // Resolve event to set improve handover reset request store data
-        case actions.STORE_IMPROVE_HANDOVER_REQUEST_RESET:
-            nextState = {...state, improve: initialState.improve};
             return nextState || state;
         // ========================================================
         // Unknown action

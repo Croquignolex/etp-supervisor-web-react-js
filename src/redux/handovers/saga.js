@@ -1,12 +1,10 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_HANDOVERS_FETCH,
     storeSetHandoversData,
-    EMIT_IMPROVE_HANDOVER,
-    storeSetNewHandoverData,
     storeSetNextHandoversData,
     EMIT_NEXT_HANDOVERS_FETCH,
     storeStopInfiniteScrollHandoverData
@@ -16,13 +14,9 @@ import {
     storeHandoversRequestFailed,
     storeHandoversRequestSucceed,
     storeNextHandoversRequestInit,
-    storeImproveHandoverRequestInit,
     storeNextHandoversRequestFailed,
     storeNextHandoversRequestSucceed,
-    storeImproveHandoverRequestFailed,
-    storeImproveHandoverRequestSucceed
 } from "../requests/handovers/actions";
-import {storeSetUserBalanceData} from "../user/actions";
 
 // Fetch handovers from API
 export function* emitHandoversFetch() {
@@ -61,34 +55,6 @@ export function* emitNextHandoversFetch() {
             // Fire event for request
             yield put(storeNextHandoversRequestFailed({message}));
             yield put(storeStopInfiniteScrollHandoverData());
-        }
-    });
-}
-
-// Fleets improve handover from API
-export function* emitImproveHandover() {
-    yield takeLatest(EMIT_IMPROVE_HANDOVER, function*({balance, amount, receiver}) {
-        try {
-            // Fire event for request
-            yield put(storeImproveHandoverRequestInit());
-            const data = new FormData();
-            data.append('id_receveur', receiver);
-            data.append('montant', amount);
-            const apiResponse = yield call(apiPostRequest, api.NEW_HANDOVER_API_PATH, data);
-            // Extract data
-            const handover = extractHandoverData(
-                apiResponse.data.emetteur,
-                apiResponse.data.recepteur,
-                apiResponse.data.versement
-            );
-            yield put(storeSetUserBalanceData({balance: balance - amount}));
-            // Fire event to redux
-            yield put(storeSetNewHandoverData({handover, alsoInList: true}))
-            // Fire event for request
-            yield put(storeImproveHandoverRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeImproveHandoverRequestFailed({message}));
         }
     });
 }
@@ -138,7 +104,6 @@ export function extractHandoversData(apiHandovers) {
 export default function* sagaHandovers() {
     yield all([
         fork(emitHandoversFetch),
-        fork(emitImproveHandover),
         fork(emitNextHandoversFetch),
     ]);
 }
