@@ -5,32 +5,22 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
-import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import FormModalComponent from "../../components/modals/FormModalComponent";
 import {CHECKOUT_INTERNAL_PAYMENTS_PAGE} from "../../constants/pageNameConstants";
 import {emitNextPaymentsFetch, emitPaymentsFetch} from "../../redux/payments/actions";
 import CheckoutPaymentsCardsComponent from "../../components/checkout/CheckoutPaymentsCardsComponent";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextPaymentsRequestReset, storePaymentsRequestReset} from "../../redux/requests/payments/actions";
-import CheckoutPaymentsAddPaymentContainer from "../../containers/checkout/CheckoutPaymentsAddPaymentContainer";
-import {
-    dateToString,
-    needleSearch,
-    requestFailed,
-    requestLoading,
-} from "../../functions/generalFunctions";
 
 // Component
 function CheckoutPaymentsPage({payments, paymentsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [paymentModal, setPaymentModal] = useState({show: false, header: 'EFFECTUER UN ENCAISSEMENT'});
 
     // Local effects
     useEffect(() => {
         dispatch(emitPaymentsFetch());
-        dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -51,16 +41,6 @@ function CheckoutPaymentsPage({payments, paymentsRequests, hasMoreData, page, di
     // Fetch next payments data to enhance infinite scroll
     const handleNextPaymentsData = () => {
         dispatch(emitNextPaymentsFetch({page}));
-    }
-
-    // Show payment modal form
-    const handlePaymentModalShow = (item) => {
-        setPaymentModal({...paymentModal, item, show: true})
-    }
-
-    // Hide payment modal form
-    const handlePaymentModalHide = () => {
-        setPaymentModal({...paymentModal, show: false})
     }
 
     // Render
@@ -84,12 +64,6 @@ function CheckoutPaymentsPage({payments, paymentsRequests, hasMoreData, page, di
                                             {/* Error message */}
                                             {requestFailed(paymentsRequests.list) && <ErrorAlertComponent message={paymentsRequests.list.message} />}
                                             {requestFailed(paymentsRequests.next) && <ErrorAlertComponent message={paymentsRequests.next.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handlePaymentModalShow}
-                                            >
-                                                <i className="fa fa-plus" /> Effectuer un encaissement
-                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <CheckoutPaymentsCardsComponent payments={searchEngine(payments, needle)} />
@@ -112,10 +86,6 @@ function CheckoutPaymentsPage({payments, paymentsRequests, hasMoreData, page, di
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={paymentModal} handleClose={handlePaymentModalHide}>
-                <CheckoutPaymentsAddPaymentContainer handleClose={handlePaymentModalHide} />
-            </FormModalComponent>
         </>
     )
 }
