@@ -62,7 +62,7 @@ export function* emitNextHandoversFetch() {
 // Extract handover data
 function extractHandoverData(apiSender, apiReceiver, apiHandover) {
     let handover = {
-        id: '', amount: '', creation: '',
+        id: '', amount: '', creation: '', status: '',
 
         sender: {id: '', name: ''},
         receiver: {id: '', name: ''},
@@ -80,6 +80,7 @@ function extractHandoverData(apiSender, apiReceiver, apiHandover) {
         };
     }
     if(apiHandover) {
+        handover.status = apiHandover.statut;
         handover.amount = apiHandover.montant;
         handover.id = apiHandover.id.toString();
         handover.creation = apiHandover.created_at;
