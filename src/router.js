@@ -53,8 +53,8 @@ function AppRoutes({history}) {
                 <RestrictedRouteContainer exact path={path.COMPANIES_PAGE_PATH} component={asyncComponent(() => import('./containers/companies/CompaniesPageContainer'))} />
                 {/* Checkouts */}
                 <RestrictedRouteContainer exact path={path.CHECKOUT_HANDING_OVER_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutHandoversPageContainer'))} />
-                <RestrictedRouteContainer exact path={path.CHECKOUT_INTERNAL_OUTLAYS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutOutlaysPageContainer'))} />
-                <RestrictedRouteContainer exact path={path.CHECKOUT_INTERNAL_PAYMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutPaymentsPageContainer'))} />
+                {/*<RestrictedRouteContainer exact path={path.CHECKOUT_INTERNAL_OUTLAYS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutOutlaysPageContainer'))} />*/}
+                {/*<RestrictedRouteContainer exact path={path.CHECKOUT_INTERNAL_PAYMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutPaymentsPageContainer'))} />*/}
                 {/* Network */}
                 <RestrictedRouteContainer exact path={path.NETWORK_FLEETS_PAGE_PATH} component={asyncComponent(() => import('./containers/network/NetworkFleetsPageContainer'))} />
                 {/* 404 page */}

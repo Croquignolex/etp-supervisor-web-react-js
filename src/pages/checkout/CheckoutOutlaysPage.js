@@ -7,9 +7,9 @@ import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
-import {CHECKOUT_OUTlAYS_PAGE} from "../../constants/pageNameConstants";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
+import {CHECKOUT_INTERNAL_OUTLAYS_PAGE} from "../../constants/pageNameConstants";
 import {emitNextOutlaysFetch, emitOutlaysFetch} from "../../redux/outlays/actions";
 import CheckoutOutlaysCardsComponent from "../../components/checkout/CheckoutOutlaysCardsComponent";
 import {storeNextOutlaysRequestReset, storeOutlaysRequestReset} from "../../redux/requests/outlays/actions";
@@ -68,7 +68,7 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={CHECKOUT_OUTlAYS_PAGE} icon={'fa fa-arrow-circle-down'} />
+                    <HeaderComponent title={CHECKOUT_INTERNAL_OUTLAYS_PAGE} icon={'fa fa-arrow-circle-down'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
