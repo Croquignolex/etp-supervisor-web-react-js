@@ -12,14 +12,9 @@ import FormModalComponent from "../../components/modals/FormModalComponent";
 import {CHECKOUT_INTERNAL_OUTLAYS_PAGE} from "../../constants/pageNameConstants";
 import {emitNextOutlaysFetch, emitOutlaysFetch} from "../../redux/outlays/actions";
 import CheckoutOutlaysCardsComponent from "../../components/checkout/CheckoutOutlaysCardsComponent";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextOutlaysRequestReset, storeOutlaysRequestReset} from "../../redux/requests/outlays/actions";
 import CheckoutOutlaysAddOutlayContainer from "../../containers/checkout/CheckoutOutlaysAddOutlayContainer";
-import {
-    dateToString,
-    needleSearch,
-    requestFailed,
-    requestLoading,
-} from "../../functions/generalFunctions";
 
 // Component
 function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispatch, location}) {
