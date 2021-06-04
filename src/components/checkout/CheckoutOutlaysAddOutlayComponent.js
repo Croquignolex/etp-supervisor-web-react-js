@@ -7,27 +7,27 @@ import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddOutlay} from "../../redux/outlays/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
+import {emitAllManagersFetch} from "../../redux/managers/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
 import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
-import {emitAllSupervisorsFetch} from "../../redux/supervisors/actions";
 import {storeAddOutlayRequestReset} from "../../redux/requests/outlays/actions";
+import {storeAllManagersRequestReset} from "../../redux/requests/managers/actions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
-import {storeAllSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, dispatch, handleClose,
-                                               allCollectorsRequests, allSupervisorsRequests}) {
+function CheckoutOutlaysAddOutlayComponent({request, collectors, managers, dispatch, handleClose,
+                                               allCollectorsRequests, allManagersRequests}) {
     // Local state
     const [amount, setAmount] = useState(DEFAULT_FORM_DATA);
     const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllManagersFetch());
         dispatch(emitAllCollectorsFetch());
-        dispatch(emitAllSupervisorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -57,14 +57,14 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, di
 
     // Build select options
     const collectorSelectOptions = useMemo(() => {
-        return dataToArrayForSelect([...supervisors, ...collectors])
-    }, [collectors, supervisors]);
+        return dataToArrayForSelect([...managers, ...collectors])
+    }, [collectors, managers]);
 
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAddOutlayRequestReset());
+        dispatch(storeAllManagersRequestReset());
         dispatch(storeAllCollectorsRequestReset());
-        dispatch(storeAllSupervisorsRequestReset());
     };
 
     // Trigger add supply form submit
@@ -91,8 +91,8 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, di
     return (
         <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
+            {requestFailed(allManagersRequests) && <ErrorAlertComponent message={allManagersRequests.message} />}
             {requestFailed(allCollectorsRequests) && <ErrorAlertComponent message={allCollectorsRequests.message} />}
-            {requestFailed(allSupervisorsRequests) && <ErrorAlertComponent message={allSupervisorsRequests.message} />}
             <form onSubmit={handleSubmit}>
                 <div className='row'>
                     <div className='col-sm-6'>
@@ -104,7 +104,7 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, di
                                          handleInput={handleCollectorSelect}
                                          requestProcessing={
                                              requestLoading(allCollectorsRequests) ||
-                                             requestLoading(allCollectorsRequests)
+                                             requestLoading(allManagersRequests)
                                          }
                         />
                     </div>
@@ -128,8 +128,10 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, di
 CheckoutOutlaysAddOutlayComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
+    managers: PropTypes.array.isRequired,
     handleClose: PropTypes.func.isRequired,
     collectors: PropTypes.array.isRequired,
+    allManagersRequests: PropTypes.object.isRequired,
     allCollectorsRequests: PropTypes.object.isRequired,
 };
 
