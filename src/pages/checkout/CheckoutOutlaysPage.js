@@ -5,7 +5,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
-import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
@@ -20,12 +19,11 @@ import CheckoutOutlaysAddOutlayContainer from "../../containers/checkout/Checkou
 function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [outlayModal, setOutlayModal] = useState({show: false, header: 'EFFECTUER UN DECAISSEMENT'});
+    const [outlayModal, setOutlayModal] = useState({show: false, header: "DECAISSEMENT D'ESPECES VERS UN RZ"});
 
     // Local effects
     useEffect(() => {
         dispatch(emitOutlaysFetch());
-        dispatch(emitAllCollectorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -63,7 +61,7 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={CHECKOUT_INTERNAL_OUTLAYS_PAGE} icon={'fa fa-arrow-circle-down'} />
+                    <HeaderComponent title={CHECKOUT_INTERNAL_OUTLAYS_PAGE} icon={'fa fa-arrow-circle-up'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -83,7 +81,7 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
                                                     className="btn btn-theme mb-2"
                                                     onClick={handleOutlayModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Effectuer un décaissement
+                                                <i className="fa fa-coins" /> Décaissement interne
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)

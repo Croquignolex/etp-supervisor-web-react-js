@@ -6,29 +6,28 @@ import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddOutlay} from "../../redux/outlays/actions";
-import FileDocumentComponent from "../form/FileDocumentComponent";
+import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
+import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
+import {emitAllSupervisorsFetch} from "../../redux/supervisors/actions";
 import {storeAddOutlayRequestReset} from "../../redux/requests/outlays/actions";
-import {requiredChecker, requiredFileChecker} from "../../functions/checkerFunctions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
-import {
-    applySuccess,
-    requestFailed,
-    requestLoading,
-    requestSucceeded
-} from "../../functions/generalFunctions";
+import {storeAllSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
+import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function CheckoutOutlaysAddOutlayComponent({request, collectors, allCollectorsRequests, dispatch, handleClose}) {
+function CheckoutOutlaysAddOutlayComponent({request, collectors, supervisors, dispatch, handleClose,
+                                               allCollectorsRequests, allSupervisorsRequests}) {
     // Local state
-    const [doc, setDoc] = useState(DEFAULT_FORM_DATA);
     const [amount, setAmount] = useState(DEFAULT_FORM_DATA);
     const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllCollectorsFetch());
+        dispatch(emitAllSupervisorsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -56,38 +55,31 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, allCollectorsRe
         setAmount({...amount, isValid: true, data})
     }
 
-    const handleFileInput = (data) => {
-        shouldResetErrorData();
-        setDoc({...doc, isValid: true, data})
-    }
-
     // Build select options
     const collectorSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(collectors)
-    }, [collectors]);
+        return dataToArrayForSelect([...supervisors, ...collectors])
+    }, [collectors, supervisors]);
 
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAddOutlayRequestReset());
         dispatch(storeAllCollectorsRequestReset());
+        dispatch(storeAllSupervisorsRequestReset());
     };
 
     // Trigger add supply form submit
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
-        const _doc = requiredFileChecker(doc);
         const _amount = requiredChecker(amount);
         const _collector = requiredChecker(collector);
         // Set value
-        setDoc(_doc);
         setAmount(_amount);
         setCollector(_collector);
-        const validationOK = (_amount.isValid && _collector.isValid && _doc.isValid);
+        const validationOK = (_amount.isValid && _collector.isValid);
         // Check
         if(validationOK) {
             dispatch(emitAddOutlay({
-                receipt: _doc.data,
                 amount: _amount.data,
                 collector: _collector.data,
             }));
@@ -100,16 +92,20 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, allCollectorsRe
         <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             {requestFailed(allCollectorsRequests) && <ErrorAlertComponent message={allCollectorsRequests.message} />}
+            {requestFailed(allSupervisorsRequests) && <ErrorAlertComponent message={allSupervisorsRequests.message} />}
             <form onSubmit={handleSubmit}>
                 <div className='row'>
                     <div className='col-sm-6'>
                         <SelectComponent input={collector}
+                                         label='Recepteur'
                                          id='inputSimManager'
-                                         label='Responsable de zone'
-                                         title='Choisir un responsable'
+                                         title='Choisir le recepteur'
                                          options={collectorSelectOptions}
                                          handleInput={handleCollectorSelect}
-                                         requestProcessing={requestLoading(allCollectorsRequests)}
+                                         requestProcessing={
+                                             requestLoading(allCollectorsRequests) ||
+                                             requestLoading(allCollectorsRequests)
+                                         }
                         />
                     </div>
                     <div className='col-sm-6'>
@@ -117,15 +113,6 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, allCollectorsRe
                                          id='inputAmount'
                                          label='Montant à décaisser'
                                          handleInput={handleAmountInput}
-                        />
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col'>
-                        <FileDocumentComponent id='file'
-                                               input={doc}
-                                               label='Réçus'
-                                               handleInput={handleFileInput}
                         />
                     </div>
                 </div>
