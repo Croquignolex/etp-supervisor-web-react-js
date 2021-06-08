@@ -32,6 +32,12 @@ function CheckoutExpensesCardsComponent({expenses}) {
                                             </span>
                                         </li>
                                         <li className="list-group-item">
+                                            <b>Responsable</b>
+                                            <span className="float-right">
+                                                {item.manager.name}
+                                            </span>
+                                        </li>
+                                        <li className="list-group-item">
                                             <b>Motif</b>
                                             <span className="float-right">{item.reason}</span>
                                         </li>
