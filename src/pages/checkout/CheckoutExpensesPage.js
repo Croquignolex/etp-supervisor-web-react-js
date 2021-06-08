@@ -7,19 +7,16 @@ import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import FormModalComponent from "../../components/modals/FormModalComponent";
 import {CHECKOUT_EXTERNAL_OUTLAYS_PAGE} from "../../constants/pageNameConstants";
 import {emitNextExpensesFetch, emitExpensesFetch} from "../../redux/expenses/actions";
 import CheckoutExpensesCardsComponent from "../../components/checkout/CheckoutExpensesCardsComponent";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextExpensesRequestReset, storeExpensesRequestReset} from "../../redux/requests/expenses/actions";
-import CheckoutExpensesAddExpenseContainer from "../../containers/checkout/CheckoutExpensesAddExpenseContainer";
 
 // Component
 function CheckoutExpensesPage({expenses, expensesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [expenseModal, setExpenseModal] = useState({show: false, header: "DECAISSEMENT D'ESPECES EXTERNE"});
 
     // Local effects
     useEffect(() => {
@@ -46,16 +43,6 @@ function CheckoutExpensesPage({expenses, expensesRequests, hasMoreData, page, di
         dispatch(emitNextExpensesFetch({page}));
     }
 
-    // Show expense modal form
-    const handleExpenseModalShow = (item) => {
-        setExpenseModal({...expenseModal, item, show: true})
-    }
-
-    // Hide expense modal form
-    const handleExpenseModalHide = () => {
-        setExpenseModal({...expenseModal, show: false})
-    }
-
     // Render
     return (
         <>
@@ -77,12 +64,6 @@ function CheckoutExpensesPage({expenses, expensesRequests, hasMoreData, page, di
                                             {/* Error message */}
                                             {requestFailed(expensesRequests.list) && <ErrorAlertComponent message={expensesRequests.list.message} />}
                                             {requestFailed(expensesRequests.next) && <ErrorAlertComponent message={expensesRequests.next.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handleExpenseModalShow}
-                                            >
-                                                <i className="fa fa-coins" /> Décaissement externe
-                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <CheckoutExpensesCardsComponent expenses={searchEngine(expenses, needle)} />
@@ -105,10 +86,6 @@ function CheckoutExpensesPage({expenses, expensesRequests, hasMoreData, page, di
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={expenseModal} handleClose={handleExpenseModalHide}>
-                <CheckoutExpensesAddExpenseContainer handleClose={handleExpenseModalHide} />
-            </FormModalComponent>
         </>
     )
 }

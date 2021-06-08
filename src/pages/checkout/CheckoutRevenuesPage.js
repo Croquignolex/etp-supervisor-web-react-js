@@ -7,19 +7,16 @@ import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import FormModalComponent from "../../components/modals/FormModalComponent";
 import {CHECKOUT_EXTERNAL_PAYMENTS_PAGE} from "../../constants/pageNameConstants";
 import {emitNextRevenuesFetch, emitRevenuesFetch} from "../../redux/revenues/actions";
 import CheckoutRevenuesCardsComponent from "../../components/checkout/CheckoutRevenuesCardsComponent";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeNextRevenuesRequestReset, storeRevenuesRequestReset} from "../../redux/requests/revenues/actions";
-import CheckoutRevenuesAddRevenueContainer from "../../containers/checkout/CheckoutRevenuesAddRevenueContainer";
 
 // Component
 function CheckoutRevenuesPage({revenues, revenuesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [revenueModal, setRevenueModal] = useState({show: false, header: "ENCAISSEMENT D'ESPECES EXTERNE"});
 
     // Local effects
     useEffect(() => {
@@ -46,16 +43,6 @@ function CheckoutRevenuesPage({revenues, revenuesRequests, hasMoreData, page, di
         dispatch(emitNextRevenuesFetch({page}));
     }
 
-    // Show revenue modal form
-    const handleRevenueModalShow = (item) => {
-        setRevenueModal({...revenueModal, item, show: true})
-    }
-
-    // Hide revenue modal form
-    const handleRevenueModalHide = () => {
-        setRevenueModal({...revenueModal, show: false})
-    }
-
     // Render
     return (
         <>
@@ -77,12 +64,6 @@ function CheckoutRevenuesPage({revenues, revenuesRequests, hasMoreData, page, di
                                             {/* Error message */}
                                             {requestFailed(revenuesRequests.list) && <ErrorAlertComponent message={revenuesRequests.list.message} />}
                                             {requestFailed(revenuesRequests.next) && <ErrorAlertComponent message={revenuesRequests.next.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handleRevenueModalShow}
-                                            >
-                                                <i className="fa fa-coins" /> Encaissement externe
-                                            </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <CheckoutRevenuesCardsComponent revenues={searchEngine(revenues, needle)} />
@@ -105,10 +86,6 @@ function CheckoutRevenuesPage({revenues, revenuesRequests, hasMoreData, page, di
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent modal={revenueModal} handleClose={handleRevenueModalHide}>
-                <CheckoutRevenuesAddRevenueContainer handleClose={handleRevenueModalHide} />
-            </FormModalComponent>
         </>
     )
 }
