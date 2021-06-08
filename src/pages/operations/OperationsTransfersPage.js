@@ -81,8 +81,8 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
     }
 
     // Show confirm modal form
-    const handleConfirmModalShow = ({id, amount}) => {
-        setConfirmModal({...confirmModal, id, body: `Confirmer le transfert de flotte de ${formatNumber(amount)}?`, show: true})
+    const handleConfirmModalShow = ({id, amount, user}) => {
+        setConfirmModal({...confirmModal, id, body: `Confirmer le transfert de flotte de ${user.name} de ${formatNumber(amount)}?`, show: true})
     }
 
     // Hide confirm modal form
@@ -122,7 +122,7 @@ function OperationsTransfersPage({transfers, transfersRequests, hasMoreData, pag
                                                     className="btn btn-theme mb-2"
                                                     onClick={handleTransferModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Effectuer un transfert
+                                                <i className="fa fa-exchange" /> Effectuer un transfert
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
