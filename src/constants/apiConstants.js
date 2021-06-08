@@ -160,5 +160,3 @@ export const CONFIRM_PAYMENT_API_PATH = `${API_URL}/approuve_encaissement`;
 // Checkout
 export const REVENUES_API_PATH = `${API_URL}/treasuries_in`;
 export const EXPENSES_API_PATH = `${API_URL}/treasuries_out`;
-export const NEW_REVENUE_API_PATH = `${API_URL}/treasury_in`;
-export const NEW_EXPENSE_API_PATH = `${API_URL}/treasury_out`;

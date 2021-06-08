@@ -2,12 +2,10 @@ import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import {DONE} from "../../constants/typeConstants";
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
 import {
-    EMIT_ADD_REVENUE,
     EMIT_REVENUES_FETCH,
     storeSetRevenuesData,
-    storeSetNewRevenueData,
     storeSetNextRevenuesData,
     EMIT_NEXT_REVENUES_FETCH,
     storeStopInfiniteScrollRevenueData
@@ -15,11 +13,8 @@ import {
 import {
     storeRevenuesRequestInit,
     storeRevenuesRequestFailed,
-    storeAddRevenueRequestInit,
     storeRevenuesRequestSucceed,
-    storeAddRevenueRequestFailed,
     storeNextRevenuesRequestInit,
-    storeAddRevenueRequestSucceed,
     storeNextRevenuesRequestFailed,
     storeNextRevenuesRequestSucceed
 } from "../requests/revenues/actions";
@@ -65,30 +60,6 @@ export function* emitNextRevenuesFetch() {
     });
 }
 
-// Fleets new revenue from API
-export function* emitAddRevenue() {
-    yield takeLatest(EMIT_ADD_REVENUE, function*({amount, name, reason, description, receipt}) {
-        try {
-            // Fire event for request
-            yield put(storeAddRevenueRequestInit());
-            const data = {nom: name, raison: reason, description: description, montant: amount};
-            const apiResponse = yield call(apiPostRequest, api.NEW_REVENUE_API_PATH, data);
-            // Extract data
-            const revenue = extractRevenueData(
-                apiResponse.data.treasury,
-                apiResponse.data.manager,
-            );
-            // Fire event to redux
-            yield put(storeSetNewRevenueData({revenue}))
-            // Fire event for request
-            yield put(storeAddRevenueRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeAddRevenueRequestFailed({message}));
-        }
-    });
-}
-
 // Extract revenue data
 function extractRevenueData(apiRevenue, apiManager) {
     let revenue = {
@@ -130,7 +101,6 @@ export function extractRevenuesData(apiRevenues) {
 // Combine to export all functions at once
 export default function* sagaRevenues() {
     yield all([
-        fork(emitAddRevenue),
         fork(emitRevenuesFetch),
         fork(emitNextRevenuesFetch),
     ]);

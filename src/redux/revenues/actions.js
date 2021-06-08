@@ -1,11 +1,9 @@
 // Reducer action types
 export const STORE_SET_REVENUES_DATA = 'STORE_SET_REVENUES_DATA';
-export const STORE_SET_NEW_REVENUE_DATA = 'STORE_SET_NEW_REVENUE_DATA';
 export const STORE_SET_NEXT_REVENUES_DATA = 'STORE_SET_NEXT_REVENUES_DATA';
 export const STORE_STOP_INFINITE_SCROLL_REVENUE_DATA = 'STORE_STOP_INFINITE_SCROLL_REVENUE_DATA';
 
 // Middleware action types
-export const EMIT_ADD_REVENUE = 'EMIT_ADD_REVENUE';
 export const EMIT_REVENUES_FETCH = 'EMIT_REVENUES_FETCH';
 export const EMIT_NEXT_REVENUES_FETCH = 'EMIT_NEXT_REVENUES_FETCH';
 
@@ -16,12 +14,6 @@ export const storeSetRevenuesData = ({revenues, hasMoreData, page}) => ({
     revenues,
     hasMoreData,
     type: STORE_SET_REVENUES_DATA
-});
-
-// Set new revenue data in store
-export const storeSetNewRevenueData = ({revenue}) => ({
-    revenue,
-    type: STORE_SET_NEW_REVENUE_DATA
 });
 
 // Set next revenues data in store
@@ -47,13 +39,4 @@ export const emitRevenuesFetch = () => ({
 export const emitNextRevenuesFetch = ({page}) => ({
     page,
     type: EMIT_NEXT_REVENUES_FETCH
-});
-
-// Emit add revenue
-export const emitAddRevenue = ({amount, name, reason, description}) => ({
-    name,
-    reason,
-    amount,
-    description,
-    type: EMIT_ADD_REVENUE
 });

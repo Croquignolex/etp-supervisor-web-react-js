@@ -2,12 +2,10 @@ import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import {DONE} from "../../constants/typeConstants";
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
-    EMIT_ADD_EXPENSE,
     EMIT_EXPENSES_FETCH,
     storeSetExpensesData,
-    storeSetNewExpenseData,
     storeSetNextExpensesData,
     EMIT_NEXT_EXPENSES_FETCH,
     storeStopInfiniteScrollExpenseData
@@ -15,11 +13,8 @@ import {
 import {
     storeExpensesRequestInit,
     storeExpensesRequestFailed,
-    storeAddExpenseRequestInit,
     storeExpensesRequestSucceed,
-    storeAddExpenseRequestFailed,
     storeNextExpensesRequestInit,
-    storeAddExpenseRequestSucceed,
     storeNextExpensesRequestFailed,
     storeNextExpensesRequestSucceed
 } from "../requests/expenses/actions";
@@ -65,30 +60,6 @@ export function* emitNextExpensesFetch() {
     });
 }
 
-// Fleets new expense from API
-export function* emitAddExpense() {
-    yield takeLatest(EMIT_ADD_EXPENSE, function*({amount, name, reason, description, receipt}) {
-        try {
-            // Fire event for request
-            yield put(storeAddExpenseRequestInit());
-            const data = {nom: name, raison: reason, description: description, montant: amount}
-            const apiResponse = yield call(apiPostRequest, api.NEW_EXPENSE_API_PATH, data);
-            // Extract data
-            const expense = extractExpenseData(
-                apiResponse.data.treasury,
-                apiResponse.data.manager,
-            );
-            // Fire event to redux
-            yield put(storeSetNewExpenseData({expense}))
-            // Fire event for request
-            yield put(storeAddExpenseRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeAddExpenseRequestFailed({message}));
-        }
-    });
-}
-
 // Extract expense data
 function extractExpenseData(apiExpense, apiManager) {
     let expense = {
@@ -129,7 +100,6 @@ export function extractExpensesData(apiExpenses) {
 // Combine to export all functions at once
 export default function* sagaExpenses() {
     yield all([
-        fork(emitAddExpense),
         fork(emitExpensesFetch),
         fork(emitNextExpensesFetch),
     ]);

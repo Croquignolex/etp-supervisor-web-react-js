@@ -9,11 +9,6 @@ export const STORE_NEXT_REVENUES_REQUEST_RESET = 'STORE_NEXT_REVENUES_REQUEST_RE
 export const STORE_NEXT_REVENUES_REQUEST_FAILED = 'STORE_NEXT_REVENUES_REQUEST_FAILED';
 export const STORE_NEXT_REVENUES_REQUEST_SUCCEEDED = 'STORE_NEXT_REVENUES_REQUEST_SUCCEEDED';
 
-export const STORE_ADD_REVENUE_REQUEST_INIT = 'STORE_ADD_REVENUE_REQUEST_INIT';
-export const STORE_ADD_REVENUE_REQUEST_RESET = 'STORE_ADD_REVENUE_REQUEST_RESET';
-export const STORE_ADD_REVENUE_REQUEST_FAILED = 'STORE_ADD_REVENUE_REQUEST_FAILED';
-export const STORE_ADD_REVENUE_REQUEST_SUCCEEDED = 'STORE_ADD_REVENUE_REQUEST_SUCCEEDED';
-
 // ======================================================== Revenues
 // Set revenues init data into store
 export const storeRevenuesRequestInit = () => ({
@@ -57,26 +52,4 @@ export const storeNextRevenuesRequestSucceed = ({message}) => ({
 // Set next revenues reset data into store
 export const storeNextRevenuesRequestReset = () => ({
     type: STORE_NEXT_REVENUES_REQUEST_RESET
-});
-// ======================================================== Add revenue
-// Set add revenue init data into store
-export const storeAddRevenueRequestInit = () => ({
-    type: STORE_ADD_REVENUE_REQUEST_INIT
-});
-
-// Set add revenue failed data into store
-export const storeAddRevenueRequestFailed = ({message}) => ({
-    message,
-    type: STORE_ADD_REVENUE_REQUEST_FAILED
-});
-
-// Set add revenue succeeded data into store
-export const storeAddRevenueRequestSucceed = ({message}) => ({
-    message,
-    type: STORE_ADD_REVENUE_REQUEST_SUCCEEDED
-});
-
-// Set add revenue reset data into store
-export const storeAddRevenueRequestReset = () => ({
-    type: STORE_ADD_REVENUE_REQUEST_RESET
 });
