@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-import {dateToString} from "../../functions/generalFunctions";
+import {dateToString, formatNumber} from "../../functions/generalFunctions";
 
 // Component
 function VendorsCardsComponent({vendors, handleVendorDetailsModalShow}) {
@@ -23,6 +23,12 @@ function VendorsCardsComponent({vendors, handleVendorDetailsModalShow}) {
                                         <li className="list-group-item">
                                             <b>Nom</b>
                                             <span className="float-right">{item.name}</span>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <b>Solde</b>
+                                            <span className="float-right text-danger text-bold">
+                                                {formatNumber(item.balance)}
+                                            </span>
                                         </li>
                                     </ul>
                                     <div className="mt-3 text-right">

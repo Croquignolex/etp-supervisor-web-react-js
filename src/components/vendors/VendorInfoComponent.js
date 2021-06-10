@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
-import {dateToString} from "../../functions/generalFunctions";
+import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import VendorInfoEditContainer from "../../containers/vendors/VendorInfoEditContainer";
 
 // Component
@@ -37,6 +37,12 @@ function VendorInfoComponent({vendor}) {
                         <li className="list-group-item">
                             <b>Nom</b>
                             <span className="float-right">{vendor.name}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <b>Solde</b>
+                            <span className="float-right text-danger text-bold">
+                                {formatNumber(vendor.balance)}
+                            </span>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>

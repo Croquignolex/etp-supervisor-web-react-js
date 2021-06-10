@@ -168,11 +168,12 @@ export function* emitUpdateVendor() {
 // Extract zone data
 function extractVendorData(apiVendor) {
     let vendor = {
-        id: '', name: '', description: '', creation: '',
+        id: '', name: '', balance: '', description: '', creation: '',
     };
     if(apiVendor) {
         vendor.actionLoader = false;
         vendor.name = apiVendor.name;
+        vendor.balance = apiVendor.solde;
         vendor.id = apiVendor.id.toString();
         vendor.creation = apiVendor.created_at;
         vendor.description = apiVendor.description;
