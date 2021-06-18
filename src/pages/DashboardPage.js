@@ -160,19 +160,8 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                             }
                         </div>
 
-                        {/* Users */}
+                        {/* Others */}
                         <div className="row">
-                            {cardsData.includes(setting.CARD_ADMINS) &&
-                                <div className="col-lg-3 col-md-4 col-sm-6">
-                                    <DashboardCardComponent color='bg-danger'
-                                                            icon='fa fa-user-secret'
-                                                            url={path.ADMINS_PAGE_PATH}
-                                                            label={setting.LABEL_ADMINS}
-                                                            data={administrators.length}
-                                                            request={allAdministratorsRequests}
-                                    />
-                                </div>
-                            }
                             {cardsData.includes(setting.CARD_SUPERVISORS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-warning'
@@ -206,6 +195,17 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
+                            {cardsData.includes(setting.CARD_ADMINS) &&
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardCardComponent color='bg-danger'
+                                                            icon='fa fa-user-secret'
+                                                            url={path.ADMINS_PAGE_PATH}
+                                                            label={setting.LABEL_ADMINS}
+                                                            data={administrators.length}
+                                                            request={allAdministratorsRequests}
+                                    />
+                                </div>
+                            }
                             {cardsData.includes(setting.CARD_AGENTS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-primary'
@@ -228,10 +228,6 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
-                        </div>
-
-                        {/* Others */}
-                        <div className="row">
                             {cardsData.includes(setting.CARD_COMPANIES) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-danger'
