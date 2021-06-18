@@ -94,6 +94,12 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
+    const yupFleetSimsFleetsData = useMemo(() => {
+        const data = sims.filter(sim => ((sim.operator.id === '3') && (sim.type.name === MASTER_TYPE)));
+        const number = data.length
+        const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
+        return {number, value}
+    }, [sims]);
 
     // Render
     return (
@@ -102,6 +108,7 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                 <HeaderComponent title={DASHBOARD_PAGE} icon={'fa fa-tachometer-alt'} />
                 <section className="content">
                     <div className='container-fluid'>
+                        {/* Cash */}
                         <div className="row">
                             {cardsData.includes(setting.CARD_BALANCE) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
@@ -114,6 +121,10 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
+                        </div>
+
+                        {/*  Fleet balance */}
+                        <div className="row">
                             {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_MTN) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardWithOperatorCardComponent color='bg-secondary'
@@ -136,6 +147,21 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
+                            {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_YUP) &&
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                    <DashboardWithOperatorCardComponent color='bg-secondary'
+                                                                        operator={{id: '3'}}
+                                                                        request={allSimsRequests}
+                                                                        url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                        data={formatNumber(yupFleetSimsFleetsData.value)}
+                                                                        label={`${setting.LABEL_FLEET_SIMS_FLEETS_YUP} (${yupFleetSimsFleetsData.number})`}
+                                    />
+                                </div>
+                            }
+                        </div>
+
+                        {/* Users */}
+                        <div className="row">
                             {cardsData.includes(setting.CARD_ADMINS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-danger'
@@ -202,6 +228,10 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                     />
                                 </div>
                             }
+                        </div>
+
+                        {/* Others */}
+                        <div className="row">
                             {cardsData.includes(setting.CARD_COMPANIES) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-danger'
@@ -212,7 +242,7 @@ function DashboardPage({agents, settings, dispatch, location, vendors,
                                                             label={setting.LABEL_COMPANIES}
                                     />
                                 </div>
-                            }
+                                }
                             {cardsData.includes(setting.CARD_SIMS) &&
                                 <div className="col-lg-3 col-md-4 col-sm-6">
                                     <DashboardCardComponent color='bg-primary'
