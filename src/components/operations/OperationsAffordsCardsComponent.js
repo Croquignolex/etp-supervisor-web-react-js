@@ -14,7 +14,7 @@ import VendorDetailsContainer from "../../containers/vendors/VendorDetailsContai
 function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
     // Local states
     const [vendorDetailsModal, setVendorSimDetailsModal] = useState({show: false, header: 'DETAIL DU FOURNISSEUR', id: ''});
-    const [outgoingSimDetailsModal, setOutgoingSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE DE FLOTTAGE', id: ''});
+    const [outgoingSimDetailsModal, setOutgoingSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE DE FLOTTAGE', id: ''});
 
     // Hide outgoing sim details modal form
     const handleOutgoingSimDetailModalHide = () => {

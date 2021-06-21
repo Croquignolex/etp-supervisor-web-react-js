@@ -16,7 +16,7 @@ export const CARD_FLEET_SIMS_FLEETS_YUP = 14;
 export const CARD_FLEET_SIMS_FLEETS_ORANGE = 13;
 
 // Labels
-export const LABEL_SIMS = "PUCES";
+export const LABEL_SIMS = "COMPTES";
 export const LABEL_ZONES = "ZONES";
 export const LABEL_AGENTS = "AGENTS";
 export const LABEL_RESOURCES = "RESSOURCES";

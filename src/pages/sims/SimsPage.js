@@ -21,7 +21,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [newSimModal, setNewSimModal] = useState({show: false, header: ''});
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
 
     // Local effects
     useEffect(() => {
@@ -55,7 +55,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
 
     // Show new sim modal form
     const handleNewSimModalShow = () => {
-        setNewSimModal({newSimModal, header: "NOUVELLE PUCE", show: true})
+        setNewSimModal({newSimModal, header: "NOUVELLE COMPTE", show: true})
     }
 
     // Hide new sim modal form

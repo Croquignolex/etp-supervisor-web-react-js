@@ -9,8 +9,8 @@ import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimCo
 // Component
 function OperatorSimsListComponent({operator}) {
     // Local states
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
-    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UNE SIM A ' + operator.name});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE', id: ''});
+    const [addSimModal, setAddSimEditModal] = useState({show: false, header: 'AJOUTER UN COMPTE A ' + operator.name});
 
     // Show add sim modal form
     const handleAddSimModalShow = () => {
@@ -31,7 +31,7 @@ function OperatorSimsListComponent({operator}) {
     return (
         <>
             <button type="button" className="btn btn-theme mb-1" onClick={handleAddSimModalShow}>
-                <i className="fa fa-plus" /> Ajouter une sim
+                <i className="fa fa-plus" /> Ajouter un compte
             </button>
             <div className="card">
                 <div className="table-responsive">
@@ -64,7 +64,7 @@ function OperatorSimsListComponent({operator}) {
                                 <tr>
                                     <td colSpan={3}>
                                         <div className='alert custom-active text-center'>
-                                            Pas de puces
+                                            Pas de comptes
                                         </div>
                                     </td>
                                 </tr>

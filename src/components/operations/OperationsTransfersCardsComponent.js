@@ -12,7 +12,7 @@ import {DONE, MASTER_TYPE, PROCESSING} from "../../constants/typeConstants";
 // Component
 function OperationsTransfersCardsComponent({transfers, handleConfirmModalShow}) {
     // Local states
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE', id: ''});
 
     // Hide sim details modal form
     const handleSimDetailModalHide = () => {

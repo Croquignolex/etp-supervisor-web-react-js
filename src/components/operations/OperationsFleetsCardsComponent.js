@@ -13,7 +13,7 @@ import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsCon
 // Component
 function OperationsFleetsCardsComponent({supplies, handleSupplyDetailsModalShow}) {
     // Local states
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DE LA PUCE', id: ''});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE', id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
     const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DE LA GESTIONNAIRE", id: ''});
 

@@ -13,7 +13,7 @@ import CollectorDetailsContainer from "../../containers/collectors/CollectorDeta
 // Component
 function RequestsFleetsCardsComponent({fleets}) {
     // Local states
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DE LA PUCE", id: ''});
+    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
     const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
@@ -63,7 +63,7 @@ function RequestsFleetsCardsComponent({fleets}) {
                                             </li>
                                         }
                                         <li className="list-group-item">
-                                            <b>Puce à flotter</b>
+                                            <b>Compte à flotter</b>
                                             <span className="float-right">
                                                 {item.sim.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
