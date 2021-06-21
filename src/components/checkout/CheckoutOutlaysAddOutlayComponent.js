@@ -6,6 +6,7 @@ import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddOutlay} from "../../redux/outlays/actions";
+import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {emitAllManagersFetch} from "../../redux/managers/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
@@ -22,6 +23,7 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, managers, dispa
                                                allCollectorsRequests, allManagersRequests}) {
     // Local state
     const [amount, setAmount] = useState(DEFAULT_FORM_DATA);
+    const [reason, setReason] = useState(DEFAULT_FORM_DATA);
     const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
@@ -53,6 +55,11 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, managers, dispa
     const handleAmountInput = (data) => {
         shouldResetErrorData();
         setAmount({...amount, isValid: true, data})
+    }
+
+    const handleReasonInput = (data) => {
+        shouldResetErrorData();
+        setReason({...reason, isValid: true, data})
     }
 
     // Build select options
@@ -113,6 +120,15 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, managers, dispa
                                          id='inputAmount'
                                          label='Montant à décaisser'
                                          handleInput={handleAmountInput}
+                        />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <TextareaComponent input={reason}
+                                           id='inputReason'
+                                           label="Motif du déciassement"
+                                           handleInput={handleReasonInput}
                         />
                     </div>
                 </div>
