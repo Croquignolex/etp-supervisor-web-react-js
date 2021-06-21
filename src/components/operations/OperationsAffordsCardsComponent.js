@@ -58,7 +58,7 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Puce réceptrice</b>
+                                            <b>Compte récepteur</b>
                                             <span className="float-right">
                                                 {item.sim.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
