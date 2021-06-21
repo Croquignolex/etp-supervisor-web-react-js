@@ -55,7 +55,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
 
     // Show new sim modal form
     const handleNewSimModalShow = () => {
-        setNewSimModal({newSimModal, header: "NOUVELLE COMPTE", show: true})
+        setNewSimModal({newSimModal, header: "NOUVEAU COMPTE", show: true})
     }
 
     // Hide new sim modal form
@@ -101,7 +101,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                                     className="btn btn-theme mr-2 mb-2"
                                                     onClick={handleNewSimModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouvelle puce
+                                                <i className="fa fa-plus" /> Nouveau compte
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {requestLoading(simsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
