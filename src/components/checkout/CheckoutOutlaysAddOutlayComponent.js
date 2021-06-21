@@ -78,16 +78,18 @@ function CheckoutOutlaysAddOutlayComponent({request, collectors, managers, dispa
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
+        const _reason = requiredChecker(reason);
         const _amount = requiredChecker(amount);
         const _collector = requiredChecker(collector);
         // Set value
         setAmount(_amount);
         setCollector(_collector);
-        const validationOK = (_amount.isValid && _collector.isValid);
+        const validationOK = (_amount.isValid && _collector.isValid && _reason.isValid);
         // Check
         if(validationOK) {
             dispatch(emitAddOutlay({
                 amount: _amount.data,
+                reason: _reason.data,
                 collector: _collector.data,
             }));
         }
