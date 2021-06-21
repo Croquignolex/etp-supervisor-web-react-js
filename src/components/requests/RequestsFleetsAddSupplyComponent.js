@@ -97,7 +97,7 @@ function RequestsFleetsAddSupplyComponent({fleet, request, sims, allSimsRequests
                     <div className='col-sm-6'>
                         <SelectComponent input={sim}
                                          id='inputSim'
-                                         title='Choisir une puce'
+                                         title='Choisir un compte'
                                          label='Puce de flottage'
                                          options={simSelectOptions}
                                          handleInput={handleSimSelect}

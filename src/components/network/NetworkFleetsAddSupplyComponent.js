@@ -137,8 +137,8 @@ function NetworkFleetsAddSupplyComponent({user, request, sims, agents, allAgents
                     <div className='col-sm-6'>
                         <SelectComponent input={outgoingSim}
                                          id='inputSimManger'
-                                         label='Puce émetrice'
-                                         title='Choisir une puce'
+                                         label='Compte émetteur'
+                                         title='Choisir un compte'
                                          options={outgoingSelectOptions}
                                          handleInput={handleOutgoingSelect}
                                          requestProcessing={requestLoading(allSimsRequests)}
@@ -147,8 +147,8 @@ function NetworkFleetsAddSupplyComponent({user, request, sims, agents, allAgents
                     <div className='col-sm-6'>
                         <SelectComponent input={incomingSim}
                                          id='inputSimCollector'
-                                         label='Puce receptrice'
-                                         title='Choisir une puce'
+                                         label='Compte recepteur'
+                                         title='Choisir un compte'
                                          options={incomingSelectOptions}
                                          handleInput={handleIncomingSelect}
                                          requestProcessing={requestLoading(allSimsRequests)}

@@ -118,7 +118,7 @@ function RequestsClearancesAddClearanceComponent({request, sims, agents, allAgen
                     <div className='col-sm-6'>
                         <SelectComponent input={incomingSim}
                                          id='inputSimAgent'
-                                         title='Choisir une puce'
+                                         title='Choisir un compte'
                                          options={incomingSelectOptions}
                                          label="Puce de l'agent/ressource"
                                          handleInput={handleIncomingSelect}

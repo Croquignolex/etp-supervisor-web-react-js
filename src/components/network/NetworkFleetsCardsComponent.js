@@ -45,7 +45,7 @@ function NetworkFleetsCardsComponent({networkSupplies}) {
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Puce receptrice</b>
+                                            <b>Compte recepteur</b>
                                             <span className="float-right">{item.sim_incoming.number}</span>
                                         </li>
                                         <li className="list-group-item">
