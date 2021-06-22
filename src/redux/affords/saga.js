@@ -1,7 +1,7 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {SUPPLY_BY_DIGITAL_PARTNER} from "../../constants/typeConstants";
+import {DONE, SUPPLY_BY_DIGITAL_PARTNER} from "../../constants/typeConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_ADD_AFFORD,
@@ -73,11 +73,17 @@ export function* emitNextAffordsFetch() {
 
 // Fleets new afford from API
 export function* emitAddAfford() {
-    yield takeLatest(EMIT_ADD_AFFORD, function*({vendor, amount, sim}) {
+    yield takeLatest(EMIT_ADD_AFFORD, function*({vendor, amount, sim, cash}) {
         try {
             // Fire event for request
             yield put(storeAddAffordRequestInit());
-            const data = {id_puce: sim, montant: amount, id_fournisseur: vendor, type: SUPPLY_BY_DIGITAL_PARTNER};
+            const data = {
+                id_puce: sim,
+                montant: amount,
+                id_fournisseur: vendor,
+                cash_pay: cash ? DONE : null,
+                type: SUPPLY_BY_DIGITAL_PARTNER
+            };
             const apiResponse = yield call(apiPostRequest, api.NEW_REFUEL_API_PATH, data);
             // Extract data
             console.log({apiResponse})

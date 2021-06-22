@@ -6,6 +6,7 @@ import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAddAfford} from "../../redux/affords/actions";
+import CheckBoxComponent from "../form/CheckBoxComponent";
 import {emitAllMasterSimsFetch} from "../../redux/sims/actions";
 import {emitAllVendorsFetch} from "../../redux/vendors/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
@@ -16,7 +17,6 @@ import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAllVendorsRequestReset} from "../../redux/requests/vendors/actions";
 import {storeAllMasterSimsRequestReset} from "../../redux/requests/sims/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import CheckBoxComponent from "../form/CheckBoxComponent";
 
 // Component
 function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendorsRequests, simsRequests, dispatch, handleClose}) {
