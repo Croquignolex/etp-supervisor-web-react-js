@@ -16,17 +16,18 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow}) {
                             <div className="card">
                                 <div className={`${simTypeBadgeColor(item.type.name).background} card-header`}>
                                     <h3 className="card-title">COMPTE {simTypeBadgeColor(item.type.name).text}</h3>
-                                    <div className="card-tools">
+                                </div>
+                                <div className="card-body">
+                                    <SimCardComponent sim={item} />
+                                    <div className="mt-3 text-right">
                                         <button type="button"
-                                                title="Détails"
-                                                className=" btn-tool btn"
+                                                className="btn btn-sm btn-theme"
                                                 onClick={() => handleSimDetailsModalShow(item)}
                                         >
-                                            <i className="fa fa-eye" />
+                                            <i className="fa fa-eye" /> Détails
                                         </button>
                                     </div>
                                 </div>
-                                <div className="card-body"><SimCardComponent sim={item} /></div>
                             </div>
                         </div>
                     )

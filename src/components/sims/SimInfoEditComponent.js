@@ -9,7 +9,6 @@ import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {emitAllOperatorsFetch} from "../../redux/operators/actions";
 import {storeEditSimRequestReset} from "../../redux/requests/sims/actions";
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
@@ -22,8 +21,6 @@ function SimInfoEditComponent({request, sim, dispatch, handleClose}) {
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAllOperatorsFetch());
-
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
