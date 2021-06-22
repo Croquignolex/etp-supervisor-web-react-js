@@ -1,6 +1,5 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
-import {DONE} from "../../constants/typeConstants";
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
@@ -61,10 +60,11 @@ export function* emitNextExpensesFetch() {
 }
 
 // Extract expense data
-function extractExpenseData(apiExpense, apiManager) {
+function extractExpenseData(apiExpense, apiManager, apiVendor) {
     let expense = {
-        id: '',  name: '', mount: '', creation: '', receipt: '', reason: '', description: '', status: '',
+        id: '',  name: '', mount: '', creation: '', reason: '', description: '',
 
+        vendor: {id: '', name: ''},
         manager: {id: '', name: ''},
     };
     if(apiManager) {
@@ -73,8 +73,13 @@ function extractExpenseData(apiExpense, apiManager) {
             id: apiManager.id.toString()
         };
     }
+    if(apiVendor) {
+        expense.vendor = {
+            name: apiVendor.name,
+            id: apiVendor.id.toString()
+        };
+    }
     if(apiExpense) {
-        expense.status = DONE;
         expense.name = apiExpense.name;
         expense.reason = apiExpense.reason;
         expense.amount = apiExpense.amount;
@@ -91,7 +96,8 @@ export function extractExpensesData(apiExpenses) {
     apiExpenses.forEach(data => {
         expenses.push(extractExpenseData(
             data.treasury,
-            data.manager
+            data.manager,
+            data.vendor,
         ));
     });
     return expenses;

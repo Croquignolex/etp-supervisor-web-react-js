@@ -1,8 +1,7 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
-import {DONE} from "../../constants/typeConstants";
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
+import {apiGetRequest} from "../../functions/axiosFunctions";
 import {
     EMIT_REVENUES_FETCH,
     storeSetRevenuesData,
@@ -61,10 +60,11 @@ export function* emitNextRevenuesFetch() {
 }
 
 // Extract revenue data
-function extractRevenueData(apiRevenue, apiManager) {
+function extractRevenueData(apiRevenue, apiManager, apiVendor) {
     let revenue = {
-        id: '',  name: '', mount: '', creation: '', receipt: '', reason: '', description: '', status: '',
+        id: '',  name: '', mount: '', creation: '', reason: '', description: '',
 
+        vendor: {id: '', name: ''},
         manager: {id: '', name: ''},
     };
     if(apiManager) {
@@ -73,15 +73,19 @@ function extractRevenueData(apiRevenue, apiManager) {
             id: apiManager.id.toString()
         };
     }
+    if(apiVendor) {
+        revenue.vendor = {
+            name: apiVendor.name,
+            id: apiVendor.id.toString()
+        };
+    }
     if(apiRevenue) {
-        revenue.status = DONE;
         revenue.name = apiRevenue.name;
         revenue.reason = apiRevenue.reason;
         revenue.amount = apiRevenue.amount;
         revenue.id = apiRevenue.id.toString();
         revenue.creation = apiRevenue.created_at;
         revenue.description = apiRevenue.description;
-        revenue.receipt = getFileFromServer(apiRevenue.receipt);
     }
     return revenue;
 }
@@ -92,7 +96,8 @@ export function extractRevenuesData(apiRevenues) {
     apiRevenues.forEach(data => {
         revenues.push(extractRevenueData(
             data.treasury,
-            data.manager
+            data.manager,
+            data.vendor,
         ));
     });
     return revenues;
