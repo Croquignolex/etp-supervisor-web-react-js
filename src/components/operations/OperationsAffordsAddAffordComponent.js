@@ -16,11 +16,13 @@ import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAllVendorsRequestReset} from "../../redux/requests/vendors/actions";
 import {storeAllMasterSimsRequestReset} from "../../redux/requests/sims/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import CheckBoxComponent from "../form/CheckBoxComponent";
 
 // Component
 function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendorsRequests, simsRequests, dispatch, handleClose}) {
     // Local state
     const [amount, setAmount] = useState(DEFAULT_FORM_DATA);
+    const [cashPay, setCashPay] = useState(true);
     const [incomingSim, setIncomingSim] = useState(DEFAULT_FORM_DATA);
     const [vendor, setVendor] = useState({...DEFAULT_FORM_DATA});
 
@@ -48,6 +50,11 @@ function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendors
     const handleIncomingSelect = (data) => {
         shouldResetErrorData();
         setIncomingSim({...incomingSim,  isValid: true, data})
+    }
+
+    const handleDirectPaySelect = (data) => {
+        shouldResetErrorData();
+        setCashPay(!data)
     }
 
     const handleVendorSelect = (data) => {
@@ -92,6 +99,7 @@ function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendors
         // Check
         if(validationOK) {
             dispatch(emitAddAfford({
+                cash: cashPay,
                 vendor: _vendor.data,
                 amount: _amount.data,
                 sim: _incomingSim.data,
@@ -134,6 +142,15 @@ function OperationsAffordsAddAffordComponent({request, sims, vendors, allVendors
                                          options={incomingSelectOptions}
                                          handleInput={handleIncomingSelect}
                                          requestProcessing={requestLoading(simsRequests)}
+                        />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-6'>
+                        <label htmlFor="inputAutoPay">Utiliser les espèces?</label>
+                        <CheckBoxComponent input={cashPay}
+                                           id='inputAutoPay'
+                                           handleInput={handleDirectPaySelect}
                         />
                     </div>
                 </div>
