@@ -3,13 +3,15 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import {emitManagerMovementsFetch} from "../../redux/managers/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/actions";
 
 // Component
-function ManagerMovementsComponent({id, manager, dispatch, request}) {
+function ManagerMovementsComponent({manager, dispatch, request}) {
     // Local effects
     useEffect(() => {
-        // dispatch(emitManagerFetch({id}));
+        dispatch(emitManagerMovementsFetch({manager}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -19,7 +21,7 @@ function ManagerMovementsComponent({id, manager, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        // dispatch(storeManagerRequestReset());
+        dispatch(storeManagerMovementsRequestReset());
     };
 
     // Render
