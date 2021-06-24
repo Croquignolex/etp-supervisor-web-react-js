@@ -23,7 +23,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
     const shouldResetErrorData = () => {
         dispatch(storeManagerMovementsRequestReset());
     };
-
+console.log(manager)
     // Render
     return (
         <>
@@ -38,14 +38,14 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th>DATE</th>
-                                            <th>OPERATION</th>
-                                            <th>LIBELLE</th>
-                                            <th>ENTREES</th>
-                                            <th>SORTIES</th>
-                                            <th>SOLDES</th>
-                                        </tr>
+                                            <tr>
+                                                <th>DATE</th>
+                                                <th>OPERATION</th>
+                                                <th>LIBELLE</th>
+                                                <th>ENTREES</th>
+                                                <th>SORTIES</th>
+                                                <th>SOLDES</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             {manager.movements.map((item, key) => {

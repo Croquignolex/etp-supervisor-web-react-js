@@ -205,6 +205,8 @@ function extractManagerData(apiManager, apiAccount) {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
         account: {id: '', balance: ''},
+
+        movements: []
     };
 
     if(apiAccount) {
