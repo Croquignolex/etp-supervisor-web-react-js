@@ -1,17 +1,12 @@
 import {connect} from "react-redux";
 
-import ManagerInfoEditComponent from "../../components/managers/ManagerInfoEditComponent";
+import ManagerCashMovementsComponent from "../../components/managers/ManagerCashMovementsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
     manager: state.managers.current,
-    request: state.managersRequests.edit,
-});
-
-// Map dispatch function to component props
-const mapDispatchToProps = (dispatch) => ({
-    dispatch: (action) => { dispatch(action) }
+    // request: state.managersRequests.edit,
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(ManagerInfoEditComponent);
+export default connect(mapStateToProps)(ManagerCashMovementsComponent);
