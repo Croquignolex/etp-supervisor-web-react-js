@@ -9,6 +9,7 @@ import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditC
 function ManagerInfoComponent({manager}) {
     // Local states
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
+    const [cashMovementsModal, setCashMovementsModal] = useState({show: false, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -20,13 +21,23 @@ function ManagerInfoComponent({manager}) {
         setInfoEditModal({...infoEditModal, show: false})
     }
 
+    // Show cash movements modal form
+    const handleCashMovementsModalShow = () => {
+        setCashMovementsModal({...cashMovementsModal, show: true})
+    }
+
+    // Hide cash movements modal form
+    const handleCashMovementsModalHide = () => {
+        setCashMovementsModal({...cashMovementsModal, show: false})
+    }
+
     // Render
     return (
         <>
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
-            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
+            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleCashMovementsModalShow}>
                 <i className="fa fa-table" /> Movements de caisse
             </button>
             <div className="card">
@@ -78,6 +89,9 @@ function ManagerInfoComponent({manager}) {
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
                 <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
+            </FormModalComponent>
+            <FormModalComponent modal={cashMovementsModal} handleClose={handleCashMovementsModalHide}>
+                <ManagerInfoEditContainer handleClose={handleCashMovementsModalHide} />
             </FormModalComponent>
         </>
     )
