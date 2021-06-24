@@ -92,7 +92,7 @@ function ManagerInfoComponent({manager}) {
                 <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={cashMovementsModal} handleClose={handleCashMovementsModalHide}>
-                <ManagerCashMovementsContainer id={managerDetailsModal.id} />
+                <ManagerCashMovementsContainer />
             </FormModalComponent>
         </>
     )
