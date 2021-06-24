@@ -48,6 +48,27 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                                         </tr>
                                         </thead>
                                         <tbody>
+                                            {manager.movements.map((item, key) => {
+                                                return (
+                                                    <tr key={key}>
+                                                        <td>{item.date}</td>
+                                                        <td>{item.type}</td>
+                                                        <td>{item.label}</td>
+                                                        <td>{item.in}</td>
+                                                        <td>{item.out}</td>
+                                                        <td>{item.balance}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                            {manager.movements.length === 0 && (
+                                                <tr>
+                                                    <td colSpan={6}>
+                                                        <div className='alert custom-active text-center'>
+                                                            Pas de mouvements de caisse
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
