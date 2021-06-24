@@ -9,7 +9,7 @@ import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeManagerRequestReset} from "../../redux/requests/managers/actions";
 
 // Component
-function ManagerCashMovementsComponent({id, manager, dispatch, request}) {
+function ManagerMovementsComponent({id, manager, dispatch, request}) {
     // Local effects
     useEffect(() => {
         dispatch(emitManagerFetch({id}));
@@ -32,7 +32,9 @@ function ManagerCashMovementsComponent({id, manager, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <ManagerInfoComponent manager={manager} />
+                            {
+
+                            }
                         </div>
                     </div>
                 )
@@ -42,11 +44,11 @@ function ManagerCashMovementsComponent({id, manager, dispatch, request}) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagerCashMovementsComponent.propTypes = {
+ManagerMovementsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     manager: PropTypes.object.isRequired,
 };
 
-export default React.memo(ManagerCashMovementsComponent);
+export default React.memo(ManagerMovementsComponent);

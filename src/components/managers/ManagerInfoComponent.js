@@ -4,13 +4,13 @@ import React, {useState} from 'react';
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
-import ManagerCashMovementsContainer from "../../containers/managers/ManagerCashMovementsContainer";
+import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
 
 // Component
 function ManagerInfoComponent({manager}) {
     // Local states
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
-    const [cashMovementsModal, setCashMovementsModal] = useState({show: false, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -22,14 +22,14 @@ function ManagerInfoComponent({manager}) {
         setInfoEditModal({...infoEditModal, show: false})
     }
 
-    // Show cash movements modal form
-    const handleCashMovementsModalShow = () => {
-        setCashMovementsModal({...cashMovementsModal, show: true})
+    // Show movements modal form
+    const handleMovementsModalShow = () => {
+        setMovementsModal({...movementsModal, show: true})
     }
 
-    // Hide cash movements modal form
-    const handleCashMovementsModalHide = () => {
-        setCashMovementsModal({...cashMovementsModal, show: false})
+    // Hide movements modal form
+    const handleMovementsModalHide = () => {
+        setMovementsModal({...movementsModal, show: false})
     }
 
     // Render
@@ -38,7 +38,7 @@ function ManagerInfoComponent({manager}) {
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
-            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleCashMovementsModalShow}>
+            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleMovementsModalShow}>
                 <i className="fa fa-table" /> Movements de caisse
             </button>
             <div className="card">
@@ -91,8 +91,8 @@ function ManagerInfoComponent({manager}) {
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
                 <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
-            <FormModalComponent modal={cashMovementsModal} handleClose={handleCashMovementsModalHide}>
-                <ManagerCashMovementsContainer />
+            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
+                <ManagerMovementsContainer />
             </FormModalComponent>
         </>
     )
