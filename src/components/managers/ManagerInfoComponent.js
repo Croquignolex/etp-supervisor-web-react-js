@@ -26,6 +26,9 @@ function ManagerInfoComponent({manager}) {
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
             </button>
+            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
+                <i className="fa fa-table" /> Movements de caisse
+            </button>
             <div className="card">
                 <div className="card-header bg-secondary" />
                 <div className="card-body">
