@@ -34,6 +34,11 @@ export const STORE_MANAGER_EDIT_INFO_REQUEST_RESET = 'STORE_MANAGER_EDIT_INFO_RE
 export const STORE_MANAGER_EDIT_INFO_REQUEST_FAILED = 'STORE_MANAGER_EDIT_INFO_REQUEST_FAILED';
 export const STORE_MANAGER_EDIT_INFO_REQUEST_SUCCEEDED = 'STORE_MANAGER_EDIT_INFO_REQUEST_SUCCEEDED';
 
+export const STORE_MANAGER_MOVEMENTS_REQUEST_INIT = 'STORE_MANAGER_MOVEMENTS_REQUEST_INIT';
+export const STORE_MANAGER_MOVEMENTS_REQUEST_RESET = 'STORE_MANAGER_MOVEMENTS_REQUEST_RESET';
+export const STORE_MANAGER_MOVEMENTS_REQUEST_FAILED = 'STORE_MANAGER_MOVEMENTS_REQUEST_FAILED';
+export const STORE_MANAGER_MOVEMENTS_REQUEST_SUCCEEDED = 'STORE_MANAGER_MOVEMENTS_REQUEST_SUCCEEDED';
+
 // ======================================================== Managers
 // Set managers init data into store
 export const storeManagersRequestInit = () => ({
@@ -187,4 +192,26 @@ export const storeManagerEditInfoRequestSucceed = ({message}) => ({
 // Set manager edit info reset data into store
 export const storeManagerEditInfoRequestReset = () => ({
     type: STORE_MANAGER_EDIT_INFO_REQUEST_RESET
+});
+// ======================================================== Manager movements
+// Set manager movements init data into store
+export const storeManagerMovementsRequestInit = () => ({
+    type: STORE_MANAGER_MOVEMENTS_REQUEST_INIT
+});
+
+// Set manager movements failed data into store
+export const storeManagerMovementsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_MANAGER_MOVEMENTS_REQUEST_FAILED
+});
+
+// Set manager movements succeeded data into store
+export const storeManagerMovementsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_MANAGER_MOVEMENTS_REQUEST_SUCCEEDED
+});
+
+// Set manager movements reset data into store
+export const storeManagerMovementsRequestReset = () => ({
+    type: STORE_MANAGER_MOVEMENTS_REQUEST_RESET
 });

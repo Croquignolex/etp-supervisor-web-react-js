@@ -10,6 +10,7 @@ const initialState = {
     show: {failed: false, loading: false, succeeded: false, message: ""},
     edit: {failed: false, loading: false, succeeded: false, message: ""},
     status: {failed: false, loading: false, succeeded: false, message: ""},
+    movements: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -134,6 +135,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set manager edit info reset request store data
         case actions.STORE_MANAGER_EDIT_INFO_REQUEST_RESET:
             nextState = {...state, edit: initialState.edit};
+            return nextState || state;
+        // ======================================================== Manager movements
+        // Resolve event to set manager movements init request store data
+        case actions.STORE_MANAGER_MOVEMENTS_REQUEST_INIT:
+            nextState = {...state, movements: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set manager movements failed request store data
+        case actions.STORE_MANAGER_MOVEMENTS_REQUEST_FAILED:
+            nextState = {...state, movements: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set manager movements succeeded request store data
+        case actions.STORE_MANAGER_MOVEMENTS_REQUEST_SUCCEEDED:
+            nextState = {...state, movements: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set manager movements reset request store data
+        case actions.STORE_MANAGER_MOVEMENTS_REQUEST_RESET:
+            nextState = {...state, movements: initialState.movements};
             return nextState || state;
         // ========================================================
         // Unknown action
