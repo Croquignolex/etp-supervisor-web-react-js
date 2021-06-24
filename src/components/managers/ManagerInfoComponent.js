@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
+import ManagerCashMovementsContainer from "../../containers/managers/ManagerCashMovementsContainer";
 
 // Component
 function ManagerInfoComponent({manager}) {
@@ -91,7 +92,7 @@ function ManagerInfoComponent({manager}) {
                 <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={cashMovementsModal} handleClose={handleCashMovementsModalHide}>
-                <ManagerInfoEditContainer handleClose={handleCashMovementsModalHide} />
+                <ManagerCashMovementsContainer id={managerDetailsModal.id} />
             </FormModalComponent>
         </>
     )
