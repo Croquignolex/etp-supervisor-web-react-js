@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import React, {useEffect} from 'react';
-
-import "react-datepicker/dist/react-datepicker.css";
+import React, {useEffect, useState} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
@@ -12,6 +10,9 @@ import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/a
 
 // Component
 function ManagerMovementsComponent({manager, dispatch, request}) {
+    // Local states
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
     // Local effects
     useEffect(() => {
         dispatch(emitManagerMovementsFetch({
@@ -32,6 +33,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
 
     const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
+        setSelectedDate(selectedDay)
         dispatch(emitManagerMovementsFetch({id: manager.id, selectedDay}));
     }
 
@@ -45,7 +47,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                             <button type="button" className="btn btn-theme mb-1 mr-1">
                                 <i className="fa fa-file-excel" /> Exporter en excel
                             </button>
-                            <DatePickerComponent handleInput={handleSelectedDate} />
+                            <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">

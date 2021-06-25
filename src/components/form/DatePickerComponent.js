@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
+import React, {forwardRef} from 'react';
 import DatePicker from "react-datepicker";
-import React, {forwardRef, useState} from 'react';
 
 import "react-datepicker/dist/react-datepicker.css";
 
 // Component
-function DatePickerComponent({handleInput}) {
-    // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
-
+function DatePickerComponent({input, handleInput}) {
+    // Custom component
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <button className="btn btn-theme mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
             <i className="fa fa-calendar-week" /> {value}
@@ -16,15 +14,14 @@ function DatePickerComponent({handleInput}) {
     ));
 
     const handleSelectedDate = (data) => {
-        setSelectedDate(data);
         handleInput(data);
     }
 
     // Render
     return (
-        <DatePicker calendarStartDay={1}
-                    maxDate={selectedDate}
-                    selected={selectedDate}
+        <DatePicker maxDate={input}
+                    selected={input}
+                    calendarStartDay={1}
                     dateFormat="dd/MM/yyyy"
                     onChange={handleSelectedDate}
                     customInput={<CustomInput />}
