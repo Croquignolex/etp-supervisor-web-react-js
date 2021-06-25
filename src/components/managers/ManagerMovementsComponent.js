@@ -14,7 +14,10 @@ import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/a
 function ManagerMovementsComponent({manager, dispatch, request}) {
     // Local effects
     useEffect(() => {
-        dispatch(emitManagerMovementsFetch({id: manager.id}));
+        dispatch(emitManagerMovementsFetch({
+            id: manager.id,
+            selectedDay: new Date()
+        }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();

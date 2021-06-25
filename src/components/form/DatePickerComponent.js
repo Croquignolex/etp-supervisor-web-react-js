@@ -17,7 +17,6 @@ function DatePickerComponent({handleInput}) {
 
     const handleSelectedDate = (data) => {
         setSelectedDate(data);
-        console.log(data)
         handleInput(data);
     }
 

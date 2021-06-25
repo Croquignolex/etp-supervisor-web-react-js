@@ -3,6 +3,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
+import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_MANAGER,
@@ -48,7 +49,6 @@ import {
     storeManagerStatusToggleRequestFailed,
     storeManagerStatusToggleRequestSucceed
 } from "../requests/managers/actions";
-import {dateToString} from "../../functions/generalFunctions";
 
 // Fetch all managers from API
 export function* emitAllManagersFetch() {
@@ -211,8 +211,8 @@ export function* emitManagerMovementsFetch() {
         try {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
-            const data = {journee: selectedDay};
-            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractManagerMovementsData(
                 apiResponse.data.movements
