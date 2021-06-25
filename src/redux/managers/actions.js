@@ -122,9 +122,9 @@ export const emitUpdateManagerInfo = ({id, email, name, address, description}) =
 });
 
 // Emit fetch manager movements
-export const emitManagerMovementsFetch = ({manager, start, end}) => ({
+export const emitManagerMovementsFetch = ({id, start, end}) => ({
+    id,
     end,
     start,
-    manager,
     type: EMIT_MANAGER_MOVEMENTS_FETCH
 });
