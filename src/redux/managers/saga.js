@@ -18,8 +18,9 @@ import {
     storeSetManagerActionData,
     storeSetManagerToggleData,
     EMIT_TOGGLE_MANAGER_STATUS,
+    storeSetManagerMovementsData,
     EMIT_MANAGER_MOVEMENTS_FETCH,
-    storeStopInfiniteScrollManagerData, storeSetManagerMovementsData
+    storeStopInfiniteScrollManagerData
 } from "./actions";
 import {
     storeManagerRequestInit,
@@ -210,7 +211,7 @@ export function* emitManagerMovementsFetch() {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
             const data = {debut: start, fin: end};
-            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_DETAILS_API_PATH}/${id}`);
+            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`);
             // Extract data
             const movements = extractManagerMovementsData(
                 apiResponse.data.user,
@@ -269,25 +270,7 @@ function extractManagerMovementsData(apiMovements) {
         movements: []
     };
 
-    if(apiAccount) {
-        manager.account = {
-            balance: apiAccount.solde,
-            id: apiAccount.id.toString(),
-        }
-    }
-    if(apiManager) {
-        manager.actionLoader = false;
-        manager.toggleLoader = false;
-        manager.name = apiManager.name;
-        manager.phone = apiManager.phone;
-        manager.email = apiManager.email;
-        manager.address = apiManager.adresse;
-        manager.id = apiManager.id.toString();
-        manager.creation = apiManager.created_at;
-        manager.description = apiManager.description;
-        manager.status = apiManager.statut === APPROVE;
-        manager.avatar = getImageFromServer(apiManager.avatar, PROFILE_SCOPE);
-    }
+
     return manager;
 }
 
