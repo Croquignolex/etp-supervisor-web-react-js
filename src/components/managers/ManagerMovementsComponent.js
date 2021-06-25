@@ -1,5 +1,8 @@
 import PropTypes from "prop-types";
-import React, {useEffect} from 'react';
+import DatePicker from "react-datepicker";
+import React, {useEffect, useState} from 'react';
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
@@ -9,6 +12,9 @@ import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/a
 
 // Component
 function ManagerMovementsComponent({manager, dispatch, request}) {
+    // Local states
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
     // Local effects
     useEffect(() => {
         dispatch(emitManagerMovementsFetch({id: manager.id}));
@@ -24,6 +30,12 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
         dispatch(storeManagerMovementsRequestReset());
     };
 
+    const handleSelectedDate = (data) => {
+        shouldResetErrorData();
+        setSelectedDate(data)
+        console.log(data)
+    }
+
     // Render
     return (
         <>
@@ -34,13 +46,14 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                             <button type="button" className="btn btn-theme mb-1 mr-1">
                                 <i className="fa fa-file-excel" /> Exporter en excel
                             </button>
+                            <DatePicker selected={selectedDate} onChange={handleSelectedDate} />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>DATE</th>
-                                                <th>OPERATION</th>
+                                                <th>TYPE</th>
                                                 <th>LIBELLE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
@@ -83,7 +96,6 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
 
 // Prop types to ensure destroyed props data type
 ManagerMovementsComponent.propTypes = {
-    id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     manager: PropTypes.object.isRequired,
