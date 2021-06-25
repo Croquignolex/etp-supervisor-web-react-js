@@ -1,7 +1,6 @@
 import Lodash from "lodash";
 
 import * as actions from "./actions";
-import {STORE_SET_MANAGER_MOVEMENTS_DATA} from "./actions";
 
 // Partial global store for users data management
 const initialState = {
