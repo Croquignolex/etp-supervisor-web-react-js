@@ -23,7 +23,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
     const shouldResetErrorData = () => {
         dispatch(storeManagerMovementsRequestReset());
     };
-console.log(manager)
+
     // Render
     return (
         <>
@@ -51,7 +51,7 @@ console.log(manager)
                                             {manager.movements.map((item, key) => {
                                                 return (
                                                     <tr key={key}>
-                                                        <td>{item.date}</td>
+                                                        <td>{item.creation}</td>
                                                         <td>{item.type}</td>
                                                         <td>{item.label}</td>
                                                         <td>{item.in}</td>

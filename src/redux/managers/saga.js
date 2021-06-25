@@ -48,6 +48,7 @@ import {
     storeManagerStatusToggleRequestFailed,
     storeManagerStatusToggleRequestSucceed
 } from "../requests/managers/actions";
+import {dateToString} from "../../functions/generalFunctions";
 
 // Fetch all managers from API
 export function* emitAllManagersFetch() {
@@ -211,11 +212,10 @@ export function* emitManagerMovementsFetch() {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
             const data = {debut: start, fin: end};
-            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`);
+            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractManagerMovementsData(
-                apiResponse.data.user,
-                apiResponse.data.caisse,
+                apiResponse.data.movements
             );
             // Fire event to redux
             yield put(storeSetManagerMovementsData({movements}));
@@ -262,16 +262,20 @@ function extractManagerData(apiManager, apiAccount) {
 
 // Extract manager data
 function extractManagerMovementsData(apiMovements) {
-    let manager = {
-        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
+    let  movements = [];
 
-        account: {id: '', balance: ''},
+    apiMovements.forEach(movement => {
+        movements.push({
+            in: movement.in,
+            out: movement.out,
+            type: movement.type,
+            label: movement.name,
+            balance: movement.balance,
+            creation: dateToString(movement.created_at),
+        });
+    });
 
-        movements: []
-    };
-
-
-    return manager;
+    return movements;
 }
 
 // Extract managers data
