@@ -18,7 +18,7 @@ import {
     storeSetManagerActionData,
     storeSetManagerToggleData,
     EMIT_TOGGLE_MANAGER_STATUS,
-    storeStopInfiniteScrollManagerData
+    storeStopInfiniteScrollManagerData, EMIT_MANAGER_MOVEMENTS_FETCH
 } from "./actions";
 import {
     storeManagerRequestInit,
@@ -41,7 +41,7 @@ import {
     storeManagerEditInfoRequestSucceed,
     storeManagerStatusToggleRequestInit,
     storeManagerStatusToggleRequestFailed,
-    storeManagerStatusToggleRequestSucceed
+    storeManagerStatusToggleRequestSucceed, storeManagerMovementsRequestInit
 } from "../requests/managers/actions";
 
 // Fetch all managers from API
@@ -199,8 +199,63 @@ export function* emitUpdateManagerInfo() {
     });
 }
 
+// Fetch manager movements from API
+export function* emitManagerMovementsFetch() {
+    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({manager, start, end}) {
+        try {
+            // Fire event for request
+            yield put(storeManagerMovementsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_DETAILS_API_PATH}/${id}`);
+            // Extract data
+            const manager = extractManagerMovementsData(
+                apiResponse.data.user,
+                apiResponse.data.caisse,
+            );
+            // Fire event to redux
+            yield put(storeSetManagerData({manager}));
+            // Fire event for request
+            yield put(storeManagerRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeManagerRequestFailed({message}));
+        }
+    });
+}
+
 // Extract manager data
 function extractManagerData(apiManager, apiAccount) {
+    let manager = {
+        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
+
+        account: {id: '', balance: ''},
+
+        movements: []
+    };
+
+    if(apiAccount) {
+        manager.account = {
+            balance: apiAccount.solde,
+            id: apiAccount.id.toString(),
+        }
+    }
+    if(apiManager) {
+        manager.actionLoader = false;
+        manager.toggleLoader = false;
+        manager.name = apiManager.name;
+        manager.phone = apiManager.phone;
+        manager.email = apiManager.email;
+        manager.address = apiManager.adresse;
+        manager.id = apiManager.id.toString();
+        manager.creation = apiManager.created_at;
+        manager.description = apiManager.description;
+        manager.status = apiManager.statut === APPROVE;
+        manager.avatar = getImageFromServer(apiManager.avatar, PROFILE_SCOPE);
+    }
+    return manager;
+}
+
+// Extract manager data
+function extractManagerMovementsData(apiMovements) {
     let manager = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
@@ -255,5 +310,6 @@ export default function* sagaManagers() {
         fork(emitUpdateManagerInfo),
         fork(emitNextManagersFetch),
         fork(emitToggleManagerStatus),
+        fork(emitManagerMovementsFetch),
     ]);
 }
