@@ -9,12 +9,10 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitManagerMovementsFetch} from "../../redux/managers/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/actions";
+import DatePickerComponent from "../form/DatePickerComponent";
 
 // Component
 function ManagerMovementsComponent({manager, dispatch, request}) {
-    // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
-
     // Local effects
     useEffect(() => {
         dispatch(emitManagerMovementsFetch({id: manager.id}));
@@ -30,17 +28,10 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
         dispatch(storeManagerMovementsRequestReset());
     };
 
-    const handleSelectedDate = (data) => {
+    const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
-        setSelectedDate(data)
-        console.log(data)
+        dispatch(emitManagerMovementsFetch({id: manager.id, selectedDay}));
     }
-
-    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <button className="btn btn-theme mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
-            <i className="fa fa-calendar-week" /> {value}
-        </button>
-    ));
 
     // Render
     return (
@@ -49,7 +40,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <DatePicker selected={selectedDate} onChange={handleSelectedDate} customInput={<ExampleCustomInput />}/>
+                            <DatePickerComponent handleInput={handleSelectedDate} />
                             <button type="button" className="btn btn-theme mb-1 mr-1">
                                 <i className="fa fa-file-excel" /> Exporter en excel
                             </button>

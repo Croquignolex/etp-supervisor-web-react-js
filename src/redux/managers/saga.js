@@ -207,11 +207,11 @@ export function* emitUpdateManagerInfo() {
 
 // Fetch manager movements from API
 export function* emitManagerMovementsFetch() {
-    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, start, end}) {
+    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, selectedDay}) {
         try {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
-            const data = {debut: start, fin: end};
+            const data = {journee: selectedDay};
             const apiResponse = yield call(apiGetRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractManagerMovementsData(
