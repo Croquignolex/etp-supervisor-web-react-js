@@ -18,7 +18,8 @@ import {
     storeSetManagerActionData,
     storeSetManagerToggleData,
     EMIT_TOGGLE_MANAGER_STATUS,
-    storeStopInfiniteScrollManagerData, EMIT_MANAGER_MOVEMENTS_FETCH
+    EMIT_MANAGER_MOVEMENTS_FETCH,
+    storeStopInfiniteScrollManagerData, storeSetManagerMovementsData
 } from "./actions";
 import {
     storeManagerRequestInit,
@@ -37,11 +38,14 @@ import {
     storeNextManagersRequestFailed,
     storeManagerEditInfoRequestInit,
     storeNextManagersRequestSucceed,
+    storeManagerMovementsRequestInit,
     storeManagerEditInfoRequestFailed,
     storeManagerEditInfoRequestSucceed,
+    storeManagerMovementsRequestFailed,
+    storeManagerMovementsRequestSucceed,
     storeManagerStatusToggleRequestInit,
     storeManagerStatusToggleRequestFailed,
-    storeManagerStatusToggleRequestSucceed, storeManagerMovementsRequestInit
+    storeManagerStatusToggleRequestSucceed
 } from "../requests/managers/actions";
 
 // Fetch all managers from API
@@ -205,19 +209,20 @@ export function* emitManagerMovementsFetch() {
         try {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_DETAILS_API_PATH}/${id}`);
+            const data = {};
+            const apiResponse = yield call(apiGetRequest, `${api.MANAGER_DETAILS_API_PATH}/${movements}`);
             // Extract data
-            const manager = extractManagerMovementsData(
+            const movements = extractManagerMovementsData(
                 apiResponse.data.user,
                 apiResponse.data.caisse,
             );
             // Fire event to redux
-            yield put(storeSetManagerData({manager}));
+            yield put(storeSetManagerMovementsData({movements}));
             // Fire event for request
-            yield put(storeManagerRequestSucceed({message: apiResponse.message}));
+            yield put(storeManagerMovementsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeManagerRequestFailed({message}));
+            yield put(storeManagerMovementsRequestFailed({message}));
         }
     });
 }
