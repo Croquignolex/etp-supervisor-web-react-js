@@ -23,7 +23,10 @@ function DatePickerComponent({handleInput}) {
 
     // Render
     return (
-        <DatePicker selected={selectedDate}
+        <DatePicker calendarStartDay={1}
+                    maxDate={selectedDate}
+                    selected={selectedDate}
+                    dateFormat="dd/MM/yyyy"
                     onChange={handleSelectedDate}
                     customInput={<CustomInput />}
         />
