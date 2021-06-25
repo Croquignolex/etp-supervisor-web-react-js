@@ -1,6 +1,7 @@
 import Lodash from "lodash";
 
 import * as actions from "./actions";
+import {STORE_SET_MANAGER_MOVEMENTS_DATA} from "./actions";
 
 // Partial global store for users data management
 const initialState = {
@@ -68,6 +69,16 @@ function reduce(state = initialState, action) {
                     if(item.id === action.id) item.actionLoader = !item.actionLoader;
                     return item;
                 })
+            };
+            return nextState || state;
+        // Resolve event to set manager movements action data
+        case actions.STORE_SET_MANAGER_MOVEMENTS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    movements: action.movements
+                }
             };
             return nextState || state;
         // Unknown action
