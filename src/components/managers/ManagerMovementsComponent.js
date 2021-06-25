@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
-import DatePicker from "react-datepicker";
-import React, {useEffect, useState, forwardRef} from 'react';
+import React, {useEffect} from 'react';
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
+import DatePickerComponent from "../form/DatePickerComponent";
 import {emitManagerMovementsFetch} from "../../redux/managers/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/actions";
-import DatePickerComponent from "../form/DatePickerComponent";
 
 // Component
 function ManagerMovementsComponent({manager, dispatch, request}) {
