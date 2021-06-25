@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, forwardRef} from 'react';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -36,6 +36,12 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
         console.log(data)
     }
 
+    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+        <button className="btn btn-theme mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
+            <i className="fa fa-calendar-week" /> {value}
+        </button>
+    ));
+
     // Render
     return (
         <>
@@ -43,10 +49,10 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
+                            <DatePicker selected={selectedDate} onChange={handleSelectedDate} customInput={<ExampleCustomInput />}/>
                             <button type="button" className="btn btn-theme mb-1 mr-1">
                                 <i className="fa fa-file-excel" /> Exporter en excel
                             </button>
-                            <DatePicker selected={selectedDate} onChange={handleSelectedDate} />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
