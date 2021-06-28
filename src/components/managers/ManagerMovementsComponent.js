@@ -55,7 +55,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                                             <tr>
                                                 <th>DATE</th>
                                                 <th>TYPE</th>
-                                                <th>LIBELLE</th>
+                                                <th>NATURE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
                                                 <th>SOLDES</th>
