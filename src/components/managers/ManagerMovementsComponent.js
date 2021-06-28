@@ -9,8 +9,8 @@ import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitManagerMovementsFetch} from "../../redux/managers/actions";
-import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/actions";
+import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function ManagerMovementsComponent({manager, dispatch, request}) {
@@ -46,10 +46,12 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
         return (
             <ExcelFile element={
                 <button type="button" className="btn btn-theme mb-1 mr-1">
-                    <i className="fa fa-file-excel" /> Exporter en excel
+                    <i className="fa fa-file-export" /> Exporter en excel
                 </button>
             }>
-                <ExcelSheet data={manager.movements} name="movements">
+                <ExcelSheet data={manager.movements}
+                            name={`Mouvemnt de caisse de ${manager.name} du ${shortDateToString(selectedDate)}`}
+                >
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="TYPE" value="type"/>
                     <ExcelColumn label="NATURE" value="label"/>
