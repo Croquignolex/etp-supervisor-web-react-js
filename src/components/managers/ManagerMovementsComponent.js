@@ -41,6 +41,27 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
         dispatch(emitManagerMovementsFetch({id: manager.id, selectedDay}));
     }
 
+    // Custom export button
+    const ExportButton = () => {
+        return (
+            <ExcelFile element={
+                <button type="button" className="btn btn-theme mb-1 mr-1">
+                    <i className="fa fa-file-excel" /> Exporter en excel
+                </button>
+            }>
+                <ExcelSheet data={manager.movements} name="movements">
+                    <ExcelColumn label="DATE" value="creation"/>
+                    <ExcelColumn label="TYPE" value="type"/>
+                    <ExcelColumn label="NATURE" value="label"/>
+                    <ExcelColumn label="ENTREES" value="in"/>
+                    <ExcelColumn label="SORTIES" value="out"/>
+                    <ExcelColumn label="SOLDES" value="balance"/>
+                </ExcelSheet>
+            </ExcelFile>
+        )
+    }
+
+
     // Render
     return (
         <>
@@ -48,19 +69,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <button type="button" className="btn btn-theme mb-1 mr-1">
-                                <i className="fa fa-file-excel" /> Exporter en excel
-                            </button>
-                            <ExcelFile element={<button>Download Data</button>}>
-                                <ExcelSheet data={manager.movements} name="movements">
-                                    <ExcelColumn label="DATE" value="creation"/>
-                                    <ExcelColumn label="TYPE" value="type"/>
-                                    <ExcelColumn label="NATURE" value="label"/>
-                                    <ExcelColumn label="ENTREES" value="in"/>
-                                    <ExcelColumn label="SORTIES" value="out"/>
-                                    <ExcelColumn label="SOLDES" value="balance"/>
-                                </ExcelSheet>
-                            </ExcelFile>
+                            <ExportButton />
                             <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
                             <div className="card">
                                 <div className="table-responsive">
