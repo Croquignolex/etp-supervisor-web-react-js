@@ -17,6 +17,7 @@ export const EMIT_ALL_MANAGERS_FETCH = 'EMIT_ALL_MANAGERS_FETCH';
 export const EMIT_UPDATE_MANAGER_INFO = 'EMIT_UPDATE_MANAGER_INFO';
 export const EMIT_TOGGLE_MANAGER_STATUS = 'EMIT_TOGGLE_MANAGER_STATUS';
 export const EMIT_MANAGER_MOVEMENTS_FETCH = 'EMIT_MANAGER_MOVEMENTS_FETCH';
+export const EMIT_MANAGER_TRANSACTIONS_FETCH = 'EMIT_MANAGER_TRANSACTIONS_FETCH';
 
 //====================== Reducer trigger actions
 // Set managers data in store
@@ -126,4 +127,11 @@ export const emitManagerMovementsFetch = ({id, selectedDay}) => ({
     id,
     selectedDay,
     type: EMIT_MANAGER_MOVEMENTS_FETCH
+});
+
+// Emit fetch manager transactions
+export const emitManagerTransactionsFetch = ({id, selectedDay}) => ({
+    id,
+    selectedDay,
+    type: EMIT_MANAGER_TRANSACTIONS_FETCH
 });

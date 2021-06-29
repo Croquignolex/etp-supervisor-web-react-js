@@ -11,6 +11,7 @@ const initialState = {
     edit: {failed: false, loading: false, succeeded: false, message: ""},
     status: {failed: false, loading: false, succeeded: false, message: ""},
     movements: {failed: false, loading: false, succeeded: false, message: ""},
+    transactions: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -152,6 +153,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set manager movements reset request store data
         case actions.STORE_MANAGER_MOVEMENTS_REQUEST_RESET:
             nextState = {...state, movements: initialState.movements};
+            return nextState || state;
+        // ======================================================== Manager transactions
+        // Resolve event to set manager transactions init request store data
+        case actions.STORE_MANAGER_TRANSACTIONS_REQUEST_INIT:
+            nextState = {...state, transactions: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set manager transactions failed request store data
+        case actions.STORE_MANAGER_TRANSACTIONS_REQUEST_FAILED:
+            nextState = {...state, transactions: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set manager transactions succeeded request store data
+        case actions.STORE_MANAGER_TRANSACTIONS_REQUEST_SUCCEEDED:
+            nextState = {...state, transactions: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set manager transactions reset request store data
+        case actions.STORE_MANAGER_TRANSACTIONS_REQUEST_RESET:
+            nextState = {...state, transactions: initialState.transactions};
             return nextState || state;
         // ========================================================
         // Unknown action

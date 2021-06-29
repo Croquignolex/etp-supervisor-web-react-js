@@ -16,6 +16,7 @@ import ManagerMovementsContainer from "../../containers/managers/ManagerMovement
 import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
+import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
 
 // Component
 function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, location}) {
@@ -195,7 +196,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                 <ManagerMovementsContainer manager={movementsModal.manager} />
             </FormModalComponent>
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <ManagerMovementsContainer manager={transactionsModal.manager} />
+                <ManagerTransactionsContainer manager={transactionsModal.manager} />
             </FormModalComponent>
         </>
     )
