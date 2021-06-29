@@ -38,7 +38,7 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
     const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedDate(selectedDay)
-        dispatch(emitCollectorTransactionsFetch({id: manager.id, selectedDay}));
+        dispatch(emitCollectorTransactionsFetch({id: collector.id, selectedDay}));
     }
 
     // Custom export button
