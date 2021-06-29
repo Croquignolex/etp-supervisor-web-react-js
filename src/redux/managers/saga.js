@@ -21,6 +21,8 @@ import {
     EMIT_TOGGLE_MANAGER_STATUS,
     storeSetManagerMovementsData,
     EMIT_MANAGER_MOVEMENTS_FETCH,
+    EMIT_MANAGER_TRANSACTIONS_FETCH,
+    storeSetManagerTransactionsData,
     storeStopInfiniteScrollManagerData
 } from "./actions";
 import {
@@ -46,8 +48,11 @@ import {
     storeManagerMovementsRequestFailed,
     storeManagerMovementsRequestSucceed,
     storeManagerStatusToggleRequestInit,
+    storeManagerTransactionsRequestInit,
     storeManagerStatusToggleRequestFailed,
-    storeManagerStatusToggleRequestSucceed
+    storeManagerTransactionsRequestFailed,
+    storeManagerStatusToggleRequestSucceed,
+    storeManagerTransactionsRequestSucceed
 } from "../requests/managers/actions";
 
 // Fetch all managers from API
@@ -230,23 +235,23 @@ export function* emitManagerMovementsFetch() {
 
 // Fetch manager transactions from API
 export function* emitManagerTransactionsFetch() {
-    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_MANAGER_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
         try {
             // Fire event for request
-            yield put(storeManagerMovementsRequestInit());
+            yield put(storeManagerTransactionsRequestInit());
             const data = {journee: shortDateToString(selectedDay)};
-            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
-            const movements = extractManagerMovementsData(
-                apiResponse.data.movements
+            const movements = extractManagerTransactionsData(
+                apiResponse.data.transactions
             );
             // Fire event to redux
-            yield put(storeSetManagerMovementsData({movements}));
+            yield put(storeSetManagerTransactionsData({movements}));
             // Fire event for request
-            yield put(storeManagerMovementsRequestSucceed({message: apiResponse.message}));
+            yield put(storeManagerTransactionsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeManagerMovementsRequestFailed({message}));
+            yield put(storeManagerTransactionsRequestFailed({message}));
         }
     });
 }
@@ -283,9 +288,9 @@ function extractManagerData(apiManager, apiAccount) {
     return manager;
 }
 
-// Extract manager data
+// Extract manager movements data
 function extractManagerMovementsData(apiMovements) {
-    let  movements = [];
+    let movements = [];
 
     apiMovements.forEach(movement => {
         movements.push({
@@ -299,6 +304,24 @@ function extractManagerMovementsData(apiMovements) {
     });
 
     return movements;
+}
+
+// Extract manager transactions data
+function extractManagerTransactionsData(apiTransactions) {
+    let transactions = [];
+
+    apiTransactions.forEach(transaction => {
+        transactions.push({
+            in: transaction.in,
+            out: transaction.out,
+            type: transaction.type,
+            label: transaction.name,
+            balance: transaction.balance,
+            creation: dateToString(transaction.created_at),
+        });
+    });
+
+    return transactions;
 }
 
 // Extract managers data

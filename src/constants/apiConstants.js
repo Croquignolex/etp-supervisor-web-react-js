@@ -73,6 +73,7 @@ export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
 export const CREATE_MANAGER_API_PATH = `${API_URL}/create_gestionnaire`;
 export const TOGGLE_MANAGER_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 export const MANAGER_MOVEMENTS_API_PATH = `${API_URL}/movements_gestionnaire`;
+export const MANAGER_TRANSACTIONS_API_PATH = `${API_URL}/transactions_gestionnaire`;
 
 // Supervisors
 export const SUPERVISORS_API_PATH = `${API_URL}/superviseurs`;
