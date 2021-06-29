@@ -242,11 +242,11 @@ export function* emitManagerTransactionsFetch() {
             const data = {journee: shortDateToString(selectedDay)};
             const apiResponse = yield call(apiPostRequest, `${api.MANAGER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
-            const movements = extractManagerTransactionsData(
+            const transactions = extractManagerTransactionsData(
                 apiResponse.data.transactions
             );
             // Fire event to redux
-            yield put(storeSetManagerTransactionsData({movements}));
+            yield put(storeSetManagerTransactionsData({transactions}));
             // Fire event for request
             yield put(storeManagerTransactionsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
