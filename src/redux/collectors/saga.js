@@ -441,5 +441,7 @@ export default function* sagaCollectors() {
         fork(emitUpdateCollectorInfo),
         fork(emitUpdateCollectorZone),
         fork(emitToggleCollectorStatus),
+        fork(emitCollectorMovementsFetch),
+        fork(emitCollectorTransactionsFetch),
     ]);
 }
