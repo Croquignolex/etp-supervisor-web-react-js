@@ -57,7 +57,6 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
                     <ExcelColumn label="TYPE" value="type"/>
                     <ExcelColumn label="COMPTE FLOTTAGE" value="left_account"/>
                     <ExcelColumn label="COMPTE RECIPROQUE" value="right_account"/>
-                    <ExcelColumn label="NATURE" value="label"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
                     <ExcelColumn label="SOLDES" value="balance"/>
