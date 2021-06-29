@@ -44,6 +44,16 @@ export const STORE_COLLECTOR_ADD_SIM_REQUEST_RESET = 'STORE_COLLECTOR_ADD_SIM_RE
 export const STORE_COLLECTOR_ADD_SIM_REQUEST_FAILED = 'STORE_COLLECTOR_ADD_SIM_REQUEST_FAILED';
 export const STORE_COLLECTOR_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_COLLECTOR_ADD_SIM_REQUEST_SUCCEEDED';
 
+export const STORE_COLLECTOR_MOVEMENTS_REQUEST_INIT = 'STORE_COLLECTOR_MOVEMENTS_REQUEST_INIT';
+export const STORE_COLLECTOR_MOVEMENTS_REQUEST_RESET = 'STORE_COLLECTOR_MOVEMENTS_REQUEST_RESET';
+export const STORE_COLLECTOR_MOVEMENTS_REQUEST_FAILED = 'STORE_COLLECTOR_MOVEMENTS_REQUEST_FAILED';
+export const STORE_COLLECTOR_MOVEMENTS_REQUEST_SUCCEEDED = 'STORE_COLLECTOR_MOVEMENTS_REQUEST_SUCCEEDED';
+
+export const STORE_COLLECTOR_TRANSACTIONS_REQUEST_INIT = 'STORE_COLLECTOR_TRANSACTIONS_REQUEST_INIT';
+export const STORE_COLLECTOR_TRANSACTIONS_REQUEST_RESET = 'STORE_COLLECTOR_TRANSACTIONS_REQUEST_RESET';
+export const STORE_COLLECTOR_TRANSACTIONS_REQUEST_FAILED = 'STORE_COLLECTOR_TRANSACTIONS_REQUEST_FAILED';
+export const STORE_COLLECTOR_TRANSACTIONS_REQUEST_SUCCEEDED = 'STORE_COLLECTOR_TRANSACTIONS_REQUEST_SUCCEEDED';
+
 // ======================================================== Collectors
 // Set collectors init data into store
 export const storeCollectorsRequestInit = () => ({
@@ -241,4 +251,48 @@ export const storeCollectorAddSimRequestSucceed = ({message}) => ({
 // Set collector add sim reset data into store
 export const storeCollectorAddSimRequestReset = () => ({
     type: STORE_COLLECTOR_ADD_SIM_REQUEST_RESET
+});
+// ======================================================== Collector movements
+// Set collector movements init data into store
+export const storeCollectorMovementsRequestInit = () => ({
+    type: STORE_COLLECTOR_MOVEMENTS_REQUEST_INIT
+});
+
+// Set collector movements failed data into store
+export const storeCollectorMovementsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_COLLECTOR_MOVEMENTS_REQUEST_FAILED
+});
+
+// Set collector movements succeeded data into store
+export const storeCollectorMovementsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_COLLECTOR_MOVEMENTS_REQUEST_SUCCEEDED
+});
+
+// Set collector movements reset data into store
+export const storeCollectorMovementsRequestReset = () => ({
+    type: STORE_COLLECTOR_MOVEMENTS_REQUEST_RESET
+});
+// ======================================================== Collector transactions
+// Set collector transactions init data into store
+export const storeCollectorTransactionsRequestInit = () => ({
+    type: STORE_COLLECTOR_TRANSACTIONS_REQUEST_INIT
+});
+
+// Set collector transactions failed data into store
+export const storeCollectorTransactionsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_COLLECTOR_TRANSACTIONS_REQUEST_FAILED
+});
+
+// Set collector transactions succeeded data into store
+export const storeCollectorTransactionsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_COLLECTOR_TRANSACTIONS_REQUEST_SUCCEEDED
+});
+
+// Set collector transactions reset data into store
+export const storeCollectorTransactionsRequestReset = () => ({
+    type: STORE_COLLECTOR_TRANSACTIONS_REQUEST_RESET
 });

@@ -13,7 +13,9 @@ const initialState = {
         sim: {failed: false, loading: false, succeeded: false, message: ""},
         info: {failed: false, loading: false, succeeded: false, message: ""},
         zone: {failed: false, loading: false, succeeded: false, message: ""},
-    }
+    },
+    movements: {failed: false, loading: false, succeeded: false, message: ""},
+    transactions: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -172,6 +174,40 @@ function reduce(state = initialState, action) {
         // Resolve event to set collector add sim reset request store data
         case actions.STORE_COLLECTOR_ADD_SIM_REQUEST_RESET:
             nextState = {...state, edit: {...state.edit, sim: initialState.edit.sim}};
+            return nextState || state;
+        // ======================================================== Collector movements
+        // Resolve event to set collector movements init request store data
+        case actions.STORE_COLLECTOR_MOVEMENTS_REQUEST_INIT:
+            nextState = {...state, movements: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set collector movements failed request store data
+        case actions.STORE_COLLECTOR_MOVEMENTS_REQUEST_FAILED:
+            nextState = {...state, movements: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set collector movements succeeded request store data
+        case actions.STORE_COLLECTOR_MOVEMENTS_REQUEST_SUCCEEDED:
+            nextState = {...state, movements: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set collector movements reset request store data
+        case actions.STORE_COLLECTOR_MOVEMENTS_REQUEST_RESET:
+            nextState = {...state, movements: initialState.movements};
+            return nextState || state;
+        // ======================================================== Collector transactions
+        // Resolve event to set collector transactions init request store data
+        case actions.STORE_COLLECTOR_TRANSACTIONS_REQUEST_INIT:
+            nextState = {...state, transactions: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set collector transactions failed request store data
+        case actions.STORE_COLLECTOR_TRANSACTIONS_REQUEST_FAILED:
+            nextState = {...state, transactions: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set collector transactions succeeded request store data
+        case actions.STORE_COLLECTOR_TRANSACTIONS_REQUEST_SUCCEEDED:
+            nextState = {...state, transactions: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set collector transactions reset request store data
+        case actions.STORE_COLLECTOR_TRANSACTIONS_REQUEST_RESET:
+            nextState = {...state, transactions: initialState.transactions};
             return nextState || state;
         // ========================================================
         // Unknown action
