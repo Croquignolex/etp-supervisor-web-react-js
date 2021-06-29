@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import ManagerTransactionsComponent from "../../components/managers/ManagerTransactionsComponent";
+import CollectorTransactionsComponent from "../../components/collectors/CollectorTransactionsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    request: state.managersRequests.transactions,
-    transactions: state.managers.current.transactions,
+    request: state.collectorsRequests.transactions,
+    transactions: state.components.current.transactions,
 });
 
 // Map dispatch function to component propsS
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(ManagerTransactionsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectorTransactionsComponent);
