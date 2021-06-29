@@ -10,7 +10,7 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
 import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
-import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function CollectorTransactionsComponent({collector, transactions, dispatch, request}) {
@@ -43,15 +43,15 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `${formatString(collector.name, 17)} ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Tansactions de flotte de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
 
         return (
             <ExcelFile element={
                 <button type="button" className="btn btn-theme mb-1 mr-1">
                     <i className="fa fa-file-export" /> Exporter en excel
                 </button>
-            }>
-                <ExcelSheet data={transactions} name={tabName}>
+            } filename={tabName}>
+                <ExcelSheet data={transactions} name="Transactions">
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="OPERATEUR" value="operator"/>
                     <ExcelColumn label="TYPE" value="type"/>

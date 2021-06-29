@@ -10,7 +10,7 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitCollectorMovementsFetch} from "../../redux/collectors/actions";
 import {storeCollectorMovementsRequestReset} from "../../redux/requests/collectors/actions";
-import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function CollectorMovementsComponent({collector, movements, dispatch, request}) {
@@ -43,15 +43,15 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `${formatString(collector.name, 17)} ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Mouvement de caisse de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
 
         return (
             <ExcelFile element={
                 <button type="button" className="btn btn-theme mb-1 mr-1">
                     <i className="fa fa-file-export" /> Exporter en excel
                 </button>
-            }>
-                <ExcelSheet data={movements} name={tabName}>
+            } filename={tabName}>
+                <ExcelSheet data={movements} name="Mouvements">
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="TYPE" value="type"/>
                     <ExcelColumn label="NATURE" value="label"/>
