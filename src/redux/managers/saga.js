@@ -228,6 +228,29 @@ export function* emitManagerMovementsFetch() {
     });
 }
 
+// Fetch manager transactions from API
+export function* emitManagerTransactionsFetch() {
+    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeManagerMovementsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
+            // Extract data
+            const movements = extractManagerMovementsData(
+                apiResponse.data.movements
+            );
+            // Fire event to redux
+            yield put(storeSetManagerMovementsData({movements}));
+            // Fire event for request
+            yield put(storeManagerMovementsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeManagerMovementsRequestFailed({message}));
+        }
+    });
+}
+
 // Extract manager data
 function extractManagerData(apiManager, apiAccount) {
     let manager = {
@@ -303,5 +326,6 @@ export default function* sagaManagers() {
         fork(emitNextManagersFetch),
         fork(emitToggleManagerStatus),
         fork(emitManagerMovementsFetch),
+        fork(emitManagerTransactionsFetch),
     ]);
 }

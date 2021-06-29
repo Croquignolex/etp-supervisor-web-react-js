@@ -13,7 +13,8 @@ const initialState = {
 
         account: {id: '', balance: ''},
 
-        movements: []
+        movements: [],
+        transactions: [],
     },
 };
 
@@ -77,6 +78,16 @@ function reduce(state = initialState, action) {
                 current: {
                     ...state.current,
                     movements: action.movements
+                }
+            };
+            return nextState || state;
+        // Resolve event to set manager transactions action data
+        case actions.STORE_SET_MANAGER_TRANSACTIONS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    transactions: action.transactions
                 }
             };
             return nextState || state;

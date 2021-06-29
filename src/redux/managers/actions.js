@@ -6,6 +6,7 @@ export const STORE_SET_NEXT_MANAGERS_DATA = 'STORE_SET_NEXT_MANAGERS_DATA';
 export const STORE_SET_MANAGER_ACTION_DATA = 'STORE_SET_MANAGER_ACTION_DATA';
 export const STORE_SET_MANAGER_TOGGLE_DATA = 'STORE_SET_MANAGER_TOGGLE_DATA';
 export const STORE_SET_MANAGER_MOVEMENTS_DATA = 'STORE_SET_MANAGER_MOVEMENTS_DATA';
+export const STORE_SET_MANAGER_TRANSACTIONS_DATA = 'STORE_SET_MANAGER_TRANSACTIONS_DATA';
 export const STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA = 'STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA';
 
 // Middleware action types
@@ -45,6 +46,12 @@ export const storeSetManagerData = ({manager, alsoInList = false}) => ({
 export const storeSetManagerMovementsData = ({movements}) => ({
     movements,
     type: STORE_SET_MANAGER_MOVEMENTS_DATA
+});
+
+// Set manager transactions data in store
+export const storeSetManagerTransactionsData = ({transactions}) => ({
+    transactions,
+    type: STORE_SET_MANAGER_TRANSACTIONS_DATA
 });
 
 // Set next managers data in store
