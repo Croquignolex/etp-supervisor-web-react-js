@@ -7,7 +7,8 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 
 // Component
-function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow, handleCollectorDetailsModalShow}) {
+function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow,
+                                      handleMovementsModalShow, handleTransactionsModalShow, handleCollectorDetailsModalShow}) {
     // Local states
     const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
 
@@ -72,10 +73,20 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                     </ul>
                                     <div className="mt-3 text-right">
                                         <button type="button"
-                                                className="btn btn-sm btn-theme"
+                                                className="btn btn-sm btn-theme mb-1"
                                                 onClick={() => handleCollectorDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" /> Détails
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme mb-1"
+                                                onClick={() => handleTransactionsModalShow(item)}>
+                                            <i className="fa fa-table" /> Transactions
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleMovementsModalShow(item)}>
+                                            <i className="fa fa-table" /> Movements caisse
                                         </button>
                                     </div>
                                 </div>
@@ -104,6 +115,8 @@ CollectorsCardsComponent.propTypes = {
     collectors: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
+    handleMovementsModalShow: PropTypes.func.isRequired,
+    handleTransactionsModalShow: PropTypes.func.isRequired,
     handleCollectorDetailsModalShow: PropTypes.func.isRequired,
 };
 

@@ -11,7 +11,9 @@ import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
+import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
+import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../../redux/collectors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../../redux/requests/collectors/actions";
@@ -22,7 +24,9 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newCollectorModal, setNewCollectorModal] = useState({show: false, header: ''});
-    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: '', manager: {}});
+    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: '', id: ''});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', manager: {}});
 
     // Local effects
     useEffect(() => {
@@ -70,8 +74,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     }
 
     // Show collector details modal form
-    const handleCollectorDetailsModalShow = ({id}) => {
-        setCollectorDetailsModal({...collectorDetailsModal, show: true, id})
+    const handleCollectorDetailsModalShow = ({id, name}) => {
+        setCollectorDetailsModal({...collectorDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide collector details modal form
@@ -83,6 +87,26 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const handleBlockModalShow = ({id, name}) => {
         setBlockModal({...blockModal, show: true, id, body: `Bloquer le responsable de zone ${name}?`})
     };
+
+    // Show transactions modal form
+    const handleTransactionsModalShow = (manager) => {
+        setTransactionsModal({...transactionsModal, manager, show: true, header: 'TRANSACTIONS DE ' + manager.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
+    // Show movements modal form
+    const handleMovementsModalShow = (manager) => {
+        setMovementsModal({...movementsModal, manager, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
+    }
+
+    // Hide movements modal form
+    const handleMovementsModalHide = () => {
+        setMovementsModal({...movementsModal, show: false})
+    }
 
     // Hide block confirmation modal
     const handleBlockModalHide = () => {
@@ -128,6 +152,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                                 ? <CollectorsCardsComponent handleBlock={handleBlock}
                                                                             handleBlockModalShow={handleBlockModalShow}
                                                                             collectors={searchEngine(collectors, needle)}
+                                                                            handleMovementsModalShow={handleMovementsModalShow}
+                                                                            handleTransactionsModalShow={handleTransactionsModalShow}
                                                                             handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
                                                 />
                                                 : (requestLoading(collectorsRequests.list) ? <LoaderComponent /> :
@@ -140,6 +166,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                                             <CollectorsCardsComponent collectors={collectors}
                                                                                       handleBlock={handleBlock}
                                                                                       handleBlockModalShow={handleBlockModalShow}
+                                                                                      handleMovementsModalShow={handleMovementsModalShow}
+                                                                                      handleTransactionsModalShow={handleTransactionsModalShow}
                                                                                       handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
@@ -163,6 +191,12 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
             </FormModalComponent>
             <FormModalComponent modal={collectorDetailsModal} handleClose={handleCollectorDetailsModalHide}>
                 <CollectorDetailsContainer id={collectorDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
+                <ManagerMovementsContainer manager={movementsModal.manager} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <ManagerTransactionsContainer manager={transactionsModal.manager} />
             </FormModalComponent>
         </>
     )
