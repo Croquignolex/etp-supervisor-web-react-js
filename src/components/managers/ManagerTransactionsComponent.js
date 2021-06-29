@@ -53,7 +53,10 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
             }>
                 <ExcelSheet data={transactions} name={tabName}>
                     <ExcelColumn label="DATE" value="creation"/>
+                    <ExcelColumn label="OPERATEUR" value="operator"/>
                     <ExcelColumn label="TYPE" value="type"/>
+                    <ExcelColumn label="COMPTE FLOTTAGE" value="left_account"/>
+                    <ExcelColumn label="COMPTE RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="NATURE" value="label"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
@@ -62,7 +65,6 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
             </ExcelFile>
         )
     }
-
 
     // Render
     return (
@@ -79,8 +81,10 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
                                         <thead>
                                             <tr>
                                                 <th>DATE</th>
+                                                <th>OPERATEUR</th>
                                                 <th>TYPE</th>
-                                                <th>NATURE</th>
+                                                <th>COMPTE FLOTTAGE</th>
+                                                <th>COMPTE RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
                                                 <th>SOLDES</th>
@@ -91,8 +95,10 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
                                                 return (
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
+                                                        <td>{item.operator}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.label}</td>
+                                                        <td>{item.left_account}</td>
+                                                        <td>{item.right_account}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
                                                         <td>{item.balance}</td>
@@ -101,7 +107,7 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
                                             })}
                                             {transactions.length === 0 && (
                                                 <tr>
-                                                    <td colSpan={6}>
+                                                    <td colSpan={8}>
                                                         <div className='alert custom-active text-center'>
                                                             Pas de transactions
                                                         </div>

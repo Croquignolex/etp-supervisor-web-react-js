@@ -63,7 +63,6 @@ function ManagerMovementsComponent({manager, movements, dispatch, request}) {
         )
     }
 
-
     // Render
     return (
         <>

@@ -263,7 +263,8 @@ function extractManagerData(apiManager, apiAccount) {
 
         account: {id: '', balance: ''},
 
-        movements: []
+        movements: [],
+        transactions: [],
     };
 
     if(apiAccount) {
@@ -315,8 +316,10 @@ function extractManagerTransactionsData(apiTransactions) {
             in: transaction.in,
             out: transaction.out,
             type: transaction.type,
-            label: transaction.name,
             balance: transaction.balance,
+            left_account: transaction.left,
+            operator: transaction.operator,
+            right_account: transaction.right,
             creation: dateToString(transaction.created_at),
         });
     });
