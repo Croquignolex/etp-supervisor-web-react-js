@@ -14,7 +14,9 @@ const initialState = {
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
-        sims: []
+        sims: [],
+        movements: [],
+        transactions: [],
     },
 };
 
@@ -69,6 +71,26 @@ function reduce(state = initialState, action) {
                     if(item.id === action.id) item.actionLoader = !item.actionLoader;
                     return item;
                 })
+            };
+            return nextState || state;
+        // Resolve event to set collector movements action data
+        case actions.STORE_SET_COLLECTOR_MOVEMENTS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    movements: action.movements
+                }
+            };
+            return nextState || state;
+        // Resolve event to set collector transactions action data
+        case actions.STORE_SET_COLLECTOR_TRANSACTIONS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    transactions: action.transactions
+                }
             };
             return nextState || state;
         // Unknown action

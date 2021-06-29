@@ -3,6 +3,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
+import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_COLLECTOR,
@@ -20,6 +21,10 @@ import {
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
+    storeSetCollectorMovementsData,
+    EMIT_COLLECTOR_MOVEMENTS_FETCH,
+    EMIT_COLLECTOR_TRANSACTIONS_FETCH,
+    storeSetCollectorTransactionsData,
     storeStopInfiniteScrollCollectorData
 } from "./actions";
 import {
@@ -43,13 +48,19 @@ import {
     storeCollectorAddSimRequestFailed,
     storeCollectorEditZoneRequestInit,
     storeCollectorAddSimRequestSucceed,
+    storeCollectorMovementsRequestInit,
     storeCollectorEditZoneRequestFailed,
     storeCollectorEditInfoRequestFailed,
     storeCollectorEditInfoRequestSucceed,
     storeCollectorEditZoneRequestSucceed,
+    storeCollectorMovementsRequestFailed,
+    storeCollectorMovementsRequestSucceed,
+    storeCollectorTransactionsRequestInit,
     storeCollectorStatusToggleRequestInit,
+    storeCollectorTransactionsRequestFailed,
     storeCollectorStatusToggleRequestFailed,
-    storeCollectorStatusToggleRequestSucceed
+    storeCollectorTransactionsRequestSucceed,
+    storeCollectorStatusToggleRequestSucceed,
 } from "../requests/collectors/actions";
 
 // Fetch all collectors from API
@@ -264,6 +275,52 @@ export function* emitAddCollectorSims() {
     });
 }
 
+// Fetch manager movements from API
+export function* emitCollectorMovementsFetch() {
+    yield takeLatest(EMIT_COLLECTOR_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorMovementsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_MOVEMENTS_API_PATH}/${id}`, data);
+            // Extract data
+            const movements = extractCollectorMovementsData(
+                apiResponse.data.movements
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorMovementsData({movements}));
+            // Fire event for request
+            yield put(storeCollectorMovementsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorMovementsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch manager transactions from API
+export function* emitCollectorTransactionsFetch() {
+    yield takeLatest(EMIT_COLLECTOR_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorTransactionsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_TRANSACTIONS_API_PATH}/${id}`, data);
+            // Extract data
+            const transactions = extractCollectorTransactionsData(
+                apiResponse.data.transactions
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorTransactionsData({transactions}));
+            // Fire event for request
+            yield put(storeCollectorTransactionsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorTransactionsRequestFailed({message}));
+        }
+    });
+}
+
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
     let collector = {
@@ -313,6 +370,44 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         collector.avatar = getImageFromServer(apiCollector.avatar, PROFILE_SCOPE);
     }
     return collector;
+}
+
+// Extract collector movements data
+function extractCollectorMovementsData(apiMovements) {
+    let movements = [];
+
+    apiMovements.forEach(movement => {
+        movements.push({
+            in: movement.in,
+            out: movement.out,
+            type: movement.type,
+            label: movement.name,
+            balance: movement.balance,
+            creation: dateToString(movement.created_at),
+        });
+    });
+
+    return movements;
+}
+
+// Extract collector transactions data
+function extractCollectorTransactionsData(apiTransactions) {
+    let transactions = [];
+
+    apiTransactions.forEach(transaction => {
+        transactions.push({
+            in: transaction.in,
+            out: transaction.out,
+            type: transaction.type,
+            balance: transaction.balance,
+            left_account: transaction.left,
+            operator: transaction.operator,
+            right_account: transaction.right,
+            creation: dateToString(transaction.created_at),
+        });
+    });
+
+    return transactions;
 }
 
 // Extract collectors data

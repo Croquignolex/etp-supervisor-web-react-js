@@ -64,6 +64,8 @@ export const ALL_COLLECTORS_API_PATH = `${API_URL}/recouvreurs_all`;
 export const CREATE_COLLECTOR_API_PATH = `${API_URL}/create_recouvreur`;
 export const COLLECTOR_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_user`;
 export const TOGGLE_COLLECTOR_STATUS_API_PATH = `${API_URL}/edit_user_status`;
+export const COLLECTOR_MOVEMENTS_API_PATH = `${API_URL}/movements_responsable_zone`;
+export const COLLECTOR_TRANSACTIONS_API_PATH = `${API_URL}/transactions_responsable_zone`;
 
 // Managers
 export const MANAGERS_API_PATH = `${API_URL}/gestionnaires`;
