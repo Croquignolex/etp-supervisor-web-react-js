@@ -11,9 +11,9 @@ import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
-import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
-import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
+import CollectorMovementsContainer from "../../containers/collectors/CollectorMovementsContainer";
+import CollectorTransactionsContainer from "../../containers/collectors/CollectorTransactionsContainer";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../../redux/collectors/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeCollectorsRequestReset, storeNextCollectorsRequestReset, storeCollectorStatusToggleRequestReset,} from "../../redux/requests/collectors/actions";
@@ -24,9 +24,9 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newCollectorModal, setNewCollectorModal] = useState({show: false, header: ''});
-    const [movementsModal, setMovementsModal] = useState({show: false, header: '', manager: {}});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: '', collector: {}});
     const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: '', id: ''});
-    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', manager: {}});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', collector: {}});
 
     // Local effects
     useEffect(() => {
@@ -89,8 +89,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     };
 
     // Show transactions modal form
-    const handleTransactionsModalShow = (manager) => {
-        setTransactionsModal({...transactionsModal, manager, show: true, header: 'TRANSACTIONS DE ' + manager.name})
+    const handleTransactionsModalShow = (collector) => {
+        setTransactionsModal({...transactionsModal, collector, show: true, header: 'TRANSACTIONS DE ' + manager.name})
     }
 
     // Hide transactions modal form
@@ -99,8 +99,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     }
 
     // Show movements modal form
-    const handleMovementsModalShow = (manager) => {
-        setMovementsModal({...movementsModal, manager, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
+    const handleMovementsModalShow = (collector) => {
+        setMovementsModal({...movementsModal, collector, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
     }
 
     // Hide movements modal form
@@ -193,10 +193,10 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                 <CollectorDetailsContainer id={collectorDetailsModal.id} />
             </FormModalComponent>
             <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
-                <ManagerMovementsContainer manager={movementsModal.manager} />
+                <CollectorMovementsContainer collector={movementsModal.collector} />
             </FormModalComponent>
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <ManagerTransactionsContainer manager={transactionsModal.manager} />
+                <CollectorTransactionsContainer collector={transactionsModal.collector} />
             </FormModalComponent>
         </>
     )
