@@ -62,6 +62,7 @@ import {
     storeCollectorTransactionsRequestSucceed,
     storeCollectorStatusToggleRequestSucceed,
 } from "../requests/collectors/actions";
+import {USER_MOVEMENTS_API_PATH, USER_TRANSACTIONS_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all collectors from API
 export function* emitAllCollectorsFetch() {
@@ -282,7 +283,7 @@ export function* emitCollectorMovementsFetch() {
             // Fire event for request
             yield put(storeCollectorMovementsRequestInit());
             const data = {journee: shortDateToString(selectedDay)};
-            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_MOVEMENTS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractCollectorMovementsData(
                 apiResponse.data.movements
@@ -305,7 +306,7 @@ export function* emitCollectorTransactionsFetch() {
             // Fire event for request
             yield put(storeCollectorTransactionsRequestInit());
             const data = {journee: shortDateToString(selectedDay)};
-            const apiResponse = yield call(apiPostRequest, `${api.COLLECTOR_TRANSACTIONS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractCollectorTransactionsData(
                 apiResponse.data.transactions

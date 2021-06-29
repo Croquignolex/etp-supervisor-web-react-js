@@ -54,6 +54,7 @@ import {
     storeManagerStatusToggleRequestSucceed,
     storeManagerTransactionsRequestSucceed
 } from "../requests/managers/actions";
+import {USER_MOVEMENTS_API_PATH, USER_TRANSACTIONS_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all managers from API
 export function* emitAllManagersFetch() {
@@ -217,7 +218,7 @@ export function* emitManagerMovementsFetch() {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
             const data = {journee: shortDateToString(selectedDay)};
-            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_MOVEMENTS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractManagerMovementsData(
                 apiResponse.data.movements
@@ -240,7 +241,7 @@ export function* emitManagerTransactionsFetch() {
             // Fire event for request
             yield put(storeManagerTransactionsRequestInit());
             const data = {journee: shortDateToString(selectedDay)};
-            const apiResponse = yield call(apiPostRequest, `${api.MANAGER_TRANSACTIONS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractManagerTransactionsData(
                 apiResponse.data.transactions

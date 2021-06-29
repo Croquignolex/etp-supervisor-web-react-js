@@ -64,8 +64,6 @@ export const ALL_COLLECTORS_API_PATH = `${API_URL}/recouvreurs_all`;
 export const CREATE_COLLECTOR_API_PATH = `${API_URL}/create_recouvreur`;
 export const COLLECTOR_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_user`;
 export const TOGGLE_COLLECTOR_STATUS_API_PATH = `${API_URL}/edit_user_status`;
-export const COLLECTOR_MOVEMENTS_API_PATH = `${API_URL}/movements_responsable_zone`;
-export const COLLECTOR_TRANSACTIONS_API_PATH = `${API_URL}/transactions_responsable_zone`;
 
 // Managers
 export const MANAGERS_API_PATH = `${API_URL}/gestionnaires`;
@@ -74,8 +72,6 @@ export const MANAGER_DETAILS_API_PATH = `${API_URL}/details_user`;
 export const ALL_MANAGERS_API_PATH = `${API_URL}/gestionnaires_all`;
 export const CREATE_MANAGER_API_PATH = `${API_URL}/create_gestionnaire`;
 export const TOGGLE_MANAGER_STATUS_API_PATH = `${API_URL}/edit_user_status`;
-export const MANAGER_MOVEMENTS_API_PATH = `${API_URL}/movements_gestionnaire`;
-export const MANAGER_TRANSACTIONS_API_PATH = `${API_URL}/transactions_gestionnaire`;
 
 // Supervisors
 export const SUPERVISORS_API_PATH = `${API_URL}/superviseurs`;
@@ -164,3 +160,7 @@ export const CONFIRM_PAYMENT_API_PATH = `${API_URL}/approuve_encaissement`;
 // Checkout
 export const REVENUES_API_PATH = `${API_URL}/treasuries_in`;
 export const EXPENSES_API_PATH = `${API_URL}/treasuries_out`;
+
+// Users
+export const USER_MOVEMENTS_API_PATH = `${API_URL}/movements_utilisateur`;
+export const USER_TRANSACTIONS_API_PATH = `${API_URL}/transactions_utilisateur`;
