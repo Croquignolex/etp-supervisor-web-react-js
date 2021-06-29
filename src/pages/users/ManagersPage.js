@@ -23,8 +23,8 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
-    const [movementsModal, setMovementsModal] = useState({show: false, header: '', id: ''});
-    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DE LA GESTIONNAIRE DE FLOTTE", manager: ''});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: '', manager: {}});
+    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: '', id: 0});
 
     // Local effects
     useEffect(() => {
@@ -82,8 +82,8 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     }
 
     // Show manager details modal form
-    const handleManagerDetailsModalShow = ({id}) => {
-        setManagerDetailsModal({...managerDetailsModal, show: true, id})
+    const handleManagerDetailsModalShow = ({id, name}) => {
+        setManagerDetailsModal({...managerDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide manager details modal form
@@ -130,7 +130,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                             {requestFailed(managersRequests.next) && <ErrorAlertComponent message={managersRequests.next.message} />}
                                             {requestFailed(managersRequests.status) && <ErrorAlertComponent message={managersRequests.status.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewManagerModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvelle gestionnaire

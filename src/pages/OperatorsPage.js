@@ -90,7 +90,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                                             {requestFailed(operatorsRequests.list) && <ErrorAlertComponent message={operatorsRequests.list.message} />}
                                             {requestFailed(operatorsRequests.next) && <ErrorAlertComponent message={operatorsRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewOperatorModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvel opérateur

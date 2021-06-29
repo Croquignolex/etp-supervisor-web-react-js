@@ -98,7 +98,7 @@ function ZonesPage({zones, zonesRequests, hasMoreData, page, dispatch, location}
                                             {requestFailed(zonesRequests.list) && <ErrorAlertComponent message={zonesRequests.list.message} />}
                                             {requestFailed(zonesRequests.next) && <ErrorAlertComponent message={zonesRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewZoneModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvelle zone

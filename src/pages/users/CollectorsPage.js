@@ -118,7 +118,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                             {requestFailed(collectorsRequests.next) && <ErrorAlertComponent message={collectorsRequests.next.message} />}
                                             {requestFailed(collectorsRequests.status) && <ErrorAlertComponent message={collectorsRequests.status.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewCollectorModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouveau responsable

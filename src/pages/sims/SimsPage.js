@@ -98,7 +98,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                             {requestFailed(simsRequests.list) && <ErrorAlertComponent message={simsRequests.list.message} />}
                                             {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewSimModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouveau compte

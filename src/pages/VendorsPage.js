@@ -90,7 +90,7 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
                                             {requestFailed(vendorsRequests.list) && <ErrorAlertComponent message={vendorsRequests.list.message} />}
                                             {requestFailed(vendorsRequests.next) && <ErrorAlertComponent message={vendorsRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewVendorModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouveau fournisseur

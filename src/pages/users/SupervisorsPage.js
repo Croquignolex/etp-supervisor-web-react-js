@@ -90,7 +90,7 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
                                             {requestFailed(supervisorsRequests.list) && <ErrorAlertComponent message={supervisorsRequests.list.message} />}
                                             {requestFailed(supervisorsRequests.next) && <ErrorAlertComponent message={supervisorsRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewSupervisorModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouveau superviseur

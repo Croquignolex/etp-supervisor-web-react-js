@@ -90,7 +90,7 @@ function CompaniesPage({companies, companiesRequests, hasMoreData, page, dispatc
                                             {requestFailed(companiesRequests.list) && <ErrorAlertComponent message={companiesRequests.list.message} />}
                                             {requestFailed(companiesRequests.next) && <ErrorAlertComponent message={companiesRequests.next.message} />}
                                             <button type="button"
-                                                    className="btn btn-theme mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewCompanyModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvelle entreprise

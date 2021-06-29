@@ -54,15 +54,20 @@ function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
                                     </ul>
                                     <div className="mt-3 text-right">
                                         <button type="button"
-                                                className="btn btn-sm btn-theme mr-1"
-                                                onClick={() => handleMovementsModalShow(item)}>
-                                            <i className="fa fa-table" /> Movements caisse
-                                        </button>
-                                        <button type="button"
-                                                className="btn btn-sm btn-theme"
+                                                className="btn btn-sm btn-theme mb-1"
                                                 onClick={() => handleManagerDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" /> Détails
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme mb-1"
+                                                onClick={() => handleMovementsModalShow(item)}>
+                                            <i className="fa fa-table" /> Transactions
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleMovementsModalShow(item)}>
+                                            <i className="fa fa-table" /> Movements caisse
                                         </button>
                                     </div>
                                 </div>
