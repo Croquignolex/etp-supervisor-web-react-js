@@ -13,7 +13,7 @@ import {storeManagerTransactionsRequestReset} from "../../redux/requests/manager
 import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function ManagerTransactionsComponent({manager, transactions, dispatch, request}) { console.log(transactions)
+function ManagerTransactionsComponent({manager, transactions, dispatch, request}) {
     // Local states
     const [selectedDate, setSelectedDate] = useState(new Date());
 

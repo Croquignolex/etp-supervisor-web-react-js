@@ -8,19 +8,19 @@ import ExcelColumn from "react-data-export/dist/ExcelPlugin/elements/ExcelColumn
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
-import {emitManagerTransactionsFetch} from "../../redux/managers/actions";
-import {storeManagerTransactionsRequestReset} from "../../redux/requests/managers/actions";
+import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
+import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
 import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function ManagerTransactionsComponent({manager, transactions, dispatch, request}) { console.log(transactions)
+function CollectorTransactionsComponent({collector, transactions, dispatch, request}) {
     // Local states
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitManagerTransactionsFetch({
-            id: manager.id,
+        dispatch(emitCollectorTransactionsFetch({
+            id: collector.id,
             selectedDay: new Date()
         }));
         // Cleaner error alert while component did unmount without store dependency
@@ -32,18 +32,18 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeManagerTransactionsRequestReset());
+        dispatch(storeCollectorTransactionsRequestReset());
     };
 
     const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedDate(selectedDay)
-        dispatch(emitManagerTransactionsFetch({id: manager.id, selectedDay}));
+        dispatch(emitCollectorTransactionsFetch({id: manager.id, selectedDay}));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `${formatString(manager.name, 17)} ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `${formatString(collector.name, 17)} ${shortDateToString(selectedDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -126,11 +126,11 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
 }
 
 // Prop types to ensure destroyed props data type
-ManagerTransactionsComponent.propTypes = {
+CollectorTransactionsComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    manager: PropTypes.object.isRequired,
+    collector: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
 };
 
-export default React.memo(ManagerTransactionsComponent);
+export default React.memo(CollectorTransactionsComponent);
