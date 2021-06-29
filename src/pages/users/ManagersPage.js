@@ -25,6 +25,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
     const [movementsModal, setMovementsModal] = useState({show: false, header: '', manager: {}});
     const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: '', id: 0});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', manager: {}});
 
     // Local effects
     useEffect(() => {
@@ -79,6 +80,16 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     // Hide movements modal form
     const handleMovementsModalHide = () => {
         setMovementsModal({...movementsModal, show: false})
+    }
+
+    // Show transactions modal form
+    const handleTransactionsModalShow = (manager) => {
+        setTransactionsModal({...transactionsModal, manager, show: true, header: 'TRANSACTIONS DE ' + manager.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
     }
 
     // Show manager details modal form
@@ -141,6 +152,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                                                           managers={searchEngine(managers, needle)}
                                                                           handleBlockModalShow={handleBlockModalShow}
                                                                           handleMovementsModalShow={handleMovementsModalShow}
+                                                                          handleTransactionsModalShow={handleTransactionsModalShow}
                                                                           handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                 />
                                                 : (requestLoading(managersRequests.list) ? <LoaderComponent /> :
@@ -154,6 +166,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                                                                     handleBlock={handleBlock}
                                                                                     handleBlockModalShow={handleBlockModalShow}
                                                                                     handleMovementsModalShow={handleMovementsModalShow}
+                                                                                    handleTransactionsModalShow={handleTransactionsModalShow}
                                                                                     handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
@@ -180,6 +193,9 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
             </FormModalComponent>
             <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
                 <ManagerMovementsContainer manager={movementsModal.manager} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <ManagerMovementsContainer manager={transactionsModal.manager} />
             </FormModalComponent>
         </>
     )

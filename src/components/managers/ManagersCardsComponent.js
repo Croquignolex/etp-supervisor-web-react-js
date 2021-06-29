@@ -6,7 +6,7 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 
 // Component
 function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
-                                    handleMovementsModalShow, handleManagerDetailsModalShow}) {
+                                    handleTransactionsModalShow, handleMovementsModalShow, handleManagerDetailsModalShow}) {
     // Render
     return (
         <>
@@ -61,7 +61,7 @@ function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
                                         </button><br/>
                                         <button type="button"
                                                 className="btn btn-sm btn-theme mb-1"
-                                                onClick={() => handleMovementsModalShow(item)}>
+                                                onClick={() => handleTransactionsModalShow(item)}>
                                             <i className="fa fa-table" /> Transactions
                                         </button><br/>
                                         <button type="button"
@@ -93,6 +93,7 @@ ManagersCardsComponent.propTypes = {
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
     handleMovementsModalShow: PropTypes.func.isRequired,
+    handleTransactionsModalShow: PropTypes.func.isRequired,
     handleManagerDetailsModalShow: PropTypes.func.isRequired,
 };
 
