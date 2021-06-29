@@ -5,7 +5,7 @@ import CollectorTransactionsComponent from "../../components/collectors/Collecto
 // Map state function to component props
 const mapStateToProps = (state) => ({
     request: state.collectorsRequests.transactions,
-    transactions: state.components.current.transactions,
+    transactions: state.collectors.current.transactions,
 });
 
 // Map dispatch function to component propsS

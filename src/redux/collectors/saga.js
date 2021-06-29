@@ -330,7 +330,9 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
-        sims: []
+        sims: [],
+        movements: [],
+        transactions: [],
     };
     if(apiSims) {
         apiSims.forEach(data => {
