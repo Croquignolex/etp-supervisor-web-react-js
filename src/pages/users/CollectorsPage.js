@@ -90,7 +90,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
 
     // Show transactions modal form
     const handleTransactionsModalShow = (collector) => {
-        setTransactionsModal({...transactionsModal, collector, show: true, header: 'TRANSACTIONS DE ' + manager.name})
+        setTransactionsModal({...transactionsModal, collector, show: true, header: 'TRANSACTIONS DE ' + collector.name})
     }
 
     // Hide transactions modal form
@@ -100,7 +100,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
 
     // Show movements modal form
     const handleMovementsModalShow = (collector) => {
-        setMovementsModal({...movementsModal, collector, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
+        setMovementsModal({...movementsModal, collector, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + collector.name})
     }
 
     // Hide movements modal form
