@@ -4,13 +4,11 @@ import React, {useState} from 'react';
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
-import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
 
 // Component
 function ManagerInfoComponent({manager}) {
     // Local states
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
-    const [movementsModal, setMovementsModal] = useState({show: false, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -22,24 +20,11 @@ function ManagerInfoComponent({manager}) {
         setInfoEditModal({...infoEditModal, show: false})
     }
 
-    // Show movements modal form
-    const handleMovementsModalShow = () => {
-        setMovementsModal({...movementsModal, show: true})
-    }
-
-    // Hide movements modal form
-    const handleMovementsModalHide = () => {
-        setMovementsModal({...movementsModal, show: false})
-    }
-
     // Render
     return (
         <>
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleInfoEditModalShow}>
                 <i className="fa fa-pencil" /> Modifier les info
-            </button>
-            <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleMovementsModalShow}>
-                <i className="fa fa-table" /> Movements de caisse
             </button>
             <div className="card">
                 <div className="card-header bg-secondary" />
@@ -90,9 +75,6 @@ function ManagerInfoComponent({manager}) {
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
                 <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
-            </FormModalComponent>
-            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
-                <ManagerMovementsContainer />
             </FormModalComponent>
         </>
     )

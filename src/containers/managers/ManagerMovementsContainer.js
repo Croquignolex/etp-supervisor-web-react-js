@@ -4,8 +4,8 @@ import ManagerMovementsComponent from "../../components/managers/ManagerMovement
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    manager: state.managers.current,
     request: state.managersRequests.movements,
+    movements: state.managers.current.movements,
 });
 
 // Map dispatch function to component props

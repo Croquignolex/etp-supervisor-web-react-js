@@ -5,7 +5,8 @@ import LoaderComponent from "../LoaderComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 
 // Component
-function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow, handleManagerDetailsModalShow}) {
+function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
+                                    handleMovementsModalShow, handleManagerDetailsModalShow}) {
     // Render
     return (
         <>
@@ -53,6 +54,11 @@ function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow, ha
                                     </ul>
                                     <div className="mt-3 text-right">
                                         <button type="button"
+                                                className="btn btn-sm btn-theme mr-1"
+                                                onClick={() => handleMovementsModalShow(item)}>
+                                            <i className="fa fa-table" /> Movements caisse
+                                        </button>
+                                        <button type="button"
                                                 className="btn btn-sm btn-theme"
                                                 onClick={() => handleManagerDetailsModalShow(item)}
                                         >
@@ -81,6 +87,7 @@ ManagersCardsComponent.propTypes = {
     managers: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
+    handleMovementsModalShow: PropTypes.func.isRequired,
     handleManagerDetailsModalShow: PropTypes.func.isRequired,
 };
 

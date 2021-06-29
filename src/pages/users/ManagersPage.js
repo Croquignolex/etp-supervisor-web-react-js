@@ -12,6 +12,7 @@ import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import ManagerNewContainer from "../../containers/managers/ManagerNewContainer";
 import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
 import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsContainer";
+import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
 import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
@@ -22,7 +23,8 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
-    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DE LA GESTIONNAIRE DE FLOTTE", id: ''});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: '', id: ''});
+    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: "DETAIL DE LA GESTIONNAIRE DE FLOTTE", manager: ''});
 
     // Local effects
     useEffect(() => {
@@ -67,6 +69,16 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     // Hide new manager modal form
     const handleNewManagerModalHide = () => {
         setNewManagerModal({...newManagerModal, show: false})
+    }
+
+    // Show movements modal form
+    const handleMovementsModalShow = (manager) => {
+        setMovementsModal({...movementsModal, manager, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
+    }
+
+    // Hide movements modal form
+    const handleMovementsModalHide = () => {
+        setMovementsModal({...movementsModal, show: false})
     }
 
     // Show manager details modal form
@@ -128,6 +140,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                                 ? <ManagersCardsComponent handleBlock={handleBlock}
                                                                           managers={searchEngine(managers, needle)}
                                                                           handleBlockModalShow={handleBlockModalShow}
+                                                                          handleMovementsModalShow={handleMovementsModalShow}
                                                                           handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                 />
                                                 : (requestLoading(managersRequests.list) ? <LoaderComponent /> :
@@ -140,6 +153,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                                             <ManagersCardsComponent managers={managers}
                                                                                     handleBlock={handleBlock}
                                                                                     handleBlockModalShow={handleBlockModalShow}
+                                                                                    handleMovementsModalShow={handleMovementsModalShow}
                                                                                     handleManagerDetailsModalShow={handleManagerDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
@@ -163,6 +177,9 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
             </FormModalComponent>
             <FormModalComponent modal={managerDetailsModal} handleClose={handleManagerDetailsModalHide}>
                 <ManagerDetailsContainer id={managerDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
+                <ManagerMovementsContainer manager={movementsModal.manager} />
             </FormModalComponent>
         </>
     )

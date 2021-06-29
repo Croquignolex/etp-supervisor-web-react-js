@@ -13,7 +13,7 @@ import {storeManagerMovementsRequestReset} from "../../redux/requests/managers/a
 import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function ManagerMovementsComponent({manager, dispatch, request}) {
+function ManagerMovementsComponent({manager, movements, dispatch, request}) {
     // Local states
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -51,7 +51,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                     <i className="fa fa-file-export" /> Exporter en excel
                 </button>
             }>
-                <ExcelSheet data={manager.movements} name={tabName}>
+                <ExcelSheet data={movements} name={tabName}>
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="TYPE" value="type"/>
                     <ExcelColumn label="NATURE" value="label"/>
@@ -87,7 +87,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {manager.movements.map((item, key) => {
+                                            {movements.map((item, key) => {
                                                 return (
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
@@ -99,7 +99,7 @@ function ManagerMovementsComponent({manager, dispatch, request}) {
                                                     </tr>
                                                 )
                                             })}
-                                            {manager.movements.length === 0 && (
+                                            {movements.length === 0 && (
                                                 <tr>
                                                     <td colSpan={6}>
                                                         <div className='alert custom-active text-center'>
@@ -125,6 +125,7 @@ ManagerMovementsComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     manager: PropTypes.object.isRequired,
+    movements: PropTypes.array.isRequired,
 };
 
 export default React.memo(ManagerMovementsComponent);
