@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
     transactions: state.managers.current.transactions,
 });
 
-// Map dispatch function to component props
+// Map dispatch function to component propsS
 const mapDispatchToProps = (dispatch) => ({
     dispatch: (action) => { dispatch(action) }
 });
