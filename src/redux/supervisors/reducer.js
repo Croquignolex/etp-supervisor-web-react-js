@@ -11,7 +11,10 @@ const initialState = {
     current: {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
-        account: {id: '', balance: ''}
+        account: {id: '', balance: ''},
+
+        movements: [],
+        transactions: [],
     },
 };
 
@@ -47,6 +50,26 @@ function reduce(state = initialState, action) {
         // Resolve event to stop infinite scroll supervisors data,
         case actions.STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA:
             nextState = {...state, hasMoreData: false};
+            return nextState || state;
+        // Resolve event to set supervisor movements action data
+        case actions.STORE_SET_SUPERVISOR_MOVEMENTS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    movements: action.movements
+                }
+            };
+            return nextState || state;
+        // Resolve event to set supervisor transactions action data
+        case actions.STORE_SET_SUPERVISOR_TRANSACTIONS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    transactions: action.transactions
+                }
+            };
             return nextState || state;
         // Unknown action
         default: return state;

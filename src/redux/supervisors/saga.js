@@ -3,6 +3,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 import * as api from "../../constants/apiConstants";
 import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
+import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {apiGetRequest, apiPostRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
     EMIT_NEW_SUPERVISOR,
@@ -11,9 +12,14 @@ import {
     EMIT_SUPERVISORS_FETCH,
     storeSetSupervisorsData,
     storeSetNewSupervisorData,
+    EMIT_ALL_SUPERVISORS_FETCH,
     EMIT_NEXT_SUPERVISORS_FETCH,
     storeSetNextSupervisorsData,
-    storeStopInfiniteScrollSupervisorData, EMIT_ALL_SUPERVISORS_FETCH
+    storeSetSupervisorMovementsData,
+    EMIT_SUPERVISOR_MOVEMENTS_FETCH,
+    EMIT_SUPERVISOR_TRANSACTIONS_FETCH,
+    storeSetSupervisorTransactionsData,
+    storeStopInfiniteScrollSupervisorData
 } from "./actions";
 import {
     storeSupervisorRequestInit,
@@ -23,14 +29,20 @@ import {
     storeSupervisorsRequestFailed,
     storeSupervisorRequestSucceed,
     storeSupervisorsRequestSucceed,
+    storeAllSupervisorsRequestInit,
     storeNextSupervisorsRequestInit,
     storeAddSupervisorRequestFailed,
     storeAddSupervisorRequestSucceed,
-    storeNextSupervisorsRequestFailed,
-    storeNextSupervisorsRequestSucceed,
-    storeAllSupervisorsRequestInit,
-    storeAllSupervisorsRequestSucceed,
     storeAllSupervisorsRequestFailed,
+    storeNextSupervisorsRequestFailed,
+    storeAllSupervisorsRequestSucceed,
+    storeNextSupervisorsRequestSucceed,
+    storeSupervisorMovementsRequestInit,
+    storeSupervisorMovementsRequestFailed,
+    storeSupervisorTransactionsRequestInit,
+    storeSupervisorMovementsRequestSucceed,
+    storeSupervisorTransactionsRequestFailed,
+    storeSupervisorTransactionsRequestSucceed,
 } from "../requests/supervisors/actions";
 
 // Fetch all supervisors from API
@@ -52,7 +64,6 @@ export function* emitAllSupervisorsFetch() {
         }
     });
 }
-
 
 // Fetch supervisors from API
 export function* emitSupervisorsFetch() {
@@ -144,12 +155,61 @@ export function* emitSupervisorFetch() {
     });
 }
 
+// Fetch supervisor movements from API
+export function* emitSupervisorMovementsFetch() {
+    yield takeLatest(EMIT_SUPERVISOR_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeSupervisorMovementsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
+            // Extract data
+            const movements = extractSupervisorMovementsData(
+                apiResponse.data.movements
+            );
+            // Fire event to redux
+            yield put(storeSetSupervisorMovementsData({movements}));
+            // Fire event for request
+            yield put(storeSupervisorMovementsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSupervisorMovementsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch supervisor transactions from API
+export function* emitSupervisorTransactionsFetch() {
+    yield takeLatest(EMIT_SUPERVISOR_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeSupervisorTransactionsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
+            // Extract data
+            const transactions = extractSupervisorTransactionsData(
+                apiResponse.data.transactions
+            );
+            // Fire event to redux
+            yield put(storeSetSupervisorTransactionsData({transactions}));
+            // Fire event for request
+            yield put(storeSupervisorTransactionsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSupervisorTransactionsRequestFailed({message}));
+        }
+    });
+}
+
 // Extract supervisor data
 function extractSupervisorData(apiSupervisor, apiAccount) {
     let supervisor = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
         account: {id: '', balance: ''},
+
+        movements: [],
+        transactions: [],
     };
 
     if(apiAccount) {
@@ -174,6 +234,44 @@ function extractSupervisorData(apiSupervisor, apiAccount) {
     return supervisor;
 }
 
+// Extract supervisor movements data
+function extractSupervisorMovementsData(apiMovements) {
+    let movements = [];
+
+    apiMovements.forEach(movement => {
+        movements.push({
+            in: movement.in,
+            out: movement.out,
+            type: movement.type,
+            label: movement.name,
+            balance: movement.balance,
+            creation: dateToString(movement.created_at),
+        });
+    });
+
+    return movements;
+}
+
+// Extract supervisor transactions data
+function extractSupervisorTransactionsData(apiTransactions) {
+    let transactions = [];
+
+    apiTransactions.forEach(transaction => {
+        transactions.push({
+            in: transaction.in,
+            out: transaction.out,
+            type: transaction.type,
+            balance: transaction.balance,
+            left_account: transaction.left,
+            operator: transaction.operator,
+            right_account: transaction.right,
+            creation: dateToString(transaction.created_at),
+        });
+    });
+
+    return transactions;
+}
+
 // Extract supervisors data
 function extractSupervisorsData(apiSupervisors) {
     const supervisors = [];
@@ -196,5 +294,7 @@ export default function* sagaSupervisors() {
         fork(emitSupervisorsFetch),
         fork(emitAllSupervisorsFetch),
         fork(emitNextSupervisorsFetch),
+        fork(emitSupervisorMovementsFetch),
+        fork(emitSupervisorTransactionsFetch),
     ]);
 }
