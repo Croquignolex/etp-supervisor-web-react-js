@@ -15,13 +15,19 @@ import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/superv
 import SupervisorDetailsContainer from "../../containers/supervisors/SupervisorDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
+import CollectorMovementsContainer from "../../containers/collectors/CollectorMovementsContainer";
+import CollectorTransactionsContainer from "../../containers/collectors/CollectorTransactionsContainer";
+import SupervisorMovementsContainer from "../../containers/supervisors/SupervisorMovementsContainer";
+import SupervisorTransactionsContainer from "../../containers/supervisors/SupervisorTransactionsContainer";
 
 // Component
 function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [newSupervisorModal, setNewSupervisorModal] = useState({show: false, header: ''});
-    const [supervisorDetailsModal, setSupervisorDetailsModal] = useState({show: false, header: "DETAIL DU SUPERVISEUR", id: ''});
+    const [movementsModal, setMovementsModal] = useState({show: false, header: '', supervisor: {}});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', supervisor: {}});
+    const [supervisorDetailsModal, setSupervisorDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
@@ -59,13 +65,34 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
     }
 
     // Show supervisor details modal form
-    const handleSupervisorDetailsModalShow = ({id}) => {
-        setSupervisorDetailsModal({...supervisorDetailsModal, show: true, id})
+    const handleSupervisorDetailsModalShow = ({id, name}) => {
+        setSupervisorDetailsModal({...supervisorDetailsModal, show: true, id, header: "DETAIL DE " + name})
+
     }
 
     // Hide supervisor details modal form
     const handleSupervisorDetailsModalHide = () => {
         setSupervisorDetailsModal({...supervisorDetailsModal, show: false})
+    }
+
+    // Show transactions modal form
+    const handleTransactionsModalShow = (supervisor) => {
+        setTransactionsModal({...transactionsModal, supervisor, show: true, header: 'TRANSACTIONS DE ' + supervisor.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
+    // Show movements modal form
+    const handleMovementsModalShow = (supervisor) => {
+        setMovementsModal({...movementsModal, supervisor, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + supervisor.name})
+    }
+
+    // Hide movements modal form
+    const handleMovementsModalHide = () => {
+        setMovementsModal({...movementsModal, show: false})
     }
 
     // Render
@@ -127,6 +154,12 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
             </FormModalComponent>
             <FormModalComponent modal={supervisorDetailsModal} handleClose={handleSupervisorDetailsModalHide}>
                 <SupervisorDetailsContainer id={supervisorDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
+                <SupervisorMovementsContainer supervisor={movementsModal.supervisor} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <SupervisorTransactionsContainer supervisor={transactionsModal.supervisor} />
             </FormModalComponent>
         </>
     )

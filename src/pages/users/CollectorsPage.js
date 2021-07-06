@@ -25,8 +25,8 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newCollectorModal, setNewCollectorModal] = useState({show: false, header: ''});
     const [movementsModal, setMovementsModal] = useState({show: false, header: '', collector: {}});
-    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: '', id: ''});
     const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', collector: {}});
+    const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
