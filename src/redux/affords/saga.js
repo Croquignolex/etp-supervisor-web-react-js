@@ -86,9 +86,7 @@ export function* emitAddAfford() {
             };
             const apiResponse = yield call(apiPostRequest, api.NEW_REFUEL_API_PATH, data);
             // Extract data
-            console.log({apiResponse})
             const afford = extractAffordData(apiResponse.data);
-            console.log({afford})
             // Fire event to redux
             yield put(storeSetNewAffordData({afford}))
             // Fire event for request
