@@ -22,7 +22,17 @@ export const STORE_ADD_SUPERVISOR_REQUEST_SUCCEEDED = 'STORE_ADD_SUPERVISOR_REQU
 export const STORE_SUPERVISOR_REQUEST_INIT = 'STORE_SUPERVISOR_REQUEST_INIT';
 export const STORE_SUPERVISOR_REQUEST_RESET = 'STORE_SUPERVISOR_REQUEST_RESET';
 export const STORE_SUPERVISOR_REQUEST_FAILED = 'STORE_SUPERVISOR_REQUEST_FAILED';
-export const STORE_SUPERVISOR_REQUEST_SUCCEEDED = 'STORE_SUPERVISOR_REQUEST_SUCCEEDED';  
+export const STORE_SUPERVISOR_REQUEST_SUCCEEDED = 'STORE_SUPERVISOR_REQUEST_SUCCEEDED';
+
+export const STORE_SUPERVISOR_MOVEMENTS_REQUEST_INIT = 'STORE_SUPERVISOR_MOVEMENTS_REQUEST_INIT';
+export const STORE_SUPERVISOR_MOVEMENTS_REQUEST_RESET = 'STORE_SUPERVISOR_MOVEMENTS_REQUEST_RESET';
+export const STORE_SUPERVISOR_MOVEMENTS_REQUEST_FAILED = 'STORE_SUPERVISOR_MOVEMENTS_REQUEST_FAILED';
+export const STORE_SUPERVISOR_MOVEMENTS_REQUEST_SUCCEEDED = 'STORE_SUPERVISOR_MOVEMENTS_REQUEST_SUCCEEDED';
+
+export const STORE_SUPERVISOR_TRANSACTIONS_REQUEST_INIT = 'STORE_SUPERVISOR_TRANSACTIONS_REQUEST_INIT';
+export const STORE_SUPERVISOR_TRANSACTIONS_REQUEST_RESET = 'STORE_SUPERVISOR_TRANSACTIONS_REQUEST_RESET';
+export const STORE_SUPERVISOR_TRANSACTIONS_REQUEST_FAILED = 'STORE_SUPERVISOR_TRANSACTIONS_REQUEST_FAILED';
+export const STORE_SUPERVISOR_TRANSACTIONS_REQUEST_SUCCEEDED = 'STORE_SUPERVISOR_TRANSACTIONS_REQUEST_SUCCEEDED';
 
 // ======================================================== Supervisors
 // Set supervisors init data into store
@@ -133,4 +143,48 @@ export const storeSupervisorRequestSucceed = ({message}) => ({
 // Set supervisor reset data into store
 export const storeSupervisorRequestReset = () => ({
     type: STORE_SUPERVISOR_REQUEST_RESET
-}); 
+});
+// ======================================================== Supervisor movements
+// Set supervisor movements init data into store
+export const storeSupervisorMovementsRequestInit = () => ({
+    type: STORE_SUPERVISOR_MOVEMENTS_REQUEST_INIT
+});
+
+// Set supervisor movements failed data into store
+export const storeSupervisorMovementsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_SUPERVISOR_MOVEMENTS_REQUEST_FAILED
+});
+
+// Set supervisor movements succeeded data into store
+export const storeSupervisorMovementsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_SUPERVISOR_MOVEMENTS_REQUEST_SUCCEEDED
+});
+
+// Set supervisor movements reset data into store
+export const storeSupervisorMovementsRequestReset = () => ({
+    type: STORE_SUPERVISOR_MOVEMENTS_REQUEST_RESET
+});
+// ======================================================== Supervisor transactions
+// Set supervisor transactions init data into store
+export const storeSupervisorTransactionsRequestInit = () => ({
+    type: STORE_SUPERVISOR_TRANSACTIONS_REQUEST_INIT
+});
+
+// Set supervisor transactions failed data into store
+export const storeSupervisorTransactionsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_SUPERVISOR_TRANSACTIONS_REQUEST_FAILED
+});
+
+// Set supervisor transactions succeeded data into store
+export const storeSupervisorTransactionsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_SUPERVISOR_TRANSACTIONS_REQUEST_SUCCEEDED
+});
+
+// Set supervisor transactions reset data into store
+export const storeSupervisorTransactionsRequestReset = () => ({
+    type: STORE_SUPERVISOR_TRANSACTIONS_REQUEST_RESET
+});
