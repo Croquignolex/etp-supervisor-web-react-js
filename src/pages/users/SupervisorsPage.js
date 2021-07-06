@@ -13,12 +13,10 @@ import SupervisorNewContainer from "../../containers/supervisors/SupervisorNewCo
 import SupervisorsCardsComponent from "../../components/supervisors/SupervisorsCardsComponent";
 import {emitSupervisorsFetch, emitNextSupervisorsFetch} from "../../redux/supervisors/actions";
 import SupervisorDetailsContainer from "../../containers/supervisors/SupervisorDetailsContainer";
-import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
-import CollectorMovementsContainer from "../../containers/collectors/CollectorMovementsContainer";
-import CollectorTransactionsContainer from "../../containers/collectors/CollectorTransactionsContainer";
 import SupervisorMovementsContainer from "../../containers/supervisors/SupervisorMovementsContainer";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import SupervisorTransactionsContainer from "../../containers/supervisors/SupervisorTransactionsContainer";
+import {storeSupervisorsRequestReset, storeNextSupervisorsRequestReset} from "../../redux/requests/supervisors/actions";
 
 // Component
 function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, dispatch, location}) {
@@ -125,6 +123,8 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <SupervisorsCardsComponent supervisors={searchEngine(supervisors, needle)}
+                                                                             handleMovementsModalShow={handleMovementsModalShow}
+                                                                             handleTransactionsModalShow={handleTransactionsModalShow}
                                                                              handleSupervisorDetailsModalShow={handleSupervisorDetailsModalShow}
                                                 />
                                                 : (requestLoading(supervisorsRequests.list) ? <LoaderComponent /> :
@@ -135,6 +135,8 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
                                                                         style={{ overflow: 'hidden' }}
                                                         >
                                                             <SupervisorsCardsComponent supervisors={supervisors}
+                                                                                       handleMovementsModalShow={handleMovementsModalShow}
+                                                                                       handleTransactionsModalShow={handleTransactionsModalShow}
                                                                                        handleSupervisorDetailsModalShow={handleSupervisorDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>

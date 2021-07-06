@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import {dateToString, formatNumber} from "../../functions/generalFunctions"; 
 
 // Component
-function SupervisorsCardsComponent({supervisors, handleSupervisorDetailsModalShow}) {
+function SupervisorsCardsComponent({supervisors, handleSupervisorDetailsModalShow,
+                                       handleMovementsModalShow, handleTransactionsModalShow}) {
     // Render
     return (
         <>
@@ -44,10 +45,20 @@ function SupervisorsCardsComponent({supervisors, handleSupervisorDetailsModalSho
                                     </ul>
                                     <div className="mt-3 text-right">
                                         <button type="button"
-                                                className="btn btn-sm btn-theme"
+                                                className="btn btn-sm btn-theme mb-1"
                                                 onClick={() => handleSupervisorDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" /> Détails
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme mb-1"
+                                                onClick={() => handleTransactionsModalShow(item)}>
+                                            <i className="fa fa-table" /> Transactions
+                                        </button><br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleMovementsModalShow(item)}>
+                                            <i className="fa fa-table" /> Movements caisse
                                         </button>
                                     </div>
                                 </div>
@@ -70,6 +81,8 @@ function SupervisorsCardsComponent({supervisors, handleSupervisorDetailsModalSho
 // Prop types to ensure destroyed props data type
 SupervisorsCardsComponent.propTypes = {
     supervisors: PropTypes.array.isRequired,
+    handleMovementsModalShow: PropTypes.func.isRequired,
+    handleTransactionsModalShow: PropTypes.func.isRequired,
     handleSupervisorDetailsModalShow: PropTypes.func.isRequired,
 };
 
