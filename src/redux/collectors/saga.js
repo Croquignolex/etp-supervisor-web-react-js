@@ -62,9 +62,8 @@ import {
     storeCollectorTransactionsRequestSucceed,
     storeCollectorStatusToggleRequestSucceed,
 } from "../requests/collectors/actions";
-import {USER_MOVEMENTS_API_PATH, USER_TRANSACTIONS_API_PATH} from "../../constants/apiConstants";
 
-// Fetch all collectors from API
+// Fetch all collectors from APIea
 export function* emitAllCollectorsFetch() {
     yield takeLatest(EMIT_ALL_COLLECTORS_FETCH, function*() {
         try {

@@ -54,7 +54,6 @@ import {
     storeManagerStatusToggleRequestSucceed,
     storeManagerTransactionsRequestSucceed
 } from "../requests/managers/actions";
-import {USER_MOVEMENTS_API_PATH, USER_TRANSACTIONS_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all managers from API
 export function* emitAllManagersFetch() {
