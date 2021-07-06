@@ -8,19 +8,19 @@ import ExcelColumn from "react-data-export/dist/ExcelPlugin/elements/ExcelColumn
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
-import {emitCollectorMovementsFetch} from "../../redux/collectors/actions";
-import {storeCollectorMovementsRequestReset} from "../../redux/requests/collectors/actions";
+import {emitSupervisorMovementsFetch} from "../../redux/supervisors/actions";
+import {storeSupervisorMovementsRequestReset} from "../../redux/requests/supervisors/actions";
 import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function SupervisorMovementsComponent({collector, movements, dispatch, request}) {
+function SupervisorMovementsComponent({supervisor, movements, dispatch, request}) {
     // Local states
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorMovementsFetch({
-            id: collector.id,
+        dispatch(emitSupervisorMovementsFetch({
+            id: supervisor.id,
             selectedDay: new Date()
         }));
         // Cleaner error alert while component did unmount without store dependency
@@ -32,18 +32,18 @@ function SupervisorMovementsComponent({collector, movements, dispatch, request})
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorMovementsRequestReset());
+        dispatch(storeSupervisorMovementsRequestReset());
     };
 
     const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedDate(selectedDay)
-        dispatch(emitCollectorMovementsFetch({id: collector.id, selectedDay}));
+        dispatch(emitSupervisorMovementsFetch({id: supervisor.id, selectedDay}));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Mouvement de caisse de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Mouvement de caisse de ${supervisor.name} du ${shortDateToString(selectedDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -124,7 +124,7 @@ SupervisorMovementsComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     movements: PropTypes.array.isRequired,
-    collector: PropTypes.object.isRequired,
+    supervisor: PropTypes.object.isRequired,
 };
 
 export default React.memo(SupervisorMovementsComponent);

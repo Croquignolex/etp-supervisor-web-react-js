@@ -8,19 +8,19 @@ import ExcelColumn from "react-data-export/dist/ExcelPlugin/elements/ExcelColumn
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
-import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
-import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
+import {emitSupervisorTransactionsFetch} from "../../redux/supervisors/actions";
+import {storeSupervisorTransactionsRequestReset} from "../../redux/requests/supervisors/actions";
 import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function SupervisorTransactionsComponent({collector, transactions, dispatch, request}) {
+function SupervisorTransactionsComponent({supervisor, transactions, dispatch, request}) {
     // Local states
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorTransactionsFetch({
-            id: collector.id,
+        dispatch(emitSupervisorTransactionsFetch({
+            id: supervisor.id,
             selectedDay: new Date()
         }));
         // Cleaner error alert while component did unmount without store dependency
@@ -32,18 +32,18 @@ function SupervisorTransactionsComponent({collector, transactions, dispatch, req
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorTransactionsRequestReset());
+        dispatch(storeSupervisorTransactionsRequestReset());
     };
 
     const handleSelectedDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedDate(selectedDay)
-        dispatch(emitCollectorTransactionsFetch({id: collector.id, selectedDay}));
+        dispatch(emitSupervisorTransactionsFetch({id: supervisor.id, selectedDay}));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Tansactions de flotte de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Tansactions de flotte de ${supervisor.name} du ${shortDateToString(selectedDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -129,7 +129,7 @@ function SupervisorTransactionsComponent({collector, transactions, dispatch, req
 SupervisorTransactionsComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    collector: PropTypes.object.isRequired,
+    supervisor: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
 };
 
