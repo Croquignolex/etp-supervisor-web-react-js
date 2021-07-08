@@ -21,13 +21,13 @@ export const COLLECTORS = 'Responsables...';
 export const COMPANIES_PAGE = 'Entreprises';
 
 // Sims
-export const SIMS_PAGE = 'Puces';
-export const AGENTS_SIMS = 'Puces agent';
-export const COLLECTORS_SIMS = 'Puces RZ';
-export const ALL_SIMS = 'Toutes les puces';
-export const MASTERS_SIMS = 'Puces master';
-export const FLEETS_SIMS = 'Puces de flottage';
-export const RESOURCES_SIMS = 'Puces ressource';
+export const SIMS_PAGE = 'Comptes';
+export const AGENTS_SIMS = 'Comptes agent';
+export const COLLECTORS_SIMS = 'Comptes RZ';
+export const ALL_SIMS = 'Toutes les comptes';
+export const MASTERS_SIMS = 'Comptes master';
+export const FLEETS_SIMS = 'Comptes de flottage';
+export const RESOURCES_SIMS = 'Comptes ressource';
 
 // Operations
 export const OPERATIONS = 'Opérations';

@@ -10,13 +10,13 @@ export const VENDORS_PAGE_PATH = "/vendors";
 export const COMPANIES_PAGE_PATH = "/companies";
 export const OPERATORS_PAGE_PATH = "/operators";
 
-// Sims
-export const ALL_SIMS_PAGE_PATH = "/sims/all";
-export const FLEETS_SIMS_PAGE_PATH = "/sims/fleet";
-export const AGENTS_SIMS_PAGE_PATH = "/sims/agent";
-export const MASTERS_SIMS_PAGE_PATH = "/sims/master";
-export const RESOURCES_SIMS_PAGE_PATH = "/sims/resource";
-export const COLLECTORS_SIMS_PAGE_PATH = "/sims/collector";
+// Accounts
+export const ALL_SIMS_PAGE_PATH = "/accounts/all";
+export const FLEETS_SIMS_PAGE_PATH = "/accounts/fleet";
+export const AGENTS_SIMS_PAGE_PATH = "/accounts/agent";
+export const MASTERS_SIMS_PAGE_PATH = "/accounts/master";
+export const RESOURCES_SIMS_PAGE_PATH = "/accounts/resource";
+export const COLLECTORS_SIMS_PAGE_PATH = "/accounts/collector";
 
 // Users
 export const AGENTS_PAGE_PATH = "/users/agents";
