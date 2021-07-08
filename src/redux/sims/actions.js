@@ -4,6 +4,7 @@ export const STORE_SET_SIMS_DATA = 'STORE_SET_SIMS_DATA';
 export const STORE_SET_NEW_SIM_DATA = 'STORE_SET_NEW_SIM_DATA';
 export const STORE_SET_NEXT_SIMS_DATA = 'STORE_SET_NEXT_SIMS_DATA';
 export const STORE_SET_SIM_ACTION_DATA = 'STORE_SET_SIM_ACTION_DATA';
+export const STORE_SET_SIM_TRANSACTIONS_DATA = 'STORE_SET_SIM_TRANSACTIONS_DATA';
 export const STORE_STOP_INFINITE_SCROLL_SIMS_DATA = 'STORE_STOP_INFINITE_SCROLL_SIMS_DATA';
 
 // Middleware action types
@@ -23,6 +24,7 @@ export const EMIT_ALL_MASTER_SIMS_FETCH = 'EMIT_ALL_MASTER_SIMS_FETCH';
 export const EMIT_COLLECTORS_SIMS_FETCH = 'EMIT_COLLECTORS_SIMS_FETCH';
 export const EMIT_NEXT_FLEETS_SIMS_FETCH = 'EMIT_NEXT_FLEETS_SIMS_FETCH';
 export const EMIT_NEXT_AGENTS_SIMS_FETCH = 'EMIT_NEXT_AGENTS_SIMS_FETCH';
+export const EMIT_SIM_TRANSACTIONS_FETCH = 'EMIT_SIM_TRANSACTIONS_FETCH';
 export const EMIT_NEXT_MASTERS_SIMS_FETCH = 'EMIT_NEXT_MASTERS_SIMS_FETCH';
 export const EMIT_NEXT_RESOURCES_SIMS_FETCH = 'EMIT_NEXT_RESOURCES_SIMS_FETCH';
 export const EMIT_NEXT_COLLECTORS_SIMS_FETCH = 'EMIT_NEXT_COLLECTORS_SIMS_FETCH';
@@ -41,6 +43,12 @@ export const storeSetSimData = ({sim, alsoInList = false}) => ({
     sim,
     alsoInList,
     type: STORE_SET_SIM_DATA
+});
+
+// Set sim transactions data in store
+export const storeSetSimTransactionsData = ({transactions}) => ({
+    transactions,
+    type: STORE_SET_SIM_TRANSACTIONS_DATA
 });
 
 // Set next sims data in store
@@ -178,4 +186,11 @@ export const emitAllInternalSimsFetch = () => ({
 // Emit all master sims fetch
 export const emitAllMasterSimsFetch = () => ({
     type: EMIT_ALL_MASTER_SIMS_FETCH
+});
+
+// Emit fetch sim transactions
+export const emitSimTransactionsFetch = ({id, selectedDay}) => ({
+    id,
+    selectedDay,
+    type: EMIT_SIM_TRANSACTIONS_FETCH
 });

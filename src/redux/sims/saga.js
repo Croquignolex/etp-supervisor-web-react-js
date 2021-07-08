@@ -2,6 +2,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {
     EMIT_NEW_SIM,
     EMIT_SIM_FETCH,
@@ -22,7 +23,9 @@ import {
     EMIT_ALL_MASTER_SIMS_FETCH,
     EMIT_COLLECTORS_SIMS_FETCH,
     EMIT_NEXT_AGENTS_SIMS_FETCH,
+    EMIT_SIM_TRANSACTIONS_FETCH,
     EMIT_NEXT_FLEETS_SIMS_FETCH,
+    storeSetSimTransactionsData,
     EMIT_NEXT_MASTERS_SIMS_FETCH,
     storeStopInfiniteScrollSimData,
     EMIT_NEXT_RESOURCES_SIMS_FETCH,
@@ -49,10 +52,13 @@ import {
     storeNextSimsRequestSucceed,
     storeAllMasterSimsRequestInit,
     storeAllInternalSimsRequestInit,
+    storeSimTransactionsRequestInit,
     storeAllMasterSimsRequestFailed,
     storeAllMasterSimsRequestSucceed,
     storeAllInternalSimsRequestFailed,
-    storeAllInternalSimsRequestSucceed
+    storeSimTransactionsRequestFailed,
+    storeAllInternalSimsRequestSucceed,
+    storeSimTransactionsRequestSucceed
 } from "../requests/sims/actions";
 
 // Fetch all sims from API
@@ -453,6 +459,29 @@ export function* emitNewSim() {
     });
 }
 
+// Fetch sim transactions from API
+export function* emitSimTransactionsFetch() {
+    yield takeLatest(EMIT_SIM_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeSimTransactionsRequestInit());
+            const data = {journee: shortDateToString(selectedDay)};
+            const apiResponse = yield call(apiPostRequest, `${api.SIM_TRANSACTIONS_API_PATH}/${id}`, data);
+            // Extract data
+            const transactions = extractSimTransactionsData(
+                apiResponse.data.transactions
+            );
+            // Fire event to redux
+            yield put(storeSetSimTransactionsData({transactions}));
+            // Fire event for request
+            yield put(storeSimTransactionsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeSimTransactionsRequestFailed({message}));
+        }
+    });
+}
+
 // Update sim info
 export function* emitUpdateSim() {
     yield takeLatest(EMIT_UPDATE_SIM, function*({id, name, description}) {
@@ -480,6 +509,27 @@ export function* emitUpdateSim() {
             yield put(storeEditSimRequestFailed({message}));
         }
     });
+}
+
+
+// Extract sim transactions data
+function extractSimTransactionsData(apiTransactions) {
+    let transactions = [];
+
+    apiTransactions.forEach(transaction => {
+        transactions.push({
+            in: transaction.in,
+            out: transaction.out,
+            type: transaction.type,
+            balance: transaction.balance,
+            left_account: transaction.left,
+            operator: transaction.operator,
+            right_account: transaction.right,
+            creation: dateToString(transaction.created_at),
+        });
+    });
+
+    return transactions;
 }
 
 // Extract sim data
@@ -571,6 +621,7 @@ export default function* sagaSims() {
         fork(emitNextFleetsSimsFetch),
         fork(emitCollectorsSimsFetch),
         fork(emitNextAgentsSimsFetch),
+        fork(emitSimTransactionsFetch),
         fork(emitAllInternalSimsFetch),
         fork(emitNextMastersSimsFetch),
         fork(emitNextResourcesSimsFetch),

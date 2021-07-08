@@ -161,6 +161,7 @@ export const CONFIRM_PAYMENT_API_PATH = `${API_URL}/approuve_encaissement`;
 export const REVENUES_API_PATH = `${API_URL}/treasuries_in`;
 export const EXPENSES_API_PATH = `${API_URL}/treasuries_out`;
 
-// Users
+// Report
+export const SIM_TRANSACTIONS_API_PATH = `${API_URL}/transactions_sim`;
 export const USER_MOVEMENTS_API_PATH = `${API_URL}/movements_utilisateur`;
 export const USER_TRANSACTIONS_API_PATH = `${API_URL}/transactions_utilisateur`;
