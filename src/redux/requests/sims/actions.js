@@ -39,6 +39,11 @@ export const STORE_ALL_INTERNAL_SIMS_REQUEST_RESET = 'STORE_ALL_INTERNAL_SIMS_RE
 export const STORE_ALL_INTERNAL_SIMS_REQUEST_FAILED = 'STORE_ALL_INTERNAL_SIMS_REQUEST_FAILED';
 export const STORE_ALL_INTERNAL_SIMS_REQUEST_SUCCEEDED = 'STORE_ALL_INTERNAL_SIMS_REQUEST_SUCCEEDED';
 
+export const STORE_SIM_TRANSACTIONS_REQUEST_INIT = 'STORE_SIM_TRANSACTIONS_REQUEST_INIT';
+export const STORE_SIM_TRANSACTIONS_REQUEST_RESET = 'STORE_SIM_TRANSACTIONS_REQUEST_RESET';
+export const STORE_SIM_TRANSACTIONS_REQUEST_FAILED = 'STORE_SIM_TRANSACTIONS_REQUEST_FAILED';
+export const STORE_SIM_TRANSACTIONS_REQUEST_SUCCEEDED = 'STORE_SIM_TRANSACTIONS_REQUEST_SUCCEEDED';
+
 // ======================================================== Sims
 // Set sims init data into store
 export const storeSimsRequestInit = () => ({
@@ -214,4 +219,26 @@ export const storeAllInternalSimsRequestSucceed = ({message}) => ({
 // Set all internals sims reset data into store
 export const storeAllInternalSimsRequestReset = () => ({
     type: STORE_ALL_INTERNAL_SIMS_REQUEST_RESET
+});
+// ======================================================== Sim transactions
+// Set sim transactions init data into store
+export const storeSimTransactionsRequestInit = () => ({
+    type: STORE_SIM_TRANSACTIONS_REQUEST_INIT
+});
+
+// Set sim transactions failed data into store
+export const storeSimTransactionsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_SIM_TRANSACTIONS_REQUEST_FAILED
+});
+
+// Set sim transactions succeeded data into store
+export const storeSimTransactionsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_SIM_TRANSACTIONS_REQUEST_SUCCEEDED
+});
+
+// Set sim transactions reset data into store
+export const storeSimTransactionsRequestReset = () => ({
+    type: STORE_SIM_TRANSACTIONS_REQUEST_RESET
 });
