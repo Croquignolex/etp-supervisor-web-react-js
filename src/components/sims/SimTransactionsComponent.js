@@ -53,10 +53,9 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
             } filename={tabName}>
                 <ExcelSheet data={transactions} name="Transactions">
                     <ExcelColumn label="DATE" value="creation"/>
-                    <ExcelColumn label="OPERATEUR" value="operator"/>
                     <ExcelColumn label="TYPE" value="type"/>
-                    <ExcelColumn label="COMPTE FLOTTAGE" value="left_account"/>
-                    <ExcelColumn label="COMPTE RECIPROQUE" value="right_account"/>
+                    <ExcelColumn label="COMPTE" value="left_account"/>
+                    <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
                     <ExcelColumn label="SOLDES" value="balance"/>
@@ -80,10 +79,9 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                         <thead>
                                             <tr>
                                                 <th>DATE</th>
-                                                <th>OPERATEUR</th>
                                                 <th>TYPE</th>
-                                                <th>COMPTE FLOTTAGE</th>
-                                                <th>COMPTE RECIPROQUE</th>
+                                                <th>COMPTE</th>
+                                                <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
                                                 <th>SOLDES</th>
@@ -94,7 +92,6 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                                 return (
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
-                                                        <td>{item.operator}</td>
                                                         <td>{item.type}</td>
                                                         <td>{item.left_account}</td>
                                                         <td>{item.right_account}</td>

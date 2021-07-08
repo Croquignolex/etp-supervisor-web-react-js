@@ -55,8 +55,8 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="OPERATEUR" value="operator"/>
                     <ExcelColumn label="TYPE" value="type"/>
-                    <ExcelColumn label="COMPTE FLOTTAGE" value="left_account"/>
-                    <ExcelColumn label="COMPTE RECIPROQUE" value="right_account"/>
+                    <ExcelColumn label="COMPTE" value="left_account"/>
+                    <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
                     <ExcelColumn label="SOLDES" value="balance"/>
@@ -82,8 +82,8 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                                                 <th>DATE</th>
                                                 <th>OPERATEUR</th>
                                                 <th>TYPE</th>
-                                                <th>COMPTE FLOTTAGE</th>
-                                                <th>COMPTE RECIPROQUE</th>
+                                                <th>COMPTE</th>
+                                                <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
                                                 <th>SOLDES</th>
