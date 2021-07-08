@@ -122,7 +122,7 @@ function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loc
                 <SimDetailsContainer id={simDetailsModal.id} />
             </FormModalComponent>
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <SimTransactionsContainer manager={transactionsModal.sim} />
+                <SimTransactionsContainer sim={transactionsModal.sim} />
             </FormModalComponent>
         </>
     )

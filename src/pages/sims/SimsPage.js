@@ -152,7 +152,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                 <SimDetailsContainer id={simDetailsModal.id} />
             </FormModalComponent>
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <SimTransactionsContainer manager={transactionsModal.sim} />
+                <SimTransactionsContainer sim={transactionsModal.sim} />
             </FormModalComponent>
         </>
     )

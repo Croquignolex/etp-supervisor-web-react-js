@@ -122,7 +122,7 @@ function FleetSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
                 <SimDetailsContainer id={simDetailsModal.id} />
             </FormModalComponent>
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <SimTransactionsContainer manager={transactionsModal.sim} />
+                <SimTransactionsContainer sim={transactionsModal.sim} />
             </FormModalComponent>
         </>
     )
