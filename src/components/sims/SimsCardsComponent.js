@@ -33,11 +33,11 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow}) {
                     )
                 })}
                 {sims.length === 0 &&
-                <div className="col-12">
-                    <div className='alert custom-active text-center'>
-                        Pas de comptes
+                    <div className="col-12">
+                        <div className='alert custom-active text-center'>
+                            Pas de comptes
+                        </div>
                     </div>
-                </div>
                 }
             </div>
         </>
