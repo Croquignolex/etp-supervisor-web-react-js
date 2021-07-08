@@ -13,10 +13,10 @@ import ManagerNewContainer from "../../containers/managers/ManagerNewContainer";
 import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
 import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsContainer";
 import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
+import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
 import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
-import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
 
 // Component
 function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, location}) {

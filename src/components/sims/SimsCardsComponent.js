@@ -5,7 +5,7 @@ import SimCardComponent from "./SimCardComponent";
 import {simTypeBadgeColor} from "../../functions/typeFunctions";
 
 // Component
-function SimsCardsComponent({sims, handleSimDetailsModalShow}) {
+function SimsCardsComponent({sims, handleSimDetailsModalShow, handleTransactionsModalShow}) {
     // Render
     return (
         <>
@@ -26,6 +26,12 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow}) {
                                         >
                                             <i className="fa fa-eye" /> Détails
                                         </button>
+                                        <br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleTransactionsModalShow(item)}>
+                                            <i className="fa fa-table" /> Transactions
+                                        </button><br/>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +53,8 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow}) {
 // Prop types to ensure destroyed props data type
 SimsCardsComponent.propTypes = {
     sims: PropTypes.array.isRequired,
-    handleSimDetailsModalShow: PropTypes.func.isRequired
+    handleSimDetailsModalShow: PropTypes.func.isRequired,
+    handleTransactionsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(SimsCardsComponent);

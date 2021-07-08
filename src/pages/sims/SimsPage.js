@@ -21,12 +21,12 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [newSimModal, setNewSimModal] = useState({show: false, header: ''});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', sim: {}});
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
 
     // Local effects
     useEffect(() => {
         dispatch(emitSimsFetch());
-
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -73,6 +73,16 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
         setSimDetailsModal({...simDetailsModal, show: false})
     }
 
+    // Show transactions modal form
+    const handleTransactionsModalShow = (sim) => {
+        setTransactionsModal({...transactionsModal, sim, show: true, header: 'TRANSACTIONS DE ' + sim.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -108,6 +118,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                                     (
                                                         <SimsCardsComponent sims={searchEngine(sims, needle)}
                                                                             handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                            handleTransactionsModalShow={handleTransactionsModalShow}
                                                         />
                                                     ) :
                                                     (
@@ -119,6 +130,7 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
                                                         >
                                                             <SimsCardsComponent sims={sims}
                                                                                 handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                                handleTransactionsModalShow={handleTransactionsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                     )

@@ -14,11 +14,13 @@ import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import {emitCollectorsSimsFetch, emitNextCollectorsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
 
 // Component
 function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', sim: {}});
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
 
     // Local effects
@@ -56,6 +58,16 @@ function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loc
         setSimDetailsModal({...simDetailsModal, show: false})
     }
 
+    // Show transactions modal form
+    const handleTransactionsModalShow = (sim) => {
+        setTransactionsModal({...transactionsModal, sim, show: true, header: 'TRANSACTIONS DE ' + sim.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -79,7 +91,10 @@ function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loc
                                             {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
+                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)}
+                                                                      handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                      handleTransactionsModalShow={handleTransactionsModalShow}
+                                                />
                                                 : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         dataLength={sims.length}
@@ -87,7 +102,10 @@ function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loc
                                                                         loader={<LoaderComponent />}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
+                                                            <SimsCardsComponent sims={sims}
+                                                                                handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                                handleTransactionsModalShow={handleTransactionsModalShow}
+                                                            />
                                                         </InfiniteScroll>
                                                 )
                                             }
@@ -102,6 +120,9 @@ function CollectorSimsPage({sims, simsRequests, hasMoreData, page, dispatch, loc
             {/* Modal */}
             <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
                 <SimDetailsContainer id={simDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <ManagerTransactionsContainer manager={transactionsModal.manager} />
             </FormModalComponent>
         </>
     )

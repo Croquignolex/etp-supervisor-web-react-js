@@ -19,6 +19,7 @@ import {dateToString, needleSearch, requestFailed, requestLoading} from "../../f
 function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', sim: {}});
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
 
     // Local effects
@@ -56,6 +57,16 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
         setSimDetailsModal({...simDetailsModal, show: false})
     }
 
+    // Show transactions modal form
+    const handleTransactionsModalShow = (sim) => {
+        setTransactionsModal({...transactionsModal, sim, show: true, header: 'TRANSACTIONS DE ' + sim.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -79,7 +90,10 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
                                             {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
+                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)}
+                                                                      handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                      handleTransactionsModalShow={handleTransactionsModalShow}
+                                                />
                                                 : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         dataLength={sims.length}
@@ -87,7 +101,10 @@ function MasterSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locati
                                                                         loader={<LoaderComponent />}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
+                                                            <SimsCardsComponent sims={sims}
+                                                                                handleSimDetailsModalShow={handleSimDetailsModalShow}
+                                                                                handleTransactionsModalShow={handleTransactionsModalShow}
+                                                            />
                                                         </InfiniteScroll>
                                                 )
                                             }
