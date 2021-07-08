@@ -11,6 +11,7 @@ import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import SimTransactionsContainer from "../../containers/sims/SimTransactionsContainer";
 import TableSearchWithButtonComponent from "../../components/TableSearchWithButtonComponent";
 import {emitNextSimsFetch, emitSearchSimsFetch, emitSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
@@ -149,6 +150,9 @@ function SimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
             </FormModalComponent>
             <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
                 <SimDetailsContainer id={simDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <SimTransactionsContainer manager={transactionsModal.sim} />
             </FormModalComponent>
         </>
     )

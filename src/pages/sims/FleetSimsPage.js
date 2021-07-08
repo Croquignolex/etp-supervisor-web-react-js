@@ -11,6 +11,7 @@ import TableSearchComponent from "../../components/TableSearchComponent";
 import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
+import SimTransactionsContainer from "../../containers/sims/SimTransactionsContainer";
 import {emitFleetsSimsFetch, emitNextFleetsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
@@ -119,6 +120,9 @@ function FleetSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
             {/* Modal */}
             <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
                 <SimDetailsContainer id={simDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <SimTransactionsContainer manager={transactionsModal.sim} />
             </FormModalComponent>
         </>
     )
