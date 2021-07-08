@@ -54,7 +54,7 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                 <ExcelSheet data={transactions} name="Transactions">
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="TYPE" value="type"/>
-                    <ExcelColumn label="COMPTE" value="left_account"/>
+                    <ExcelColumn label="RESPONSABLE" value="user"/>
                     <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
@@ -80,7 +80,7 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                             <tr>
                                                 <th>DATE</th>
                                                 <th>TYPE</th>
-                                                <th>COMPTE</th>
+                                                <th>RESPONSABLE</th>
                                                 <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
@@ -93,7 +93,7 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.left_account}</td>
+                                                        <td>{item.user}</td>
                                                         <td>{item.right_account}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
