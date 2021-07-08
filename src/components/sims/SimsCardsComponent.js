@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import SimCardComponent from "./SimCardComponent";
+import * as types from "../../constants/typeConstants";
 import {simTypeBadgeColor} from "../../functions/typeFunctions";
 
 // Component
@@ -26,12 +27,16 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow, handleTransactions
                                         >
                                             <i className="fa fa-eye" /> Détails
                                         </button>
-                                        <br/>
-                                        <button type="button"
-                                                className="btn btn-sm btn-theme"
-                                                onClick={() => handleTransactionsModalShow(item)}>
-                                            <i className="fa fa-table" /> Transactions
-                                        </button><br/>
+                                        {[types.FLEET_TYPE, types.MASTER_TYPE, types.COLLECTOR_TYPE].includes(item.type.name) && (
+                                            <>
+                                                <br/>
+                                                <button type="button"
+                                                        className="btn btn-sm btn-theme"
+                                                        onClick={() => handleTransactionsModalShow(item)}>
+                                                    <i className="fa fa-table" /> Transactions
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
