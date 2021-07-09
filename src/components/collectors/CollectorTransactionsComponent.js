@@ -10,7 +10,7 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
 import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
-import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function CollectorTransactionsComponent({collector, transactions, dispatch, request}) {
@@ -75,7 +75,6 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                     <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
-                    <ExcelColumn label="SOLDES" value="balance"/>
                 </ExcelSheet>
             </ExcelFile>
         )
@@ -107,7 +106,6 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                                                 <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
-                                                <th>SOLDES</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -117,11 +115,10 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                                                         <td>{item.creation}</td>
                                                         <td>{item.operator}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.left_account}</td>
-                                                        <td>{item.right_account}</td>
+                                                        <td>{formatString(item.left_account, 20)}</td>
+                                                        <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
-                                                        <td>{item.balance}</td>
                                                     </tr>
                                                 )
                                             })}
