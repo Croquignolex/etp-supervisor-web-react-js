@@ -130,15 +130,17 @@ export const emitUpdateManagerInfo = ({id, email, name, address, description}) =
 });
 
 // Emit fetch manager movements
-export const emitManagerMovementsFetch = ({id, selectedDay}) => ({
+export const emitManagerMovementsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_MANAGER_MOVEMENTS_FETCH
 });
 
 // Emit fetch manager transactions
-export const emitManagerTransactionsFetch = ({id, selectedDay}) => ({
+export const emitManagerTransactionsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_MANAGER_TRANSACTIONS_FETCH
 });

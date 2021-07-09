@@ -212,11 +212,14 @@ export function* emitUpdateManagerInfo() {
 
 // Fetch manager movements from API
 export function* emitManagerMovementsFetch() {
-    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_MANAGER_MOVEMENTS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeManagerMovementsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractManagerMovementsData(
@@ -235,11 +238,14 @@ export function* emitManagerMovementsFetch() {
 
 // Fetch manager transactions from API
 export function* emitManagerTransactionsFetch() {
-    yield takeLatest(EMIT_MANAGER_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_MANAGER_TRANSACTIONS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeManagerTransactionsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractManagerTransactionsData(
