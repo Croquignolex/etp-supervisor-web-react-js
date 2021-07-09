@@ -25,7 +25,7 @@ function DatePickerComponent({end, start, handleEnd, handleStart}) {
     return (
         <div className="d-flex">
             <DatePicker selected={start}
-                        maxDate={new Date()}
+                        maxDate={end}
                         calendarStartDay={1}
                         dateFormat="dd/MM/yyyy"
                         onChange={handleSelectedStartDate}
