@@ -42,8 +42,8 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
         setSelectedStartDate(selectedDay)
         dispatch(emitSupervisorTransactionsFetch({
             id: supervisor.id,
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
         }));
     }
 

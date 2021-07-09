@@ -42,8 +42,8 @@ function SupervisorMovementsComponent({supervisor, movements, dispatch, request}
         setSelectedStartDate(selectedDay)
         dispatch(emitSupervisorMovementsFetch({
             id: supervisor.id,
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
         }));
     }
 

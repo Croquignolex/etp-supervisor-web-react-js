@@ -42,8 +42,8 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
         setSelectedStartDate(selectedDay)
         dispatch(emitManagerTransactionsFetch({
             id: manager.id,
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
         }));
     }
 

@@ -42,8 +42,8 @@ function ManagerMovementsComponent({manager, movements, dispatch, request}) {
         setSelectedStartDate(selectedDay)
         dispatch(emitManagerMovementsFetch({
             id: manager.id,
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
         }));
     }
 

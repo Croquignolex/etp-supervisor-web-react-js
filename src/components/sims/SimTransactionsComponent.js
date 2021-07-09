@@ -42,8 +42,8 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
         setSelectedStartDate(selectedDay)
         dispatch(emitSimTransactionsFetch({
             id: sim.id,
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
         }));
     }
 
