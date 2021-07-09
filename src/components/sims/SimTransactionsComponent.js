@@ -114,7 +114,7 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.user}</td>
+                                                        <td>{formatString(item.user, 20)}</td>
                                                         <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
