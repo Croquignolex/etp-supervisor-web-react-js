@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function DatePickerComponent({end, start, handleEnd, handleStart}) {
     // Custom component
     const CustomInput = forwardRef(({ value, onClick, isBegin }, ref) => (
-        <button className="btn btn-theme mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
+        <button className="btn btn-theme btn-sm mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
             <i className="fa fa-calendar-week" /> {isBegin ? 'Du' : 'Au'} {value}
         </button>
     ));
@@ -23,7 +23,7 @@ function DatePickerComponent({end, start, handleEnd, handleStart}) {
 
     // Render
     return (
-        <>
+        <div className="d-flex">
             <DatePicker selected={start}
                         maxDate={new Date()}
                         calendarStartDay={1}
@@ -45,7 +45,7 @@ function DatePickerComponent({end, start, handleEnd, handleStart}) {
                         minDate={start}
                         endDate={end}
             />
-        </>
+        </div>
     )
 }
 
