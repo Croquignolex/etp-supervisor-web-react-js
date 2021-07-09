@@ -157,11 +157,14 @@ export function* emitSupervisorFetch() {
 
 // Fetch supervisor movements from API
 export function* emitSupervisorMovementsFetch() {
-    yield takeLatest(EMIT_SUPERVISOR_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_SUPERVISOR_MOVEMENTS_FETCH, function*({id,  selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeSupervisorMovementsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractSupervisorMovementsData(
@@ -180,11 +183,14 @@ export function* emitSupervisorMovementsFetch() {
 
 // Fetch supervisor transactions from API
 export function* emitSupervisorTransactionsFetch() {
-    yield takeLatest(EMIT_SUPERVISOR_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_SUPERVISOR_TRANSACTIONS_FETCH, function*({id,  selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeSupervisorTransactionsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractSupervisorTransactionsData(

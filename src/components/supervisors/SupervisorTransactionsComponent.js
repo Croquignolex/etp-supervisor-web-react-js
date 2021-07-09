@@ -10,18 +10,20 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitSupervisorTransactionsFetch} from "../../redux/supervisors/actions";
 import {storeSupervisorTransactionsRequestReset} from "../../redux/requests/supervisors/actions";
-import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function SupervisorTransactionsComponent({supervisor, transactions, dispatch, request}) {
     // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
         dispatch(emitSupervisorTransactionsFetch({
             id: supervisor.id,
-            selectedDay: new Date()
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
         }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
@@ -35,15 +37,29 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
         dispatch(storeSupervisorTransactionsRequestReset());
     };
 
-    const handleSelectedDate = (selectedDay) => {
+    const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
-        setSelectedDate(selectedDay)
-        dispatch(emitSupervisorTransactionsFetch({id: supervisor.id, selectedDay}));
+        setSelectedStartDate(selectedDay)
+        dispatch(emitSupervisorTransactionsFetch({
+            id: supervisor.id,
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitSupervisorTransactionsFetch({
+            id: supervisor.id,
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Tansactions de flotte de ${supervisor.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Tansactions de flotte de ${supervisor.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -59,7 +75,6 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                     <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
-                    <ExcelColumn label="SOLDES" value="balance"/>
                 </ExcelSheet>
             </ExcelFile>
         )
@@ -73,7 +88,12 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
                             <ExportButton />
-                            <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
+                            <DatePickerComponent
+                                end={selectedEndDate}
+                                start={selectedStartDate}
+                                handleEnd={handleSelectedEndDate}
+                                handleStart={handleSelectedStartDate}
+                            />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
@@ -86,7 +106,6 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                                                 <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
-                                                <th>SOLDES</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -96,11 +115,10 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                                                         <td>{item.creation}</td>
                                                         <td>{item.operator}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.left_account}</td>
-                                                        <td>{item.right_account}</td>
+                                                        <td>{formatString(item.left_account, 20)}</td>
+                                                        <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
-                                                        <td>{item.balance}</td>
                                                     </tr>
                                                 )
                                             })}

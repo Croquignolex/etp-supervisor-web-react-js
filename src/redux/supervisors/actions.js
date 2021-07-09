@@ -99,15 +99,17 @@ export const emitNewSupervisor = ({name, address, phone, email, password,  descr
 });
 
 // Emit fetch supervisor movements
-export const emitSupervisorMovementsFetch = ({id, selectedDay}) => ({
+export const emitSupervisorMovementsFetch = ({id,  selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_SUPERVISOR_MOVEMENTS_FETCH
 });
 
 // Emit fetch supervisor transactions
-export const emitSupervisorTransactionsFetch = ({id, selectedDay}) => ({
+export const emitSupervisorTransactionsFetch = ({id,  selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_SUPERVISOR_TRANSACTIONS_FETCH
 });
