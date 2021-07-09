@@ -10,18 +10,20 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitCollectorMovementsFetch} from "../../redux/collectors/actions";
 import {storeCollectorMovementsRequestReset} from "../../redux/requests/collectors/actions";
-import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function CollectorMovementsComponent({collector, movements, dispatch, request}) {
     // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
         dispatch(emitCollectorMovementsFetch({
             id: collector.id,
-            selectedDay: new Date()
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
         }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
@@ -35,15 +37,29 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
         dispatch(storeCollectorMovementsRequestReset());
     };
 
-    const handleSelectedDate = (selectedDay) => {
+    const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
-        setSelectedDate(selectedDay)
-        dispatch(emitCollectorMovementsFetch({id: collector.id, selectedDay}));
+        setSelectedStartDate(selectedDay)
+        dispatch(emitCollectorMovementsFetch({
+            id: collector.id,
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitCollectorMovementsFetch({
+            id: collector.id,
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Mouvement de caisse de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Mouvement de caisse de ${collector.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -71,7 +87,12 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
                             <ExportButton />
-                            <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
+                            <DatePickerComponent
+                                end={selectedEndDate}
+                                start={selectedStartDate}
+                                handleEnd={handleSelectedEndDate}
+                                handleStart={handleSelectedStartDate}
+                            />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
@@ -91,7 +112,7 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
                                                     <tr key={key}>
                                                         <td>{item.creation}</td>
                                                         <td>{item.type}</td>
-                                                        <td>{item.label}</td>
+                                                        <td>{formatString(item.label, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
                                                         <td>{item.balance}</td>
