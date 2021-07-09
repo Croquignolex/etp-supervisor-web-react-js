@@ -157,9 +157,10 @@ export const emitCollectorMovementsFetch = ({id, selectedDay}) => ({
 });
 
 // Emit fetch collector transactions
-export const emitCollectorTransactionsFetch = ({id, selectedDay}) => ({
+export const emitCollectorTransactionsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_COLLECTOR_TRANSACTIONS_FETCH
 });
 

@@ -15,14 +15,16 @@ import {requestFailed, requestLoading, shortDateToString} from "../../functions/
 // Component
 function CollectorTransactionsComponent({collector, transactions, dispatch, request}) {
     // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorTransactionsFetch({
+        /*dispatch(emitCollectorTransactionsFetch({
             id: collector.id,
-            selectedDay: new Date()
-        }));
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
+        }));*/
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -35,15 +37,29 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
         dispatch(storeCollectorTransactionsRequestReset());
     };
 
-    const handleSelectedDate = (selectedDay) => {
+    const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
-        setSelectedDate(selectedDay)
-        dispatch(emitCollectorTransactionsFetch({id: collector.id, selectedDay}));
+        setSelectedStartDate(selectedDay)
+        dispatch(emitCollectorTransactionsFetch({
+            id: collector.id,
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitCollectorTransactionsFetch({
+            id: collector.id,
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Tansactions de flotte de ${collector.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Tansactions de flotte de ${collector.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -73,7 +89,12 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
                             <ExportButton />
-                            <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
+                            <DatePickerComponent
+                                end={selectedEndDate}
+                                start={selectedStartDate}
+                                handleEnd={handleSelectedEndDate}
+                                handleStart={handleSelectedStartDate}
+                            />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
