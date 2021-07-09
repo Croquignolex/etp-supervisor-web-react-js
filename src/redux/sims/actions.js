@@ -189,8 +189,9 @@ export const emitAllMasterSimsFetch = () => ({
 });
 
 // Emit fetch sim transactions
-export const emitSimTransactionsFetch = ({id, selectedDay}) => ({
+export const emitSimTransactionsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_SIM_TRANSACTIONS_FETCH
 });

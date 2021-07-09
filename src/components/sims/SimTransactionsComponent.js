@@ -10,18 +10,20 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
 import {emitSimTransactionsFetch} from "../../redux/sims/actions";
 import {storeSimTransactionsRequestReset} from "../../redux/requests/sims/actions";
-import {requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
 function SimTransactionsComponent({sim, transactions, dispatch, request}) {
     // Local states
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
         dispatch(emitSimTransactionsFetch({
             id: sim.id,
-            selectedDay: new Date()
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
         }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
@@ -35,15 +37,29 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
         dispatch(storeSimTransactionsRequestReset());
     };
 
-    const handleSelectedDate = (selectedDay) => {
+    const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
-        setSelectedDate(selectedDay)
-        dispatch(emitSimTransactionsFetch({id: sim.id, selectedDay}));
+        setSelectedStartDate(selectedDay)
+        dispatch(emitSimTransactionsFetch({
+            id: sim.id,
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitSimTransactionsFetch({
+            id: sim.id,
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Tansactions de flotte de ${sim.name} du ${shortDateToString(selectedDate, '-')}`;
+        const tabName = `Tansactions de flotte de ${sim.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -72,7 +88,12 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
                             <ExportButton />
-                            <DatePickerComponent input={selectedDate} handleInput={handleSelectedDate} />
+                            <DatePickerComponent
+                                end={selectedEndDate}
+                                start={selectedStartDate}
+                                handleEnd={handleSelectedEndDate}
+                                handleStart={handleSelectedStartDate}
+                            />
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
@@ -94,7 +115,7 @@ function SimTransactionsComponent({sim, transactions, dispatch, request}) {
                                                         <td>{item.creation}</td>
                                                         <td>{item.type}</td>
                                                         <td>{item.user}</td>
-                                                        <td>{item.right_account}</td>
+                                                        <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
                                                         <td>{item.balance}</td>

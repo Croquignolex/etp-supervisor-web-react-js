@@ -461,11 +461,14 @@ export function* emitNewSim() {
 
 // Fetch sim transactions from API
 export function* emitSimTransactionsFetch() {
-    yield takeLatest(EMIT_SIM_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_SIM_TRANSACTIONS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeSimTransactionsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.SIM_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractSimTransactionsData(
