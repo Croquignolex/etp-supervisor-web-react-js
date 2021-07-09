@@ -23,7 +23,7 @@ function DatePickerComponent({end, start, handleEnd, handleStart}) {
 
     // Render
     return (
-        <div>
+        <>
             <DatePicker selected={start}
                         maxDate={new Date()}
                         calendarStartDay={1}
@@ -45,7 +45,7 @@ function DatePickerComponent({end, start, handleEnd, handleStart}) {
                         minDate={start}
                         endDate={end}
             />
-        </div>
+        </>
     )
 }
 
