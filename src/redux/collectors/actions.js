@@ -150,9 +150,10 @@ export const emitAddCollectorSims = ({id, name, number, description, operator}) 
 });
 
 // Emit fetch collector movements
-export const emitCollectorMovementsFetch = ({id, selectedDay}) => ({
+export const emitCollectorMovementsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
     id,
-    selectedDay,
+    selectedEndDay,
+    selectedStartDay,
     type: EMIT_COLLECTOR_MOVEMENTS_FETCH
 });
 

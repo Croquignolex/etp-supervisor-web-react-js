@@ -20,11 +20,11 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
 
     // Local effects
     useEffect(() => {
-        /*dispatch(emitCollectorTransactionsFetch({
+        dispatch(emitCollectorTransactionsFetch({
             id: collector.id,
             selectedEndDay: new Date(),
             selectedStartDay: new Date(),
-        }));*/
+        }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -40,21 +40,21 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
     const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedStartDate(selectedDay)
-        // dispatch(emitCollectorTransactionsFetch({
-        //     id: collector.id,
-        //     selectedStartDay: selectedDay,
-        //     selectedEndDay: selectedEndDate
-        // }));
+        dispatch(emitCollectorTransactionsFetch({
+            id: collector.id,
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
+        }));
     }
 
     const handleSelectedEndDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedEndDate(selectedDay)
-        // dispatch(emitCollectorTransactionsFetch({
-        //     id: collector.id,
-        //     selectedEndDay: selectedDay,
-        //     selectedStartDay: selectedStartDate
-        // }));
+        dispatch(emitCollectorTransactionsFetch({
+            id: collector.id,
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Custom export button

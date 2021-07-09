@@ -277,11 +277,14 @@ export function* emitAddCollectorSims() {
 
 // Fetch manager movements from API
 export function* emitCollectorMovementsFetch() {
-    yield takeLatest(EMIT_COLLECTOR_MOVEMENTS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_COLLECTOR_MOVEMENTS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeCollectorMovementsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_MOVEMENTS_API_PATH}/${id}`, data);
             // Extract data
             const movements = extractCollectorMovementsData(
@@ -300,11 +303,14 @@ export function* emitCollectorMovementsFetch() {
 
 // Fetch manager transactions from API
 export function* emitCollectorTransactionsFetch() {
-    yield takeLatest(EMIT_COLLECTOR_TRANSACTIONS_FETCH, function*({id, selectedDay}) {
+    yield takeLatest(EMIT_COLLECTOR_TRANSACTIONS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
             yield put(storeCollectorTransactionsRequestInit());
-            const data = {journee: shortDateToString(selectedDay)};
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
             const apiResponse = yield call(apiPostRequest, `${api.USER_TRANSACTIONS_API_PATH}/${id}`, data);
             // Extract data
             const transactions = extractCollectorTransactionsData(
