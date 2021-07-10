@@ -164,6 +164,7 @@ export const EXPENSES_API_PATH = `${API_URL}/treasuries_out`;
 // Report
 export const SIM_TRANSACTIONS_API_PATH = `${API_URL}/transactions_sim`;
 export const USER_MOVEMENTS_API_PATH = `${API_URL}/movements_utilisateur`;
+export const PERSONAL_MOVEMENTS_API_PATH = `${API_URL}/movements_personal`;
 export const OPERATOR_TRANSACTIONS_API_PATH = `${API_URL}/transactions_flote`;
 export const USER_TRANSACTIONS_API_PATH = `${API_URL}/transactions_utilisateur`;
 export const PERSONAL_TRANSACTIONS_API_PATH = `${API_URL}/transactions_personal`;
