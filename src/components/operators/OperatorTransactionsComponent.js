@@ -71,10 +71,10 @@ function OperatorTransactionsComponent({operator, transactions, dispatch, reques
                     <ExcelColumn label="DATE" value="creation"/>
                     <ExcelColumn label="TYPE" value="type"/>
                     <ExcelColumn label="RESPONSABLE" value="user"/>
+                    <ExcelColumn label="COMPTE" value="left_account"/>
                     <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
-                    <ExcelColumn label="SOLDES" value="balance"/>
                 </ExcelSheet>
             </ExcelFile>
         )
@@ -102,10 +102,10 @@ function OperatorTransactionsComponent({operator, transactions, dispatch, reques
                                                 <th>DATE</th>
                                                 <th>TYPE</th>
                                                 <th>RESPONSABLE</th>
+                                                <th>COMPTE</th>
                                                 <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
-                                                <th>SOLDES</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -115,10 +115,10 @@ function OperatorTransactionsComponent({operator, transactions, dispatch, reques
                                                         <td>{item.creation}</td>
                                                         <td>{item.type}</td>
                                                         <td>{formatString(item.user, 20)}</td>
+                                                        <td>{formatString(item.left_account, 20)}</td>
                                                         <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
-                                                        <td>{item.balance}</td>
                                                     </tr>
                                                 )
                                             })}

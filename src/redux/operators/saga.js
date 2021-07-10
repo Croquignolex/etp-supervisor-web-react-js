@@ -247,8 +247,7 @@ function extractOperatorTransactionsData(apiTransactions) {
             out: transaction.out,
             type: transaction.type,
             user: transaction.user,
-            balance: transaction.balance,
-            operator: transaction.operator,
+            left_account: transaction.left,
             right_account: transaction.right,
             creation: dateToString(transaction.created_at),
         });
@@ -262,7 +261,8 @@ function extractOperatorData(apiOperator, apiSims) {
     let operator = {
         id: '', name: '', description: '', creation: '',
 
-        sims: []
+        sims: [],
+        transactions: []
     };
     if(apiSims) {
         apiSims.forEach(data => {
