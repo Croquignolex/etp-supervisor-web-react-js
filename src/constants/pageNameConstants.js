@@ -29,6 +29,11 @@ export const MASTERS_SIMS = 'Comptes master';
 export const FLEETS_SIMS = 'Comptes de flottage';
 export const RESOURCES_SIMS = 'Comptes ressource';
 
+// Reports
+export const REPORTS_PAGE = 'Comptes';
+export const MOVEMENTS_REPORTS = 'Mouvements de caisse';
+export const TRANSACTIONS_REPORTS = 'Transactions de flotte';
+
 // Operations
 export const OPERATIONS = 'Opérations';
 export const OPERATIONS_FLEETS_PAGE = 'Flottages';

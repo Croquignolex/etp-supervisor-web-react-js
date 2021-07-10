@@ -6,6 +6,8 @@ import {APP_NAME} from "../constants/generalConstants";
 import * as path from "../constants/pagePathConstants";
 import * as page from "../constants/pageNameConstants";
 import {formatString} from "../functions/generalFunctions";
+import {MOVEMENTS_REPORTS, REPORTS_PAGE, TRANSACTIONS_REPORTS} from "../constants/pageNameConstants";
+import {MOVEMENTS_PAGE_PATH, TRANSACTIONS_PAGE_PATH} from "../constants/pagePathConstants";
 
 // Component
 function SideBarComponent({user, pathname}) {
@@ -27,6 +29,7 @@ function SideBarComponent({user, pathname}) {
             buildZonesMenu(),
             buildVendorsMenu(),
             buildOperatorsMenu(),
+            buildReportsMenu(),
         ];
         // eslint-disable-next-line
     }, [pathname]);
@@ -247,6 +250,18 @@ function buildOperatorsMenu() {
         icon: 'fa fa-globe',
         sub: []
     };
+}
+
+// Build reports menu
+function buildReportsMenu() {
+    return {
+        name: page.REPORTS_PAGE,
+        icon: 'fa fa-sim-card',
+        sub: [
+            {name: page.MOVEMENTS_REPORTS, path: path.MOVEMENTS_PAGE_PATH},
+            {name: page.TRANSACTIONS_REPORTS, path: path.TRANSACTIONS_PAGE_PATH},
+        ]
+    }
 }
 
 // Side bar drawer open

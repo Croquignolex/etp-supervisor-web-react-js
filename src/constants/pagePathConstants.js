@@ -18,6 +18,10 @@ export const MASTERS_SIMS_PAGE_PATH = "/accounts/master";
 export const RESOURCES_SIMS_PAGE_PATH = "/accounts/resource";
 export const COLLECTORS_SIMS_PAGE_PATH = "/accounts/collector";
 
+// Reports
+export const MOVEMENTS_PAGE_PATH = "/reports/movements";
+export const TRANSACTIONS_PAGE_PATH = "/reports/transactions";
+
 // Users
 export const AGENTS_PAGE_PATH = "/users/agents";
 export const ADMINS_PAGE_PATH = "/users/admins";
