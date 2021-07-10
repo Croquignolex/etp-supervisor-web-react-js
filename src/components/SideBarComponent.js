@@ -6,8 +6,6 @@ import {APP_NAME} from "../constants/generalConstants";
 import * as path from "../constants/pagePathConstants";
 import * as page from "../constants/pageNameConstants";
 import {formatString} from "../functions/generalFunctions";
-import {MOVEMENTS_REPORTS, REPORTS_PAGE, TRANSACTIONS_REPORTS} from "../constants/pageNameConstants";
-import {MOVEMENTS_PAGE_PATH, TRANSACTIONS_PAGE_PATH} from "../constants/pagePathConstants";
 
 // Component
 function SideBarComponent({user, pathname}) {
