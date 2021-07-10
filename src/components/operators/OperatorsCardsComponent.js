@@ -36,7 +36,7 @@ function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow, han
                                         </button>
                                         <br/>
                                         <button type="button"
-                                                className="btn btn-sm btn-theme"
+                                                className="btn btn-sm btn-theme mt-1"
                                                 onClick={() => handleTransactionsModalShow(item)}>
                                             <i className="fa fa-table" /> Transactions
                                         </button>
