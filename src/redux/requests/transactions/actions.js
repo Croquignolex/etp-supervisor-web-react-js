@@ -5,24 +5,24 @@ export const STORE_TRANSACTIONS_REQUEST_FAILED = 'STORE_TRANSACTIONS_REQUEST_FAI
 export const STORE_TRANSACTIONS_REQUEST_SUCCEEDED = 'STORE_TRANSACTIONS_REQUEST_SUCCEEDED';
 
 // ======================================================== Transactions
-// Set collectors init data into store
-export const storeCollectorsRequestInit = () => ({
-    type: STORE_COLLECTORS_REQUEST_INIT
+// Set transactions init data into store
+export const storeTransactionsRequestInit = () => ({
+    type: STORE_TRANSACTIONS_REQUEST_INIT
 });
 
-// Set collectors failed data into store
-export const storeCollectorsRequestFailed = ({message}) => ({
+// Set transactions failed data into store
+export const storeTransactionsRequestFailed = ({message}) => ({
     message,
-    type: STORE_COLLECTORS_REQUEST_FAILED
+    type: STORE_TRANSACTIONS_REQUEST_FAILED
 });
 
-// Set collectors succeeded data into store
-export const storeCollectorsRequestSucceed = ({message}) => ({
+// Set transactions succeeded data into store
+export const storeTransactionsRequestSucceed = ({message}) => ({
     message,
-    type: STORE_COLLECTORS_REQUEST_SUCCEEDED
+    type: STORE_TRANSACTIONS_REQUEST_SUCCEEDED
 });
 
-// Set collectors reset data into store
-export const storeCollectorsRequestReset = () => ({
-    type: STORE_COLLECTORS_REQUEST_RESET
+// Set transactions reset data into store
+export const storeTransactionsRequestReset = () => ({
+    type: STORE_TRANSACTIONS_REQUEST_RESET
 });
