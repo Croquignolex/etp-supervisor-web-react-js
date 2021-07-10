@@ -34,6 +34,11 @@ export const STORE_OPERATOR_ADD_SIM_REQUEST_RESET = 'STORE_OPERATOR_ADD_SIM_REQU
 export const STORE_OPERATOR_ADD_SIM_REQUEST_FAILED = 'STORE_OPERATOR_ADD_SIM_REQUEST_FAILED';
 export const STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED = 'STORE_OPERATOR_ADD_SIM_REQUEST_SUCCEEDED';
 
+export const STORE_OPERATOR_TRANSACTIONS_REQUEST_INIT = 'STORE_OPERATOR_TRANSACTIONS_REQUEST_INIT';
+export const STORE_OPERATOR_TRANSACTIONS_REQUEST_RESET = 'STORE_OPERATOR_TRANSACTIONS_REQUEST_RESET';
+export const STORE_OPERATOR_TRANSACTIONS_REQUEST_FAILED = 'STORE_OPERATOR_TRANSACTIONS_REQUEST_FAILED';
+export const STORE_OPERATOR_TRANSACTIONS_REQUEST_SUCCEEDED = 'STORE_OPERATOR_TRANSACTIONS_REQUEST_SUCCEEDED';
+
 // ======================================================== Operators
 // Set operators init data into store
 export const storeOperatorsRequestInit = () => ({
@@ -187,4 +192,26 @@ export const storeOperatorAddSimRequestSucceed = ({message}) => ({
 // Set operator add sim reset data into store
 export const storeOperatorAddSimRequestReset = () => ({
     type: STORE_OPERATOR_ADD_SIM_REQUEST_RESET
+});
+// ======================================================== Operator transactions
+// Set operator transactions init data into store
+export const storeSimTransactionsRequestInit = () => ({
+    type: STORE_OPERATOR_TRANSACTIONS_REQUEST_INIT
+});
+
+// Set operator transactions failed data into store
+export const storeSimTransactionsRequestFailed = ({message}) => ({
+    message,
+    type: STORE_OPERATOR_TRANSACTIONS_REQUEST_FAILED
+});
+
+// Set operator transactions succeeded data into store
+export const storeSimTransactionsRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_OPERATOR_TRANSACTIONS_REQUEST_SUCCEEDED
+});
+
+// Set operator transactions reset data into store
+export const storeSimTransactionsRequestReset = () => ({
+    type: STORE_OPERATOR_TRANSACTIONS_REQUEST_RESET
 });

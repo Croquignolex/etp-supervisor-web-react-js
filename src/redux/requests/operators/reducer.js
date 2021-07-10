@@ -10,6 +10,7 @@ const initialState = {
     next: {failed: false, loading: false, succeeded: false, message: ""},
     show: {failed: false, loading: false, succeeded: false, message: ""},
     edit: {failed: false, loading: false, succeeded: false, message: ""},
+    transactions: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -134,6 +135,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set operator add sim reset request store data
         case actions.STORE_OPERATOR_ADD_SIM_REQUEST_RESET:
             nextState = {...state, sim: initialState.sim};
+            return nextState || state;
+        // ======================================================== Operator transactions
+        // Resolve event to set operator transactions init request store data
+        case actions.STORE_OPERATOR_TRANSACTIONS_REQUEST_INIT:
+            nextState = {...state, transactions: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set operator transactions failed request store data
+        case actions.STORE_OPERATOR_TRANSACTIONS_REQUEST_FAILED:
+            nextState = {...state, transactions: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set operator transactions succeeded request store data
+        case actions.STORE_OPERATOR_TRANSACTIONS_REQUEST_SUCCEEDED:
+            nextState = {...state, transactions: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set operator transactions reset request store data
+        case actions.STORE_OPERATOR_TRANSACTIONS_REQUEST_RESET:
+            nextState = {...state, transactions: initialState.transactions};
             return nextState || state;
         // ========================================================
         // Unknown action

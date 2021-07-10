@@ -155,19 +155,19 @@ function reduce(state = initialState, action) {
             nextState = {...state, internal: initialState.internal};
             return nextState || state;
         // ======================================================== Sim transactions
-        // Resolve event to set sims transactions init request store data
+        // Resolve event to set sim transactions init request store data
         case actions.STORE_SIM_TRANSACTIONS_REQUEST_INIT:
             nextState = {...state, transactions: requestInitValue()};
             return nextState || state;
-        // Resolve event to set sims transactions failed request store data
+        // Resolve event to set sim transactions failed request store data
         case actions.STORE_SIM_TRANSACTIONS_REQUEST_FAILED:
             nextState = {...state, transactions: requestFailedValue(action.message)};
             return nextState || state;
-        // Resolve event to set sims transactions succeeded request store data
+        // Resolve event to set sim transactions succeeded request store data
         case actions.STORE_SIM_TRANSACTIONS_REQUEST_SUCCEEDED:
             nextState = {...state, transactions: requestSucceededValue(action.message)};
             return nextState || state;
-        // Resolve event to set sims transactions reset request store data
+        // Resolve event to set sim transactions reset request store data
         case actions.STORE_SIM_TRANSACTIONS_REQUEST_RESET:
             nextState = {...state, transactions: initialState.transactions};
             return nextState || state;
