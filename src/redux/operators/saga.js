@@ -2,6 +2,7 @@ import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {
     EMIT_NEW_OPERATOR,
     EMIT_OPERATOR_FETCH,
@@ -14,6 +15,8 @@ import {
     EMIT_ALL_OPERATORS_FETCH,
     storeSetNextOperatorsData,
     EMIT_NEXT_OPERATORS_FETCH,
+    EMIT_OPERATOR_TRANSACTIONS_FETCH,
+    storeSetOperatorTransactionsData,
     storeStopInfiniteScrollOperatorData
 } from "./actions";
 import {
@@ -38,6 +41,9 @@ import {
     storeNextOperatorsRequestSucceed,
     storeOperatorAddSimRequestFailed,
     storeOperatorAddSimRequestSucceed,
+    storeOperatorTransactionsRequestInit,
+    storeOperatorTransactionsRequestFailed,
+    storeOperatorTransactionsRequestSucceed,
 } from "../requests/operators/actions";
 
 // Fetch all operators from API
@@ -205,7 +211,53 @@ export function* emitAddOperatorSims() {
     });
 }
 
-// Extract zone data
+// Fetch operator transactions from API
+export function* emitSimTransactionsFetch() {
+    yield takeLatest(EMIT_OPERATOR_TRANSACTIONS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
+        try {
+            // Fire event for request
+            yield put(storeOperatorTransactionsRequestInit());
+            const data = {
+                debut: shortDateToString(selectedStartDay),
+                fin: shortDateToString(selectedEndDay),
+            };
+            const apiResponse = yield call(apiPostRequest, `${api.OPERATOR_TRANSACTIONS_API_PATH}/${id}`, data);
+            // Extract data
+            const transactions = extractOperatorTransactionsData(
+                apiResponse.data.transactions
+            );
+            // Fire event to redux
+            yield put(storeSetOperatorTransactionsData({transactions}));
+            // Fire event for request
+            yield put(storeOperatorTransactionsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeOperatorTransactionsRequestFailed({message}));
+        }
+    });
+}
+
+// Extract operator transactions data
+function extractOperatorTransactionsData(apiTransactions) {
+    let transactions = [];
+
+    apiTransactions.forEach(transaction => {
+        transactions.push({
+            in: transaction.in,
+            out: transaction.out,
+            type: transaction.type,
+            user: transaction.user,
+            balance: transaction.balance,
+            operator: transaction.operator,
+            right_account: transaction.right,
+            creation: dateToString(transaction.created_at),
+        });
+    });
+
+    return transactions;
+}
+
+// Extract operator data
 function extractOperatorData(apiOperator, apiSims) {
     let operator = {
         id: '', name: '', description: '', creation: '',
@@ -257,5 +309,6 @@ export default function* sagaOperators() {
         fork(emitAddOperatorSims),
         fork(emitAllOperatorsFetch),
         fork(emitNextOperatorsFetch),
+        fork(emitSimTransactionsFetch),
     ]);
 }

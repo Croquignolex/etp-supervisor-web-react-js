@@ -11,7 +11,8 @@ const initialState = {
     current: {
         id: '', name: '', description: '', creation: '',
 
-        sims: []
+        sims: [],
+        transactions: []
     }
 };
 
@@ -47,6 +48,16 @@ function reduce(state = initialState, action) {
         // Resolve event to stop infinite scroll operators data,
         case actions.STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA:
             nextState = {...state, hasMoreData: false};
+            return nextState || state;
+        // Resolve event to set operator transactions action data
+        case actions.STORE_SET_OPERATOR_TRANSACTIONS_DATA:
+            nextState = {
+                ...state,
+                current: {
+                    ...state.current,
+                    transactions: action.transactions
+                }
+            };
             return nextState || state;
         // Unknown action
         default: return state;

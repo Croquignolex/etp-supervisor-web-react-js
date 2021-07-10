@@ -3,6 +3,7 @@ export const STORE_SET_OPERATOR_DATA = 'STORE_SET_OPERATOR_DATA';
 export const STORE_SET_OPERATORS_DATA = 'STORE_SET_OPERATORS_DATA';
 export const STORE_SET_NEW_OPERATOR_DATA = 'STORE_SET_NEW_OPERATOR_DATA';
 export const STORE_SET_NEXT_OPERATORS_DATA = 'STORE_SET_NEXT_OPERATORS_DATA';
+export const STORE_SET_OPERATOR_TRANSACTIONS_DATA = 'STORE_SET_OPERATOR_TRANSACTIONS_DATA';
 export const STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_OPERATORS_DATA';
 
 // Middleware action types
@@ -13,6 +14,7 @@ export const EMIT_OPERATORS_FETCH = 'EMIT_OPERATORS_FETCH';
 export const EMIT_ADD_OPERATOR_SIMS = 'EMIT_ADD_OPERATOR_SIMS';
 export const EMIT_ALL_OPERATORS_FETCH = 'EMIT_ALL_OPERATORS_FETCH';
 export const EMIT_NEXT_OPERATORS_FETCH = 'EMIT_NEXT_OPERATORS_FETCH';
+export const EMIT_OPERATOR_TRANSACTIONS_FETCH = 'EMIT_OPERATOR_TRANSACTIONS_FETCH';
 
 //====================== Reducer trigger actions
 // Set operators data in store
@@ -36,6 +38,12 @@ export const storeSetNextOperatorsData = ({operators, hasMoreData, page}) => ({
     operators,
     hasMoreData,
     type: STORE_SET_NEXT_OPERATORS_DATA
+});
+
+// Set operator transactions data in store
+export const storeSetOperatorTransactionsData = ({transactions}) => ({
+    transactions,
+    type: STORE_SET_OPERATOR_TRANSACTIONS_DATA
 });
 
 // Stop infinite scroll
@@ -100,4 +108,12 @@ export const emitAddOperatorSims = ({id, simType, name, number, description, age
     reference,
     description,
     type: EMIT_ADD_OPERATOR_SIMS
+});
+
+// Emit fetch operator transactions
+export const emitOperatorTransactionsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
+    id,
+    selectedEndDay,
+    selectedStartDay,
+    type: EMIT_OPERATOR_TRANSACTIONS_FETCH
 });

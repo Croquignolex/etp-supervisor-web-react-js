@@ -195,23 +195,23 @@ export const storeOperatorAddSimRequestReset = () => ({
 });
 // ======================================================== Operator transactions
 // Set operator transactions init data into store
-export const storeSimTransactionsRequestInit = () => ({
+export const storeOperatorTransactionsRequestInit = () => ({
     type: STORE_OPERATOR_TRANSACTIONS_REQUEST_INIT
 });
 
 // Set operator transactions failed data into store
-export const storeSimTransactionsRequestFailed = ({message}) => ({
+export const storeOperatorTransactionsRequestFailed = ({message}) => ({
     message,
     type: STORE_OPERATOR_TRANSACTIONS_REQUEST_FAILED
 });
 
 // Set operator transactions succeeded data into store
-export const storeSimTransactionsRequestSucceed = ({message}) => ({
+export const storeOperatorTransactionsRequestSucceed = ({message}) => ({
     message,
     type: STORE_OPERATOR_TRANSACTIONS_REQUEST_SUCCEEDED
 });
 
 // Set operator transactions reset data into store
-export const storeSimTransactionsRequestReset = () => ({
+export const storeOperatorTransactionsRequestReset = () => ({
     type: STORE_OPERATOR_TRANSACTIONS_REQUEST_RESET
 });
