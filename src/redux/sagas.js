@@ -27,7 +27,6 @@ import recoveries from './recoveries/saga';
 import supervisors from './supervisors/saga';
 import notifications from './notifications/saga';
 import administrators from './administrators/saga';
-import networkSupplies from './networkSupplies/saga';
 
 // Combine all saga middleware
 export default function* sagas() {
@@ -59,6 +58,5 @@ export default function* sagas() {
         supervisors(),
         notifications(),
         administrators(),
-        networkSupplies(),
     ]);
 }

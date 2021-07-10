@@ -30,7 +30,6 @@ import zonesRequests from './requests/zones/reducer';
 import administrators from './administrators/reducer';
 import agentsRequests from './requests/agents/reducer';
 import fleetsRequests from './requests/fleets/reducer';
-import networkSupplies from './networkSupplies/reducer';
 import refuelsRequests from './requests/refuels/reducer';
 import returnsRequests from './requests/returns/reducer';
 import affordsRequests from './requests/affords/reducer';
@@ -53,7 +52,6 @@ import recoveriesRequests from './requests/recoveries/reducer';
 import supervisorsRequests from './requests/supervisors/reducer';
 import notificationsRequests from './requests/notifications/reducer';
 import administratorsRequests from './requests/administrators/reducer';
-import networkSuppliesRequests from './requests/networkSupplies/reducer';
 
 // Combine all reducers
 export default {
@@ -90,7 +88,6 @@ export default {
     agentsRequests,
     administrators,
     outlaysRequests,
-    networkSupplies,
     returnsRequests,
     refuelsRequests,
     vendorsRequests,
@@ -112,5 +109,4 @@ export default {
     supervisorsRequests,
     notificationsRequests,
     administratorsRequests,
-    networkSuppliesRequests,
 };
