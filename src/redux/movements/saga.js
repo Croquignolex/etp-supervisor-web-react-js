@@ -40,16 +40,14 @@ export function* emitMovementsFetch() {
 function extractMovementsData(apiMovements) {
     let movements = [];
 
-    apiMovements.forEach(transaction => {
+    apiMovements.forEach(movement => {
         movements.push({
-            in: transaction.in,
-            out: transaction.out,
-            type: transaction.type,
-            balance: transaction.balance,
-            left_account: transaction.left,
-            operator: transaction.operator,
-            right_account: transaction.right,
-            creation: dateToString(transaction.created_at),
+            in: movement.in,
+            out: movement.out,
+            type: movement.type,
+            label: movement.name,
+            balance: movement.balance,
+            creation: dateToString(movement.created_at),
         });
     });
 
