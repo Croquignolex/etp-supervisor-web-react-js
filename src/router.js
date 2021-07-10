@@ -7,7 +7,6 @@ import asyncComponent from './components/asyncComponent';
 import {NotificationContainer} from "react-notifications";
 import PublicRouteContainer from "./containers/PublicRouteContainer";
 import RestrictedRouteContainer from "./containers/RestrictedRouteContainer";
-import {MOVEMENTS_PAGE_PATH, REQUESTS_FLEETS_PAGE_PATH, TRANSACTIONS_PAGE_PATH} from "./constants/pagePathConstants";
 
 // Component
 function AppRoutes({history}) {
@@ -59,8 +58,8 @@ function AppRoutes({history}) {
                 <RestrictedRouteContainer exact path={path.CHECKOUT_EXTERNAL_PAYMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutRevenuesPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.CHECKOUT_INTERNAL_PAYMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/checkout/CheckoutPaymentsPageContainer'))} />
                 {/* Network */}
-                <RestrictedRouteContainer exact path={path.MOVEMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/re/NetworkFleetsPageContainer'))} />
-                <RestrictedRouteContainer exact path={path.TRANSACTIONS_PAGE_PATH} component={asyncComponent(() => import('./containers/re/NetworkFleetsPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.MOVEMENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/reports/MovementsReportsPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.TRANSACTIONS_PAGE_PATH} component={asyncComponent(() => import('./containers/reports/TransactionsReportsPageContainer'))} />
                 {/* 404 page */}
                 <Route component={asyncComponent(() => import('./pages/NotFoundPage'))} />
             </Switch>
