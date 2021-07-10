@@ -1,94 +1,43 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {apiPostRequest} from "../../functions/axiosFunctions";
+import {EMIT_TRANSACTIONS_FETCH, storeSetTransactionsData} from "./actions";
 import {dateToString, shortDateToString} from "../../functions/generalFunctions";
 import {
-    EMIT_NEW_SIM,
-    EMIT_SIM_FETCH,
-    storeSetSimData,
-    EMIT_UPDATE_SIM,
-    EMIT_SIMS_FETCH,
-    storeSetSimsData,
-    storeSetNewSimData,
-    EMIT_ALL_SIMS_FETCH,
-    EMIT_NEXT_SIMS_FETCH,
-    storeSetNextSimsData,
-    EMIT_FLEETS_SIMS_FETCH,
-    EMIT_AGENTS_SIMS_FETCH,
-    EMIT_SEARCH_SIMS_FETCH,
-    EMIT_MASTERS_SIMS_FETCH,
-    EMIT_INTERNAL_SIMS_FETCH,
-    EMIT_RESOURCES_SIMS_FETCH,
-    EMIT_ALL_MASTER_SIMS_FETCH,
-    EMIT_COLLECTORS_SIMS_FETCH,
-    EMIT_NEXT_AGENTS_SIMS_FETCH,
-    EMIT_SIM_TRANSACTIONS_FETCH,
-    EMIT_NEXT_FLEETS_SIMS_FETCH,
-    storeSetSimTransactionsData,
-    EMIT_NEXT_MASTERS_SIMS_FETCH,
-    storeStopInfiniteScrollSimData,
-    EMIT_NEXT_RESOURCES_SIMS_FETCH,
-    EMIT_NEXT_COLLECTORS_SIMS_FETCH
-} from "./actions";
-import {
-    storeSimsRequestInit,
-    storeSimsRequestFailed,
-    storeAddSimRequestInit,
-    storeShowSimRequestInit,
-    storeSimsRequestSucceed,
-    storeAllSimsRequestInit,
-    storeEditSimRequestInit,
-    storeNextSimsRequestInit,
-    storeAddSimRequestFailed,
-    storeShowSimRequestFailed,
-    storeAllSimsRequestFailed,
-    storeAddSimRequestSucceed,
-    storeEditSimRequestFailed,
-    storeShowSimRequestSucceed,
-    storeNextSimsRequestFailed,
-    storeAllSimsRequestSucceed,
-    storeEditSimRequestSucceed,
-    storeNextSimsRequestSucceed,
-    storeAllMasterSimsRequestInit,
-    storeAllInternalSimsRequestInit,
-    storeSimTransactionsRequestInit,
-    storeAllMasterSimsRequestFailed,
-    storeAllMasterSimsRequestSucceed,
-    storeAllInternalSimsRequestFailed,
-    storeSimTransactionsRequestFailed,
-    storeAllInternalSimsRequestSucceed,
-    storeSimTransactionsRequestSucceed
-} from "../requests/sims/actions";
+    storeTransactionsRequestInit,
+    storeTransactionsRequestFailed,
+    storeTransactionsRequestSucceed
+} from "../requests/transactions/actions";
 
-// Fetch sim transactions from API
+// Fetch transactions from API
 export function* emitTransactionsFetch() {
-    yield takeLatest(EMIT_TRANSACTIONS_FETCH, function*({id, selectedStartDay, selectedEndDay}) {
+    yield takeLatest(EMIT_TRANSACTIONS_FETCH, function*({selectedStartDay, selectedEndDay}) {
         try {
             // Fire event for request
-            yield put(storeSimTransactionsRequestInit());
+            yield put(storeTransactionsRequestInit());
             const data = {
                 debut: shortDateToString(selectedStartDay),
                 fin: shortDateToString(selectedEndDay),
             };
-            const apiResponse = yield call(apiPostRequest, `${api.SIM_TRANSACTIONS_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, api.PERSONAL_TRANSACTIONS_API_PATH, data);
             // Extract data
-            const transactions = extractSimTransactionsData(
+            const transactions = extractTransactionsData(
                 apiResponse.data.transactions
             );
             // Fire event to redux
-            yield put(storeSetSimTransactionsData({transactions}));
+            yield put(storeSetTransactionsData({transactions}));
             // Fire event for request
-            yield put(storeSimTransactionsRequestSucceed({message: apiResponse.message}));
+            yield put(storeTransactionsRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeSimTransactionsRequestFailed({message}));
+            yield put(storeTransactionsRequestFailed({message}));
         }
     });
 }
 
 // Extract sim transactions data
-function extractSimTransactionsData(apiTransactions) {
+function extractTransactionsData(apiTransactions) {
     let transactions = [];
 
     apiTransactions.forEach(transaction => {
@@ -96,8 +45,8 @@ function extractSimTransactionsData(apiTransactions) {
             in: transaction.in,
             out: transaction.out,
             type: transaction.type,
-            user: transaction.user,
             balance: transaction.balance,
+            left_account: transaction.left,
             operator: transaction.operator,
             right_account: transaction.right,
             creation: dateToString(transaction.created_at),
@@ -110,6 +59,6 @@ function extractSimTransactionsData(apiTransactions) {
 // Combine to export all functions at once
 export default function* sagaSims() {
     yield all([
-        fork(emitAllTransactionsFetch),
+        fork(emitTransactionsFetch),
     ]);
 }
