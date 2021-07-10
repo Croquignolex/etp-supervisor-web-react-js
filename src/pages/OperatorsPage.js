@@ -13,6 +13,7 @@ import OperatorNewContainer from "../containers/operators/OperatorNewContainer";
 import OperatorsCardsComponent from "../components/operators/OperatorsCardsComponent";
 import {emitNextOperatorsFetch, emitOperatorsFetch} from "../redux/operators/actions";
 import OperatorDetailsContainer from "../containers/operators/OperatorDetailsContainer";
+import OperatorTransactionsContainer from "../containers/operators/OperatorTransactionsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
 import {storeNextOperatorsRequestReset, storeOperatorsRequestReset} from "../redux/requests/operators/actions";
 
@@ -21,6 +22,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
     // Local states
     const [needle, setNeedle] = useState('');
     const [newOperatorModal, setNewOperatorModal] = useState({show: false, header: ''});
+    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', operator: {}});
     const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEUR", id: ''});
 
     // Local effects
@@ -68,6 +70,16 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
         setOperatorDetailsModal({...operatorDetailsModal, show: false})
     }
 
+    // Show transactions modal form
+    const handleTransactionsModalShow = (operator) => {
+        setTransactionsModal({...transactionsModal, operator, show: true, header: 'TRANSACTIONS DE ' + operator.name})
+    }
+
+    // Hide transactions modal form
+    const handleTransactionsModalHide = () => {
+        setTransactionsModal({...transactionsModal, show: false})
+    }
+
     // Render
     return (
         <>
@@ -98,6 +110,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
                                                 ? <OperatorsCardsComponent operators={searchEngine(operators, needle)}
+                                                                           handleTransactionsModalShow={handleTransactionsModalShow}
                                                                            handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
                                                 />
                                                 : (requestLoading(operatorsRequests.list) ? <LoaderComponent /> :
@@ -108,6 +121,7 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
                                                                         style={{ overflow: 'hidden' }}
                                                         >
                                                             <OperatorsCardsComponent operators={operators}
+                                                                                     handleTransactionsModalShow={handleTransactionsModalShow}
                                                                                      handleOperatorDetailsModalShow={handleOperatorDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
@@ -127,6 +141,9 @@ function OperatorsPage({operators, operatorsRequests, hasMoreData, page, dispatc
             </FormModalComponent>
             <FormModalComponent modal={operatorDetailsModal} handleClose={handleOperatorDetailsModalHide}>
                 <OperatorDetailsContainer id={operatorDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
+                <OperatorTransactionsContainer operator={transactionsModal.operator} />
             </FormModalComponent>
         </>
     )
