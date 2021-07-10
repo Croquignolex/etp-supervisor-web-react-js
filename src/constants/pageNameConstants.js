@@ -30,7 +30,7 @@ export const FLEETS_SIMS = 'Comptes de flottage';
 export const RESOURCES_SIMS = 'Comptes ressource';
 
 // Reports
-export const REPORTS_PAGE = 'Comptes';
+export const REPORTS_PAGE = 'Mes listing';
 export const MOVEMENTS_REPORTS = 'Mouvements de caisse';
 export const TRANSACTIONS_REPORTS = 'Transactions de flotte';
 
