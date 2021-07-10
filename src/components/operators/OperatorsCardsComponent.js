@@ -5,7 +5,7 @@ import OperatorComponent from "../OperatorComponent";
 import {dateToString} from "../../functions/generalFunctions";
 
 // Component
-function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
+function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow, handleTransactionsModalShow}) {
     // Render
     return (
         <>
@@ -34,6 +34,12 @@ function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
                                         >
                                             <i className="fa fa-eye" /> Détails
                                         </button>
+                                        <br/>
+                                        <button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleTransactionsModalShow(item)}>
+                                            <i className="fa fa-table" /> Transactions
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +61,8 @@ function OperatorsCardsComponent({operators, handleOperatorDetailsModalShow}) {
 // Prop types to ensure destroyed props data type
 OperatorsCardsComponent.propTypes = {
     operators: PropTypes.array.isRequired,
-    handleOperatorDetailsModalShow: PropTypes.func.isRequired
+    handleTransactionsModalShow: PropTypes.func.isRequired,
+    handleOperatorDetailsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(OperatorsCardsComponent);
