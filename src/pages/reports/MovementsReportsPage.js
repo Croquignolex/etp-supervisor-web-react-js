@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {AGENTS_SIMS} from "../../constants/pageNameConstants";
+import {AGENTS_SIMS, MOVEMENTS_REPORTS} from "../../constants/pageNameConstants";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
@@ -14,16 +14,17 @@ import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {emitMovementsFetch} from "../../redux/movements/actions";
+import {storeMovementsRequestReset} from "../../redux/requests/movements/actions";
 
 // Component
-function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
+function MovementsReportsPage({movements, movementsRequests, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAgentsSimsFetch());
+        dispatch(emitMovementsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -37,31 +38,15 @@ function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeSimsRequestReset());
-        dispatch(storeNextSimsRequestReset());
+        dispatch(storeMovementsRequestReset());
     };
-
-    // Fetch next sims data to enhance infinite scroll
-    const handleNextSimsData = () => {
-        dispatch(emitNextAgentsSimsFetch({page}));
-    }
-
-    // Show sim details modal form
-    const handleSimDetailsModalShow = ({id}) => {
-        setSimDetailsModal({...simDetailsModal, show: true, id})
-    }
-
-    // Hide sim details modal form
-    const handleSimDetailsModalHide = () => {
-        setSimDetailsModal({...simDetailsModal, show: false})
-    }
 
     // Render
     return (
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={AGENTS_SIMS} icon={'fa fa-sim-card'} />
+                    <HeaderComponent title="Mes mouvements de caisse" icon={'fa fa-table'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -75,20 +60,13 @@ function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(simsRequests.list) && <ErrorAlertComponent message={simsRequests.list.message} />}
-                                            {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
-                                            {/* Search result & Infinite scroll */}
+                                            {requestFailed(movementsRequests.list) && <ErrorAlertComponent message={movementsRequests.list.message} />}
+                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
-                                                : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
-                                                        <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={sims.length}
-                                                                        next={handleNextSimsData}
-                                                                        loader={<LoaderComponent />}
-                                                                        style={{ overflow: 'hidden' }}
-                                                        >
-                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
-                                                        </InfiniteScroll>
+                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} />
+                                                : (requestLoading(movementsRequests.list) ?
+                                                        <LoaderComponent /> :
+                                                        <SimsCardsComponent sims={sims} />
                                                 )
                                             }
                                         </div>
@@ -129,13 +107,11 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-AgentSimsPage.propTypes = {
-    sims: PropTypes.array.isRequired,
-    page: PropTypes.number.isRequired,
+MovementsReportsPage.propTypes = {
+    movements: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    hasMoreData: PropTypes.bool.isRequired,
-    simsRequests: PropTypes.object.isRequired,
+    movementsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(AgentSimsPage);
+export default React.memo(MovementsReportsPage);
