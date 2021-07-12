@@ -15,8 +15,6 @@ import {dateToString, needleSearch, requestFailed, requestLoading} from "../../f
 function AgentSimsPage({transactions, transactionsRequests, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
@@ -40,6 +38,11 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
         dispatch(storeTransactionsRequestReset());
     };
 
+    const handleTransactionsFetch = (selectedEndDay, selectedStartDay) => {
+        shouldResetErrorData();
+        dispatch(emitTransactionsFetch({selectedEndDay, selectedStartDay}));
+    }
+
     // Render
     return (
         <>
@@ -62,10 +65,14 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                                             {requestFailed(transactionsRequests.list) && <ErrorAlertComponent message={transactionsRequests.list.message} />}
                                              {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <TransactionsReportsComponent transactions={searchEngine(transactions, needle)} />
+                                                ? <TransactionsReportsComponent transactions={searchEngine(transactions, needle)}
+                                                                                handleTransactionsFetch={handleTransactionsFetch}
+                                                />
                                                 : (requestLoading(simsRequests.list)
                                                         ? <LoaderComponent />
-                                                        : <TransactionsReportsComponent transactions={transactions} />
+                                                        : <TransactionsReportsComponent transactions={transactions}
+                                                                                        handleTransactionsFetch={handleTransactionsFetch}
+                                                        />
                                                 )
                                             }
                                         </div>
@@ -87,12 +94,12 @@ function searchEngine(data, _needle) {
         // Filter
         data = data.filter((item) => {
             return (
-                needleSearch(item.name, _needle) ||
-                needleSearch(item.number, _needle) ||
-                needleSearch(item.balance, _needle) ||
-                needleSearch(item.type.name, _needle) ||
-                needleSearch(item.agent.name, _needle) ||
-                needleSearch(item.operator.name, _needle) ||
+                needleSearch(item.in, _needle) ||
+                needleSearch(item.out, _needle) ||
+                needleSearch(item.type, _needle) ||
+                needleSearch(item.operator, _needle) ||
+                needleSearch(item.left_account, _needle) ||
+                needleSearch(item.right_account, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )
         });

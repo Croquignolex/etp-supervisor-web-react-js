@@ -98,9 +98,9 @@ function searchEngine(data, _needle) {
 
 // Prop types to ensure destroyed props data type
 MovementsReportsPage.propTypes = {
-    movements: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
+    movements: PropTypes.array.isRequired,
     movementsRequests: PropTypes.object.isRequired,
 };
 

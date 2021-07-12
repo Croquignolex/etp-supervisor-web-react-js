@@ -15,43 +15,19 @@ import {emitTransactionsFetch} from "../../redux/transactions/actions";
 import {storeTransactionsRequestReset} from "../../redux/requests/transactions/actions";
 
 // Component
-function TransactionsReportsComponent({transactions, request, dispatch}) {
-
-
-    // Local effects
-    useEffect(() => {
-        dispatch(emitTransactionsFetch({
-            selectedEndDay: new Date(),
-            selectedStartDay: new Date(),
-        }));
-        // Cleaner error alert while component did unmount without store dependency
-        return () => {
-            shouldResetErrorData();
-        };
-        // eslint-disable-next-line
-    }, []);
-
-    // Reset error alert
-    const shouldResetErrorData = () => {
-        dispatch(storeTransactionsRequestReset());
-    };
+function TransactionsReportsComponent({transactions, handleTransactionsFetch}) {
+    // Local states
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     const handleSelectedStartDate = (selectedDay) => {
-        shouldResetErrorData();
         setSelectedStartDate(selectedDay)
-        dispatch(emitTransactionsFetch({
-            selectedStartDay: selectedDay,
-            selectedEndDay: selectedEndDate
-        }));
+        handleTransactionsFetch(selectedDay, selectedEndDate)
     }
 
     const handleSelectedEndDate = (selectedDay) => {
-        shouldResetErrorData();
         setSelectedEndDate(selectedDay)
-        dispatch(emitTransactionsFetch({
-            selectedEndDay: selectedDay,
-            selectedStartDay: selectedStartDate
-        }));
+        handleTransactionsFetch(selectedStartDate, selectedDay)
     }
 
     // Custom export button
@@ -80,70 +56,64 @@ function TransactionsReportsComponent({transactions, request, dispatch}) {
     // Render
     return (
         <>
-            {requestLoading(request)  ? <LoaderComponent /> : (
-                requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
-                    <div className="row">
-                        <div className="col-lg-12 col-md-12">
-                            <ExportButton />
-                            <DatePickerComponent
-                                end={selectedEndDate}
-                                start={selectedStartDate}
-                                handleEnd={handleSelectedEndDate}
-                                handleStart={handleSelectedStartDate}
-                            />
-                            <div className="card">
-                                <div className="table-responsive">
-                                    <table className="table table-hover text-nowrap table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>DATE</th>
-                                                <th>OPERATEUR</th>
-                                                <th>TYPE</th>
-                                                <th>COMPTE</th>
-                                                <th>RECIPROQUE</th>
-                                                <th>ENTREES</th>
-                                                <th>SORTIES</th>
+            <div className="row">
+                <div className="col-lg-12 col-md-12">
+                    <ExportButton />
+                    <DatePickerComponent
+                        end={selectedEndDate}
+                        start={selectedStartDate}
+                        handleEnd={handleSelectedEndDate}
+                        handleStart={handleSelectedStartDate}
+                    />
+                    <div className="card">
+                        <div className="table-responsive">
+                            <table className="table table-hover text-nowrap table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>OPERATEUR</th>
+                                        <th>TYPE</th>
+                                        <th>COMPTE</th>
+                                        <th>RECIPROQUE</th>
+                                        <th>ENTREES</th>
+                                        <th>SORTIES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {transactions.map((item, key) => {
+                                        return (
+                                            <tr key={key}>
+                                                <td>{item.creation}</td>
+                                                <td>{item.operator}</td>
+                                                <td>{item.type}</td>
+                                                <td>{formatString(item.left_account, 20)}</td>
+                                                <td>{formatString(item.right_account, 20)}</td>
+                                                <td>{item.in}</td>
+                                                <td>{item.out}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            {transactions.map((item, key) => {
-                                                return (
-                                                    <tr key={key}>
-                                                        <td>{item.creation}</td>
-                                                        <td>{item.operator}</td>
-                                                        <td>{item.type}</td>
-                                                        <td>{formatString(item.left_account, 20)}</td>
-                                                        <td>{formatString(item.right_account, 20)}</td>
-                                                        <td>{item.in}</td>
-                                                        <td>{item.out}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                            {transactions.length === 0 && (
-                                                <tr>
-                                                    <td colSpan={8}>
-                                                        <div className='alert custom-active text-center'>
-                                                            Pas de transactions
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                        )
+                                    })}
+                                    {transactions.length === 0 && (
+                                        <tr>
+                                            <td colSpan={8}>
+                                                <div className='alert custom-active text-center'>
+                                                    Pas de transactions
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                )
-            )}
+                </div>
+            </div>
         </>
     )
 }
 
 // Prop types to ensure destroyed props data type
 TransactionsReportsComponent.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    request: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
 };
 
