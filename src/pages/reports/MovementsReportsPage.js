@@ -15,10 +15,15 @@ import {dateToString, needleSearch, requestFailed, requestLoading} from "../../f
 function MovementsReportsPage({movements, movementsRequests, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitMovementsFetch());
+        dispatch(emitMovementsFetch({
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
+        }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -34,6 +39,24 @@ function MovementsReportsPage({movements, movementsRequests, dispatch, location}
     const shouldResetErrorData = () => {
         dispatch(storeMovementsRequestReset());
     };
+
+    const handleSelectedStartDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedStartDate(selectedDay)
+        dispatch(emitMovementsFetch({
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitMovementsFetch({
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
+    }
 
     // Render
     return (
@@ -57,10 +80,20 @@ function MovementsReportsPage({movements, movementsRequests, dispatch, location}
                                             {requestFailed(movementsRequests.list) && <ErrorAlertComponent message={movementsRequests.list.message} />}
                                              {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <MovementsReportsComponent movements={searchEngine(movements, needle)} />
+                                                ? <MovementsReportsComponent selectedEndDate={selectedEndDate}
+                                                                             selectedStartDate={selectedStartDate}
+                                                                             movements={searchEngine(movements, needle)}
+                                                                             handleSelectedEndDate={handleSelectedEndDate}
+                                                                             handleSelectedStartDate={handleSelectedStartDate}
+                                                />
                                                 : (requestLoading(movementsRequests.list) ?
                                                         <LoaderComponent /> :
-                                                        <MovementsReportsComponent movements={movements} />
+                                                        <MovementsReportsComponent movements={movements}
+                                                                                   selectedEndDate={selectedEndDate}
+                                                                                   selectedStartDate={selectedStartDate}
+                                                                                   handleSelectedEndDate={handleSelectedEndDate}
+                                                                                   handleSelectedStartDate={handleSelectedStartDate}
+                                                        />
                                                 )
                                             }
                                         </div>
@@ -82,12 +115,11 @@ function searchEngine(data, _needle) {
         // Filter
         data = data.filter((item) => {
             return (
-                needleSearch(item.name, _needle) ||
-                needleSearch(item.number, _needle) ||
+                needleSearch(item.in, _needle) ||
+                needleSearch(item.out, _needle) ||
+                needleSearch(item.type, _needle) ||
+                needleSearch(item.label, _needle) ||
                 needleSearch(item.balance, _needle) ||
-                needleSearch(item.type.name, _needle) ||
-                needleSearch(item.agent.name, _needle) ||
-                needleSearch(item.operator.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )
         });
