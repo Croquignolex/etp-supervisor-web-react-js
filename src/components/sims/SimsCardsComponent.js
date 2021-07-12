@@ -58,8 +58,8 @@ function SimsCardsComponent({sims, handleSimDetailsModalShow, handleTransactions
 // Prop types to ensure destroyed props data type
 SimsCardsComponent.propTypes = {
     sims: PropTypes.array.isRequired,
+    handleTransactionsModalShow: PropTypes.func,
     handleSimDetailsModalShow: PropTypes.func.isRequired,
-    handleTransactionsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(SimsCardsComponent);
