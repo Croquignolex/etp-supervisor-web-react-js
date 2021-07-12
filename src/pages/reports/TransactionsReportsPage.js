@@ -14,16 +14,21 @@ import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/actions";
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {emitTransactionsFetch} from "../../redux/transactions/actions";
 
 // Component
-function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, location}) {
+function AgentSimsPage({transactions, transactionsRequests, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAgentsSimsFetch());
+        dispatch(emitTransactionsFetch({
+            selectedEndDay: new Date(),
+            selectedStartDay: new Date(),
+        }));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -37,8 +42,7 @@ function AgentSimsPage({sims, simsRequests, hasMoreData, page, dispatch, locatio
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeSimsRequestReset());
-        dispatch(storeNextSimsRequestReset());
+        dispatch(storeTransactionsRequestReset());
     };
 
     // Fetch next sims data to enhance infinite scroll

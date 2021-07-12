@@ -11,17 +11,16 @@ import DatePickerComponent from "../form/DatePickerComponent";
 import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
 import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
 import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
+import {emitTransactionsFetch} from "../../redux/transactions/actions";
+import {storeTransactionsRequestReset} from "../../redux/requests/transactions/actions";
 
 // Component
-function CollectorTransactionsComponent({collector, transactions, dispatch, request}) {
-    // Local states
-    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+function TransactionsReportsComponent({transactions, request, dispatch}) {
+
 
     // Local effects
     useEffect(() => {
-        dispatch(emitCollectorTransactionsFetch({
-            id: collector.id,
+        dispatch(emitTransactionsFetch({
             selectedEndDay: new Date(),
             selectedStartDay: new Date(),
         }));
@@ -34,14 +33,13 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeCollectorTransactionsRequestReset());
+        dispatch(storeTransactionsRequestReset());
     };
 
     const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedStartDate(selectedDay)
-        dispatch(emitCollectorTransactionsFetch({
-            id: collector.id,
+        dispatch(emitTransactionsFetch({
             selectedStartDay: selectedDay,
             selectedEndDay: selectedEndDate
         }));
@@ -50,8 +48,7 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
     const handleSelectedEndDate = (selectedDay) => {
         shouldResetErrorData();
         setSelectedEndDate(selectedDay)
-        dispatch(emitCollectorTransactionsFetch({
-            id: collector.id,
+        dispatch(emitTransactionsFetch({
             selectedEndDay: selectedDay,
             selectedStartDay: selectedStartDate
         }));
@@ -59,7 +56,7 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Tansactions de flotte de ${collector.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
+        const tabName = `Mes Tansactions de flotte du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
@@ -144,11 +141,10 @@ function CollectorTransactionsComponent({collector, transactions, dispatch, requ
 }
 
 // Prop types to ensure destroyed props data type
-CollectorTransactionsComponent.propTypes = {
+TransactionsReportsComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    collector: PropTypes.object.isRequired,
     transactions: PropTypes.array.isRequired,
 };
 
-export default React.memo(CollectorTransactionsComponent);
+export default React.memo(TransactionsReportsComponent);

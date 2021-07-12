@@ -1,21 +1,15 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import InfiniteScroll from "react-infinite-scroll-component";
 
-import {AGENTS_SIMS, MOVEMENTS_REPORTS} from "../../constants/pageNameConstants";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
+import {emitMovementsFetch} from "../../redux/movements/actions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
-import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
-import FormModalComponent from "../../components/modals/FormModalComponent";
-import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/actions";
-import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
-import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {emitMovementsFetch} from "../../redux/movements/actions";
 import {storeMovementsRequestReset} from "../../redux/requests/movements/actions";
+import MovementsReportsComponent from "../../components/reports/MovementsReportsComponent";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function MovementsReportsPage({movements, movementsRequests, dispatch, location}) {
@@ -63,10 +57,10 @@ function MovementsReportsPage({movements, movementsRequests, dispatch, location}
                                             {requestFailed(movementsRequests.list) && <ErrorAlertComponent message={movementsRequests.list.message} />}
                                              {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} />
+                                                ? <MovementsReportsComponent movements={searchEngine(movements, needle)} />
                                                 : (requestLoading(movementsRequests.list) ?
                                                         <LoaderComponent /> :
-                                                        <SimsCardsComponent sims={sims} />
+                                                        <MovementsReportsComponent movements={movements} />
                                                 )
                                             }
                                         </div>
@@ -77,10 +71,6 @@ function MovementsReportsPage({movements, movementsRequests, dispatch, location}
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
-                <SimDetailsContainer id={simDetailsModal.id} />
-            </FormModalComponent>
         </>
     )
 }
