@@ -59,7 +59,7 @@ function ManagerMovementsComponent({manager, movements, dispatch, request}) {
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Mouvement de caisse de ${manager.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
+        const tabName = `Mouvements de caisse de ${manager.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={

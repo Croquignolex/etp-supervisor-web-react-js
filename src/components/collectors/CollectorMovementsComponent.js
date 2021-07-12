@@ -59,7 +59,7 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Mouvement de caisse de ${collector.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
+        const tabName = `Mouvements de caisse de ${collector.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={

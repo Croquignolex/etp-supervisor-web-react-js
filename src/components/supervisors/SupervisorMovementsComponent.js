@@ -59,7 +59,7 @@ function SupervisorMovementsComponent({supervisor, movements, dispatch, request}
 
     // Custom export button
     const ExportButton = () => {
-        const tabName = `Mouvement de caisse de ${supervisor.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
+        const tabName = `Mouvements de caisse de ${supervisor.name} du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
 
         return (
             <ExcelFile element={
