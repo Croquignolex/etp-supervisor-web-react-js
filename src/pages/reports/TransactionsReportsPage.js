@@ -15,6 +15,8 @@ import {dateToString, needleSearch, requestFailed, requestLoading} from "../../f
 function AgentSimsPage({transactions, transactionsRequests, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
     // Local effects
     useEffect(() => {
@@ -38,9 +40,22 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
         dispatch(storeTransactionsRequestReset());
     };
 
-    const handleTransactionsFetch = (selectedEndDay, selectedStartDay) => {
+    const handleSelectedStartDate = (selectedDay) => {
         shouldResetErrorData();
-        dispatch(emitTransactionsFetch({selectedEndDay, selectedStartDay}));
+        setSelectedStartDate(selectedDay)
+        dispatch(emitTransactionsFetch({
+            selectedStartDay: selectedDay,
+            selectedEndDay: selectedEndDate
+        }));
+    }
+
+    const handleSelectedEndDate = (selectedDay) => {
+        shouldResetErrorData();
+        setSelectedEndDate(selectedDay)
+        dispatch(emitTransactionsFetch({
+            selectedEndDay: selectedDay,
+            selectedStartDay: selectedStartDate
+        }));
     }
 
     // Render
@@ -65,13 +80,15 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                                             {requestFailed(transactionsRequests.list) && <ErrorAlertComponent message={transactionsRequests.list.message} />}
                                              {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <TransactionsReportsComponent transactions={searchEngine(transactions, needle)}
-                                                                                handleTransactionsFetch={handleTransactionsFetch}
+                                                ? <TransactionsReportsComponent handleSelectedEndDate={handleSelectedEndDate}
+                                                                                transactions={searchEngine(transactions, needle)}
+                                                                                handleSelectedStartDate={handleSelectedStartDate}
                                                 />
                                                 : (requestLoading(transactionsRequests.list)
                                                         ? <LoaderComponent />
                                                         : <TransactionsReportsComponent transactions={transactions}
-                                                                                        handleTransactionsFetch={handleTransactionsFetch}
+                                                                                        handleSelectedEndDate={handleSelectedEndDate}
+                                                                                        handleSelectedStartDate={handleSelectedStartDate}
                                                         />
                                                 )
                                             }

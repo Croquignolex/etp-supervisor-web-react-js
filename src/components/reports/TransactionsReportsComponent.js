@@ -1,35 +1,16 @@
+import React from 'react';
 import PropTypes from "prop-types";
-import React, {useEffect, useState} from 'react';
 
 import ExcelFile from "react-data-export/dist/ExcelPlugin/components/ExcelFile";
 import ExcelSheet from "react-data-export/dist/ExcelPlugin/elements/ExcelSheet";
 import ExcelColumn from "react-data-export/dist/ExcelPlugin/elements/ExcelColumn";
 
-import LoaderComponent from "../LoaderComponent";
-import ErrorAlertComponent from "../ErrorAlertComponent";
 import DatePickerComponent from "../form/DatePickerComponent";
-import {emitCollectorTransactionsFetch} from "../../redux/collectors/actions";
-import {storeCollectorTransactionsRequestReset} from "../../redux/requests/collectors/actions";
-import {formatString, requestFailed, requestLoading, shortDateToString} from "../../functions/generalFunctions";
-import {emitTransactionsFetch} from "../../redux/transactions/actions";
-import {storeTransactionsRequestReset} from "../../redux/requests/transactions/actions";
+import {formatString, shortDateToString} from "../../functions/generalFunctions";
 
 // Component
-function TransactionsReportsComponent({transactions, handleTransactionsFetch}) {
-    // Local states
-    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-
-    const handleSelectedStartDate = (selectedDay) => {
-        setSelectedStartDate(selectedDay)
-        handleTransactionsFetch(selectedDay, selectedEndDate)
-    }
-
-    const handleSelectedEndDate = (selectedDay) => {
-        setSelectedEndDate(selectedDay)
-        handleTransactionsFetch(selectedStartDate, selectedDay)
-    }
-
+function TransactionsReportsComponent({transactions, selectedEndDate, selectedStartDate,
+                                          handleSelectedStartDate, handleSelectedEndDate}) {
     // Custom export button
     const ExportButton = () => {
         const tabName = `Mes Tansactions de flotte du ${shortDateToString(selectedStartDate, '-')} au ${shortDateToString(selectedEndDate, '-')}`;
@@ -115,6 +96,10 @@ function TransactionsReportsComponent({transactions, handleTransactionsFetch}) {
 // Prop types to ensure destroyed props data type
 TransactionsReportsComponent.propTypes = {
     transactions: PropTypes.array.isRequired,
+    selectedEndDate: PropTypes.string.isRequired,
+    selectedStartDate: PropTypes.string.isRequired,
+    handleSelectedEndDate: PropTypes.func.isRequired,
+    handleSelectedStartDate: PropTypes.func.isRequired,
 };
 
 export default React.memo(TransactionsReportsComponent);
