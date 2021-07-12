@@ -96,8 +96,8 @@ function CollectorMovementsComponent({collector, movements, dispatch, request}) 
                             <div className="card">
                                 <div className="table-responsive">
                                     <table className="table table-hover text-nowrap table-bordered">
-                                        <thead>
-                                            <tr>
+                                        <thead className="bg-theme">
+                                            <tr className="bg-theme">
                                                 <th>DATE</th>
                                                 <th>TYPE</th>
                                                 <th>NATURE</th>

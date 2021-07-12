@@ -50,7 +50,7 @@ function TransactionsReportsComponent({transactions, selectedEndDate, selectedSt
                     <div className="card">
                         <div className="table-responsive">
                             <table className="table table-hover text-nowrap table-bordered">
-                                <thead>
+                                <thead className="bg-secondary">
                                     <tr>
                                         <th>DATE</th>
                                         <th>OPERATEUR</th>
@@ -97,8 +97,8 @@ function TransactionsReportsComponent({transactions, selectedEndDate, selectedSt
 // Prop types to ensure destroyed props data type
 TransactionsReportsComponent.propTypes = {
     transactions: PropTypes.array.isRequired,
-    selectedEndDate: PropTypes.string.isRequired,
-    selectedStartDate: PropTypes.string.isRequired,
+    selectedEndDate: PropTypes.object.isRequired,
+    selectedStartDate: PropTypes.object.isRequired,
     handleSelectedEndDate: PropTypes.func.isRequired,
     handleSelectedStartDate: PropTypes.func.isRequired,
 };
