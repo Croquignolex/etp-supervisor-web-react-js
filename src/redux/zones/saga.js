@@ -39,6 +39,7 @@ import {
     storeZoneAddAgentRequestFailed,
     storeZoneAddAgentRequestSucceed
 } from "../requests/zones/actions";
+import {EDIT_ZONE_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all zones from API
 export function* emitAllZonesFetch() {
@@ -159,7 +160,7 @@ export function* emitUpdateZone() {
             // Fire event for request
             yield put(storeEditZoneRequestInit());
             const data = {name, reference,  description};
-            const apiResponse = yield call(apiPostRequest, `${api.ZONE_ADD_AGENT_API_PATH}/${id}`, data);
+            const apiResponse = yield call(apiPostRequest, `${api.EDIT_ZONE_API_PATH}/${id}`, data);
             // Extract data
             const zone = extractZoneData(
                 apiResponse.data.zone,
