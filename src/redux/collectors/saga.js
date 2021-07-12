@@ -185,7 +185,6 @@ export function* emitNewCollector() {
             const collector = extractCollectorData(
                 apiResponse.data.recouvreur,
                 apiResponse.data.zone,
-                apiResponse.data.caisse
             );
             // Fire event to redux
             yield put(storeSetNewCollectorData({collector}));
@@ -330,7 +329,7 @@ export function* emitCollectorTransactionsFetch() {
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
     let collector = {
-        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '', debt: '',
+        id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '', debt: 0,
 
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
@@ -367,7 +366,6 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         collector.actionLoader = false;
         collector.toggleLoader = false;
         collector.name = apiCollector.name;
-        collector.debt = apiCollector.dette;
         collector.phone = apiCollector.phone;
         collector.email = apiCollector.email;
         collector.address = apiCollector.adresse;
