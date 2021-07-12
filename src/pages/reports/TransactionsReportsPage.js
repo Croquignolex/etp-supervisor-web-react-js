@@ -15,6 +15,7 @@ import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/act
 import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {emitTransactionsFetch} from "../../redux/transactions/actions";
+import {storeTransactionsRequestReset} from "../../redux/requests/transactions/actions";
 
 // Component
 function AgentSimsPage({transactions, transactionsRequests, dispatch, location}) {
@@ -45,27 +46,12 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
         dispatch(storeTransactionsRequestReset());
     };
 
-    // Fetch next sims data to enhance infinite scroll
-    const handleNextSimsData = () => {
-        dispatch(emitNextAgentsSimsFetch({page}));
-    }
-
-    // Show sim details modal form
-    const handleSimDetailsModalShow = ({id}) => {
-        setSimDetailsModal({...simDetailsModal, show: true, id})
-    }
-
-    // Hide sim details modal form
-    const handleSimDetailsModalHide = () => {
-        setSimDetailsModal({...simDetailsModal, show: false})
-    }
-
     // Render
     return (
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={AGENTS_SIMS} icon={'fa fa-sim-card'} />
+                    <HeaderComponent title="Mes transactions de flotte" icon={'fa fa-table'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
