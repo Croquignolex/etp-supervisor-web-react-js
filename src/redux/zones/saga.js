@@ -39,7 +39,6 @@ import {
     storeZoneAddAgentRequestFailed,
     storeZoneAddAgentRequestSucceed
 } from "../requests/zones/actions";
-import {EDIT_ZONE_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all zones from API
 export function* emitAllZonesFetch() {
