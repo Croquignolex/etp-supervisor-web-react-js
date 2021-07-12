@@ -1,21 +1,15 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import InfiniteScroll from "react-infinite-scroll-component";
 
-import {AGENTS_SIMS} from "../../constants/pageNameConstants";
 import LoaderComponent from "../../components/LoaderComponent";
 import HeaderComponent from "../../components/HeaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
-import TableSearchComponent from "../../components/TableSearchComponent";
-import SimsCardsComponent from "../../components/sims/SimsCardsComponent";
-import FormModalComponent from "../../components/modals/FormModalComponent";
-import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import {emitAgentsSimsFetch, emitNextAgentsSimsFetch} from "../../redux/sims/actions";
-import {storeNextSimsRequestReset, storeSimsRequestReset} from "../../redux/requests/sims/actions";
-import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {emitTransactionsFetch} from "../../redux/transactions/actions";
+import TableSearchComponent from "../../components/TableSearchComponent";
 import {storeTransactionsRequestReset} from "../../redux/requests/transactions/actions";
+import TransactionsReportsComponent from "../../components/reports/TransactionsReportsComponent";
+import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
 function AgentSimsPage({transactions, transactionsRequests, dispatch, location}) {
@@ -65,20 +59,13 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(simsRequests.list) && <ErrorAlertComponent message={simsRequests.list.message} />}
-                                            {requestFailed(simsRequests.next) && <ErrorAlertComponent message={simsRequests.next.message} />}
-                                            {/* Search result & Infinite scroll */}
+                                            {requestFailed(transactionsRequests.list) && <ErrorAlertComponent message={transactionsRequests.list.message} />}
+                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <SimsCardsComponent sims={searchEngine(sims, needle)} handleSimDetailsModalShow={handleSimDetailsModalShow} />
-                                                : (requestLoading(simsRequests.list) ? <LoaderComponent /> :
-                                                        <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={sims.length}
-                                                                        next={handleNextSimsData}
-                                                                        loader={<LoaderComponent />}
-                                                                        style={{ overflow: 'hidden' }}
-                                                        >
-                                                            <SimsCardsComponent sims={sims} handleSimDetailsModalShow={handleSimDetailsModalShow} />
-                                                        </InfiniteScroll>
+                                                ? <TransactionsReportsComponent transactions={searchEngine(transactions, needle)} />
+                                                : (requestLoading(simsRequests.list)
+                                                        ? <LoaderComponent />
+                                                        : <TransactionsReportsComponent transactions={transactions} />
                                                 )
                                             }
                                         </div>
@@ -89,10 +76,6 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                     </section>
                 </div>
             </AppLayoutContainer>
-            {/* Modal */}
-            <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailsModalHide}>
-                <SimDetailsContainer id={simDetailsModal.id} />
-            </FormModalComponent>
         </>
     )
 }
@@ -120,12 +103,10 @@ function searchEngine(data, _needle) {
 
 // Prop types to ensure destroyed props data type
 AgentSimsPage.propTypes = {
-    sims: PropTypes.array.isRequired,
-    page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    hasMoreData: PropTypes.bool.isRequired,
-    simsRequests: PropTypes.object.isRequired,
+    transactions: PropTypes.array.isRequired,
+    transactionsRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(AgentSimsPage);
