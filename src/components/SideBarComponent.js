@@ -254,7 +254,7 @@ function buildOperatorsMenu() {
 function buildReportsMenu() {
     return {
         name: page.REPORTS_PAGE,
-        icon: 'fa fa-file',
+        icon: 'fa fa-table',
         sub: [
             {name: page.MOVEMENTS_REPORTS, path: path.MOVEMENTS_PAGE_PATH},
             {name: page.TRANSACTIONS_REPORTS, path: path.TRANSACTIONS_PAGE_PATH},

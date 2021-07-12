@@ -68,7 +68,7 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                                                 ? <TransactionsReportsComponent transactions={searchEngine(transactions, needle)}
                                                                                 handleTransactionsFetch={handleTransactionsFetch}
                                                 />
-                                                : (requestLoading(simsRequests.list)
+                                                : (requestLoading(transactionsRequests.list)
                                                         ? <LoaderComponent />
                                                         : <TransactionsReportsComponent transactions={transactions}
                                                                                         handleTransactionsFetch={handleTransactionsFetch}
