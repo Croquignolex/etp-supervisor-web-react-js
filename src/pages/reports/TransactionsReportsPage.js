@@ -80,13 +80,17 @@ function AgentSimsPage({transactions, transactionsRequests, dispatch, location})
                                             {requestFailed(transactionsRequests.list) && <ErrorAlertComponent message={transactionsRequests.list.message} />}
                                              {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <TransactionsReportsComponent handleSelectedEndDate={handleSelectedEndDate}
+                                                ? <TransactionsReportsComponent selectedEndDate={selectedEndDate}
+                                                                                selectedStartDate={selectedStartDate}
+                                                                                handleSelectedEndDate={handleSelectedEndDate}
                                                                                 transactions={searchEngine(transactions, needle)}
                                                                                 handleSelectedStartDate={handleSelectedStartDate}
                                                 />
                                                 : (requestLoading(transactionsRequests.list)
                                                         ? <LoaderComponent />
                                                         : <TransactionsReportsComponent transactions={transactions}
+                                                                                        selectedEndDate={selectedEndDate}
+                                                                                        selectedStartDate={selectedStartDate}
                                                                                         handleSelectedEndDate={handleSelectedEndDate}
                                                                                         handleSelectedStartDate={handleSelectedStartDate}
                                                         />

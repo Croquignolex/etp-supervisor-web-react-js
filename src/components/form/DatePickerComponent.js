@@ -5,10 +5,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // Component
-function DatePickerComponent({end, start, handleEnd, handleStart}) {
+function DatePickerComponent({end, start, bigButtons, handleEnd, handleStart}) {
     // Custom component
     const CustomInput = forwardRef(({ value, onClick, isBegin }, ref) => (
-        <button className="btn btn-theme btn-sm mb-1 mr-1" type="button" onClick={onClick} ref={ref}>
+        <button className={`btn btn-theme mb-1 mr-1 ${!bigButtons && 'btn-sm'}`} type="button" onClick={onClick} ref={ref}>
             <i className="fa fa-calendar-week" /> {isBegin ? 'Du' : 'Au'} {value}
         </button>
     ));
@@ -54,7 +54,13 @@ DatePickerComponent.propTypes = {
     end: PropTypes.object.isRequired,
     start: PropTypes.object.isRequired,
     handleEnd: PropTypes.func.isRequired,
+    bigButtons: PropTypes.bool.isRequired,
     handleStart: PropTypes.func.isRequired,
+};
+
+// Prop types to ensure destroyed props data type
+DatePickerComponent.defaultProps = {
+    bigButtons: false
 };
 
 export default React.memo(DatePickerComponent);

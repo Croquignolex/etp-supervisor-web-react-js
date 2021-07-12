@@ -17,7 +17,7 @@ function TransactionsReportsComponent({transactions, selectedEndDate, selectedSt
 
         return (
             <ExcelFile element={
-                <button type="button" className="btn btn-theme btn-sm mb-1 mr-1">
+                <button type="button" className="btn btn-theme mb-1 mr-1">
                     <i className="fa fa-file-export" /> Exporter en excel
                 </button>
             } filename={tabName}>
@@ -41,6 +41,7 @@ function TransactionsReportsComponent({transactions, selectedEndDate, selectedSt
                 <div className="col-lg-12 col-md-12">
                     <ExportButton />
                     <DatePickerComponent
+                        bigButtons
                         end={selectedEndDate}
                         start={selectedStartDate}
                         handleEnd={handleSelectedEndDate}
