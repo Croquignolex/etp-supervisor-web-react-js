@@ -213,6 +213,7 @@ function searchEngine(data, _needle) {
                 needleSearch(item.phone, _needle) ||
                 needleSearch(item.email, _needle) ||
                 needleSearch(item.zone.name, _needle) ||
+                needleSearch(item.creator.name, _needle) ||
                 needleSearch(item.zone.reference, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )

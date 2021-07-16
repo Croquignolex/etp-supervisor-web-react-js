@@ -177,6 +177,7 @@ function searchEngine(data, _needle) {
                 needleSearch(item.name, _needle) ||
                 needleSearch(item.phone, _needle) ||
                 needleSearch(item.email, _needle) ||
+                needleSearch(item.creator.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
             )
         });
