@@ -98,7 +98,10 @@ export function* emitAdministratorFetch() {
             yield put(storeAdministratorRequestInit());
             const apiResponse = yield call(apiGetRequest, `${api.ADMINISTRATOR_DETAILS_API_PATH}/${id}`);
             // Extract data
-            const administrator = extractAdministratorData(apiResponse.data.user);
+            const administrator = extractAdministratorData(
+                apiResponse.data.user,
+                apiResponse.data.createur,
+            );
             // Fire event to redux
             yield put(storeSetAdministratorData({administrator}));
             // Fire event for request
@@ -111,18 +114,17 @@ export function* emitAdministratorFetch() {
 }
 
 // Extract administrator data
-function extractAdministratorData(apiAdministrator, apiAccount) {
+function extractAdministratorData(apiAdministrator, apiCreator) {
     let administrator = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
         creator: {id: '', name: ''},
-        account: {id: '', balance: ''},
     };
 
-    if(apiAccount) {
-        administrator.account = {
-            balance: apiAccount.solde,
-            id: apiAccount.id.toString(),
+    if(apiCreator) {
+        administrator.creator = {
+            name: apiCreator.name,
+            id: apiCreator.id.toString(),
         }
     }
     if(apiAdministrator) {
