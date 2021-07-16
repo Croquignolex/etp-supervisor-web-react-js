@@ -158,7 +158,8 @@ export function* emitUpdateCollectorInfo() {
                 apiResponse.data.user,
                 apiResponse.data.zone,
                 apiResponse.data.caisse,
-                apiResponse.data.puces
+                apiResponse.data.puces,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetCollectorData({collector, alsoInList: true}));
@@ -185,6 +186,9 @@ export function* emitNewCollector() {
             const collector = extractCollectorData(
                 apiResponse.data.recouvreur,
                 apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.puces,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetNewCollectorData({collector}));
@@ -210,7 +214,8 @@ export function* emitUpdateCollectorZone() {
                 apiResponse.data.user,
                 apiResponse.data.zone,
                 apiResponse.data.caisse,
-                apiResponse.data.puces
+                apiResponse.data.puces,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetCollectorData({collector, alsoInList: true}));
@@ -235,7 +240,8 @@ export function* emitCollectorFetch() {
                 apiResponse.data.user,
                 apiResponse.data.zone,
                 apiResponse.data.caisse,
-                apiResponse.data.puces
+                apiResponse.data.puces,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetCollectorData({collector}));
@@ -261,7 +267,8 @@ export function* emitAddCollectorSims() {
                 apiResponse.data.user,
                 apiResponse.data.zone,
                 apiResponse.data.caisse,
-                apiResponse.data.puces
+                apiResponse.data.puces,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetCollectorData({collector, alsoInList: true}));
@@ -327,10 +334,11 @@ export function* emitCollectorTransactionsFetch() {
 }
 
 // Extract collector data
-function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
+function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims, apiCreator) {
     let collector = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '', debt: 0,
 
+        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
@@ -338,6 +346,13 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         movements: [],
         transactions: [],
     };
+
+    if(apiCreator) {
+        collector.creator = {
+            name: apiCreator.name,
+            id: apiCreator.id.toString(),
+        }
+    }
     if(apiSims) {
         apiSims.forEach(data => {
             collector.sims.push({
@@ -426,7 +441,8 @@ function extractCollectorsData(apiCollectors) {
                 data.recouvreur,
                 data.zone,
                 data.caisse,
-                data.puces
+                data.puces,
+                data.createur,
             ));
         });
     }

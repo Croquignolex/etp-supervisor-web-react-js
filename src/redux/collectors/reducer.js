@@ -11,6 +11,7 @@ const initialState = {
     current: {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '', debt: 0,
 
+        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
         zone: {id: '', name: '', map: ''},
 
