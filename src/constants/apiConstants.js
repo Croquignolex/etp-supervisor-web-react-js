@@ -122,6 +122,7 @@ export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
 
 // Supplies
 export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
+export const NEW_SUPPLY_API_PATH = `${API_URL}/flottage_express`;
 
 // Refuels
 export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
@@ -132,6 +133,7 @@ export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
 export const SUPPLY_FLEET_RECOVERIES_API_PATH = `${API_URL}/list_retour_flotte`;
 
 // Cash recovery
+export const NEW_CASH_RECOVERIES_API_PATH = `${API_URL}/recouvrement`;
 export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
 export const SUPPLY_CASH_RECOVERIES_API_PATH = `${API_URL}/list_recouvrement`;
 

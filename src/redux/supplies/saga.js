@@ -1,19 +1,25 @@
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
+import {DONE} from "../../constants/typeConstants";
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest} from "../../functions/axiosFunctions";
+import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
 import {
+    EMIT_ADD_SUPPLY,
     EMIT_SUPPLIES_FETCH,
     storeSetSuppliesData,
+    storeSetNewSupplyData,
     EMIT_NEXT_SUPPLIES_FETCH,
     storeSetNextSuppliesData,
     storeStopInfiniteScrollSupplyData
 } from "./actions";
 import {
     storeSuppliesRequestInit,
+    storeAddSupplyRequestInit,
     storeSuppliesRequestFailed,
     storeSuppliesRequestSucceed,
+    storeAddSupplyRequestFailed,
     storeNextSuppliesRequestInit,
+    storeAddSupplyRequestSucceed,
     storeNextSuppliesRequestFailed,
     storeNextSuppliesRequestSucceed
 } from "../requests/supplies/actions";
@@ -55,6 +61,41 @@ export function* emitNextSuppliesFetch() {
             // Fire event for request
             yield put(storeNextSuppliesRequestFailed({message}));
             yield put(storeStopInfiniteScrollSupplyData());
+        }
+    });
+}
+
+// Fleets new supply from API
+export function* emitAddSupply() {
+    yield takeLatest(EMIT_ADD_SUPPLY, function*({amount, managerSim, agentSim, agent, pay}) {
+        try {
+            // Fire event for request
+            yield put(storeAddSupplyRequestInit());
+            const data = {
+                montant: amount,
+                id_agent: agent,
+                id_puce_agent: agentSim,
+                id_puce_flottage: managerSim,
+                direct_pay: pay ? DONE : null
+            };
+            const apiResponse = yield call(apiPostRequest, api.NEW_SUPPLY_API_PATH, data);
+            // Extract data
+            const supply = extractSupplyData(
+                apiResponse.data.puce_emetrice,
+                apiResponse.data.puce_receptrice,
+                apiResponse.data.user,
+                apiResponse.data.agent,
+                apiResponse.data.gestionnaire,
+                apiResponse.data.approvisionnement,
+                apiResponse.data.operateur,
+            );
+            // Fire event to redux
+            yield put(storeSetNewSupplyData({supply}))
+            // Fire event for request
+            yield put(storeAddSupplyRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddSupplyRequestFailed({message}));
         }
     });
 }
@@ -133,6 +174,7 @@ export function extractSuppliesData(apiSupplies) {
 // Combine to export all functions at once
 export default function* sagaSupplies() {
     yield all([
+        fork(emitAddSupply),
         fork(emitSuppliesFetch),
         fork(emitNextSuppliesFetch),
     ]);

@@ -1,16 +1,21 @@
 import { all, takeLatest, put, fork, call } from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {apiGetRequest, getFileFromServer} from "../../functions/axiosFunctions";
+import {storeUpdateSupplyData} from "../supplies/actions";
+import {apiGetRequest, apiPostRequest, getFileFromServer} from "../../functions/axiosFunctions";
 import {
+    EMIT_NEW_RECOVERY,
     EMIT_RECOVERIES_FETCH,
     storeSetRecoveriesData,
     EMIT_NEXT_RECOVERIES_FETCH,
-    EMIT_SUPPLY_RECOVERIES_FETCH,
     storeSetNextRecoveriesData,
+    EMIT_SUPPLY_RECOVERIES_FETCH,
     storeStopInfiniteScrollRecoveryData
 } from "./actions";
 import {
+    storeRecoverRequestInit,
+    storeRecoverRequestFailed,
+    storeRecoverRequestSucceed,
     storeRecoveriesRequestInit,
     storeRecoveriesRequestFailed,
     storeRecoveriesRequestSucceed,
@@ -80,6 +85,25 @@ export function* emitNextRecoveriesFetch() {
     });
 }
 
+// New recovery from API
+export function* emitNewRecovery() {
+    yield takeLatest(EMIT_NEW_RECOVERY, function*({supply, amount}) {
+        try {
+            // Fire event for request
+            yield put(storeRecoverRequestInit());
+            const data = {montant: amount, id_flottage: supply}
+            const apiResponse = yield call(apiPostRequest, api.NEW_CASH_RECOVERIES_API_PATH, data);
+            // Fire event to redux
+            yield put(storeUpdateSupplyData({id: supply, amount}));
+            // Fire event for request
+            yield put(storeRecoverRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeRecoverRequestFailed({message}));
+        }
+    });
+}
+
 // Extract recovery data
 function extractRecoveryData(apiRecovery, apiUser, apiAgent, apiCollector) {
     let recovery = {
@@ -129,6 +153,7 @@ function extractRecoveriesData(apiRecoveries) {
 // Combine to export all functions at once
 export default function* sagaRecoveries() {
     yield all([
+        fork(emitNewRecovery),
         fork(emitRecoveriesFetch),
         fork(emitNextRecoveriesFetch),
         fork(emitSupplyRecoveriesFetch),

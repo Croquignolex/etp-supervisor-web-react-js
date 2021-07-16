@@ -180,6 +180,7 @@ function extractReturnsData(apiReturns) {
 // Combine to export all functions at once
 export default function* sagaReturns() {
     yield all([
+        fork(emitNewReturn),
         fork(emitReturnsFetch),
         fork(emitNextReturnsFetch),
         fork(emitSupplyReturnsFetch),

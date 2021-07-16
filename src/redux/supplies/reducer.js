@@ -53,6 +53,10 @@ function reduce(state = initialState, action) {
                 })
             };
             return nextState || state;
+        // Resolve event to set new supply data
+        case actions.STORE_SET_NEW_SUPPLY_DATA:
+            nextState = {...state, list: [action.supply, ...state.list]}
+            return nextState || state;
         // Unknown action
         default: return state;
     }
