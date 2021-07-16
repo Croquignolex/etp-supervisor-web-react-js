@@ -368,6 +368,7 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims) {
         collector.name = apiCollector.name;
         collector.phone = apiCollector.phone;
         collector.email = apiCollector.email;
+        collector.debt = apiCollector.dette || 0;
         collector.address = apiCollector.adresse;
         collector.id = apiCollector.id.toString();
         collector.creation = apiCollector.created_at;

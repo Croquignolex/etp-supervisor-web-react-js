@@ -119,7 +119,6 @@ function ManagerTransactionsComponent({manager, transactions, dispatch, request}
                                                         <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
-                                                        <td>{item.balance}</td>
                                                     </tr>
                                                 )
                                             })}
