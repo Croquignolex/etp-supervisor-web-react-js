@@ -42,6 +42,10 @@ function SupervisorInfoComponent({supervisor}) {
                             <span className="float-right text-success text-bold">{formatNumber(supervisor.account.balance)}</span>
                         </li>
                         <li className="list-group-item">
+                            <b>Créer par</b>
+                            <span className="float-right">{supervisor.creator.name}</span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Adresse</b>
                             <p>{supervisor.address}</p>
                         </li>
