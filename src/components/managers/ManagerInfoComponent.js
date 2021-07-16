@@ -62,6 +62,10 @@ function ManagerInfoComponent({manager}) {
                             </span>
                         </li>
                         <li className="list-group-item">
+                            <b>Créer par</b>
+                            <span className="float-right">{manager.creator.name}</span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Adresse</b>
                             <p>{manager.address}</p>
                         </li>
