@@ -126,11 +126,14 @@ export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
 // Refuels
 export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
 
-// Recoveries
-export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
+// Fleet recovery
+export const NEW_FLEET_RECOVERIES_API_PATH = `${API_URL}/retour_flotte`;
 export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
-export const SUPPLY_CASH_RECOVERIES_API_PATH = `${API_URL}/list_recouvrement`;
 export const SUPPLY_FLEET_RECOVERIES_API_PATH = `${API_URL}/list_retour_flotte`;
+
+// Cash recovery
+export const CASH_RECOVERIES_API_PATH = `${API_URL}/list_all_recouvrement`;
+export const SUPPLY_CASH_RECOVERIES_API_PATH = `${API_URL}/list_recouvrement`;
 
 // Transfers
 export const NEW_TRANSFERS_API_PATH = `${API_URL}/flottage_rz`;

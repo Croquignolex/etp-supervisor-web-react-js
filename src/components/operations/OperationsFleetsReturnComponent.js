@@ -6,7 +6,7 @@ import ButtonComponent from "../form/ButtonComponent";
 import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {FLEET_TYPE} from "../../constants/typeConstants";
+import {MASTER_TYPE} from "../../constants/typeConstants";
 import {emitNewReturn} from "../../redux/returns/actions";
 import {emitAllSimsFetch} from "../../redux/sims/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
@@ -65,7 +65,7 @@ function OperationsFleetsReturnComponent({supply, request, sims, allSimsRequests
     // Build select options
     const incomingSelectOptions = useMemo(() => {
         return dataToArrayForSelect(mappedSims(sims.filter(
-            item => (FLEET_TYPE === item.type.name) && (item.operator.id === selectedOp)
+            item => (MASTER_TYPE === item.type.name) && (item.operator.id === selectedOp)
         )))
     }, [sims, selectedOp]);
 
