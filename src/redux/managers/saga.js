@@ -150,7 +150,8 @@ export function* emitNewManager() {
             // Extract data
             const manager = extractManagerData(
                 apiResponse.data.gestionnaire,
-                apiResponse.data.caisse
+                apiResponse.data.caisse,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetNewManagerData({manager}));
@@ -174,6 +175,7 @@ export function* emitManagerFetch() {
             const manager = extractManagerData(
                 apiResponse.data.user,
                 apiResponse.data.caisse,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetManagerData({manager}));
@@ -198,6 +200,7 @@ export function* emitUpdateManagerInfo() {
             const manager = extractManagerData(
                 apiResponse.data.user,
                 apiResponse.data.caisse,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetManagerData({manager, alsoInList: true}));
@@ -263,16 +266,23 @@ export function* emitManagerTransactionsFetch() {
 }
 
 // Extract manager data
-function extractManagerData(apiManager, apiAccount) {
+function extractManagerData(apiManager, apiAccount, apiCreator) {
     let manager = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
+        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
 
         movements: [],
         transactions: [],
     };
 
+    if(apiCreator) {
+        manager.creator = {
+            name: apiCreator.name,
+            id: apiCreator.id.toString(),
+        }
+    }
     if(apiAccount) {
         manager.account = {
             balance: apiAccount.solde,
@@ -341,6 +351,7 @@ function extractManagersData(apiManagers) {
             managers.push(extractManagerData(
                 data.gestionnaire,
                 data.caisse,
+                data.createur,
             ));
         });
     }
