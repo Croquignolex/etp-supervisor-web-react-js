@@ -109,6 +109,10 @@ function CollectorInfoComponent({collector}) {
                             </span>
                         </li>
                         <li className="list-group-item">
+                            <b>Créer par</b>
+                            <span className="float-right">{collector.creator.name}</span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Adresse</b>
                             <p>{collector.address}</p>
                         </li>
