@@ -38,6 +38,10 @@ function AdministratorInfoComponent({administrator}) {
                             <span className="float-right">{administrator.email}</span>
                         </li>
                         <li className="list-group-item">
+                            <b>Créer par</b>
+                            <span className="float-right">{administrator.creator.name}</span>
+                        </li>
+                        <li className="list-group-item">
                             <b>Adresse</b>
                             <p>{administrator.address}</p>
                         </li>
