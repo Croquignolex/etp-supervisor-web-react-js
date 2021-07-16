@@ -119,7 +119,8 @@ export function* emitNewSupervisor() {
             // Extract data
             const supervisor = extractSupervisorData(
                 apiResponse.data.superviseur,
-                apiResponse.data.caisse
+                apiResponse.data.caisse,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetNewSupervisorData({supervisor}));
@@ -143,6 +144,7 @@ export function* emitSupervisorFetch() {
             const supervisor = extractSupervisorData(
                 apiResponse.data.user,
                 apiResponse.data.caisse,
+                apiResponse.data.createur,
             );
             // Fire event to redux
             yield put(storeSetSupervisorData({supervisor}));
@@ -208,16 +210,23 @@ export function* emitSupervisorTransactionsFetch() {
 }
 
 // Extract supervisor data
-function extractSupervisorData(apiSupervisor, apiAccount) {
+function extractSupervisorData(apiSupervisor, apiAccount, apiCreator) {
     let supervisor = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
+        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
 
         movements: [],
         transactions: [],
     };
 
+    if(apiCreator) {
+        supervisor.creator = {
+            name: apiCreator.name,
+            id: apiCreator.id.toString(),
+        }
+    }
     if(apiAccount) {
         supervisor.account = {
             balance: apiAccount.solde,
@@ -286,6 +295,7 @@ function extractSupervisorsData(apiSupervisors) {
             supervisors.push(extractSupervisorData(
                 data.superviseur,
                 data.caisse,
+                data.createur,
             ));
         });
     }

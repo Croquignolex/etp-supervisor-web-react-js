@@ -115,6 +115,7 @@ function extractAdministratorData(apiAdministrator, apiAccount) {
     let administrator = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
+        creator: {id: '', name: ''},
         account: {id: '', balance: ''},
     };
 
@@ -145,7 +146,10 @@ function extractAdministratorsData(apiAdministrators) {
     const administrators = [];
     if(apiAdministrators) {
         apiAdministrators.forEach(data => {
-            administrators.push(extractAdministratorData(data.administrateur));
+            administrators.push(extractAdministratorData(
+                data.administrateur,
+                data.createur,
+            ));
         });
     }
     return administrators;
