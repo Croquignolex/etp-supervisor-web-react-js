@@ -5,7 +5,7 @@ import ButtonComponent from "../form/ButtonComponent";
 import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {FLEET_TYPE} from "../../constants/typeConstants";
+import {MASTER_TYPE} from "../../constants/typeConstants";
 import {emitAllSimsFetch} from "../../redux/sims/actions";
 import CheckBoxComponent from "../form/CheckBoxComponent";
 import {emitAddSupply} from "../../redux/supplies/actions";
@@ -86,7 +86,7 @@ function OperationsFleetsAddSupplyComponent({request, sims, agents, allAgentsReq
 
     // Build select options
     const outgoingSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedSims(sims.filter(item => FLEET_TYPE === item.type.name)))
+        return dataToArrayForSelect(mappedSims(sims.filter(item => MASTER_TYPE === item.type.name)))
     }, [sims]);
 
     // Build select options
