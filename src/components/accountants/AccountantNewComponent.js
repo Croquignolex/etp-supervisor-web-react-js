@@ -13,7 +13,7 @@ import {storeAddManagerRequestReset} from "../../redux/requests/managers/actions
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ManagerNewComponent({request, dispatch, handleClose}) {
+function AccountantNewComponent({request, dispatch, handleClose}) {
     // Local state
     const [name, setName] = useState(constants.DEFAULT_FORM_DATA);
     const [phone, setPhone] = useState(constants.DEFAULT_FORM_DATA);
@@ -155,10 +155,10 @@ function ManagerNewComponent({request, dispatch, handleClose}) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagerNewComponent.propTypes = {
+AccountantNewComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired
 };
 
-export default React.memo(ManagerNewComponent);
+export default React.memo(AccountantNewComponent);

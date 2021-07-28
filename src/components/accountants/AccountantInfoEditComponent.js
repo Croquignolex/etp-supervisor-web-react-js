@@ -13,7 +13,7 @@ import {storeManagerEditInfoRequestReset} from "../../redux/requests/managers/ac
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function ManagerInfoEditComponent({request, manager, dispatch, handleClose}) {
+function AccountantInfoEditComponent({request, manager, dispatch, handleClose}) {
     // Local state
     const [name, setName] = useState({...DEFAULT_FORM_DATA, data: manager.name});
     const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: manager.email});
@@ -133,11 +133,11 @@ function ManagerInfoEditComponent({request, manager, dispatch, handleClose}) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagerInfoEditComponent.propTypes = {
+AccountantInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     manager: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 
-export default React.memo(ManagerInfoEditComponent);
+export default React.memo(AccountantInfoEditComponent);

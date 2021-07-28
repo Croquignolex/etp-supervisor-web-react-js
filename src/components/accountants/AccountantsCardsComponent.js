@@ -5,7 +5,7 @@ import LoaderComponent from "../LoaderComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 
 // Component
-function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
+function AccountantsCardsComponent({managers, handleBlock, handleBlockModalShow,
                                     handleTransactionsModalShow, handleMovementsModalShow, handleManagerDetailsModalShow}) {
     // Render
     return (
@@ -92,7 +92,7 @@ function ManagersCardsComponent({managers, handleBlock, handleBlockModalShow,
 }
 
 // Prop types to ensure destroyed props data type
-ManagersCardsComponent.propTypes = {
+AccountantsCardsComponent.propTypes = {
     managers: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
@@ -101,4 +101,4 @@ ManagersCardsComponent.propTypes = {
     handleManagerDetailsModalShow: PropTypes.func.isRequired,
 };
 
-export default React.memo(ManagersCardsComponent);
+export default React.memo(AccountantsCardsComponent);

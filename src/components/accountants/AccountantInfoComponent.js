@@ -6,7 +6,7 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
 
 // Component
-function ManagerInfoComponent({manager}) {
+function AccountantInfoComponent({manager}) {
     // Local states
     const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
 
@@ -85,8 +85,8 @@ function ManagerInfoComponent({manager}) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagerInfoComponent.propTypes = {
+AccountantInfoComponent.propTypes = {
     manager: PropTypes.object.isRequired
 };
 
-export default React.memo(ManagerInfoComponent);
+export default React.memo(AccountantInfoComponent);

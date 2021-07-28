@@ -3,13 +3,13 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import ManagerInfoComponent from "./ManagerInfoComponent";
+import ManagerInfoComponent from "./AccountantInfoComponent";
 import {emitManagerFetch} from "../../redux/managers/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeManagerRequestReset} from "../../redux/requests/managers/actions";
 
 // Component
-function ManagerDetailsComponent({id, manager, dispatch, request}) {
+function AccountantDetailsComponent({id, manager, dispatch, request}) {
     // Local effects
     useEffect(() => {
         dispatch(emitManagerFetch({id}));
@@ -42,11 +42,11 @@ function ManagerDetailsComponent({id, manager, dispatch, request}) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagerDetailsComponent.propTypes = {
+AccountantDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     manager: PropTypes.object.isRequired,
 };
 
-export default React.memo(ManagerDetailsComponent);
+export default React.memo(AccountantDetailsComponent);
