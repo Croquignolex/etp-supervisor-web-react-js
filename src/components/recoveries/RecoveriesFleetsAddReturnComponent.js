@@ -5,7 +5,7 @@ import ButtonComponent from "../form/ButtonComponent";
 import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {FLEET_TYPE, MASTER_TYPE} from "../../constants/typeConstants";
+import {MASTER_TYPE} from "../../constants/typeConstants";
 import {emitAllSimsFetch} from "../../redux/sims/actions";
 import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import {emitAddFleetReturn} from "../../redux/returns/actions";

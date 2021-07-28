@@ -6,6 +6,7 @@ const initialState = {
     add: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
+    fleet: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -62,6 +63,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set return reset request store data
         case actions.STORE_RETURN_REQUEST_RESET:
             nextState = {...state, add: initialState.add};
+            return nextState || state;
+        // ======================================================== Add fleet return
+        // Resolve event to set add fleet return init request store data
+        case actions.STORE_ADD_FLEET_RETURN_REQUEST_INIT:
+            nextState = {...state, fleet: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set add fleet return  failed request store data
+        case actions.STORE_ADD_FLEET_RETURN_REQUEST_FAILED:
+            nextState = {...state, fleet: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add fleet return  succeeded request store data
+        case actions.STORE_ADD_FLEET_RETURN_REQUEST_SUCCEEDED:
+            nextState = {...state, fleet: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add fleet return  reset request store data
+        case actions.STORE_ADD_FLEET_RETURN_REQUEST_RESET:
+            nextState = {...state, fleet: initialState.fleet};
             return nextState || state;
         // ========================================================
         // Unknown action

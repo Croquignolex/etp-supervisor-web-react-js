@@ -1,11 +1,13 @@
 // Reducer action types
 export const STORE_SET_RETURNS_DATA = 'STORE_SET_RETURNS_DATA';
 export const STORE_SET_NEXT_RETURNS_DATA = 'STORE_SET_NEXT_RETURNS_DATA';
+export const STORE_SET_ADD_FLEET_RETURN_DATA = 'STORE_SET_ADD_FLEET_RETURN_DATA';
 export const STORE_STOP_INFINITE_SCROLL_RETURNS_DATA = 'STORE_STOP_INFINITE_SCROLL_RETURNS_DATA';
 
 // Middleware action types
 export const EMIT_NEW_RETURN = 'EMIT_NEW_RETURN';
 export const EMIT_RETURNS_FETCH = 'EMIT_RETURNS_FETCH';
+export const EMIT_ADD_FLEET_RETURN = 'EMIT_ADD_FLEET_RETURN';
 export const EMIT_NEXT_RETURNS_FETCH = 'EMIT_NEXT_RETURNS_FETCH';
 export const EMIT_SUPPLY_RETURNS_FETCH = 'EMIT_SUPPLY_RETURNS_FETCH';
 
@@ -29,6 +31,12 @@ export const storeSetNextReturnsData = ({returns, hasMoreData, page}) => ({
 // Stop infinite scroll
 export const storeStopInfiniteScrollReturnData = () => ({
     type: STORE_STOP_INFINITE_SCROLL_RETURNS_DATA
+});
+
+// Set add fleet return data in store
+export const storeSetAddFleetReturnData = ({data}) => ({
+    data,
+    type: STORE_SET_ADD_FLEET_RETURN_DATA
 });
 
 //====================== Middleware trigger actions
@@ -56,4 +64,13 @@ export const emitNewReturn = ({supply, amount, agentSim, managerSim}) => ({
     agentSim,
     managerSim,
     type: EMIT_NEW_RETURN
+});
+
+
+// Emit add fleet return
+export const emitAddFleetReturn = ({amount, agentSim, managerSim}) => ({
+    amount,
+    agentSim,
+    managerSim,
+    type: EMIT_ADD_FLEET_RETURN
 });

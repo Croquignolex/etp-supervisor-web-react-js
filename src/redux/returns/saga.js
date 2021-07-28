@@ -7,9 +7,11 @@ import {
     EMIT_NEW_RETURN,
     EMIT_RETURNS_FETCH,
     storeSetReturnsData,
+    EMIT_ADD_FLEET_RETURN,
     EMIT_NEXT_RETURNS_FETCH,
     storeSetNextReturnsData,
     EMIT_SUPPLY_RETURNS_FETCH,
+    storeSetAddFleetReturnData,
     storeStopInfiniteScrollReturnData
 } from "./actions";
 import {
@@ -22,6 +24,9 @@ import {
     storeNextReturnsRequestInit,
     storeNextReturnsRequestFailed,
     storeNextReturnsRequestSucceed,
+    storeAddFleetReturnRequestInit,
+    storeAddFleetReturnRequestFailed,
+    storeAddFleetReturnRequestSucceed,
 } from "../requests/returns/actions";
 
 // Fetch returns from API
@@ -104,6 +109,35 @@ export function* emitNewReturn() {
     });
 }
 
+// New  add fleet from API
+export function* emitAddFleetReturn() {
+    yield takeLatest(EMIT_ADD_FLEET_RETURN, function*({amount, agentSim, managerSim}) {
+        try {
+            // Fire event for request
+            yield put(storeAddFleetReturnRequestInit());
+            const data = {montant: amount, puce_agent: agentSim, puce_flottage: managerSim};
+            const apiResponse = yield call(apiPostRequest, api.ADD_FLEET_RETURNS_API_PATH, data);
+            // Extract data
+            const returns = extractRecoveryData(
+                apiResponse.data.recouvrement,
+                apiResponse.data.user,
+                apiResponse.data.agent,
+                apiResponse.data.recouvreur,
+                apiResponse.data.puce_agent,
+                apiResponse.data.puce_flottage,
+                apiResponse.data.operateur,
+            );
+            // Fire event to redux
+            yield put(storeSetAddFleetReturnData({data: returns}));
+            // Fire event for request
+            yield put(storeAddFleetReturnRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAddFleetReturnRequestFailed({message}));
+        }
+    });
+}
+
 // Extract recovery data
 function extractRecoveryData(apiRecovery, apiUser, apiAgent, apiCollector, apiSimOutgoing, apiSimIncoming, apiOperator) {
     let recovery = {
@@ -182,6 +216,7 @@ export default function* sagaReturns() {
     yield all([
         fork(emitNewReturn),
         fork(emitReturnsFetch),
+        fork(emitAddFleetReturn),
         fork(emitNextReturnsFetch),
         fork(emitSupplyReturnsFetch),
     ]);

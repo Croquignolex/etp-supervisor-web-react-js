@@ -144,6 +144,7 @@ export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
 export const NEW_FLEET_RECOVERIES_API_PATH = `${API_URL}/retour_flotte`;
 export const FLEET_RECOVERIES_API_PATH = `${API_URL}/list_all_retour_flotte`;
 export const SUPPLY_FLEET_RECOVERIES_API_PATH = `${API_URL}/list_retour_flotte`;
+export const ADD_FLEET_RETURNS_API_PATH = `${API_URL}/retour_flotte_sans_flottage`;
 
 // Cash recovery
 export const NEW_CASH_RECOVERIES_API_PATH = `${API_URL}/recouvrement`;
