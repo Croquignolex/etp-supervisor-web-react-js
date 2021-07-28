@@ -96,6 +96,11 @@ export const OVERSEERS_API_PATH = `${API_URL}/controlleurs`;
 export const ALL_OVERSEERS_API_PATH = `${API_URL}/controlleurs`;
 export const OVERSEER_DETAILS_API_PATH = `${API_URL}/details_user`;
 
+// Accountants
+export const ACCOUNTANTS_API_PATH = `${API_URL}/comptables`;
+export const ALL_ACCOUNTANTS_API_PATH = `${API_URL}/comptables`;
+export const ACCOUNTANT_DETAILS_API_PATH = `${API_URL}/details_user`;
+
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;
 export const OPERATORS_API_PATH = `${API_URL}/flote_list`;
