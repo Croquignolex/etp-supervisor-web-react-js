@@ -75,6 +75,7 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                     <ExcelColumn label="RECIPROQUE" value="right_account"/>
                     <ExcelColumn label="ENTREES" value="in"/>
                     <ExcelColumn label="SORTIES" value="out"/>
+                    <ExcelColumn label="SOLDES" value="balance"/>
                 </ExcelSheet>
             </ExcelFile>
         )
@@ -106,6 +107,7 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                                                 <th>RECIPROQUE</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
+                                                <th>SOLDES</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,6 +121,7 @@ function SupervisorTransactionsComponent({supervisor, transactions, dispatch, re
                                                         <td>{formatString(item.right_account, 20)}</td>
                                                         <td>{item.in}</td>
                                                         <td>{item.out}</td>
+                                                        <td>{item.balance}</td>
                                                     </tr>
                                                 )
                                             })}
