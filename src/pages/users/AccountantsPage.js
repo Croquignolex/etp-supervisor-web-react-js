@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import {ACCOUNTANTS} from "../../constants/pageNameConstants";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
@@ -9,28 +10,24 @@ import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import ManagerNewContainer from "../../containers/managers/ManagerNewContainer";
-import ManagersCardsComponent from "../../components/managers/ManagersCardsComponent";
-import ManagerDetailsContainer from "../../containers/managers/ManagerDetailsContainer";
-import ManagerMovementsContainer from "../../containers/managers/ManagerMovementsContainer";
-import ManagerTransactionsContainer from "../../containers/managers/ManagerTransactionsContainer";
-import {emitManagersFetch, emitNextManagersFetch, emitToggleManagerStatus} from "../../redux/managers/actions";
+import AccountantNewContainer from "../../containers/accountants/AccountantNewContainer";
+import AccountantsCardsComponent from "../../components/accountants/AccountantsCardsComponent";
+import AccountantDetailsContainer from "../../containers/accountants/AccountantDetailsContainer";
+import {emitAccountantsFetch, emitNextAccountantsFetch, emitToggleAccountantStatus} from "../../redux/accountants/actions";
 import {applySuccess, dateToString, needleSearch, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import {storeManagersRequestReset, storeNextManagersRequestReset, storeManagerStatusToggleRequestReset,} from "../../redux/requests/managers/actions";
+import {storeAccountantsRequestReset, storeNextAccountantsRequestReset, storeAccountantStatusToggleRequestReset,} from "../../redux/requests/accountants/actions";
 
 // Component
-function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, location}) {
+function AccountantsPage({accountants, accountantsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
-    const [newManagerModal, setNewManagerModal] = useState({show: false, header: ''});
-    const [movementsModal, setMovementsModal] = useState({show: false, header: '', manager: {}});
-    const [managerDetailsModal, setManagerDetailsModal] = useState({show: false, header: '', id: 0});
-    const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', manager: {}});
+    const [newAccountantModal, setNewAccountantModal] = useState({show: false, header: ''});
+    const [accountantDetailsModal, setAccountantDetailsModal] = useState({show: false, header: '', id: 0});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitManagersFetch());
+        dispatch(emitAccountantsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -41,11 +38,11 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     // Local effects
     useEffect(() => {
         // Reset inputs while toast (well done) into current scope
-        if(requestSucceeded(managersRequests.status)) {
-            applySuccess(managersRequests.status.message);
+        if(requestSucceeded(accountantsRequests.status)) {
+            applySuccess(accountantsRequests.status.message);
         }
         // eslint-disable-next-line
-    }, [managersRequests.status]);
+    }, [accountantsRequests.status]);
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
@@ -53,59 +50,39 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeManagersRequestReset());
-        dispatch(storeNextManagersRequestReset());
-        dispatch(storeManagerStatusToggleRequestReset());
+        dispatch(storeAccountantsRequestReset());
+        dispatch(storeNextAccountantsRequestReset());
+        dispatch(storeAccountantStatusToggleRequestReset());
     };
 
-    // Fetch next manager data to enhance infinite scroll
-    const handleNextManagersData = () => {
-        dispatch(emitNextManagersFetch({page}));
+    // Fetch next accountant data to enhance infinite scroll
+    const handleNextAccountantsData = () => {
+        dispatch(emitNextAccountantsFetch({page}));
     }
 
-    // Show new manager modal form
-    const handleNewManagerModalShow = () => {
-        setNewManagerModal({newManagerModal, header: "NOUVELLE GESTIONNAIRE DE FLOTTE", show: true})
+    // Show new accountant modal form
+    const handleNewAccountantModalShow = () => {
+        setNewAccountantModal({newAccountantModal, header: "NOUVEAU COMPTABLE", show: true})
     }
 
-    // Hide new manager modal form
-    const handleNewManagerModalHide = () => {
-        setNewManagerModal({...newManagerModal, show: false})
+    // Hide new accountant modal form
+    const handleNewAccountantModalHide = () => {
+        setNewAccountantModal({...newAccountantModal, show: false})
     }
 
-    // Show movements modal form
-    const handleMovementsModalShow = (manager) => {
-        setMovementsModal({...movementsModal, manager, show: true, header: 'MOUVEMENTS DE CAISSE DE ' + manager.name})
+    // Show accountant details modal form
+    const handleAccountantDetailsModalShow = ({id, name}) => {
+        setAccountantDetailsModal({...accountantDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
-    // Hide movements modal form
-    const handleMovementsModalHide = () => {
-        setMovementsModal({...movementsModal, show: false})
-    }
-
-    // Show transactions modal form
-    const handleTransactionsModalShow = (manager) => {
-        setTransactionsModal({...transactionsModal, manager, show: true, header: 'TRANSACTIONS DE ' + manager.name})
-    }
-
-    // Hide transactions modal form
-    const handleTransactionsModalHide = () => {
-        setTransactionsModal({...transactionsModal, show: false})
-    }
-
-    // Show manager details modal form
-    const handleManagerDetailsModalShow = ({id, name}) => {
-        setManagerDetailsModal({...managerDetailsModal, show: true, id, header: "DETAIL DE " + name})
-    }
-
-    // Hide manager details modal form
-    const handleManagerDetailsModalHide = () => {
-        setManagerDetailsModal({...managerDetailsModal, show: false})
+    // Hide accountant details modal form
+    const handleAccountantDetailsModalHide = () => {
+        setAccountantDetailsModal({...accountantDetailsModal, show: false})
     }
 
     // Trigger when user block status confirmed on modal
     const handleBlockModalShow = ({id, name}) => {
-        setBlockModal({...blockModal, show: true, id, body: `Bloquer la gestionnaire de flotte ${name}?`})
+        setBlockModal({...blockModal, show: true, id, body: `Bloquer le comptable ${name}?`})
     };
 
     // Hide block confirmation modal
@@ -116,7 +93,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
     // Trigger when user change status confirmed on modal
     const handleBlock = (id) => {
         handleBlockModalHide();
-        dispatch(emitToggleManagerStatus({id}));
+        dispatch(emitToggleAccountantStatus({id}));
     };
 
     // Render
@@ -124,7 +101,7 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Gestinnaires de flottes" icon={'fa fa-user-tag'} />
+                    <HeaderComponent title={ACCOUNTANTS} icon={'fa fa-user-shield'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -138,37 +115,33 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(managersRequests.list) && <ErrorAlertComponent message={managersRequests.list.message} />}
-                                            {requestFailed(managersRequests.next) && <ErrorAlertComponent message={managersRequests.next.message} />}
-                                            {requestFailed(managersRequests.status) && <ErrorAlertComponent message={managersRequests.status.message} />}
+                                            {requestFailed(accountantsRequests.list) && <ErrorAlertComponent message={accountantsRequests.list.message} />}
+                                            {requestFailed(accountantsRequests.next) && <ErrorAlertComponent message={accountantsRequests.next.message} />}
+                                            {requestFailed(accountantsRequests.status) && <ErrorAlertComponent message={accountantsRequests.status.message} />}
                                             <button type="button"
                                                     className="btn btn-theme ml-2 mb-2"
-                                                    onClick={handleNewManagerModalShow}
+                                                    onClick={handleNewAccountantModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouvelle gestionnaire
+                                                <i className="fa fa-plus" /> Nouveau comptable
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <ManagersCardsComponent handleBlock={handleBlock}
-                                                                          managers={searchEngine(managers, needle)}
-                                                                          handleBlockModalShow={handleBlockModalShow}
-                                                                          handleMovementsModalShow={handleMovementsModalShow}
-                                                                          handleTransactionsModalShow={handleTransactionsModalShow}
-                                                                          handleManagerDetailsModalShow={handleManagerDetailsModalShow}
+                                                ? <AccountantsCardsComponent handleBlock={handleBlock}
+                                                                             handleBlockModalShow={handleBlockModalShow}
+                                                                             accountants={searchEngine(accountants, needle)}
+                                                                             handleAccountantDetailsModalShow={handleAccountantDetailsModalShow}
                                                 />
-                                                : (requestLoading(managersRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(accountantsRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={managers.length}
-                                                                        next={handleNextManagersData}
+                                                                        dataLength={accountants.length}
+                                                                        next={handleNextAccountantsData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <ManagersCardsComponent managers={managers}
-                                                                                    handleBlock={handleBlock}
-                                                                                    handleBlockModalShow={handleBlockModalShow}
-                                                                                    handleMovementsModalShow={handleMovementsModalShow}
-                                                                                    handleTransactionsModalShow={handleTransactionsModalShow}
-                                                                                    handleManagerDetailsModalShow={handleManagerDetailsModalShow}
+                                                            <AccountantsCardsComponent accountants={accountants}
+                                                                                       handleBlock={handleBlock}
+                                                                                       handleBlockModalShow={handleBlockModalShow}
+                                                                                       handleAccountantDetailsModalShow={handleAccountantDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -186,17 +159,11 @@ function ManagersPage({managers, managersRequests, hasMoreData, page, dispatch, 
                                  handleBlock={handleBlock}
                                  handleClose={handleBlockModalHide}
             />
-            <FormModalComponent modal={newManagerModal} handleClose={handleNewManagerModalHide}>
-                <ManagerNewContainer type={newManagerModal.type} handleClose={handleNewManagerModalHide} />
+            <FormModalComponent modal={newAccountantModal} handleClose={handleNewAccountantModalHide}>
+                <AccountantNewContainer type={newAccountantModal.type} handleClose={handleNewAccountantModalHide} />
             </FormModalComponent>
-            <FormModalComponent modal={managerDetailsModal} handleClose={handleManagerDetailsModalHide}>
-                <ManagerDetailsContainer id={managerDetailsModal.id} />
-            </FormModalComponent>
-            <FormModalComponent modal={movementsModal} handleClose={handleMovementsModalHide}>
-                <ManagerMovementsContainer manager={movementsModal.manager} />
-            </FormModalComponent>
-            <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
-                <ManagerTransactionsContainer manager={transactionsModal.manager} />
+            <FormModalComponent modal={accountantDetailsModal} handleClose={handleAccountantDetailsModalHide}>
+                <AccountantDetailsContainer id={accountantDetailsModal.id} />
             </FormModalComponent>
         </>
     )
@@ -222,13 +189,13 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-ManagersPage.propTypes = {
+AccountantsPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    managers: PropTypes.array.isRequired,
+    accountants: PropTypes.array.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    managersRequests: PropTypes.object.isRequired,
+    accountantsRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(ManagersPage);
+export default React.memo(AccountantsPage);
