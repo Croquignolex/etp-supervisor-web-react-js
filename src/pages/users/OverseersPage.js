@@ -2,18 +2,18 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {ADMINS} from "../../constants/pageNameConstants";
+import {OVERSEER} from "../../constants/pageNameConstants";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
-import AdministratorsCardsComponent from "../../components/administrators/AdministratorsCardsComponent";
-import {emitAdministratorsFetch, emitNextAdministratorsFetch} from "../../redux/administrators/actions";
-import AdministratorDetailsContainer from "../../containers/administrators/AdministratorDetailsContainer";
+import OverseersCardsComponent from "../../components/overseers/OverseersCardsComponent";
+import {emitOverseersFetch, emitNextOverseersFetch} from "../../redux/overseers/actions";
+import OverseerDetailsContainer from "../../containers/overseers/OverseerDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeAdministratorsRequestReset, storeNextAdministratorsRequestReset} from "../../redux/requests/administrators/actions";
+import {storeOverseersRequestReset, storeNextOverseersRequestReset} from "../../redux/requests/overseers/actions";
 
 // Component
 function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatch, location}) {
@@ -23,7 +23,7 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAdministratorsFetch());
+        dispatch(emitOverseersFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -37,23 +37,23 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAdministratorsRequestReset());
-        dispatch(storeNextAdministratorsRequestReset());
+        dispatch(storeOverseersRequestReset());
+        dispatch(storeNextOverseersRequestReset());
     };
 
-    // Fetch next administrator data to enhance infinite scroll
-    const handleNextAdministratorsData = () => {
-        dispatch(emitNextAdministratorsFetch({page}));
+    // Fetch next overseer data to enhance infinite scroll
+    const handleNextOverseersData = () => {
+        dispatch(emitNextOverseersFetch({page}));
     }
 
-    // Show administrator details modal form
-    const handleAdministratorDetailsModalShow = ({id}) => {
-        setAdministratorDetailsModal({...administratorDetailsModal, show: true, id})
+    // Show overseer details modal form
+    const handleOverseerDetailsModalShow = ({id}) => {
+        setOverseerDetailsModal({...overseerDetailsModal, show: true, id})
     }
 
-    // Hide administrator details modal form
-    const handleAdministratorDetailsModalHide = () => {
-        setAdministratorDetailsModal({...administratorDetailsModal, show: false})
+    // Hide overseer details modal form
+    const handleOverseerDetailsModalHide = () => {
+        setOverseerDetailsModal({...overseerDetailsModal, show: false})
     }
 
     // Render
@@ -61,7 +61,7 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={ADMINS} icon={'fa fa-user-secret'} />
+                    <HeaderComponent title={OVERSEER} icon={'fa fa-user-secret'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -75,22 +75,22 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(administratorsRequests.list) && <ErrorAlertComponent message={administratorsRequests.list.message} />}
-                                            {requestFailed(administratorsRequests.next) && <ErrorAlertComponent message={administratorsRequests.next.message} />}
+                                            {requestFailed(overseersRequests.list) && <ErrorAlertComponent message={overseersRequests.list.message} />}
+                                            {requestFailed(overseersRequests.next) && <ErrorAlertComponent message={overseersRequests.next.message} />}
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <AdministratorsCardsComponent administrators={searchEngine(administrators, needle)}
-                                                                                handleAdministratorDetailsModalShow={handleAdministratorDetailsModalShow}
+                                                ? <OverseersCardsComponent overseers={searchEngine(overseers, needle)}
+                                                                                handleOverseerDetailsModalShow={handleOverseerDetailsModalShow}
                                                 />
-                                                : (requestLoading(administratorsRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(overseersRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={administrators.length}
-                                                                        next={handleNextAdministratorsData}
+                                                                        dataLength={overseers.length}
+                                                                        next={handleNextOverseersData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <AdministratorsCardsComponent administrators={administrators}
-                                                                                          handleAdministratorDetailsModalShow={handleAdministratorDetailsModalShow}
+                                                            <OverseersCardsComponent overseers={overseers}
+                                                                                     handleOverseerDetailsModalShow={handleOverseerDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -104,8 +104,8 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
-            <FormModalComponent modal={administratorDetailsModal} handleClose={handleAdministratorDetailsModalHide}>
-                <AdministratorDetailsContainer id={administratorDetailsModal.id} />
+            <FormModalComponent modal={overseerDetailsModal} handleClose={handleOverseerDetailsModalHide}>
+                <OverseerDetailsContainer id={overseerDetailsModal.id} />
             </FormModalComponent>
         </>
     )

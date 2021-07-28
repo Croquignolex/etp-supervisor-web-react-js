@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import SupervisorDetailsComponent from "../../components/supervisors/SupervisorDetailsComponent";
+import OverseerDetailsComponent from "../../components/overseers/OverseerDetailsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    supervisor: state.supervisors.current,
-    request: state.supervisorsRequests.show,
+    overseer: state.overseers.current,
+    request: state.overseersRequests.show,
 });
 
 // Map dispatch function to component props
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(SupervisorDetailsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(OverseerDetailsComponent);

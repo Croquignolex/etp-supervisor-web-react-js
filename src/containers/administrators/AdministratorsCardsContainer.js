@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import AgentsCardsComponent from "../../components/agents/AgentsCardsComponent";
+import AdministratorsCardsComponent from "../../components/administrators/AdministratorsCardsComponent";
 
 // Map dispatch function to component props
 const mapDispatchToProps = (dispatch) => ({
@@ -8,4 +8,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapDispatchToProps)(AgentsCardsComponent);
+export default connect(mapDispatchToProps)(AdministratorsCardsComponent);
