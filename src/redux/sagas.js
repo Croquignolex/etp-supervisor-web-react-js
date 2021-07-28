@@ -21,6 +21,7 @@ import operators from './operators/saga';
 import transfers from './transfers/saga';
 import companies from './companies/saga';
 import simsTypes from './simsTypes/saga';
+import overseers from './overseers/saga';
 import handovers from './handovers/saga';
 import clearances from './clearances/saga';
 import collectors from './collectors/saga';
@@ -49,6 +50,7 @@ export default function* sagas() {
         managers(),
         payments(),
         settings(),
+        overseers(),
         movements(),
         companies(),
         handovers(),
