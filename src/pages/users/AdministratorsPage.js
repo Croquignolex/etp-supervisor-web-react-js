@@ -19,7 +19,7 @@ import {storeAdministratorsRequestReset, storeNextAdministratorsRequestReset} fr
 function AdministratorsPage({administrators, administratorsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [administratorDetailsModal, setAdministratorDetailsModal] = useState({show: false, header: "DETAIL DE L'ADMINISTRATEUR", id: ''});
+    const [administratorDetailsModal, setAdministratorDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
@@ -47,8 +47,8 @@ function AdministratorsPage({administrators, administratorsRequests, hasMoreData
     }
 
     // Show administrator details modal form
-    const handleAdministratorDetailsModalShow = ({id}) => {
-        setAdministratorDetailsModal({...administratorDetailsModal, show: true, id})
+    const handleAdministratorDetailsModalShow = ({id, name}) => {
+        setAdministratorDetailsModal({...administratorDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide administrator details modal form

@@ -65,7 +65,6 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
     // Show supervisor details modal form
     const handleSupervisorDetailsModalShow = ({id, name}) => {
         setSupervisorDetailsModal({...supervisorDetailsModal, show: true, id, header: "DETAIL DE " + name})
-
     }
 
     // Hide supervisor details modal form

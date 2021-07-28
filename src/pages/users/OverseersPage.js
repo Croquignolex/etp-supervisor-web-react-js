@@ -19,7 +19,7 @@ import {storeOverseersRequestReset, storeNextOverseersRequestReset} from "../../
 function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [overseerDetailsModal, setOverseerDetailsModal] = useState({show: false, header: "DETAIL DU CONTROLLEUR", id: ''});
+    const [overseerDetailsModal, setOverseerDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
@@ -47,8 +47,8 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
     }
 
     // Show overseer details modal form
-    const handleOverseerDetailsModalShow = ({id}) => {
-        setOverseerDetailsModal({...overseerDetailsModal, show: true, id})
+    const handleOverseerDetailsModalShow = ({id, name}) => {
+        setOverseerDetailsModal({...overseerDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide overseer details modal form

@@ -40,7 +40,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newAgentModal, setNewAgentModal] = useState({show: false, header: '', type: ''});
-    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
+    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
@@ -97,8 +97,8 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     }
 
     // Show agent details modal form
-    const handleAgentDetailsModalShow = ({id}) => {
-        setAgentDetailsModal({...agentDetailsModal, show: true, id})
+    const handleAgentDetailsModalShow = ({id, name}) => {
+        setAgentDetailsModal({...agentDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide agent details modal form
