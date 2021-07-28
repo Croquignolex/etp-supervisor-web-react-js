@@ -24,6 +24,7 @@ import handovers from './handovers/reducer';
 import recoveries from './recoveries/reducer';
 import clearances from './clearances/reducer';
 import collectors from './collectors/reducer';
+import accountants from './accountants/reducer';
 import supervisors from './supervisors/reducer';
 import transactions from './transactions/reducer';
 import userRequests from './requests/user/reducer';
@@ -54,6 +55,7 @@ import movementsRequests from './requests/movements/reducer';
 import collectorsRequests from './requests/collectors/reducer';
 import clearancesRequests from './requests/clearances/reducer';
 import recoveriesRequests from './requests/recoveries/reducer';
+import accountantsRequests from './requests/accountants/reducer';
 import supervisorsRequests from './requests/supervisors/reducer';
 import transactionsRequests from './requests/transactions/reducer';
 import notificationsRequests from './requests/notifications/reducer';
@@ -88,6 +90,7 @@ export default {
     clearances,
     collectors,
     supervisors,
+    accountants,
     simsRequests,
     userRequests,
     transactions,
@@ -118,6 +121,7 @@ export default {
     clearancesRequests,
     collectorsRequests,
     supervisorsRequests,
+    accountantsRequests,
     transactionsRequests,
     notificationsRequests,
     administratorsRequests,

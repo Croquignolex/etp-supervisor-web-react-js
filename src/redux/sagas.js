@@ -27,6 +27,7 @@ import clearances from './clearances/saga';
 import collectors from './collectors/saga';
 import recoveries from './recoveries/saga';
 import supervisors from './supervisors/saga';
+import accountants from './accountants/saga';
 import transactions from './transactions/saga';
 import notifications from './notifications/saga';
 import administrators from './administrators/saga';
@@ -60,6 +61,7 @@ export default function* sagas() {
         clearances(),
         recoveries(),
         collectors(),
+        accountants(),
         supervisors(),
         transactions(),
         notifications(),
