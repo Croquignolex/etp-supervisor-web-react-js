@@ -1,146 +1,114 @@
 // Reducer action types
-export const STORE_SET_MANAGER_DATA = 'STORE_SET_MANAGER_DATA';
-export const STORE_SET_MANAGERS_DATA = 'STORE_SET_MANAGERS_DATA';
-export const STORE_SET_NEW_MANAGER_DATA = 'STORE_SET_NEW_MANAGER_DATA';
-export const STORE_SET_NEXT_MANAGERS_DATA = 'STORE_SET_NEXT_MANAGERS_DATA';
-export const STORE_SET_MANAGER_ACTION_DATA = 'STORE_SET_MANAGER_ACTION_DATA';
-export const STORE_SET_MANAGER_TOGGLE_DATA = 'STORE_SET_MANAGER_TOGGLE_DATA';
-export const STORE_SET_MANAGER_MOVEMENTS_DATA = 'STORE_SET_MANAGER_MOVEMENTS_DATA';
-export const STORE_SET_MANAGER_TRANSACTIONS_DATA = 'STORE_SET_MANAGER_TRANSACTIONS_DATA';
-export const STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA = 'STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA';
+export const STORE_SET_ACCOUNTANT_DATA = 'STORE_SET_ACCOUNTANT_DATA';
+export const STORE_SET_ACCOUNTANTS_DATA = 'STORE_SET_ACCOUNTANTS_DATA';
+export const STORE_SET_NEW_ACCOUNTANT_DATA = 'STORE_SET_NEW_ACCOUNTANT_DATA';
+export const STORE_SET_NEXT_ACCOUNTANTS_DATA = 'STORE_SET_NEXT_ACCOUNTANTS_DATA';
+export const STORE_SET_ACCOUNTANT_ACTION_DATA = 'STORE_SET_ACCOUNTANT_ACTION_DATA';
+export const STORE_SET_ACCOUNTANT_TOGGLE_DATA = 'STORE_SET_ACCOUNTANT_TOGGLE_DATA';
+export const STORE_STOP_INFINITE_SCROLL_ACCOUNTANTS_DATA = 'STORE_STOP_INFINITE_SCROLL_ACCOUNTANTS_DATA';
 
 // Middleware action types
-export const EMIT_NEW_MANAGER = 'EMIT_NEW_MANAGER';
-export const EMIT_MANAGER_FETCH = 'EMIT_MANAGER_FETCH';
-export const EMIT_MANAGERS_FETCH = 'EMIT_MANAGERS_FETCH';
-export const EMIT_NEXT_MANAGERS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
-export const EMIT_ALL_MANAGERS_FETCH = 'EMIT_ALL_MANAGERS_FETCH';
-export const EMIT_UPDATE_MANAGER_INFO = 'EMIT_UPDATE_MANAGER_INFO';
-export const EMIT_TOGGLE_MANAGER_STATUS = 'EMIT_TOGGLE_MANAGER_STATUS';
-export const EMIT_MANAGER_MOVEMENTS_FETCH = 'EMIT_MANAGER_MOVEMENTS_FETCH';
-export const EMIT_MANAGER_TRANSACTIONS_FETCH = 'EMIT_MANAGER_TRANSACTIONS_FETCH';
+export const EMIT_NEW_ACCOUNTANT = 'EMIT_NEW_ACCOUNTANT';
+export const EMIT_ACCOUNTANT_FETCH = 'EMIT_ACCOUNTANT_FETCH';
+export const EMIT_ACCOUNTANTS_FETCH = 'EMIT_ACCOUNTANTS_FETCH';
+export const EMIT_NEXT_ACCOUNTANTS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
+export const EMIT_ALL_ACCOUNTANTS_FETCH = 'EMIT_ALL_ACCOUNTANTS_FETCH';
+export const EMIT_UPDATE_ACCOUNTANT_INFO = 'EMIT_UPDATE_ACCOUNTANT_INFO';
+export const EMIT_TOGGLE_ACCOUNTANT_STATUS = 'EMIT_TOGGLE_ACCOUNTANT_STATUS';
 
 //====================== Reducer trigger actions
-// Set managers data in store
-export const storeSetManagersData = ({managers, hasMoreData, page}) => ({
+// Set accountants data in store
+export const storeSetAccountantsData = ({accountants, hasMoreData, page}) => ({
     page,
-    managers,
+    accountants,
     hasMoreData,
-    type: STORE_SET_MANAGERS_DATA
+    type: STORE_SET_ACCOUNTANTS_DATA
 });
 
-// Set new manager data in store
-export const storeSetNewManagerData = ({manager}) => ({
-    manager,
-    type: STORE_SET_NEW_MANAGER_DATA
+// Set new accountant data in store
+export const storeSetNewAccountantData = ({accountant}) => ({
+    accountant,
+    type: STORE_SET_NEW_ACCOUNTANT_DATA
 });
 
-// Set manager data in store
-export const storeSetManagerData = ({manager, alsoInList = false}) => ({
-    manager,
+// Set accountant data in store
+export const storeSetAccountantData = ({accountant, alsoInList = false}) => ({
+    accountant,
     alsoInList,
-    type: STORE_SET_MANAGER_DATA
+    type: STORE_SET_ACCOUNTANT_DATA
 });
 
-// Set manager movements data in store
-export const storeSetManagerMovementsData = ({movements}) => ({
-    movements,
-    type: STORE_SET_MANAGER_MOVEMENTS_DATA
-});
-
-// Set manager transactions data in store
-export const storeSetManagerTransactionsData = ({transactions}) => ({
-    transactions,
-    type: STORE_SET_MANAGER_TRANSACTIONS_DATA
-});
-
-// Set next managers data in store
-export const storeSetNextManagersData = ({managers, hasMoreData, page}) => ({
+// Set next accountants data in store
+export const storeSetNextAccountantsData = ({accountants, hasMoreData, page}) => ({
     page,
-    managers,
+    accountants,
     hasMoreData,
-    type: STORE_SET_NEXT_MANAGERS_DATA
+    type: STORE_SET_NEXT_ACCOUNTANTS_DATA
 });
 
 // Stop infinite scroll
-export const storeStopInfiniteScrollManagerData = () => ({
-    type: STORE_STOP_INFINITE_SCROLL_MANAGERS_DATA
+export const storeStopInfiniteScrollAccountantData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_ACCOUNTANTS_DATA
 });
 
 // Set sim action data in store
-export const storeSetManagerActionData = ({id}) => ({
+export const storeSetAccountantActionData = ({id}) => ({
     id,
-    type: STORE_SET_MANAGER_ACTION_DATA
+    type: STORE_SET_ACCOUNTANT_ACTION_DATA
 });
 
-// Set manager toggle data in store
-export const storeSetManagerToggleData = ({id}) => ({
+// Set accountant toggle data in store
+export const storeSetAccountantToggleData = ({id}) => ({
     id,
-    type: STORE_SET_MANAGER_TOGGLE_DATA
+    type: STORE_SET_ACCOUNTANT_TOGGLE_DATA
 });
 
 //====================== Middleware trigger actions
-// Emit managers fetch
-export const emitManagersFetch = () => ({
-    type: EMIT_MANAGERS_FETCH
+// Emit accountants fetch
+export const emitAccountantsFetch = () => ({
+    type: EMIT_ACCOUNTANTS_FETCH
 });
 
-// Emit next managers fetch
-export const emitNextManagersFetch = ({page}) => ({
+// Emit next accountants fetch
+export const emitNextAccountantsFetch = ({page}) => ({
     page,
-    type: EMIT_NEXT_MANAGERS_FETCH
+    type: EMIT_NEXT_ACCOUNTANTS_FETCH
 });
 
-// Emit all managers fetch
-export const emitAllManagersFetch = () => ({
-    type: EMIT_ALL_MANAGERS_FETCH
+// Emit all accountants fetch
+export const emitAllAccountantsFetch = () => ({
+    type: EMIT_ALL_ACCOUNTANTS_FETCH
 });
 
-// Emit manager fetch
-export const emitManagerFetch = ({id}) => ({
+// Emit accountant fetch
+export const emitAccountantFetch = ({id}) => ({
     id,
-    type: EMIT_MANAGER_FETCH
+    type: EMIT_ACCOUNTANT_FETCH
 });
 
-// Emit toggle manager status
-export const emitToggleManagerStatus = ({id}) => ({
+// Emit toggle accountant status
+export const emitToggleAccountantStatus = ({id}) => ({
     id,
-    type: EMIT_TOGGLE_MANAGER_STATUS
+    type: EMIT_TOGGLE_ACCOUNTANT_STATUS
 });
 
-// Emit new manager fetch
-export const emitNewManager = ({name, address, phone, email, password,  description}) => ({
+// Emit new accountant fetch
+export const emitNewAccountant = ({name, address, phone, email, password,  description}) => ({
     name,
     phone,
     email,
     address,
     password,
     description,
-    type: EMIT_NEW_MANAGER
+    type: EMIT_NEW_ACCOUNTANT
 });
 
-// Emit update manager info
-export const emitUpdateManagerInfo = ({id, email, name, address, description}) => ({
+// Emit update accountant info
+export const emitUpdateAccountantInfo = ({id, email, name, address, description}) => ({
     id,
     name,
     email,
     address,
     description,
-    type: EMIT_UPDATE_MANAGER_INFO
-});
-
-// Emit fetch manager movements
-export const emitManagerMovementsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
-    id,
-    selectedEndDay,
-    selectedStartDay,
-    type: EMIT_MANAGER_MOVEMENTS_FETCH
-});
-
-// Emit fetch manager transactions
-export const emitManagerTransactionsFetch = ({id, selectedStartDay, selectedEndDay}) => ({
-    id,
-    selectedEndDay,
-    selectedStartDay,
-    type: EMIT_MANAGER_TRANSACTIONS_FETCH
+    type: EMIT_UPDATE_ACCOUNTANT_INFO
 });

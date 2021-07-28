@@ -98,8 +98,11 @@ export const OVERSEER_DETAILS_API_PATH = `${API_URL}/details_user`;
 
 // Accountants
 export const ACCOUNTANTS_API_PATH = `${API_URL}/comptables`;
+export const EDIT_ACCOUNTANT_API_PATH = `${API_URL}/edit_user`;
 export const ALL_ACCOUNTANTS_API_PATH = `${API_URL}/comptables`;
 export const ACCOUNTANT_DETAILS_API_PATH = `${API_URL}/details_user`;
+export const CREATE_ACCOUNTANT_API_PATH = `${API_URL}/create_comptable`;
+export const TOGGLE_ACCOUNTANT_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 
 // Operators
 export const OPERATOR_API_PATH = `${API_URL}/show_flote`;
