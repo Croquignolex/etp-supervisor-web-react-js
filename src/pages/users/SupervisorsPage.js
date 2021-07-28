@@ -97,7 +97,7 @@ function SupervisorsPage({supervisors, supervisorsRequests, hasMoreData, page, d
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={SUPERVISORS} icon={'fa fa-user-astronaut'} />
+                    <HeaderComponent title={SUPERVISORS} icon={'fa fa-user-edit'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">

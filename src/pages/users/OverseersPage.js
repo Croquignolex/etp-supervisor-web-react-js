@@ -61,7 +61,7 @@ function OverseersPage({overseers, overseersRequests, hasMoreData, page, dispatc
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={OVERSEER} icon={'fa fa-user-secret'} />
+                    <HeaderComponent title={OVERSEER} icon={'fa fa-user-astronaut'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
