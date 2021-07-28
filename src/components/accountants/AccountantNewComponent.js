@@ -9,7 +9,7 @@ import * as constants from "../../constants/defaultConstants";
 import {emitNewAccountant} from "../../redux/accountants/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
-import {storeAddManagerRequestReset} from "../../redux/requests/managers/actions";
+import {storeAddAccountantRequestReset} from "../../redux/requests/accountants/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -67,7 +67,7 @@ function AccountantNewComponent({request, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddManagerRequestReset());
+        dispatch(storeAddAccountantRequestReset());
     };
 
     // Trigger new agent form submit
