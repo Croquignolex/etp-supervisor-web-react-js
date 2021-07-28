@@ -6,6 +6,8 @@ import {APP_NAME} from "../constants/generalConstants";
 import * as path from "../constants/pagePathConstants";
 import * as page from "../constants/pageNameConstants";
 import {formatString} from "../functions/generalFunctions";
+import {ACCOUNTANTS, OVERSEER} from "../constants/pageNameConstants";
+import {ACCOUNTANTS_PAGE_PATH, OVERSEERS_PAGE_PATH} from "../constants/pagePathConstants";
 
 // Component
 function SideBarComponent({user, pathname}) {
@@ -186,7 +188,9 @@ function buildUsersMenu() {
         icon: 'fa fa-users',
         sub: [
             {name: page.ADMINS, path: path.ADMINS_PAGE_PATH},
+            {name: page.OVERSEER, path: path.OVERSEERS_PAGE_PATH},
             {name: page.SUPERVISORS, path: path.SUPERVISORS_PAGE_PATH},
+            {name: page.ACCOUNTANTS, path: path.ACCOUNTANTS_PAGE_PATH},
             {name: page.MANAGERS, path: path.MANAGERS_PAGE_PATH},
             {name: page.COLLECTORS, path: path.COLLECTORS_PAGE_PATH},
             {name: page.AGENTS, path: path.AGENTS_PAGE_PATH},

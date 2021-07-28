@@ -26,8 +26,10 @@ export const TRANSACTIONS_PAGE_PATH = "/reports/transactions";
 export const AGENTS_PAGE_PATH = "/users/agents";
 export const ADMINS_PAGE_PATH = "/users/admins";
 export const MANAGERS_PAGE_PATH = "/users/managers";
+export const OVERSEERS_PAGE_PATH = "/users/overseers";
 export const COLLECTORS_PAGE_PATH = "/users/collectors";
 export const SUPERVISORS_PAGE_PATH = "/users/supervisors";
+export const ACCOUNTANTS_PAGE_PATH = "/users/accountants";
 
 // Operations
 export const OPERATIONS_FLEETS_PAGE_PATH = "/operations/fleets";
