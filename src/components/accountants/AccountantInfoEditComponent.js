@@ -7,18 +7,18 @@ import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
-import {emitUpdateManagerInfo} from "../../redux/managers/actions";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeManagerEditInfoRequestReset} from "../../redux/requests/managers/actions";
+import {emitUpdateAccountantInfo} from "../../redux/accountants/actions";
+import {storeAccountantEditInfoRequestReset} from "../../redux/requests/accountants/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function AccountantInfoEditComponent({request, manager, dispatch, handleClose}) {
+function AccountantInfoEditComponent({request, accountant, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: manager.name});
-    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: manager.email});
-    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: manager.address});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: manager.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: accountant.name});
+    const [email, setEmail] = useState({...DEFAULT_FORM_DATA, data: accountant.email});
+    const [address, setAddress] = useState({...DEFAULT_FORM_DATA, data: accountant.address});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: accountant.description});
 
     // Local effects
     useEffect(() => {
@@ -41,7 +41,7 @@ function AccountantInfoEditComponent({request, manager, dispatch, handleClose}) 
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeManagerEditInfoRequestReset());
+        dispatch(storeAccountantEditInfoRequestReset());
     };
 
     const handleNameInput = (data) => {
@@ -74,8 +74,8 @@ function AccountantInfoEditComponent({request, manager, dispatch, handleClose}) 
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateManagerInfo({
-                id: manager.id,
+            dispatch(emitUpdateAccountantInfo({
+                id: accountant.id,
                 name: _name.data,
                 email: email.data,
                 address: address.data,
@@ -136,7 +136,7 @@ function AccountantInfoEditComponent({request, manager, dispatch, handleClose}) 
 AccountantInfoEditComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    manager: PropTypes.object.isRequired,
+    accountant: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 

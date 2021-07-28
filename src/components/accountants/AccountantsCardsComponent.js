@@ -5,13 +5,12 @@ import LoaderComponent from "../LoaderComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 
 // Component
-function AccountantsCardsComponent({managers, handleBlock, handleBlockModalShow,
-                                    handleTransactionsModalShow, handleMovementsModalShow, handleManagerDetailsModalShow}) {
+function AccountantsCardsComponent({accountants, handleBlock, handleBlockModalShow,handleAccountantDetailsModalShow}) {
     // Render
     return (
         <>
             <div className="row m-1">
-                {managers.map((item, key) => {
+                {accountants.map((item, key) => {
                     return (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="card">
@@ -59,19 +58,9 @@ function AccountantsCardsComponent({managers, handleBlock, handleBlockModalShow,
                                     <div className="mt-3 text-right">
                                         <button type="button"
                                                 className="btn btn-sm btn-theme mb-1"
-                                                onClick={() => handleManagerDetailsModalShow(item)}
+                                                onClick={() => handleAccountantDetailsModalShow(item)}
                                         >
                                             <i className="fa fa-eye" /> Détails
-                                        </button><br/>
-                                        <button type="button"
-                                                className="btn btn-sm btn-theme mb-1"
-                                                onClick={() => handleTransactionsModalShow(item)}>
-                                            <i className="fa fa-table" /> Transactions
-                                        </button><br/>
-                                        <button type="button"
-                                                className="btn btn-sm btn-theme"
-                                                onClick={() => handleMovementsModalShow(item)}>
-                                            <i className="fa fa-table" /> Movements caisse
                                         </button>
                                     </div>
                                 </div>
@@ -79,7 +68,7 @@ function AccountantsCardsComponent({managers, handleBlock, handleBlockModalShow,
                         </div>
                     )
                 })}
-                {managers.length === 0 &&
+                {accountants.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
                             Pas de gestionnaires de flottes
@@ -93,12 +82,10 @@ function AccountantsCardsComponent({managers, handleBlock, handleBlockModalShow,
 
 // Prop types to ensure destroyed props data type
 AccountantsCardsComponent.propTypes = {
-    managers: PropTypes.array.isRequired,
+    accountants: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
-    handleMovementsModalShow: PropTypes.func.isRequired,
-    handleTransactionsModalShow: PropTypes.func.isRequired,
-    handleManagerDetailsModalShow: PropTypes.func.isRequired,
+    handleAccountantDetailsModalShow: PropTypes.func.isRequired,
 };
 
 export default React.memo(AccountantsCardsComponent);

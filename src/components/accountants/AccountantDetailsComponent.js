@@ -3,16 +3,16 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import ManagerInfoComponent from "./AccountantInfoComponent";
-import {emitManagerFetch} from "../../redux/managers/actions";
+import AccountantInfoComponent from "./AccountantInfoComponent";
+import {emitAccountantFetch} from "../../redux/accountants/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeManagerRequestReset} from "../../redux/requests/managers/actions";
+import {storeAccountantRequestReset} from "../../redux/requests/accountants/actions";
 
 // Component
-function AccountantDetailsComponent({id, manager, dispatch, request}) {
+function AccountantDetailsComponent({id, accountant, dispatch, request}) {
     // Local effects
     useEffect(() => {
-        dispatch(emitManagerFetch({id}));
+        dispatch(emitAccountantFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -22,7 +22,7 @@ function AccountantDetailsComponent({id, manager, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeManagerRequestReset());
+        dispatch(storeAccountantRequestReset());
     };
 
     // Render
@@ -32,7 +32,7 @@ function AccountantDetailsComponent({id, manager, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <ManagerInfoComponent manager={manager} />
+                            <AccountantInfoComponent accountant={accountant} />
                         </div>
                     </div>
                 )
@@ -46,7 +46,7 @@ AccountantDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    manager: PropTypes.object.isRequired,
+    accountant: PropTypes.object.isRequired,
 };
 
 export default React.memo(AccountantDetailsComponent);

@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import ManagerInfoEditContainer from "../../containers/managers/ManagerInfoEditContainer";
+import AccountantInfoEditContainer from "../../containers/accountants/AccountantInfoEditContainer";
 
 // Component
-function AccountantInfoComponent({manager}) {
+function AccountantInfoComponent({accountant}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + manager.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + accountant.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -30,9 +30,9 @@ function AccountantInfoComponent({manager}) {
                 <div className="card-header bg-secondary" />
                 <div className="card-body">
                     <div className="text-center mb-2">
-                        <img src={manager.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
+                        <img src={accountant.avatar} alt="avatar..." className="profile-user-img img-fluid img-circle" />
                         <div className="float-right">
-                            {manager.status
+                            {accountant.status
                                 ?  <span className="badge badge-success">Activé</span>
                                 :  <span className="badge badge-danger">Bloqué</span>
                             }
@@ -41,44 +41,44 @@ function AccountantInfoComponent({manager}) {
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(manager.creation)}</span>
+                            <span className="float-right">{dateToString(accountant.creation)}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Nom</b>
-                            <span className="float-right">{manager.name}</span>
+                            <span className="float-right">{accountant.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Téléphone</b>
-                            <span className="float-right">{manager.phone}</span>
+                            <span className="float-right">{accountant.phone}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Email</b>
-                            <span className="float-right">{manager.email}</span>
+                            <span className="float-right">{accountant.email}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Solde caisse</b>
                             <span className="float-right text-success text-bold">
-                                {formatNumber(manager.account.balance)}
+                                {formatNumber(accountant.account.balance)}
                             </span>
                         </li>
                         <li className="list-group-item">
                             <b>Créer par</b>
-                            <span className="float-right">{manager.creator.name}</span>
+                            <span className="float-right">{accountant.creator.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Adresse</b>
-                            <p>{manager.address}</p>
+                            <p>{accountant.address}</p>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>
-                            <p>{manager.description}</p>
+                            <p>{accountant.description}</p>
                         </li>
                     </ul>
                 </div>
             </div>
             {/* Modal */}
             <FormModalComponent modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <ManagerInfoEditContainer handleClose={handleInfoEditModalHide} />
+                <AccountantInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
     )
@@ -86,7 +86,7 @@ function AccountantInfoComponent({manager}) {
 
 // Prop types to ensure destroyed props data type
 AccountantInfoComponent.propTypes = {
-    manager: PropTypes.object.isRequired
+    accountant: PropTypes.object.isRequired
 };
 
 export default React.memo(AccountantInfoComponent);
