@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 
-import {SUPERVISORS} from "../../constants/pageNameConstants";
+import {OVERSEER} from "../../constants/pageNameConstants";
+import OverseersPage from "../../pages/users/OverseersPage";
 import {setPageTitle} from "../../functions/generalFunctions";
-import SupervisorsPage from "../../pages/users/SupervisorsPage";
 
-setPageTitle(SUPERVISORS);
+setPageTitle(OVERSEER);
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    page: state.supervisors.page,
-    supervisors: state.supervisors.list,
-    hasMoreData: state.supervisors.hasMoreData,
-    supervisorsRequests: state.supervisorsRequests,
+    page: state.overseers.page,
+    overseers: state.overseers.list,
+    hasMoreData: state.overseers.hasMoreData,
+    overseersRequests: state.overseersRequests,
 });
 
 // Map dispatch function to component props
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(SupervisorsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OverseersPage);
