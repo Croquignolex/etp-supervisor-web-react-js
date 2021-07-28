@@ -1,63 +1,63 @@
 // Reducer action types
-export const STORE_SET_ADMINISTRATOR_DATA = 'STORE_SET_ADMINISTRATOR_DATA';
-export const STORE_SET_ADMINISTRATORS_DATA = 'STORE_SET_ADMINISTRATORS_DATA';
-export const STORE_SET_NEXT_ADMINISTRATORS_DATA = 'STORE_SET_NEXT_ADMINISTRATORS_DATA';
-export const STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA = 'STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA';
+export const STORE_SET_OVERSEER_DATA = 'STORE_SET_OVERSEER_DATA';
+export const STORE_SET_OVERSEERS_DATA = 'STORE_SET_OVERSEERS_DATA';
+export const STORE_SET_NEXT_OVERSEERS_DATA = 'STORE_SET_NEXT_OVERSEERS_DATA';
+export const STORE_STOP_INFINITE_SCROLL_OVERSEERS_DATA = 'STORE_STOP_INFINITE_SCROLL_OVERSEERS_DATA';
 
 // Middleware action types
-export const EMIT_ADMINISTRATOR_FETCH = 'EMIT_ADMINISTRATOR_FETCH';
-export const EMIT_ADMINISTRATORS_FETCH = 'EMIT_ADMINISTRATORS_FETCH'; 
-export const EMIT_NEXT_ADMINISTRATORS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
-export const EMIT_ALL_ADMINISTRATORS_FETCH = 'EMIT_ALL_ADMINISTRATORS_FETCH'; 
+export const EMIT_OVERSEER_FETCH = 'EMIT_OVERSEER_FETCH';
+export const EMIT_OVERSEERS_FETCH = 'EMIT_OVERSEERS_FETCH'; 
+export const EMIT_NEXT_OVERSEERS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
+export const EMIT_ALL_OVERSEERS_FETCH = 'EMIT_ALL_OVERSEERS_FETCH'; 
 
 //====================== Reducer trigger actions
-// Set administrators data in store
-export const storeSetAdministratorsData = ({administrators, hasMoreData, page}) => ({
+// Set overseers data in store
+export const storeSetOverseersData = ({overseers, hasMoreData, page}) => ({
     page,
-    administrators,
+    overseers,
     hasMoreData,
-    type: STORE_SET_ADMINISTRATORS_DATA
+    type: STORE_SET_OVERSEERS_DATA
 });
 
-// Set administrator data in store
-export const storeSetAdministratorData = ({administrator, alsoInList = false}) => ({
-    administrator,
+// Set overseer data in store
+export const storeSetOverseerData = ({overseer, alsoInList = false}) => ({
+    overseer,
     alsoInList,
-    type: STORE_SET_ADMINISTRATOR_DATA
+    type: STORE_SET_OVERSEER_DATA
 });
 
-// Set next administrators data in store
-export const storeSetNextAdministratorsData = ({administrators, hasMoreData, page}) => ({
+// Set next overseers data in store
+export const storeSetNextOverseersData = ({overseers, hasMoreData, page}) => ({
     page,
-    administrators,
+    overseers,
     hasMoreData,
-    type: STORE_SET_NEXT_ADMINISTRATORS_DATA
+    type: STORE_SET_NEXT_OVERSEERS_DATA
 });
 
 // Stop infinite scroll
-export const storeStopInfiniteScrollAdministratorData = () => ({
-    type: STORE_STOP_INFINITE_SCROLL_ADMINISTRATORS_DATA
+export const storeStopInfiniteScrollOverseerData = () => ({
+    type: STORE_STOP_INFINITE_SCROLL_OVERSEERS_DATA
 });
 
 //====================== Middleware trigger actions
-// Emit administrators fetch
-export const emitAdministratorsFetch = () => ({
-    type: EMIT_ADMINISTRATORS_FETCH
+// Emit overseers fetch
+export const emitOverseersFetch = () => ({
+    type: EMIT_OVERSEERS_FETCH
 });
 
-// Emit next administrators fetch
-export const emitNextAdministratorsFetch = ({page}) => ({
+// Emit next overseers fetch
+export const emitNextOverseersFetch = ({page}) => ({
     page,
-    type: EMIT_NEXT_ADMINISTRATORS_FETCH
+    type: EMIT_NEXT_OVERSEERS_FETCH
 });
 
-// Emit all administrators fetch
-export const emitAllAdministratorsFetch = () => ({
-    type: EMIT_ALL_ADMINISTRATORS_FETCH
+// Emit all overseers fetch
+export const emitAllOverseersFetch = () => ({
+    type: EMIT_ALL_OVERSEERS_FETCH
 });
 
-// Emit administrator fetch
-export const emitAdministratorFetch = ({id}) => ({
+// Emit overseer fetch
+export const emitOverseerFetch = ({id}) => ({
     id,
-    type: EMIT_ADMINISTRATOR_FETCH
+    type: EMIT_OVERSEER_FETCH
 });

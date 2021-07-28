@@ -5,164 +5,164 @@ import {APPROVE} from "../../constants/typeConstants";
 import {PROFILE_SCOPE} from "../../constants/defaultConstants";
 import {apiGetRequest, getImageFromServer} from "../../functions/axiosFunctions";
 import {
-    EMIT_ADMINISTRATOR_FETCH,
-    EMIT_ADMINISTRATORS_FETCH,
-    storeSetAdministratorData,
-    storeSetAdministratorsData,
-    EMIT_ALL_ADMINISTRATORS_FETCH,
-    EMIT_NEXT_ADMINISTRATORS_FETCH,
-    storeSetNextAdministratorsData,
-    storeStopInfiniteScrollAdministratorData
+    EMIT_OVERSEER_FETCH,
+    EMIT_OVERSEERS_FETCH,
+    storeSetOverseerData,
+    storeSetOverseersData,
+    EMIT_ALL_OVERSEERS_FETCH,
+    EMIT_NEXT_OVERSEERS_FETCH,
+    storeSetNextOverseersData,
+    storeStopInfiniteScrollOverseerData
 } from "./actions";
 import {
-    storeAdministratorRequestInit,
-    storeAdministratorsRequestInit,
-    storeAdministratorRequestFailed,
-    storeAdministratorsRequestFailed,
-    storeAdministratorRequestSucceed,
-    storeAllAdministratorsRequestInit,
-    storeAdministratorsRequestSucceed,
-    storeNextAdministratorsRequestInit,
-    storeAllAdministratorsRequestFailed,
-    storeNextAdministratorsRequestFailed,
-    storeAllAdministratorsRequestSucceed,
-    storeNextAdministratorsRequestSucceed,
-} from "../requests/administrators/actions";
+    storeOverseerRequestInit,
+    storeOverseersRequestInit,
+    storeOverseerRequestFailed,
+    storeOverseersRequestFailed,
+    storeOverseerRequestSucceed,
+    storeAllOverseersRequestInit,
+    storeOverseersRequestSucceed,
+    storeNextOverseersRequestInit,
+    storeAllOverseersRequestFailed,
+    storeNextOverseersRequestFailed,
+    storeAllOverseersRequestSucceed,
+    storeNextOverseersRequestSucceed,
+} from "../requests/overseers/actions";
 
-// Fetch all administrators from API
-export function* emitAllAdministratorsFetch() {
-    yield takeLatest(EMIT_ALL_ADMINISTRATORS_FETCH, function*() {
+// Fetch all overseers from API
+export function* emitAllOverseersFetch() {
+    yield takeLatest(EMIT_ALL_OVERSEERS_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeAllAdministratorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, api.ALL_ADMINISTRATORS_API_PATH);
+            yield put(storeAllOverseersRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.ALL_OVERSEERS_API_PATH);
             // Extract data
-            const administrators = extractAdministratorsData(apiResponse.data.administrateurs);
+            const overseers = extractOverseersData(apiResponse.data.controlleurs);
             // Fire event to redux
-            yield put(storeSetAdministratorsData({administrators, hasMoreData: false, page: 0}));
+            yield put(storeSetOverseersData({overseers, hasMoreData: false, page: 0}));
             // Fire event for request
-            yield put(storeAllAdministratorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeAllOverseersRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAllAdministratorsRequestFailed({message}));
+            yield put(storeAllOverseersRequestFailed({message}));
         }
     });
 }
 
-// Fetch administrators from API
-export function* emitAdministratorsFetch() {
-    yield takeLatest(EMIT_ADMINISTRATORS_FETCH, function*() {
+// Fetch overseers from API
+export function* emitOverseersFetch() {
+    yield takeLatest(EMIT_OVERSEERS_FETCH, function*() {
         try {
             // Fire event for request
-            yield put(storeAdministratorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.ADMINISTRATORS_API_PATH}?page=1`);
+            yield put(storeOverseersRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.OVERSEERS_API_PATH}?page=1`);
             // Extract data
-            const administrators = extractAdministratorsData(apiResponse.data.administrateurs);
+            const overseers = extractOverseersData(apiResponse.data.controlleurs);
             // Fire event to redux
-            yield put(storeSetAdministratorsData({administrators, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            yield put(storeSetOverseersData({overseers, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
             // Fire event for request
-            yield put(storeAdministratorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeOverseersRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAdministratorsRequestFailed({message}));
+            yield put(storeOverseersRequestFailed({message}));
         }
     });
 }
 
-// Fetch next administrators from API
-export function* emitNextAdministratorsFetch() {
-    yield takeLatest(EMIT_NEXT_ADMINISTRATORS_FETCH, function*({page}) {
+// Fetch next overseers from API
+export function* emitNextOverseersFetch() {
+    yield takeLatest(EMIT_NEXT_OVERSEERS_FETCH, function*({page}) {
         try {
             // Fire event for request
-            yield put(storeNextAdministratorsRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.ADMINISTRATORS_API_PATH}?page=${page}`);
+            yield put(storeNextOverseersRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.OVERSEERS_API_PATH}?page=${page}`);
             // Extract data
-            const administrators = extractAdministratorsData(apiResponse.data.administrateurs);
+            const overseers = extractOverseersData(apiResponse.data.controlleurs);
             // Fire event to redux
-            yield put(storeSetNextAdministratorsData({administrators, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
+            yield put(storeSetNextOverseersData({overseers, hasMoreData: apiResponse.data.hasMoreData, page: page + 1}));
             // Fire event for request
-            yield put(storeNextAdministratorsRequestSucceed({message: apiResponse.message}));
+            yield put(storeNextOverseersRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeNextAdministratorsRequestFailed({message}));
-            yield put(storeStopInfiniteScrollAdministratorData());
+            yield put(storeNextOverseersRequestFailed({message}));
+            yield put(storeStopInfiniteScrollOverseerData());
         }
     });
 }
 
-// Fetch administrator from API
-export function* emitAdministratorFetch() {
-    yield takeLatest(EMIT_ADMINISTRATOR_FETCH, function*({id}) {
+// Fetch overseer from API
+export function* emitOverseerFetch() {
+    yield takeLatest(EMIT_OVERSEER_FETCH, function*({id}) {
         try {
             // Fire event for request
-            yield put(storeAdministratorRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.ADMINISTRATOR_DETAILS_API_PATH}/${id}`);
+            yield put(storeOverseerRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.OVERSEER_DETAILS_API_PATH}/${id}`);
             // Extract data
-            const administrator = extractAdministratorData(
+            const overseer = extractOverseerData(
                 apiResponse.data.user,
                 apiResponse.data.createur,
             );
             // Fire event to redux
-            yield put(storeSetAdministratorData({administrator}));
+            yield put(storeSetOverseerData({overseer}));
             // Fire event for request
-            yield put(storeAdministratorRequestSucceed({message: apiResponse.message}));
+            yield put(storeOverseerRequestSucceed({message: apiResponse.message}));
         } catch (message) {
             // Fire event for request
-            yield put(storeAdministratorRequestFailed({message}));
+            yield put(storeOverseerRequestFailed({message}));
         }
     });
 }
 
-// Extract administrator data
-function extractAdministratorData(apiAdministrator, apiCreator) {
-    let administrator = {
+// Extract overseer data
+function extractOverseerData(apiOverseer, apiCreator) {
+    let overseer = {
         id: '', name: '', phone: '', email: '', avatar: '', address: '', creation: '', description: '',
 
         creator: {id: '', name: ''},
     };
 
     if(apiCreator) {
-        administrator.creator = {
+        overseer.creator = {
             name: apiCreator.name,
             id: apiCreator.id.toString(),
         }
     }
-    if(apiAdministrator) {
-        administrator.actionLoader = false;
-        administrator.toggleLoader = false;
-        administrator.name = apiAdministrator.name;
-        administrator.phone = apiAdministrator.phone;
-        administrator.email = apiAdministrator.email;
-        administrator.address = apiAdministrator.adresse;
-        administrator.id = apiAdministrator.id.toString();
-        administrator.creation = apiAdministrator.created_at;
-        administrator.description = apiAdministrator.description;
-        administrator.status = apiAdministrator.statut === APPROVE;
-        administrator.avatar = getImageFromServer(apiAdministrator.avatar, PROFILE_SCOPE);
+    if(apiOverseer) {
+        overseer.actionLoader = false;
+        overseer.toggleLoader = false;
+        overseer.name = apiOverseer.name;
+        overseer.phone = apiOverseer.phone;
+        overseer.email = apiOverseer.email;
+        overseer.address = apiOverseer.adresse;
+        overseer.id = apiOverseer.id.toString();
+        overseer.creation = apiOverseer.created_at;
+        overseer.description = apiOverseer.description;
+        overseer.status = apiOverseer.statut === APPROVE;
+        overseer.avatar = getImageFromServer(apiOverseer.avatar, PROFILE_SCOPE);
     }
-    return administrator;
+    return overseer;
 }
 
-// Extract administrators data
-function extractAdministratorsData(apiAdministrators) {
-    const administrators = [];
-    if(apiAdministrators) {
-        apiAdministrators.forEach(data => {
-            administrators.push(extractAdministratorData(
-                data.administrateur,
+// Extract overseers data
+function extractOverseersData(apiOverseers) {
+    const overseers = [];
+    if(apiOverseers) {
+        apiOverseers.forEach(data => {
+            overseers.push(extractOverseerData(
+                data.controlleur,
                 data.createur,
             ));
         });
     }
-    return administrators;
+    return overseers;
 }
 
 // Combine to export all functions at once
-export default function* sagaAdministrators() {
+export default function* sagaOverseers() {
     yield all([
-        fork(emitAdministratorFetch),
-        fork(emitAdministratorsFetch),
-        fork(emitAllAdministratorsFetch),
-        fork(emitNextAdministratorsFetch),
+        fork(emitOverseerFetch),
+        fork(emitOverseersFetch),
+        fork(emitAllOverseersFetch),
+        fork(emitNextOverseersFetch),
     ]);
 }

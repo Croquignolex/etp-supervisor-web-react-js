@@ -85,25 +85,25 @@ export const storeAllOverseersRequestSucceed = ({message}) => ({
 export const storeAllOverseersRequestReset = () => ({
     type: STORE_ALL_OVERSEERS_REQUEST_RESET
 });
-// ======================================================== Administrator
+// ======================================================== Overseer
 // Set overseer init data into store
-export const storeAdministratorRequestInit = () => ({
+export const storeOverseerRequestInit = () => ({
     type: STORE_ADMINISTRATOR_REQUEST_INIT
 });
 
 // Set overseer failed data into store
-export const storeAdministratorRequestFailed = ({message}) => ({
+export const storeOverseerRequestFailed = ({message}) => ({
     message,
     type: STORE_ADMINISTRATOR_REQUEST_FAILED
 });
 
 // Set overseer succeeded data into store
-export const storeAdministratorRequestSucceed = ({message}) => ({
+export const storeOverseerRequestSucceed = ({message}) => ({
     message,
     type: STORE_ADMINISTRATOR_REQUEST_SUCCEEDED
 });
 
 // Set overseer reset data into store
-export const storeAdministratorRequestReset = () => ({
+export const storeOverseerRequestReset = () => ({
     type: STORE_ADMINISTRATOR_REQUEST_RESET
 }); 
