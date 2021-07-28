@@ -39,8 +39,8 @@ function AppRoutes({history}) {
                 <RestrictedRouteContainer exact path={path.OVERSEERS_PAGE_PATH} component={asyncComponent(() => import('./containers/overseers/OverseersPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.COLLECTORS_PAGE_PATH} component={asyncComponent(() => import('./containers/collectors/CollectorsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.SUPERVISORS_PAGE_PATH} component={asyncComponent(() => import('./containers/supervisors/SupervisorsPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.ACCOUNTANTS_PAGE_PATH} component={asyncComponent(() => import('./containers/accountants/AccountantsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.ADMINS_PAGE_PATH} component={asyncComponent(() => import('./containers/administrators/AdministratorsPageContainer'))} />
-                {/*<RestrictedRouteContainer exact path={path.ACCOUNTANTS_PAGE_PATH} component={asyncComponent(() => import('./containers/administrators/AdministratorsPageContainer'))} />*/}
                 {/* Sims */}
                 <RestrictedRouteContainer exact path={path.ALL_SIMS_PAGE_PATH} component={asyncComponent(() => import('./containers/sims/SimsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.MASTERS_SIMS_PAGE_PATH} component={asyncComponent(() => import('./containers/sims/MasterSimsPageContainer'))} />
