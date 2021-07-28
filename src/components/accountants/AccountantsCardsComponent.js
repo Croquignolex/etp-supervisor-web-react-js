@@ -71,7 +71,7 @@ function AccountantsCardsComponent({accountants, handleBlock, handleBlockModalSh
                 {accountants.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas de gestionnaires de flottes
+                            Pas de comptables
                         </div>
                     </div>
                 }
