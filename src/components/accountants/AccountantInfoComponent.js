@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
-import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import {dateToString} from "../../functions/generalFunctions";
 import AccountantInfoEditContainer from "../../containers/accountants/AccountantInfoEditContainer";
 
 // Component
