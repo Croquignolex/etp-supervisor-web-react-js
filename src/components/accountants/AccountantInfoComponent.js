@@ -56,12 +56,6 @@ function AccountantInfoComponent({accountant}) {
                             <span className="float-right">{accountant.email}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Solde caisse</b>
-                            <span className="float-right text-success text-bold">
-                                {formatNumber(accountant.account.balance)}
-                            </span>
-                        </li>
-                        <li className="list-group-item">
                             <b>Créer par</b>
                             <span className="float-right">{accountant.creator.name}</span>
                         </li>

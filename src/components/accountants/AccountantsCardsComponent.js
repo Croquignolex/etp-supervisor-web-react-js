@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import LoaderComponent from "../LoaderComponent";
-import {dateToString, formatNumber} from "../../functions/generalFunctions";
+import {dateToString} from "../../functions/generalFunctions";
 
 // Component
 function AccountantsCardsComponent({accountants, handleBlock, handleBlockModalShow,handleAccountantDetailsModalShow}) {
@@ -43,12 +43,6 @@ function AccountantsCardsComponent({accountants, handleBlock, handleBlockModalSh
                                         <li className="list-group-item">
                                             <b>Téléphone</b>
                                             <span className="float-right">{item.phone}</span>
-                                        </li>
-                                        <li className="list-group-item">
-                                            <b>Solde caisse</b>
-                                            <span className="float-right text-success text-bold">
-                                                {formatNumber(item.account.balance)}
-                                            </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Créer par</b>
