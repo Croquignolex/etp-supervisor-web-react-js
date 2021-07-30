@@ -25,6 +25,7 @@ import {storeAllSimsRequestReset} from "../redux/requests/sims/actions";
 import {storeAllZonesRequestReset} from "../redux/requests/zones/actions";
 import {emitAllAdministratorsFetch} from "../redux/administrators/actions";
 import {storeAllAgentsRequestReset} from "../redux/requests/agents/actions";
+import DeleteModalComponent from "../components/modals/DeleteModalComponent";
 import {storeAllVendorsRequestReset} from "../redux/requests/vendors/actions";
 import {storeAllManagersRequestReset} from "../redux/requests/managers/actions";
 import {emitFetchUserBalance, emitUserFactoryReset} from "../redux/user/actions";
@@ -140,29 +141,30 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
 
     // Render
     return (
-        <AppLayoutContainer pathname={location.pathname}>
-            <div className="content-wrapper">
-                <HeaderComponent title={DASHBOARD_PAGE} icon={'fa fa-tachometer-alt'} />
-                <section className="content">
-                    <div className='container-fluid'>
-                        <div className="row">
-                            <div className="col">
-                                {requestFailed(resetUserRequests) && <ErrorAlertComponent message={resetUserRequests.message} />}
-                                {requestLoading(resetUserRequests) ? <div className='small-box'><LoaderComponent /></div> : (
-                                    <button type="button"
-                                            onClick={handleConfirmModalShow}
-                                            className="btn btn-theme mr-2 mb-2"
-                                    >
-                                        <i className="fa fa-backward" /> Rémise à zéro
-                                    </button>
-                                )}
+        <div>
+            <AppLayoutContainer pathname={location.pathname}>
+                <div className="content-wrapper">
+                    <HeaderComponent title={DASHBOARD_PAGE} icon={'fa fa-tachometer-alt'} />
+                    <section className="content">
+                        <div className='container-fluid'>
+                            <div className="row">
+                                <div className="col">
+                                    {requestFailed(resetUserRequests) && <ErrorAlertComponent message={resetUserRequests.message} />}
+                                    {requestLoading(resetUserRequests) ? <div className='small-box'><LoaderComponent /></div> : (
+                                        <button type="button"
+                                                onClick={handleConfirmModalShow}
+                                                className="btn btn-theme mr-2 mb-2"
+                                        >
+                                            <i className="fa fa-backward" /> Rémise à zéro
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                        {!requestLoading(resetUserRequests) && (
-                            <>
-                                {/* Cash */}
-                                <div className="row">
-                                    {cardsData.includes(setting.CARD_BALANCE) &&
+                            {!requestLoading(resetUserRequests) && (
+                                <>
+                                    {/* Cash */}
+                                    <div className="row">
+                                        {cardsData.includes(setting.CARD_BALANCE) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-dark'
                                                                     icon='fa fa-coins'
@@ -172,11 +174,11 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     data={formatNumber(user.balance)}
                                             />
                                         </div>
-                                    }
-                                </div>
-                                {/*  Fleet balance */}
-                                <div className="row">
-                                    {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_MTN) &&
+                                        }
+                                    </div>
+                                    {/*  Fleet balance */}
+                                    <div className="row">
+                                        {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_MTN) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '1'}}
@@ -186,8 +188,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_MTN} (${mtnFleetSimsFleetsData.number})`}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_ORANGE) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_ORANGE) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '2'}}
@@ -197,8 +199,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_ORANGE} (${orangeFleetSimsFleetsData.number})`}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_YUP) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_YUP) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '3'}}
@@ -208,66 +210,11 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_YUP} (${yupFleetSimsFleetsData.number})`}
                                             />
                                         </div>
-                                    }
-                                </div>
-                                {/* Others */}
-                                <div className="row">
-                                    {cardsData.includes(setting.CARD_OVERSEERS) &&
-                                        <div className="col-lg-3 col-md-4 col-sm-6">
-                                            <DashboardCardComponent color='bg-dark'
-                                                                    data={overseers.length}
-                                                                    icon='fa fa-user-astronaut'
-                                                                    url={path.OVERSEERS_PAGE_PATH}
-                                                                    label={setting.LABEL_OVERSEERS}
-                                                                    request={allOverseersRequests}
-                                            />
-                                        </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_SUPERVISORS) &&
-                                        <div className="col-lg-3 col-md-4 col-sm-6">
-                                            <DashboardCardComponent color='bg-warning'
-                                                                    data={supervisors.length}
-                                                                    icon='fa fa-user-astronaut'
-                                                                    request={allSupervisorsRequests}
-                                                                    url={path.SUPERVISORS_PAGE_PATH}
-                                                                    label={setting.LABEL_SUPERVISORS}
-                                            />
-                                        </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_ACCOUNTANTS) &&
-                                        <div className="col-lg-3 col-md-4 col-sm-6">
-                                            <DashboardCardComponent color='bg-primary'
-                                                                    icon='fa fa-user-shield'
-                                                                    data={accountants.length}
-                                                                    url={path.ACCOUNTANTS_PAGE_PATH}
-                                                                    request={allAccountantsRequests}
-                                                                    label={setting.LABEL_ACCOUNTANTS}
-                                            />
-                                        </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_MANAGERS) &&
-                                        <div className="col-lg-3 col-md-4 col-sm-6">
-                                            <DashboardCardComponent color='bg-success'
-                                                                    icon='fa fa-user-tag'
-                                                                    data={managers.length}
-                                                                    request={allManagersRequests}
-                                                                    url={path.MANAGERS_PAGE_PATH}
-                                                                    label={setting.LABEL_MANAGERS}
-                                            />
-                                        </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_COLLECTORS) &&
-                                        <div className="col-lg-3 col-md-4 col-sm-6">
-                                            <DashboardCardComponent color='bg-warning'
-                                                                    icon='fa fa-user-clock'
-                                                                    data={collectors.length}
-                                                                    request={allCollectorsRequests}
-                                                                    url={path.COLLECTORS_PAGE_PATH}
-                                                                    label={setting.LABEL_COLLECTORS}
-                                            />
-                                        </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_ADMINS) &&
+                                        }
+                                    </div>
+                                    {/* Others */}
+                                    <div className="row">
+                                        {cardsData.includes(setting.CARD_ADMINS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-danger'
                                                                     icon='fa fa-user-secret'
@@ -277,8 +224,64 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     request={allAdministratorsRequests}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_AGENTS) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_OVERSEERS) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardCardComponent color='bg-success'
+                                                                    data={overseers.length}
+                                                                    icon='fa fa-user-astronaut'
+                                                                    url={path.OVERSEERS_PAGE_PATH}
+                                                                    label={setting.LABEL_OVERSEERS}
+                                                                    request={allOverseersRequests}
+                                            />
+                                        </div>
+                                        }
+                                        {cardsData.includes(setting.CARD_SUPERVISORS) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardCardComponent color='bg-warning'
+                                                                    data={supervisors.length}
+                                                                    icon='fa fa-user-astronaut'
+                                                                    request={allSupervisorsRequests}
+                                                                    url={path.SUPERVISORS_PAGE_PATH}
+                                                                    label={setting.LABEL_SUPERVISORS}
+                                            />
+                                        </div>
+                                        }
+                                        {cardsData.includes(setting.CARD_ACCOUNTANTS) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardCardComponent color='bg-primary'
+                                                                    icon='fa fa-user-shield'
+                                                                    data={accountants.length}
+                                                                    url={path.ACCOUNTANTS_PAGE_PATH}
+                                                                    request={allAccountantsRequests}
+                                                                    label={setting.LABEL_ACCOUNTANTS}
+                                            />
+                                        </div>
+                                        }
+                                        {cardsData.includes(setting.CARD_MANAGERS) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardCardComponent color='bg-success'
+                                                                    icon='fa fa-user-tag'
+                                                                    data={managers.length}
+                                                                    request={allManagersRequests}
+                                                                    url={path.MANAGERS_PAGE_PATH}
+                                                                    label={setting.LABEL_MANAGERS}
+                                            />
+                                        </div>
+                                        }
+                                        {cardsData.includes(setting.CARD_COLLECTORS) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardCardComponent color='bg-warning'
+                                                                    icon='fa fa-user-clock'
+                                                                    data={collectors.length}
+                                                                    request={allCollectorsRequests}
+                                                                    url={path.COLLECTORS_PAGE_PATH}
+                                                                    label={setting.LABEL_COLLECTORS}
+                                            />
+                                        </div>
+                                        }
+
+                                        {cardsData.includes(setting.CARD_AGENTS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-primary'
                                                                     icon='fa fa-user-cog'
@@ -288,8 +291,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     data={agents.length - resourcesData}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_RESOURCES) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_RESOURCES) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-info'
                                                                     data={resourcesData}
@@ -299,8 +302,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     label={setting.LABEL_RESOURCES}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_COMPANIES) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_COMPANIES) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-danger'
                                                                     data={companies.length}
@@ -310,8 +313,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     label={setting.LABEL_COMPANIES}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_SIMS) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_SIMS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-primary'
                                                                     data={sims.length}
@@ -321,8 +324,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     url={path.ALL_SIMS_PAGE_PATH}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_ZONES) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_ZONES) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent icon='fa fa-map'
                                                                     color='bg-success'
@@ -332,8 +335,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     label={setting.LABEL_ZONES}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_OPERATORS) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_OPERATORS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-danger'
                                                                     icon='fa fa-globe'
@@ -343,8 +346,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     label={setting.LABEL_OPERATORS}
                                             />
                                         </div>
-                                    }
-                                    {cardsData.includes(setting.CARD_VENDORS) &&
+                                        }
+                                        {cardsData.includes(setting.CARD_VENDORS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-info'
                                                                     data={vendors.length}
@@ -354,14 +357,20 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                                                     label={setting.LABEL_VENDORS}
                                             />
                                         </div>
-                                    }
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </section>
-            </div>
-        </AppLayoutContainer>
+                                        }
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </section>
+                </div>
+            </AppLayoutContainer>
+            {/* Modal */}
+            <DeleteModalComponent modal={confirmModal}
+                                  handleModal={handleConfirm}
+                                  handleClose={handleConfirmModalHide}
+            />
+        </div>
     )
 }
 
