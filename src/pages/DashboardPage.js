@@ -37,9 +37,9 @@ import DashboardCardComponent from "../components/dashboard/DashboardCardCompone
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import {storeAllSupervisorsRequestReset} from "../redux/requests/supervisors/actions";
 import {storeAllAccountantsRequestReset} from "../redux/requests/accountants/actions";
-import {formatNumber, requestFailed, requestLoading} from "../functions/generalFunctions";
 import {storeAllAdministratorsRequestReset} from "../redux/requests/administrators/actions";
 import DashboardWithOperatorCardComponent from "../components/dashboard/DashboardWithOperatorCardComponent";
+import {applySuccess, formatNumber, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
 
 // Component
 function DashboardPage({agents, overseers, accountants, settings, dispatch,
@@ -53,6 +53,26 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
 
     // Local effects
     useEffect(() => {
+        fillDashboardData();
+        // Cleaner error alert while component did unmount without store dependency
+        return () => {
+            shouldResetErrorData();
+        };
+        // eslint-disable-next-line
+    }, []);
+
+    // Local effects
+    useEffect(() => {
+        // Reset inputs while toast (well done) into current scope
+        if(requestSucceeded(resetUserRequests)) {
+            applySuccess(resetUserRequests.message);
+            fillDashboardData();
+        }
+        // eslint-disable-next-line
+    }, [resetUserRequests]);
+
+    // Fill dashboard
+    const fillDashboardData = () => {
         dispatch(emitAllSimsFetch());
         dispatch(emitAllZonesFetch());
         dispatch(emitAllAgentsFetch());
@@ -66,12 +86,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
         dispatch(emitAllSupervisorsFetch());
         dispatch(emitAllAccountantsFetch());
         dispatch(emitAllAdministratorsFetch());
-        // Cleaner error alert while component did unmount without store dependency
-        return () => {
-            shouldResetErrorData();
-        };
-        // eslint-disable-next-line
-    }, []);
+    }
 
     // Reset error alert
     const shouldResetErrorData = () => {
