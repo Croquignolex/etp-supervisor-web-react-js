@@ -29,7 +29,6 @@ import DeleteModalComponent from "../components/modals/DeleteModalComponent";
 import {storeAllVendorsRequestReset} from "../redux/requests/vendors/actions";
 import {storeAllManagersRequestReset} from "../redux/requests/managers/actions";
 import {emitFetchUserBalance, emitUserFactoryReset} from "../redux/user/actions";
-import {storeUserBalanceFetchRequestReset} from "../redux/requests/user/actions";
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
 import {storeAllOverseersRequestReset} from "../redux/requests/overseers/actions";
@@ -39,6 +38,7 @@ import {storeAllSupervisorsRequestReset} from "../redux/requests/supervisors/act
 import {storeAllAccountantsRequestReset} from "../redux/requests/accountants/actions";
 import {storeAllAdministratorsRequestReset} from "../redux/requests/administrators/actions";
 import DashboardWithOperatorCardComponent from "../components/dashboard/DashboardWithOperatorCardComponent";
+import {storeUserBalanceFetchRequestReset, storeUserFactoryResetRequestReset} from "../redux/requests/user/actions";
 import {applySuccess, formatNumber, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
 
 // Component
@@ -101,6 +101,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
         dispatch(storeAllCollectorsRequestReset());
         dispatch(storeAllSupervisorsRequestReset());
         dispatch(storeAllAccountantsRequestReset());
+        dispatch(storeUserFactoryResetRequestReset());
         dispatch(storeUserBalanceFetchRequestReset());
         dispatch(storeAllAdministratorsRequestReset());
     };
