@@ -18,6 +18,7 @@ import {
     storeSetUserFullData,
     storeSetUserAvatarData,
     storeSetUserBalanceData,
+    EMIT_USER_FACTORY_RESET,
     EMIT_USER_AVATAR_UPDATE,
     EMIT_FETCH_USER_BALANCE,
     EMIT_USER_PASSWORD_UPDATE,
@@ -35,13 +36,16 @@ import {
     storeUserPasswordEditRequestInit,
     storeUserAvatarEditRequestFailed,
     storeUserBalanceFetchRequestInit,
+    storeUserFactoryResetRequestInit,
     storeUserProfileEditRequestFailed,
     storeUserAvatarEditRequestSucceed,
     storeUserPasswordEditRequestFailed,
     storeUserProfileEditRequestSucceed,
+    storeUserFactoryResetRequestFailed,
     storeUserBalanceFetchRequestFailed,
     storeUserPasswordEditRequestSucceed,
-    storeUserBalanceFetchRequestSucceed
+    storeUserBalanceFetchRequestSucceed,
+    storeUserFactoryResetRequestSucceed
 } from "../requests/user/actions";
 
 // Check user authentication from data in local storage
@@ -222,6 +226,23 @@ export function* emitUserAvatarUpdate() {
     });
 }
 
+// Update user factory reset from API
+export function* emitUserFactoryReset() {
+    yield takeLatest(EMIT_USER_FACTORY_RESET, function*() {
+        try {
+            // Fire event for request
+            yield put(storeUserFactoryResetRequestInit());
+            // API call
+            const apiResponse = yield call(apiPostRequest, api.USER_FACTORY_RESET_API_PATH);
+            // Fire event for request
+            yield put(storeUserFactoryResetRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeUserFactoryResetRequestFailed({message}));
+        }
+    });
+}
+
 // Extract user data & settings
 function extractUserAndSettingsData(apiResponse) {
     const {user, settings, role} = apiResponse;
@@ -255,6 +276,7 @@ function extractUserAndSettingsData(apiResponse) {
 export default function* sagaUser() {
     yield all([
         fork(emitUserLogout),
+        fork(emitUserFactoryReset),
         fork(emitFetchUserBalance),
         fork(emitUserAvatarUpdate),
         fork(emitUserPasswordUpdate),

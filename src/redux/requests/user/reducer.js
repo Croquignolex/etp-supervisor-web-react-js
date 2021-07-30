@@ -4,6 +4,7 @@ import {requestFailedValue, requestInitValue, requestSucceededValue} from "../..
 // Partial global store for requests data management
 const initialState = {
     check: {failed: false, loading: false, succeeded: false, message: ""},
+    reset: {failed: false, loading: false, succeeded: false, message: ""},
     avatar: {failed: false, loading: false, succeeded: false, message: ""},
     profile: {failed: false, loading: false, succeeded: false, message: ""},
     balance: {failed: false, loading: false, succeeded: false, message: ""},
@@ -98,6 +99,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set user balance fetch request store data
         case actions.STORE_USER_BALANCE_FETCH_REQUEST_RESET:
             nextState = {...state, balance: initialState.balance};
+            return nextState || state;
+        // ======================================================== User factory reset
+        // Resolve event to set user factory reset request store data
+        case actions.STORE_USER_FACTORY_RESET_REQUEST_INIT:
+            nextState = {...state, reset: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set user factory reset request store data
+        case actions.STORE_USER_FACTORY_RESET_REQUEST_FAILED:
+            nextState = {...state, reset: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set user factory reset request store data
+        case actions.STORE_USER_FACTORY_RESET_REQUEST_SUCCEEDED:
+            nextState = {...state, reset: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set user factory reset request store data
+        case actions.STORE_USER_FACTORY_RESET_REQUEST_RESET:
+            nextState = {...state, reset: initialState.reset};
             return nextState || state;
         // ========================================================
         // Unknown action

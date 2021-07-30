@@ -7,6 +7,7 @@ export const STORE_SET_USER_INFORMATION_DATA = 'STORE_SET_USER_INFORMATION_DATA'
 
 // Middleware action types
 export const EMIT_USER_LOGOUT = 'EMIT_USER_LOGOUT';
+export const EMIT_USER_FACTORY_RESET = 'EMIT_USER_FACTORY_RESET';
 export const EMIT_FETCH_USER_BALANCE = 'EMIT_FETCH_USER_BALANCE';
 export const EMIT_USER_AVATAR_UPDATE = 'EMIT_USER_AVATAR_UPDATE';
 export const EMIT_USER_PASSWORD_UPDATE = 'EMIT_USER_PASSWORD_UPDATE';
@@ -99,4 +100,9 @@ export const emitUserAvatarUpdate = ({avatar}) => ({
 // Emit user data clean up toward api logout
 export const emitUserLogout = () => ({
     type: EMIT_USER_LOGOUT
+});
+
+// Emit user factory reset
+export const emitUserFactoryReset = () => ({
+    type: EMIT_USER_FACTORY_RESET
 });

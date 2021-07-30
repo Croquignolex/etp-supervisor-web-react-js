@@ -24,6 +24,11 @@ export const STORE_USER_BALANCE_FETCH_REQUEST_RESET = 'STORE_USER_BALANCE_FETCH_
 export const STORE_USER_BALANCE_FETCH_REQUEST_FAILED = 'STORE_USER_BALANCE_FETCH_REQUEST_FAILED';
 export const STORE_USER_BALANCE_FETCH_REQUEST_SUCCEEDED = 'STORE_USER_BALANCE_FETCH_REQUEST_SUCCEEDED';
 
+export const STORE_USER_FACTORY_RESET_REQUEST_INIT = 'STORE_USER_FACTORY_RESET_REQUEST_INIT';
+export const STORE_USER_FACTORY_RESET_REQUEST_RESET = 'STORE_USER_FACTORY_RESET_REQUEST_RESET';
+export const STORE_USER_FACTORY_RESET_REQUEST_FAILED = 'STORE_USER_FACTORY_RESET_REQUEST_FAILED';
+export const STORE_USER_FACTORY_RESET_REQUEST_SUCCEEDED = 'STORE_USER_FACTORY_RESET_REQUEST_SUCCEEDED';
+
 // ======================================================== User check
 // Set user check init data into store
 export const storeUserCheckRequestInit = () => ({
@@ -133,4 +138,26 @@ export const storeUserBalanceFetchRequestSucceed = ({message}) => ({
 // Set user balance fetch reset data into store
 export const storeUserBalanceFetchRequestReset = () => ({
     type: STORE_USER_BALANCE_FETCH_REQUEST_RESET
+});
+// ======================================================== User factory reset
+// Set user factory reset init data into store
+export const storeUserFactoryResetRequestInit = () => ({
+    type: STORE_USER_FACTORY_RESET_REQUEST_INIT
+});
+
+// Set user factory reset failed data into store
+export const storeUserFactoryResetRequestFailed = ({message}) => ({
+    message,
+    type: STORE_USER_FACTORY_RESET_REQUEST_FAILED
+});
+
+// Set user factory reset succeeded data into store
+export const storeUserFactoryResetRequestSucceed = ({message}) => ({
+    message,
+    type: STORE_USER_FACTORY_RESET_REQUEST_SUCCEEDED
+});
+
+// Set user factory reset reset data into store
+export const storeUserFactoryResetRequestReset = () => ({
+    type: STORE_USER_FACTORY_RESET_REQUEST_RESET
 });

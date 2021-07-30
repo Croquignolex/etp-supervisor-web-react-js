@@ -8,6 +8,7 @@ export const FETCH_BALANCE_API_PATH = `${API_URL}/mon_solde`;
 export const EDIT_PASSWORD_API_PATH = `${API_URL}/edit_password`;
 export const EDIT_PROFILE_API_PATH = `${API_URL}/update_profile`;
 export const AUTHENTICATION_API_PATH = `${API_URL}/authentication`;
+export const USER_FACTORY_RESET_API_PATH = `${API_URL}/factory_reset`;
 
 // Settings
 export const EDIT_SETTING_API_PATH = `${API_URL}/edit_setting`;

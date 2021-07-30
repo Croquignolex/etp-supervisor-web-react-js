@@ -17,6 +17,7 @@ import CheckBoxComponent from "../components/form/CheckBoxComponent";
 import {storeSettingsRequestReset} from "../redux/requests/settings/actions";
 import {DEFAULT_ARRAY_FORM_DATA, DEFAULT_FORM_DATA} from "../constants/defaultConstants";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
+import {CARD_ACCOUNTANTS, CARD_OVERSEERS, LABEL_ACCOUNTANTS, LABEL_OVERSEERS} from "../constants/settingsConstants";
 
 // Component
 function SettingsPage({settings, request, dispatch, location}) {
@@ -62,8 +63,10 @@ function SettingsPage({settings, request, dispatch, location}) {
                 {value: setting.CARD_RESOURCES, label: setting.LABEL_RESOURCES},
                 {value: setting.CARD_OPERATORS, label: setting.LABEL_OPERATORS},
                 {value: setting.CARD_COMPANIES, label: setting.LABEL_COMPANIES},
+                {value: setting.CARD_OVERSEERS, label: setting.LABEL_OVERSEERS},
                 {value: setting.CARD_COLLECTORS, label: setting.LABEL_COLLECTORS},
                 {value: setting.CARD_SUPERVISORS, label: setting.LABEL_SUPERVISORS},
+                {value: setting.CARD_ACCOUNTANTS, label: setting.LABEL_ACCOUNTANTS},
                 {value: setting.CARD_FLEET_SIMS_FLEETS_YUP, label: setting.LABEL_FLEET_SIMS_FLEETS_YUP},
                 {value: setting.CARD_FLEET_SIMS_FLEETS_MTN, label: setting.LABEL_FLEET_SIMS_FLEETS_MTN},
                 {value: setting.CARD_FLEET_SIMS_FLEETS_ORANGE, label: setting.LABEL_FLEET_SIMS_FLEETS_ORANGE},
