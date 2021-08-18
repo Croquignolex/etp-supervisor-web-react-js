@@ -3,11 +3,14 @@
   "title": "MMAC",
   "description": "MMAC",
   "keywords": [
-    "etp", "mmac"
+    "etp",
+    "mmac"
   ],
   "license": "MIT",
   "author": "Croquignolex",
-  "contributors": ["Alex NGOMBOL"],
+  "contributors": [
+    "Alex NGOMBOL"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Croquignolex/etp-supervisor-web-react-js.git"
@@ -46,7 +49,8 @@
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
     "uifx": "^2.0.7",
-    "xlsx": "^0.17.0"
+    "xlsx": "^0.17.0",
+    "env-cmd": "^10.1.0"
   },
   "scripts": {
     "start": "env-cmd -f .env.development react-scripts start",
