@@ -1,4 +1,5 @@
 // General
+export const ENABLE_NOTIFICATION = true;
 export const APP_NAME = process.env.REACT_APP_APP_NAME;
 
 // Urls
