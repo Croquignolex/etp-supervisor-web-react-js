@@ -68,10 +68,10 @@ function AgentsCardsComponent({agents, handleBlock, handleBlockModalShow, handle
                                                 />
                                             </span>
                                         </li>
-                                        <li className="list-group-item">
+                                        {/*<li className="list-group-item">
                                             <b>Solde total</b>
                                             <span className="float-right text-success text-bold">{formatNumber(item.account.balance)}</span>
-                                        </li>
+                                        </li>*/}
                                         <li className="list-group-item">
                                             <b>Créer par</b>
                                             <span className="float-right">{item.creator.name}</span>
