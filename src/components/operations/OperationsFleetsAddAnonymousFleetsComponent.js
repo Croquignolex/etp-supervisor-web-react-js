@@ -135,6 +135,7 @@ function OperationsFleetsAddAnonymousFleetsComponent({request, sims, simsRequest
         <>
             {requestFailed(request) && <ErrorAlertComponent message={request.message} />}
             {requestFailed(simsRequests) && <ErrorAlertComponent message={simsRequests.message} />}
+            {requestFailed(zonesRequests) && <ErrorAlertComponent message={zonesRequests.message} />}
             <form onSubmit={handleSubmit}>
                 <div className='row'>
                     <div className='col-sm-6'>
