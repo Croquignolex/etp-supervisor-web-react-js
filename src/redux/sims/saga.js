@@ -21,6 +21,7 @@ import {
     EMIT_INTERNAL_SIMS_FETCH,
     EMIT_RESOURCES_SIMS_FETCH,
     EMIT_ALL_MASTER_SIMS_FETCH,
+    EMIT_ALL_FLEETS_SIMS_FETCH,
     EMIT_COLLECTORS_SIMS_FETCH,
     EMIT_NEXT_AGENTS_SIMS_FETCH,
     EMIT_SIM_TRANSACTIONS_FETCH,
@@ -50,9 +51,12 @@ import {
     storeAllSimsRequestSucceed,
     storeEditSimRequestSucceed,
     storeNextSimsRequestSucceed,
+    storeAllFleetSimsRequestInit,
     storeAllMasterSimsRequestInit,
+    storeAllFleetSimsRequestFailed,
     storeAllInternalSimsRequestInit,
     storeSimTransactionsRequestInit,
+    storeAllFleetSimsRequestSucceed,
     storeAllMasterSimsRequestFailed,
     storeAllMasterSimsRequestSucceed,
     storeAllInternalSimsRequestFailed,
@@ -514,6 +518,25 @@ export function* emitUpdateSim() {
     });
 }
 
+// Fetch all fleets sims from API
+export function* emitAllFleetSimsFetch() {
+    yield takeLatest(EMIT_ALL_FLEETS_SIMS_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeAllFleetSimsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.ALL_FLEETS_SIMS_API_PATH}?page=1`);
+            // Extract data
+            const sims = extractSimsData(apiResponse.data.puces);
+            // Fire event to redux
+            yield put(storeSetSimsData({sims, hasMoreData: apiResponse.data.hasMoreData, page: 2}));
+            // Fire event for request
+            yield put(storeAllFleetSimsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAllFleetSimsRequestFailed({message}));
+        }
+    });
+}
 
 // Extract sim transactions data
 function extractSimTransactionsData(apiTransactions) {
@@ -619,6 +642,7 @@ export default function* sagaSims() {
         fork(emitFleetsSimsFetch),
         fork(emitAgentsSimsFetch),
         fork(emitMastersSimsFetch),
+        fork(emitAllFleetSimsFetch),
         fork(emitAllMasterSimsFetch),
         fork(emitResourcesSimsFetch),
         fork(emitNextFleetsSimsFetch),

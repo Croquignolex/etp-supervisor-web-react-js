@@ -6,6 +6,7 @@ const initialState = {
     add: {failed: false, loading: false, succeeded: false, message: ""},
     list: {failed: false, loading: false, succeeded: false, message: ""},
     next: {failed: false, loading: false, succeeded: false, message: ""},
+    anonymous: {failed: false, loading: false, succeeded: false, message: ""},
 };
 
 // Reduce
@@ -62,6 +63,23 @@ function reduce(state = initialState, action) {
         // Resolve event to set add supply reset request store data
         case actions.STORE_ADD_SUPPLY_REQUEST_RESET:
             nextState = {...state, add: initialState.add};
+            return nextState || state;
+        // ======================================================== Add anonymous supply
+        // Resolve event to set add anonymous supply init request store data
+        case actions.STORE_ADD_ANONYMOUS_SUPPLY_REQUEST_INIT:
+            nextState = {...state, anonymous: requestInitValue()};
+            return nextState || state;
+        // Resolve event to set add anonymous supply failed request store data
+        case actions.STORE_ADD_ANONYMOUS_SUPPLY_REQUEST_FAILED:
+            nextState = {...state, anonymous: requestFailedValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add anonymous supply succeeded request store data
+        case actions.STORE_ADD_ANONYMOUS_SUPPLY_REQUEST_SUCCEEDED:
+            nextState = {...state, anonymous: requestSucceededValue(action.message)};
+            return nextState || state;
+        // Resolve event to set add anonymous supply reset request store data
+        case actions.STORE_ADD_ANONYMOUS_SUPPLY_REQUEST_RESET:
+            nextState = {...state, anonymous: initialState.anonymous};
             return nextState || state;
         // ========================================================
         // Unknown action

@@ -41,6 +41,7 @@ export const COLLECTORS_SIMS_API_PATH = `${API_URL}/puce_list_collector`;
 export const RESOURCES_SIMS_API_PATH = `${API_URL}/puce_list_all_resource`;
 export const ALL_MASTERS_SIMS_API_PATH = `${API_URL}/puce_list_master_all`;
 export const All_INTERNAL_SIMS_API_PATH = `${API_URL}/puce_list_interne_all`;
+export const ALL_FLEETS_SIMS_API_PATH = `${API_URL}/puce_list_gestionnaire_all`;
 
 // Agents
 export const AGENT_API_PATH = `${API_URL}/show_agent`;
@@ -137,6 +138,7 @@ export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
 // Supplies
 export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
 export const NEW_SUPPLY_API_PATH = `${API_URL}/flottage_express`;
+export const NEW_ANONYMOUS_SUPPLY_API_PATH = `${API_URL}/flottage_anonyme`;
 
 // Refuels
 export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
