@@ -7,6 +7,7 @@ import {
     storeSetRefuelsData,
     storeSetNextRefuelsData,
     EMIT_NEXT_REFUELS_FETCH,
+    EMIT_SEARCH_REFUELS_FETCH,
     storeStopInfiniteScrollRefuelData
 } from "./actions";
 import {
@@ -55,6 +56,26 @@ export function* emitNextRefuelsFetch() {
             // Fire event for request
             yield put(storeNextRefuelsRequestFailed({message}));
             yield put(storeStopInfiniteScrollRefuelData());
+        }
+    });
+}
+
+// Emit search refuels fetch
+export function* emitSearchRefuelsFetch() {
+    yield takeLatest(EMIT_SEARCH_REFUELS_FETCH, function*({needle}) {
+        try {
+            // Fire event for request
+            yield put(storeRefuelsRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.SEARCH_REFUELS_API_PATH}?needle=${needle}`);
+            // Extract data
+            const refuels = extractRefuelsData(apiResponse.data.destockages);
+            // Fire event to redux
+            yield put(storeSetRefuelsData({refuels, hasMoreData: false, page: 0}));
+            // Fire event for request
+            yield put(storeRefuelsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeRefuelsRequestFailed({message}));
         }
     });
 }
@@ -127,5 +148,6 @@ export default function* sagaRefuels() {
     yield all([
         fork(emitRefuelsFetch),
         fork(emitNextRefuelsFetch),
+        fork(emitSearchRefuelsFetch),
     ]);
 }

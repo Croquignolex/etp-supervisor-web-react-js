@@ -12,6 +12,7 @@ export const EMIT_SUPPLY_FETCH = 'EMIT_SUPPLY_FETCH';
 export const EMIT_SUPPLIES_FETCH = 'EMIT_SUPPLIES_FETCH';
 export const EMIT_NEXT_SUPPLIES_FETCH = 'EMIT_NEXT_SUPPLIES_FETCH';
 export const EMIT_ADD_ANONYMOUS_SUPPLY = 'EMIT_ADD_ANONYMOUS_SUPPLY';
+export const EMIT_SEARCH_SUPPLIES_FETCH = 'EMIT_SEARCH_SUPPLIES_FETCH';
 
 //====================== Reducer trigger actions
 // Set agent data in store
@@ -92,4 +93,10 @@ export const emitAddAnonymousSupply = ({sim, amount, receiver, receiverSim, pay,
     receiver,
     receiverSim,
     type: EMIT_ADD_ANONYMOUS_SUPPLY
+});
+
+// Emit search supplies fetch
+export const emitSearchSuppliesFetch = ({needle}) => ({
+    needle,
+    type: EMIT_SEARCH_SUPPLIES_FETCH
 });

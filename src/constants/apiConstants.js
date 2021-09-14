@@ -139,9 +139,11 @@ export const All_SIMS_TYPES_API_PATH = `${API_URL}/types_puces_list`;
 export const SUPPLIES_API_PATH = `${API_URL}/list_all_flottage`;
 export const NEW_SUPPLY_API_PATH = `${API_URL}/flottage_express`;
 export const NEW_ANONYMOUS_SUPPLY_API_PATH = `${API_URL}/flottage_anonyme`;
+export const SEARCH_SUPPLIES_API_PATH = `${API_URL}/search_list_all_flottage`;
 
 // Refuels
 export const REFUELS_API_PATH = `${API_URL}/list_destockage`;
+export const SEARCH_REFUELS_API_PATH = `${API_URL}/search_list_destockage`;
 
 // Fleet recovery
 export const NEW_FLEET_RECOVERIES_API_PATH = `${API_URL}/retour_flotte`;
