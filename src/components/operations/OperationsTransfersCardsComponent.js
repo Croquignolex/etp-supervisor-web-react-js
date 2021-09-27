@@ -65,7 +65,7 @@ function OperationsTransfersCardsComponent({transfers, handleConfirmModalShow, h
                                         </li>
                                         <li className="list-group-item">
                                             {item.status === DONE && <b className="text-success text-bold">Confirmé</b>}
-                                            {item.status === CANCEL && <b className="text-secondary text-bold">Annulé</b>}
+                                            {item.status === CANCEL && <b className="text-danger text-bold">Annulé</b>}
                                             {item.status === PROCESSING && <b className="text-danger text-bold">En attente de confirmation</b>}
                                         </li>
                                     </ul>
