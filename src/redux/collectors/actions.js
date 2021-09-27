@@ -1,10 +1,12 @@
 // Reducer action types
 export const STORE_SET_COLLECTOR_DATA = 'STORE_SET_COLLECTOR_DATA';
 export const STORE_SET_COLLECTORS_DATA = 'STORE_SET_COLLECTORS_DATA';
+export const EMIT_COLLECTOR_REPORTS_FETCH = 'EMIT_COLLECTOR_REPORTS_FETCH';
 export const STORE_SET_NEW_COLLECTOR_DATA = 'STORE_SET_NEW_COLLECTOR_DATA';
 export const STORE_SET_NEXT_COLLECTORS_DATA = 'STORE_SET_NEXT_COLLECTORS_DATA';
 export const STORE_SET_COLLECTOR_ACTION_DATA = 'STORE_SET_COLLECTOR_ACTION_DATA';
 export const STORE_SET_COLLECTOR_TOGGLE_DATA = 'STORE_SET_COLLECTOR_TOGGLE_DATA';
+export const STORE_SET_COLLECTOR_REPORTS_DATA = 'STORE_SET_COLLECTOR_REPORTS_DATA';
 export const STORE_SET_COLLECTOR_MOVEMENTS_DATA = 'STORE_SET_COLLECTOR_MOVEMENTS_DATA';
 export const STORE_SET_COLLECTOR_TRANSACTIONS_DATA = 'STORE_SET_COLLECTOR_TRANSACTIONS_DATA';
 export const STORE_STOP_INFINITE_SCROLL_COLLECTORS_DATA = 'STORE_STOP_INFINITE_SCROLL_COLLECTORS_DATA';
@@ -62,6 +64,12 @@ export const storeSetNextCollectorsData = ({collectors, hasMoreData, page}) => (
     collectors,
     hasMoreData,
     type: STORE_SET_NEXT_COLLECTORS_DATA
+});
+
+// Set collector reports data in store
+export const storeSetCollectorReportsData = ({reports}) => ({
+    reports,
+    type: STORE_SET_COLLECTOR_REPORTS_DATA
 });
 
 // Stop infinite scroll
@@ -165,3 +173,9 @@ export const emitCollectorTransactionsFetch = ({id, selectedStartDay, selectedEn
     type: EMIT_COLLECTOR_TRANSACTIONS_FETCH
 });
 
+// Emit fetch collector reports
+export const emitCollectorReportsFetch = ({id, selectedDay}) => ({
+    id,
+    selectedDay,
+    type: EMIT_COLLECTOR_REPORTS_FETCH
+});

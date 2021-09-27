@@ -20,6 +20,8 @@ import {
     EMIT_NEXT_COLLECTORS_FETCH,
     storeSetCollectorActionData,
     storeSetCollectorToggleData,
+    EMIT_COLLECTOR_REPORTS_FETCH,
+    storeSetCollectorReportsData,
     EMIT_TOGGLE_COLLECTOR_STATUS,
     storeSetCollectorMovementsData,
     EMIT_COLLECTOR_MOVEMENTS_FETCH,
@@ -43,12 +45,15 @@ import {
     storeCollectorAddSimRequestInit,
     storeNextCollectorsRequestFailed,
     storeAllCollectorsRequestSucceed,
+    storeCollectorReportsRequestInit,
     storeNextCollectorsRequestSucceed,
     storeCollectorEditInfoRequestInit,
     storeCollectorAddSimRequestFailed,
     storeCollectorEditZoneRequestInit,
     storeCollectorAddSimRequestSucceed,
+    storeCollectorReportsRequestFailed,
     storeCollectorMovementsRequestInit,
+    storeCollectorReportsRequestSucceed,
     storeCollectorEditZoneRequestFailed,
     storeCollectorEditInfoRequestFailed,
     storeCollectorEditInfoRequestSucceed,
@@ -333,6 +338,31 @@ export function* emitCollectorTransactionsFetch() {
     });
 }
 
+// Fetch manager reports from API
+export function* emitCollectorReportsFetch() {
+    yield takeLatest(EMIT_COLLECTOR_REPORTS_FETCH, function*({id, selectedDay}) {
+        try {
+            // Fire event for request
+            yield put(storeCollectorReportsRequestInit());
+            const data = {
+                journee: shortDateToString(selectedDay)
+            };
+            const apiResponse = yield call(apiPostRequest, `${api.USER_REPORTS_API_PATH}/${id}`, data);
+            // Extract data
+            const reports = extractCollectorMovementsData(
+                apiResponse.data.rapports
+            );
+            // Fire event to redux
+            yield put(storeSetCollectorReportsData({reports}));
+            // Fire event for request
+            yield put(storeCollectorReportsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeCollectorReportsRequestFailed({message}));
+        }
+    });
+}
+
 // Extract collector data
 function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims, apiCreator) {
     let collector = {
@@ -343,6 +373,7 @@ function extractCollectorData(apiCollector, apiZone, apiAccount, apiSims, apiCre
         zone: {id: '', name: '', map: ''},
 
         sims: [],
+        reports: [],
         movements: [],
         transactions: [],
     };
@@ -460,6 +491,7 @@ export default function* sagaCollectors() {
         fork(emitNextCollectorsFetch),
         fork(emitUpdateCollectorInfo),
         fork(emitUpdateCollectorZone),
+        fork(emitCollectorReportsFetch),
         fork(emitToggleCollectorStatus),
         fork(emitCollectorMovementsFetch),
         fork(emitCollectorTransactionsFetch),
