@@ -13,7 +13,7 @@ import {CHECKOUT_INTERNAL_OUTLAYS_PAGE} from "../../constants/pageNameConstants"
 import CheckoutOutlaysCardsComponent from "../../components/checkout/CheckoutOutlaysCardsComponent";
 import {emitCancelOutlay, emitNextOutlaysFetch, emitOutlaysFetch} from "../../redux/outlays/actions";
 import CheckoutOutlaysAddOutlayContainer from "../../containers/checkout/CheckoutOutlaysAddOutlayContainer";
-import {storeNextOutlaysRequestReset, storeOutlaysRequestReset} from "../../redux/requests/outlays/actions";
+import {storeNextOutlaysRequestReset, storeOutlaysRequestReset,  storeCancelOutlayRequestReset} from "../../redux/requests/outlays/actions";
 import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
 
 // Component
@@ -40,6 +40,7 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeOutlaysRequestReset());
+        dispatch(storeCancelOutlayRequestReset());
         dispatch(storeNextOutlaysRequestReset());
     };
 
@@ -95,6 +96,7 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
                                             {/* Error message */}
                                             {requestFailed(outlaysRequests.list) && <ErrorAlertComponent message={outlaysRequests.list.message} />}
                                             {requestFailed(outlaysRequests.next) && <ErrorAlertComponent message={outlaysRequests.next.message} />}
+											{requestFailed(outlaysRequests.cancel) && <ErrorAlertComponent message={outlaysRequests.cancel.message} />}
                                             <button type="button"
                                                     className="btn btn-theme mb-2"
                                                     onClick={handleOutlayModalShow}
