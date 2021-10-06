@@ -14,7 +14,15 @@ import CheckoutOutlaysCardsComponent from "../../components/checkout/CheckoutOut
 import {emitCancelOutlay, emitNextOutlaysFetch, emitOutlaysFetch} from "../../redux/outlays/actions";
 import CheckoutOutlaysAddOutlayContainer from "../../containers/checkout/CheckoutOutlaysAddOutlayContainer";
 import {storeNextOutlaysRequestReset, storeOutlaysRequestReset,  storeCancelOutlayRequestReset} from "../../redux/requests/outlays/actions";
-import {dateToString, formatNumber, needleSearch, requestFailed, requestLoading} from "../../functions/generalFunctions";
+import {
+    applySuccess,
+    dateToString,
+    formatNumber,
+    needleSearch,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispatch, location}) {
@@ -33,6 +41,15 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
         // eslint-disable-next-line
     }, []);
 
+	 // Local effects
+    useEffect(() => {
+        // Reset inputs while toast (well done) into current scope
+        if(requestSucceeded(outlaysRequests.cancel)) {
+            applySuccess(outlaysRequests.cancel.message);
+        }
+        // eslint-disable-next-line
+    }, [outlaysRequests.cancel]);
+
     const handleNeedleInput = (data) => {
         setNeedle(data)
     }
@@ -40,8 +57,8 @@ function CheckoutOutlaysPage({outlays, outlaysRequests, hasMoreData, page, dispa
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeOutlaysRequestReset());
-        dispatch(storeCancelOutlayRequestReset());
         dispatch(storeNextOutlaysRequestReset());
+        dispatch(storeCancelOutlayRequestReset());
     };
 
     // Fetch next outlays data to enhance infinite scroll
