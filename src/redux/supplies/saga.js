@@ -24,6 +24,7 @@ import {
     storeSuppliesRequestSucceed,
     storeAddSupplyRequestFailed,
     storeNextSuppliesRequestInit,
+    storeCancelSupplyRequestInit,
     storeAddSupplyRequestSucceed,
     storeNextSuppliesRequestFailed,
     storeCancelSupplyRequestFailed,
