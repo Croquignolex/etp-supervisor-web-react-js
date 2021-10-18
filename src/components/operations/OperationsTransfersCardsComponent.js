@@ -41,18 +41,18 @@ function OperationsTransfersCardsComponent({transfers, group, handleConfirmModal
                                         <li className="list-group-item">
                                             <b>Compte émetteur</b>
                                             <span className="float-right">
-                                                {item.sim_outgoing.number}
+                                                {item.sim_outgoing?.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_outgoing.id})}
+                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_outgoing?.id})}
                                                 />
                                             </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Compte recepteur</b>
                                             <span className="float-right">
-                                                {item.sim_incoming.number}
+                                                {item.sim_incoming?.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_incoming.id})}
+                                                   onClick={() => setSimDetailsModal({...simDetailsModal, show: true, id: item.sim_incoming?.id})}
                                                 />
                                             </span>
                                         </li>
@@ -64,7 +64,7 @@ function OperationsTransfersCardsComponent({transfers, group, handleConfirmModal
                                         </li>
                                         <li className="list-group-item">
                                             <b>Emetteur</b>
-                                            <span className="float-right">{item.user.name}</span>
+                                            <span className="float-right">{item.user?.name}</span>
                                         </li>
                                         {(!group) && (
                                             <li className="list-group-item">
