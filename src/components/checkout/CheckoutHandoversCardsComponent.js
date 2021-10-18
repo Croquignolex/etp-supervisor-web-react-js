@@ -31,7 +31,7 @@ function CheckoutHandoversCardsComponent({handovers}) {
                                             <span className="float-right">{item.receiver.name}</span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Monant</b>
+                                            <b>Montant</b>
                                             <span className="float-right text-success text-bold">
                                                 {formatNumber(item.amount)}
                                             </span>
