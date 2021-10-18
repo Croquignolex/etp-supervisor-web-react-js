@@ -84,7 +84,7 @@ export function* emitGroupConfirmAfford() {
             const apiResponse = yield call(apiPostRequest, api.GROUP_CONFIRM_AFFORD_API_PATH, {ids});
             const apiResponse2 = yield call(apiGetRequest, api.GROUP_AFFORDS_API_PATH);
             // Extract data
-            const affords = extractAffordsData(apiResponse.data.destockages);
+            const affords = extractAffordsData(apiResponse2.data.destockages);
             const groupedAfford = Object.values(Lodash.groupBy(affords, afford => [afford.collector.id, afford.operator.id]));
             // Fire event to redux
             yield put(storeSetGroupAffordsData({affords: groupedAfford}));
