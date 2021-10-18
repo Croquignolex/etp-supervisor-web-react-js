@@ -1,8 +1,9 @@
+import Lodash from "lodash";
 import {all, call, fork, put, takeLatest} from 'redux-saga/effects'
 
 import * as api from "../../constants/apiConstants";
-import {DONE, SUPPLY_BY_DIGITAL_PARTNER} from "../../constants/typeConstants";
 import {apiGetRequest, apiPostRequest} from "../../functions/axiosFunctions";
+import {DONE, SUPPLY_BY_DIGITAL_PARTNER} from "../../constants/typeConstants";
 import {
     EMIT_ADD_AFFORD,
     EMIT_AFFORDS_FETCH,
@@ -13,6 +14,9 @@ import {
     storeSetNextAffordsData,
     EMIT_NEXT_AFFORDS_FETCH,
     storeSetAffordActionData,
+    storeSetGroupAffordsData,
+    EMIT_GROUP_AFFORDS_FETCH,
+    EMIT_GROUP_CONFIRM_AFFORD,
     storeStopInfiniteScrollAffordData
 } from "./actions";
 import {
@@ -46,6 +50,49 @@ export function* emitAffordsFetch() {
         } catch (message) {
             // Fire event for request
             yield put(storeAffordsRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch group affords from API
+export function* emitGroupAffordsFetch() {
+    yield takeLatest(EMIT_GROUP_AFFORDS_FETCH, function*() {
+        try {
+            // Fire event for request
+            yield put(storeAffordsRequestInit());
+            const apiResponse = yield call(apiGetRequest, api.GROUP_AFFORDS_API_PATH);
+            // Extract data
+            const affords = extractAffordsData(apiResponse.data.destockages);
+            const groupedAfford = Object.values(Lodash.groupBy(affords, afford => [afford.collector.id, afford.operator.id]));
+            // Fire event to redux
+            yield put(storeSetGroupAffordsData({affords: groupedAfford}));
+            // Fire event for request
+            yield put(storeAffordsRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAffordsRequestFailed({message}));
+        }
+    });
+}
+
+// Confirm group afford from API
+export function* emitGroupConfirmAfford() {
+    yield takeLatest(EMIT_GROUP_CONFIRM_AFFORD, function*({ids}) {
+        try {
+            // Fire event for request
+            yield put(storeConfirmAffordRequestInit());
+            const apiResponse = yield call(apiPostRequest, api.GROUP_CONFIRM_AFFORD_API_PATH, {ids});
+            const apiResponse2 = yield call(apiGetRequest, api.GROUP_AFFORDS_API_PATH);
+            // Extract data
+            const affords = extractAffordsData(apiResponse.data.destockages);
+            const groupedAfford = Object.values(Lodash.groupBy(affords, afford => [afford.collector.id, afford.operator.id]));
+            // Fire event to redux
+            yield put(storeSetGroupAffordsData({affords: groupedAfford}));
+            // Fire event for request
+            yield put(storeConfirmAffordRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeConfirmAffordRequestFailed({message}));
         }
     });
 }
@@ -188,5 +235,7 @@ export default function* sagaAffords() {
         fork(emitAffordsFetch),
         fork(emitConfirmAfford),
         fork(emitNextAffordsFetch),
+        fork(emitGroupAffordsFetch),
+        fork(emitGroupConfirmAfford),
     ]);
 }

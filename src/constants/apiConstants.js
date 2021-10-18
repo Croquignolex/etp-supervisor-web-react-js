@@ -173,6 +173,8 @@ export const NETWORK_SUPPLIES_API_PATH = `${API_URL}/list_flottage_rz_by_rz`;
 export const AFFORDS_API_PATH = `${API_URL}/list_approvisionnement`;
 export const NEW_REFUEL_API_PATH = `${API_URL}/approvisionnement_etp`;
 export const CONFIRM_AFFORD_API_PATH = `${API_URL}/approuve_approvisionnement`;
+export const GROUP_AFFORDS_API_PATH = `${API_URL}/list_approvisionnement_groupee`;
+export const GROUP_CONFIRM_AFFORD_API_PATH = `${API_URL}/approuve_approvisionnement_groupee`;
 
 // Handovers
 export const HANDOVERS_API_PATH = `${API_URL}/passations_list`;
