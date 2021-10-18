@@ -11,7 +11,7 @@ import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import VendorDetailsContainer from "../../containers/vendors/VendorDetailsContainer";
 
 // Component
-function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
+function OperationsAffordsCardsComponent({affords, group, handleConfirmModalShow}) {
     // Local states
     const [vendorDetailsModal, setVendorSimDetailsModal] = useState({show: false, header: 'DETAIL DU FOURNISSEUR', id: ''});
     const [outgoingSimDetailsModal, setOutgoingSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE DE FLOTTAGE', id: ''});
@@ -32,9 +32,12 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
             <div className="row m-1">
                 {affords.map((item, key) => {
                     return (
-                        <div className="col-lg-4 col-md-6" key={key}>
+                        <div className={`${group ? "col-lg-6" : "col-lg-4"} col-md-6`} key={key}>
                             <div className="card">
-                                <div className={`${fleetTypeBadgeColor(item.status).background} card-header`} />
+                                {group
+                                    ? <div className={`bg-secondary card-header`} />
+                                    : <div className={`${fleetTypeBadgeColor(item.status).background} card-header`} />
+                                }
                                 <div className="card-body">
                                     <ul className="list-group list-group-unbordered">
                                         <OperatorComponent operator={item.operator} />
@@ -45,9 +48,9 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
                                         <li className="list-group-item">
                                             <b>Fournisseur</b>
                                             <span className="float-right">
-                                                {item.vendor.name}
+                                                {item.vendor?.name}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                                   onClick={() => setVendorSimDetailsModal({...vendorDetailsModal, show: true, id: item.vendor.id})}
+                                                   onClick={() => setVendorSimDetailsModal({...vendorDetailsModal, show: true, id: item.vendor?.id})}
                                                 />
                                             </span>
                                         </li>
@@ -60,33 +63,39 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
                                         <li className="list-group-item">
                                             <b>Compte récepteur</b>
                                             <span className="float-right">
-                                                {item.sim.number}
+                                                {item.sim?.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                                   onClick={() => setOutgoingSimDetailsModal({...outgoingSimDetailsModal, show: true, id: item.sim.id})}
+                                                   onClick={() => setOutgoingSimDetailsModal({...outgoingSimDetailsModal, show: true, id: item.sim?.id})}
                                                 />
                                             </span>
                                         </li>
                                         <li className="list-group-item">
                                             <b>Responsable</b>
-                                            <span className="float-right">{item.collector.name}</span>
+                                            <span className="float-right">{item.collector?.name}</span>
                                         </li>
-                                        <li className="list-group-item">
-                                            {item.status === CANCEL && <b className="text-danger text-bold">Annulé</b>}
-                                            {item.status === DONE && <b className="text-success text-bold">Confirmé</b>}
-                                            {item.status === PROCESSING && <b className="text-danger text-bold">En attente de confirmation</b>}
-                                        </li>
+                                        {(!group) && (
+                                            <li className="list-group-item">
+                                                {item.status === DONE && <b className="text-success text-bold">Confirmé</b>}
+                                                {item.status === CANCEL && <b className="text-danger text-bold">Annulé</b>}
+                                                {item.status === PROCESSING && <b className="text-danger text-bold">En attente de confirmation</b>}
+                                            </li>
+                                        )}
                                     </ul>
-                                    {(item.status === PROCESSING) && (
-                                        <div className="mt-3 text-right">
-                                            {item.actionLoader ? <LoaderComponent little={true} /> : (
-                                                <button type="button"
-                                                        className="btn btn-theme btn-sm"
-                                                        onClick={() => handleConfirmModalShow(item)}
-                                                >
-                                                    <i className="fa fa-check" /> Confirmer
-                                                </button>
+                                    {(!group) && (
+                                        <>
+                                            {(item.status === PROCESSING) && (
+                                                <div className="mt-3 text-right">
+                                                    {item.actionLoader ? <LoaderComponent little={true} /> : (
+                                                        <button type="button"
+                                                                className="btn btn-theme btn-sm"
+                                                                onClick={() => handleConfirmModalShow(item)}
+                                                        >
+                                                            <i className="fa fa-check" /> Confirmer
+                                                        </button>
+                                                    )}
+                                                </div>
                                             )}
-                                        </div>
+                                        </>
                                     )}
                                 </div>
                             </div>
@@ -114,8 +123,14 @@ function OperationsAffordsCardsComponent({affords, handleConfirmModalShow}) {
 
 // Prop types to ensure destroyed props data type
 OperationsAffordsCardsComponent.propTypes = {
+    group: PropTypes.bool,
     affords: PropTypes.array.isRequired,
-    handleConfirmModalShow: PropTypes.func.isRequired,
+    handleConfirmModalShow: PropTypes.func,
+};
+
+// Prop types to ensure destroyed props data type
+OperationsAffordsCardsComponent.defaultProps = {
+    group: false
 };
 
 export default React.memo(OperationsAffordsCardsComponent);

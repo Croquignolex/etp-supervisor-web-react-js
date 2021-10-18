@@ -10,7 +10,12 @@ import TableSearchComponent from "../../components/TableSearchComponent";
 import {OPERATIONS_AFFORDS_PAGE} from "../../constants/pageNameConstants";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import ConfirmModalComponent from "../../components/modals/ConfirmModalComponent";
-import {emitAffordsFetch, emitConfirmAfford, emitNextAffordsFetch} from "../../redux/affords/actions";
+import {
+    emitAffordsFetch,
+    emitConfirmAfford,
+    emitGroupAffordsFetch, emitGroupConfirmAfford,
+    emitNextAffordsFetch
+} from "../../redux/affords/actions";
 import OperationsAffordsCardsComponent from "../../components/operations/OperationsAffordsCardsComponent";
 import OperationsAffordsAddAffordContainer from "../../containers/operations/OperationsAffordsAddAffordContainer";
 import {storeAffordsRequestReset, storeConfirmAffordRequestReset, storeNextAffordsRequestReset} from "../../redux/requests/affords/actions";
@@ -23,13 +28,17 @@ import {
     requestLoading,
     requestSucceeded
 } from "../../functions/generalFunctions";
+import OperationsGroupAffordsCardsComponent from "../../components/operations/OperationsGroupAffordsCardsComponent";
 
 // Component
 function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
+    const [groupToggle, setGroupToggle] = useState(false);
     const [confirmModal, setConfirmModal] = useState({show: false, body: '', id: 0});
+    const [groupConfirmModal, setGroupConfirmModal] = useState({show: false, body: '', id: []});
     const [affordModal, setAffordModal] = useState({show: false, header: 'EFFECTUER UN APPROVISIONNEMENT'});
+    const [groupDetailModal, setGroupDetailModal] = useState({show: false, header: "DETAIL DE L'APPROVISIONNEMENT GROUPE", item: {}});
 
     // Local effects
     useEffect(() => {
@@ -81,6 +90,47 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
         setConfirmModal({...confirmModal, id, body: `Confirmer l'approvisionnement de ${formatNumber(amount)}?`, show: true})
     }
 
+    // Show group supply modal form
+    const handleGroupConfirmModalShow = (item) => {
+        const ids = [];
+        item.forEach(item => {
+            ids.push(item.id);
+        });
+        const amount = item.reduce((acc, val) => acc + val.amount, 0);
+        setGroupConfirmModal({...groupConfirmModal, id: ids, body: `Confirmer l'approvisionnement groupée de ${item[0].collector.name} de ${formatNumber(amount)}?`, show: true})
+    }
+
+    // Hide group supply modal form
+    const handleGroupConfirmModalHide = () => {
+        setGroupConfirmModal({...groupConfirmModal, show: false})
+    }
+
+    // Show group detail modal form
+    const handleGroupDetailsModalShow = (item) => {
+        setGroupDetailModal({...groupDetailModal, item, show: true})
+    }
+
+    // Hide group detail modal form
+    const handleGroupDetailsModalHide = () => {
+        setGroupDetailModal({...groupDetailModal, show: false})
+    }
+
+    const handleGroup = () => {
+        dispatch(emitGroupAffordsFetch());
+        setGroupToggle(true)
+    }
+
+    const handleUngroup = () => {
+        dispatch(emitAffordsFetch());
+        setGroupToggle(false);
+    }
+
+    // Trigger when group transfer confirm confirmed on modal
+    const handleGroupConfirm = (id) => {
+        handleGroupConfirmModalHide();
+        dispatch(emitGroupConfirmAfford({ids: id}));
+    };
+
     // Hide confirm modal form
     const handleConfirmModalHide = () => {
         setConfirmModal({...confirmModal, show: false})
@@ -114,28 +164,59 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                             {requestFailed(affordsRequests.list) && <ErrorAlertComponent message={affordsRequests.list.message} />}
                                             {requestFailed(affordsRequests.next) && <ErrorAlertComponent message={affordsRequests.next.message} />}
                                             {requestFailed(affordsRequests.apply) && <ErrorAlertComponent message={affordsRequests.apply.message} />}
-                                            <button type="button"
-                                                    className="btn btn-theme mb-2"
-                                                    onClick={handleAffordModalShow}
-                                            >
-                                                <i className="fa fa-plus" /> Effectuer un approvisionnement
-                                            </button>
-                                            {/* Search result & Infinite scroll */}
-                                            {(needle !== '' && needle !== undefined)
-                                                ? <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)}
-                                                                                   handleConfirmModalShow={handleConfirmModalShow}
-                                                />
-                                                : (requestLoading(affordsRequests.list) ? <LoaderComponent /> :
-                                                        <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={affords.length}
-                                                                        loader={<LoaderComponent />}
-                                                                        next={handleNextAffordsData}
-                                                                        style={{ overflow: 'hidden' }}
-                                                        >
-                                                            <OperationsAffordsCardsComponent affords={affords}
-                                                                                             handleConfirmModalShow={handleConfirmModalShow}
+                                            {(groupToggle) ?
+                                                ((requestLoading(affordsRequests.list) || requestLoading(affordsRequests.apply)) ? <LoaderComponent /> :
+                                                        <>
+                                                            <button type="button"
+                                                                    className="btn btn-secondary mb-2 ml-2"
+                                                                    onClick={handleUngroup}
+                                                            >
+                                                                <i className="fa fa-table" /> Dégrouper
+                                                            </button>
+                                                            <OperationsGroupAffordsCardsComponent affords={affords}
+                                                                                                  handleGroupConfirmModalShow={handleGroupConfirmModalShow}
+                                                                                                  handleGroupDetailsModalShow={handleGroupDetailsModalShow}
                                                             />
-                                                        </InfiniteScroll>
+                                                        </>
+                                                ) :
+                                                (
+                                                    <>
+
+                                                        {!requestLoading(affordsRequests.list) && (
+                                                            <>
+                                                                <button type="button"
+                                                                        className="btn btn-theme mb-2"
+                                                                        onClick={handleAffordModalShow}
+                                                                >
+                                                                    <i className="fa fa-plus" /> Effectuer un approvisionnement
+                                                                </button>
+                                                                <button type="button"
+                                                                        className="btn btn-danger mb-2 ml-2"
+                                                                        onClick={handleGroup}
+                                                                >
+                                                                    <i className="fa fa-table"/> Grouper
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                        {/* Search result & Infinite scroll */}
+                                                        {(needle !== '' && needle !== undefined)
+                                                            ? <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)}
+                                                                                               handleConfirmModalShow={handleConfirmModalShow}
+                                                            />
+                                                            : (requestLoading(affordsRequests.list) ? <LoaderComponent /> :
+                                                                    <InfiniteScroll hasMore={hasMoreData}
+                                                                                    dataLength={affords.length}
+                                                                                    loader={<LoaderComponent />}
+                                                                                    next={handleNextAffordsData}
+                                                                                    style={{ overflow: 'hidden' }}
+                                                                    >
+                                                                        <OperationsAffordsCardsComponent affords={affords}
+                                                                                                         handleConfirmModalShow={handleConfirmModalShow}
+                                                                        />
+                                                                    </InfiniteScroll>
+                                                            )
+                                                        }
+                                                    </>
                                                 )
                                             }
                                         </div>
@@ -147,6 +228,10 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
+            <ConfirmModalComponent modal={groupConfirmModal}
+                                   handleModal={handleGroupConfirm}
+                                   handleClose={handleGroupConfirmModalHide}
+            />
             <FormModalComponent modal={affordModal} handleClose={handleAffordModalHide}>
                 <OperationsAffordsAddAffordContainer handleClose={handleAffordModalHide} />
             </FormModalComponent>
@@ -154,6 +239,9 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                    handleModal={handleConfirm}
                                    handleClose={handleConfirmModalHide}
             />
+            <FormModalComponent modal={groupDetailModal} handleClose={handleGroupDetailsModalHide}>
+                <OperationsAffordsCardsComponent group affords={groupDetailModal.item} />
+            </FormModalComponent>
         </>
     )
 }
