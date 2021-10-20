@@ -567,7 +567,9 @@ function extractSimData(apiSim, apiType, apiUser, apiAgent, apiCompany, apiOpera
         agent: {id: '', name: ''},
         company: {id: '', name: ''},
         operator: {id: '', name: ''},
-        collector: {id: '', name: ''}
+        collector: {id: '', name: ''},
+
+        transactions: []
     };
     if(apiAgent && apiUser) {
         sim.agent = {
