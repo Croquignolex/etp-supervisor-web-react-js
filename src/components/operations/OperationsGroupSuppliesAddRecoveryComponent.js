@@ -6,7 +6,13 @@ import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitGroupSupplyAddRecovery} from "../../redux/supplies/actions";
 import {storeRecoverRequestReset} from "../../redux/requests/recoveries/actions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {
+    applySuccess,
+    formatNumber,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function OperationsGroupSuppliesAddRecoveryComponent({supply, request, dispatch, handleClose}) {
@@ -72,8 +78,8 @@ function OperationsGroupSuppliesAddRecoveryComponent({supply, request, dispatch,
                 </div>
                 <div className='row'>
                     <div className='col-sm-6'>
-                        <DisabledInput val={amount}
-                                       id='inputAmount'
+                        <DisabledInput id='inputAmount'
+                                       val={formatNumber(amount)}
                                        label='Montant à récouvrir'
                         />
                     </div>

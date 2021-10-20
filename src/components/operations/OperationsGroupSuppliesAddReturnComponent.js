@@ -14,7 +14,13 @@ import {emitGroupSupplyAddReturn} from "../../redux/supplies/actions";
 import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import {storeReturnRequestReset} from "../../redux/requests/returns/actions";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
-import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {
+    applySuccess,
+    formatNumber,
+    requestFailed,
+    requestLoading,
+    requestSucceeded
+} from "../../functions/generalFunctions";
 
 // Component
 function OperationsGroupSuppliesAddReturnComponent({supply, request, sims, allSimsRequests, dispatch, handleClose}) {
@@ -115,9 +121,9 @@ function OperationsGroupSuppliesAddReturnComponent({supply, request, sims, allSi
                         />
                     </div>
                     <div className='col-sm-4'>
-                        <DisabledInput val={amount}
-                                       id='inputAmount'
+                        <DisabledInput id='inputAmount'
                                        label='Flotte à retourner'
+                                       val={formatNumber(amount)}
                         />
                     </div>
                     <div className='col-sm-4'>
