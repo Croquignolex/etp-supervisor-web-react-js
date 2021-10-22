@@ -7,6 +7,7 @@ import LoaderComponent from "../../components/LoaderComponent";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import {OPERATIONS_FLEETS_PAGE} from "../../constants/pageNameConstants";
+import TableSearchComponent from "../../components/TableSearchComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import DeleteModelComponent from "../../components/modals/DeleteModalComponent";
 import SupplyDetailsContainer from "../../containers/operations/SupplyDetailsContainer";
@@ -40,7 +41,6 @@ import {
     emitGroupSuppliesFetch,
     emitSearchSuppliesFetch
 } from "../../redux/supplies/actions";
-import TableSearchComponent from "../../components/TableSearchComponent";
 
 // Component
 function OperationsFleetsPage({supplies, suppliesRequests, hasMoreData, page, user, dispatch, location}) {
