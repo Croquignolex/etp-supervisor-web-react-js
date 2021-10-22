@@ -117,12 +117,14 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
 
     const handleGroup = () => {
         dispatch(emitGroupAffordsFetch());
-        setGroupToggle(true)
+        setGroupToggle(true);
+        setNeedle('');
     }
 
     const handleUngroup = () => {
         dispatch(emitAffordsFetch());
         setGroupToggle(false);
+        setNeedle('');
     }
 
     // Trigger when group transfer confirm confirmed on modal
@@ -166,44 +168,41 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                             {requestFailed(affordsRequests.apply) && <ErrorAlertComponent message={affordsRequests.apply.message} />}
                                             {(groupToggle) ?
                                                 ((requestLoading(affordsRequests.list) || requestLoading(affordsRequests.apply)) ? <LoaderComponent /> :
-                                                        <>
-                                                            <button type="button"
-                                                                    className="btn btn-secondary mb-2 ml-2"
-                                                                    onClick={handleUngroup}
-                                                            >
-                                                                <i className="fa fa-table" /> Dégrouper
-                                                            </button>
-                                                            <OperationsGroupAffordsCardsComponent affords={affords}
-                                                                                                  handleGroupConfirmModalShow={handleGroupConfirmModalShow}
-                                                                                                  handleGroupDetailsModalShow={handleGroupDetailsModalShow}
-                                                            />
-                                                        </>
+                                                    <>
+                                                        <button type="button"
+                                                                className="btn btn-secondary mb-2 ml-2"
+                                                                onClick={handleUngroup}
+                                                        >
+                                                            <i className="fa fa-table" /> Dégrouper
+                                                        </button>
+                                                        <OperationsGroupAffordsCardsComponent affords={groupSearchEngine(affords, needle)}
+                                                                                              handleGroupConfirmModalShow={handleGroupConfirmModalShow}
+                                                                                              handleGroupDetailsModalShow={handleGroupDetailsModalShow}
+                                                        />
+                                                    </>
                                                 ) :
                                                 (
-                                                    <>
-
-                                                        {!requestLoading(affordsRequests.list) && (
-                                                            <>
-                                                                <button type="button"
-                                                                        className="btn btn-theme mb-2"
-                                                                        onClick={handleAffordModalShow}
-                                                                >
-                                                                    <i className="fa fa-plus" /> Effectuer un approvisionnement
-                                                                </button>
-                                                                <button type="button"
-                                                                        className="btn btn-danger mb-2 ml-2"
-                                                                        onClick={handleGroup}
-                                                                >
-                                                                    <i className="fa fa-table"/> Grouper
-                                                                </button>
-                                                            </>
-                                                        )}
-                                                        {/* Search result & Infinite scroll */}
-                                                        {(needle !== '' && needle !== undefined)
-                                                            ? <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)}
-                                                                                               handleConfirmModalShow={handleConfirmModalShow}
-                                                            />
-                                                            : (requestLoading(affordsRequests.list) ? <LoaderComponent /> :
+                                                    (requestLoading(affordsRequests.list) ? <LoaderComponent /> :
+                                                        <>
+                                                            <button type="button"
+                                                                    className="btn btn-theme mb-2"
+                                                                    onClick={handleAffordModalShow}
+                                                            >
+                                                                <i className="fa fa-plus" /> Approvisionnement
+                                                            </button>
+                                                            <button type="button"
+                                                                    className="btn btn-danger mb-2 ml-2"
+                                                                    onClick={handleGroup}
+                                                            >
+                                                                <i className="fa fa-table"/> Grouper
+                                                            </button>
+                                                            {/* Search result & Infinite scroll */}
+                                                            {(needle !== '' && needle !== undefined)
+                                                                ? (
+                                                                    <OperationsAffordsCardsComponent affords={searchEngine(affords, needle)}
+                                                                                                   handleConfirmModalShow={handleConfirmModalShow}
+                                                                    />
+                                                                ) : (
                                                                     <InfiniteScroll hasMore={hasMoreData}
                                                                                     dataLength={affords.length}
                                                                                     loader={<LoaderComponent />}
@@ -214,9 +213,10 @@ function OperationsAffordsPage({affords, affordsRequests, hasMoreData, page, dis
                                                                                                          handleConfirmModalShow={handleConfirmModalShow}
                                                                         />
                                                                     </InfiniteScroll>
-                                                            )
-                                                        }
-                                                    </>
+                                                                )
+                                                            }
+                                                        </>
+                                                    )
                                                 )
                                             }
                                         </div>
@@ -259,6 +259,24 @@ function searchEngine(data, _needle) {
                 needleSearch(item.operator.name, _needle) ||
                 needleSearch(item.collector.name, _needle) ||
                 needleSearch(dateToString(item.creation), _needle)
+            )
+        });
+    }
+    // Return data
+    return data;
+}
+
+// Search engine
+function groupSearchEngine(data, _needle) {
+    // Avoid empty filtering
+    if(_needle !== '' && _needle !== undefined) {
+        // Filter
+        data = data.filter((item) => {
+            return (
+                needleSearch(item.length, _needle) ||
+                needleSearch(item[0].operator.name, _needle) ||
+                needleSearch(item[0].collector.name, _needle) ||
+                needleSearch(item.reduce((acc, val) => acc + parseInt(val.amount, 10), 0), _needle)
             )
         });
     }
