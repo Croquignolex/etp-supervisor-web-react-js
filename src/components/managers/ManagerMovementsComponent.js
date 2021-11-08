@@ -102,6 +102,7 @@ function ManagerMovementsComponent({manager, movements, dispatch, request}) {
                                                 <th>DATE</th>
                                                 <th>TYPE</th>
                                                 <th>NATURE</th>
+                                                <th>MOTIF</th>
                                                 <th>ENTREES</th>
                                                 <th>SORTIES</th>
                                                 <th>SOLDES</th>
