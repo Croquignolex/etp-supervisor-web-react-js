@@ -13,6 +13,7 @@ export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
 export const OPERATORS = 'Opérateurs';
 export const OVERSEER = 'Contrôleurs';
+export const AGENCIES_PAGE = 'Agences';
 export const ADMINS = 'Administrateurs';
 export const ACCOUNTANTS = 'Comptables';
 export const AGENTS = 'Agents/Resources';

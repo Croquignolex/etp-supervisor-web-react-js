@@ -2,30 +2,30 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {VENDORS_PAGE} from "../constants/pageNameConstants";
+import {AGENCIES_PAGE} from "../constants/pageNameConstants";
 import HeaderComponent from "../components/HeaderComponent";
 import LoaderComponent from "../components/LoaderComponent";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../components/ErrorAlertComponent";
 import TableSearchComponent from "../components/TableSearchComponent";
 import FormModalComponent from "../components/modals/FormModalComponent";
-import VendorNewContainer from "../containers/vendors/VendorNewContainer";
-import VendorsCardsComponent from "../components/vendors/VendorsCardsComponent";
-import {emitNextVendorsFetch, emitVendorsFetch} from "../redux/vendors/actions";
-import VendorDetailsContainer from "../containers/vendors/VendorDetailsContainer";
+import AgencyNewContainer from "../containers/agencies/AgencyNewContainer";
+import AgenciesCardsComponent from "../components/agencies/AgenciesCardsComponent";
+import {emitNextAgenciesFetch, emitAgenciesFetch} from "../redux/agencies/actions";
+import AgencyDetailsContainer from "../containers/agencies/AgencyDetailsContainer";
 import {dateToString, needleSearch, requestFailed, requestLoading} from "../functions/generalFunctions";
-import {storeNextVendorsRequestReset, storeVendorsRequestReset} from "../redux/requests/vendors/actions";
+import {storeNextAgenciesRequestReset, storeAgenciesRequestReset} from "../redux/requests/agencies/actions";
 
 // Component
-function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, location}) {
+function AgenciesPage({agencies, agenciesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
-    const [newVendorModal, setNewVendorModal] = useState({show: false, header: ''});
-    const [vendorDetailsModal, setVendorDetailsModal] = useState({show: false, header: "DETAIL DU FOURNISSEUR", id: ''});
+    const [newAgencyModal, setNewAgencyModal] = useState({show: false, header: ''});
+    const [agencyDetailsModal, setAgencyDetailsModal] = useState({show: false, header: "DETAIL DU AGENCE", id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitVendorsFetch());
+        dispatch(emitAgenciesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -39,33 +39,33 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeVendorsRequestReset());
-        dispatch(storeNextVendorsRequestReset());
+        dispatch(storeAgenciesRequestReset());
+        dispatch(storeNextAgenciesRequestReset());
     };
 
-    // Fetch next vendors data to enhance infinite scroll
-    const handleNextVendorsData = () => {
-        dispatch(emitNextVendorsFetch({page}));
+    // Fetch next agencies data to enhance infinite scroll
+    const handleNextAgenciesData = () => {
+        dispatch(emitNextAgenciesFetch({page}));
     }
 
-    // Show new vendor modal form
-    const handleNewVendorModalShow = () => {
-        setNewVendorModal({newVendorModal, header: "NOUVEAU FOURNISSEUR", show: true})
+    // Show new agency modal form
+    const handleNewAgencyModalShow = () => {
+        setNewAgencyModal({newAgencyModal, header: "NOUVELLE AGENCE", show: true})
     }
 
-    // Hide new vendor modal form
-    const handleNewVendorModalHide = () => {
-        setNewVendorModal({...newVendorModal, show: false})
+    // Hide new agency modal form
+    const handleNewAgencyModalHide = () => {
+        setNewAgencyModal({...newAgencyModal, show: false})
     }
 
-    // Show vendor details modal form
-    const handleVendorDetailsModalShow = ({id}) => {
-        setVendorDetailsModal({...vendorDetailsModal, show: true, id})
+    // Show agency details modal form
+    const handleAgencyDetailsModalShow = ({id}) => {
+        setAgencyDetailsModal({...agencyDetailsModal, show: true, id})
     }
 
-    // Hide vendor details modal form
-    const handleVendorDetailsModalHide = () => {
-        setVendorDetailsModal({...vendorDetailsModal, show: false})
+    // Hide agency details modal form
+    const handleAgencyDetailsModalHide = () => {
+        setAgencyDetailsModal({...agencyDetailsModal, show: false})
     }
 
     // Render
@@ -73,7 +73,7 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title={VENDORS_PAGE} icon={'fa fa-user-ninja'} />
+                    <HeaderComponent title={AGENCIES_PAGE} icon={'fa fa-building'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -87,28 +87,28 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(vendorsRequests.list) && <ErrorAlertComponent message={vendorsRequests.list.message} />}
-                                            {requestFailed(vendorsRequests.next) && <ErrorAlertComponent message={vendorsRequests.next.message} />}
+                                            {requestFailed(agenciesRequests.list) && <ErrorAlertComponent message={agenciesRequests.list.message} />}
+                                            {requestFailed(agenciesRequests.next) && <ErrorAlertComponent message={agenciesRequests.next.message} />}
                                             <button type="button"
                                                     className="btn btn-theme ml-2 mb-2"
-                                                    onClick={handleNewVendorModalShow}
+                                                    onClick={handleNewAgencyModalShow}
                                             >
-                                                <i className="fa fa-plus" /> Nouveau fournisseur
+                                                <i className="fa fa-plus" /> Nouvelle agence
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {(needle !== '' && needle !== undefined)
-                                                ? <VendorsCardsComponent vendors={searchEngine(vendors, needle)}
-                                                                         handleVendorDetailsModalShow={handleVendorDetailsModalShow}
+                                                ? <AgenciesCardsComponent agencies={searchEngine(agencies, needle)}
+                                                                         handleAgencyDetailsModalShow={handleAgencyDetailsModalShow}
                                                 />
-                                                : (requestLoading(vendorsRequests.list) ? <LoaderComponent /> :
+                                                : (requestLoading(agenciesRequests.list) ? <LoaderComponent /> :
                                                         <InfiniteScroll hasMore={hasMoreData}
                                                                         loader={<LoaderComponent />}
-                                                                        dataLength={vendors.length}
-                                                                        next={handleNextVendorsData}
+                                                                        dataLength={agencies.length}
+                                                                        next={handleNextAgenciesData}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <VendorsCardsComponent vendors={vendors}
-                                                                                   handleVendorDetailsModalShow={handleVendorDetailsModalShow}
+                                                            <AgenciesCardsComponent agencies={agencies}
+                                                                                   handleAgencyDetailsModalShow={handleAgencyDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                 )
@@ -122,11 +122,11 @@ function VendorsPage({vendors, vendorsRequests, hasMoreData, page, dispatch, loc
                 </div>
             </AppLayoutContainer>
             {/* Modal */}
-            <FormModalComponent modal={newVendorModal} handleClose={handleNewVendorModalHide}>
-                <VendorNewContainer handleClose={handleNewVendorModalHide} />
+            <FormModalComponent modal={newAgencyModal} handleClose={handleNewAgencyModalHide}>
+                <AgencyNewContainer handleClose={handleNewAgencyModalHide} />
             </FormModalComponent>
-            <FormModalComponent small={true} modal={vendorDetailsModal} handleClose={handleVendorDetailsModalHide}>
-                <VendorDetailsContainer id={vendorDetailsModal.id} />
+            <FormModalComponent small={true} modal={agencyDetailsModal} handleClose={handleAgencyDetailsModalHide}>
+                <AgencyDetailsContainer id={agencyDetailsModal.id} />
             </FormModalComponent>
         </>
     )
@@ -150,13 +150,13 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-VendorsPage.propTypes = {
+AgenciesPage.propTypes = {
     page: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
-    vendors: PropTypes.array.isRequired,
+    agencies: PropTypes.array.isRequired,
     location: PropTypes.object.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    vendorsRequests: PropTypes.object.isRequired,
+    agenciesRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(VendorsPage);
+export default React.memo(AgenciesPage);
