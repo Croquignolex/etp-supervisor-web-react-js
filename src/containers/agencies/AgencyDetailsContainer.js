@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import VendorDetailsComponent from "../../components/vendors/VendorDetailsComponent";
+import AgencyDetailsComponent from "../../components/agencies/AgencyDetailsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    vendor: state.vendors.current,
-    request: state.vendorsRequests.show,
+    agency: state.agencies.current,
+    request: state.agenciesRequests.show,
 });
 
 // Map dispatch function to component props
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(VendorDetailsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(AgencyDetailsComponent);

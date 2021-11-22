@@ -6,17 +6,17 @@ import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {requiredChecker} from "../../functions/checkerFunctions";
-import {emitUpdateVendor} from "../../redux/vendors/actions";
+import {emitUpdateAgency} from "../../redux/agencies/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeEditVendorRequestReset} from "../../redux/requests/vendors/actions";
+import {storeEditAgencyRequestReset} from "../../redux/requests/agencies/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function AgencyInfoEditComponent({request, vendor, dispatch, handleClose}) {
+function AgencyInfoEditComponent({request, agency, dispatch, handleClose}) {
     // Local state
-    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: vendor.name});
-    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: vendor.description});
+    const [name, setName] = useState({...DEFAULT_FORM_DATA, data: agency.name});
+    const [description, setDescription] = useState({...DEFAULT_FORM_DATA, data: agency.description});
 
     // Local effects
     useEffect(() => {
@@ -39,7 +39,7 @@ function AgencyInfoEditComponent({request, vendor, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeEditVendorRequestReset());
+        dispatch(storeEditAgencyRequestReset());
     };
 
     const handleNameInput = (data) => {
@@ -62,8 +62,8 @@ function AgencyInfoEditComponent({request, vendor, dispatch, handleClose}) {
         const validationOK = _name.isValid;
         // Check
         if(validationOK) {
-            dispatch(emitUpdateVendor({
-                id: vendor.id,
+            dispatch(emitUpdateAgency({
+                id: agency.id,
                 name: _name.data,
                 description: description.data
             }));
@@ -103,9 +103,9 @@ function AgencyInfoEditComponent({request, vendor, dispatch, handleClose}) {
 
 // Prop types to ensure destroyed props data type
 AgencyInfoEditComponent.propTypes = {
+    agency: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    vendor: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
 };
 

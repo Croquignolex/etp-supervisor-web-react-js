@@ -2,18 +2,18 @@ import PropTypes from "prop-types";
 import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
-import VendorInfoComponent from "./AgencyInfoComponent";
+import AgencyInfoComponent from "./AgencyInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {emitVendorFetch} from "../../redux/vendors/actions";
+import {emitAgencyFetch} from "../../redux/agencies/actions";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
-import {storeShowVendorRequestReset} from "../../redux/requests/vendors/actions";
+import {storeShowAgencyRequestReset} from "../../redux/requests/agencies/actions";
 
 // Component
-function AgencyDetailsComponent({id, vendor, dispatch, request}) {
+function AgencyDetailsComponent({id, agency, dispatch, request}) {
 
     // Local effects
     useEffect(() => {
-        dispatch(emitVendorFetch({id}));
+        dispatch(emitAgencyFetch({id}));
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -23,7 +23,7 @@ function AgencyDetailsComponent({id, vendor, dispatch, request}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeShowVendorRequestReset());
+        dispatch(storeShowAgencyRequestReset());
     };
 
     // Render
@@ -33,7 +33,7 @@ function AgencyDetailsComponent({id, vendor, dispatch, request}) {
                 requestFailed(request) ? <ErrorAlertComponent message={request.message} /> : (
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
-                            <VendorInfoComponent vendor={vendor} />
+                            <AgencyInfoComponent agency={agency} />
                         </div>
                     </div>
                 )
@@ -45,7 +45,7 @@ function AgencyDetailsComponent({id, vendor, dispatch, request}) {
 // Prop types to ensure destroyed props data type
 AgencyDetailsComponent.propTypes = {
     id: PropTypes.string.isRequired,
-    vendor: PropTypes.object.isRequired,
+    agency: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
 };

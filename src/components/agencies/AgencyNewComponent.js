@@ -5,11 +5,11 @@ import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
-import {emitNewVendor} from "../../redux/vendors/actions";
+import {emitNewAgency} from "../../redux/agencies/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
-import {storeAddVendorRequestReset} from "../../redux/requests/vendors/actions";
+import {storeAddAgencyRequestReset} from "../../redux/requests/agencies/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -49,7 +49,7 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAddVendorRequestReset());
+        dispatch(storeAddAgencyRequestReset());
     };
 
     // Trigger new agent form submit
@@ -62,7 +62,7 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
         const validationOK = (_name.isValid);
         // Check
         if(validationOK)
-            dispatch(emitNewVendor({
+            dispatch(emitNewAgency({
                 name: _name.data,
                 description: description.data
             }));

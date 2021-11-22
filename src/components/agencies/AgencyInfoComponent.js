@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 
 import FormModalComponent from "../modals/FormModalComponent";
-import {dateToString, formatNumber} from "../../functions/generalFunctions";
-import VendorInfoEditContainer from "../../containers/vendors/VendorInfoEditContainer";
+import {dateToString} from "../../functions/generalFunctions";
+import AgencyInfoEditContainer from "../../containers/agencies/AgencyInfoEditContainer";
 
 // Component
-function AgencyInfoComponent({vendor}) {
+function AgencyInfoComponent({agency}) {
     // Local states
-    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + vendor.name});
+    const [infoEditModal, setInfoEditModal] = useState({show: false, header: 'MODIFIER LES INFO DE ' + agency.name});
 
     // Show info edit modal form
     const handleInfoEditModalShow = () => {
@@ -32,28 +32,22 @@ function AgencyInfoComponent({vendor}) {
                     <ul className="list-group list-group-unbordered mb-3">
                         <li className="list-group-item">
                             <b>Création</b>
-                            <span className="float-right">{dateToString(vendor.creation)}</span>
+                            <span className="float-right">{dateToString(agency.creation)}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Nom</b>
-                            <span className="float-right">{vendor.name}</span>
-                        </li>
-                        <li className="list-group-item">
-                            <b>Solde</b>
-                            <span className="float-right text-danger text-bold">
-                                {formatNumber(vendor.balance)}
-                            </span>
+                            <span className="float-right">{agency.name}</span>
                         </li>
                         <li className="list-group-item">
                             <b>Description</b>
-                            <p>{vendor.description}</p>
+                            <p>{agency.description}</p>
                         </li>
                     </ul>
                 </div>
             </div>
             {/* Modal */}
             <FormModalComponent small={true} modal={infoEditModal} handleClose={handleInfoEditModalHide}>
-                <VendorInfoEditContainer handleClose={handleInfoEditModalHide} />
+                <AgencyInfoEditContainer handleClose={handleInfoEditModalHide} />
             </FormModalComponent>
         </>
     )
@@ -61,7 +55,7 @@ function AgencyInfoComponent({vendor}) {
 
 // Prop types to ensure destroyed props data type
 AgencyInfoComponent.propTypes = {
-    vendor: PropTypes.object.isRequired
+    agency: PropTypes.object.isRequired
 };
 
 export default React.memo(AgencyInfoComponent);

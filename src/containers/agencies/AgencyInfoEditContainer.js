@@ -1,11 +1,11 @@
 import {connect} from "react-redux";
 
-import VendorInfoEditComponent from "../../components/vendors/VendorInfoEditComponent";
+import AgencyInfoEditComponent from "../../components/agencies/AgencyInfoEditComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
-    vendor: state.vendors.current,
-    request: state.vendorsRequests.edit,
+    agency: state.agencies.current,
+    request: state.agenciesRequests.edit,
 });
 
 // Map dispatch function to component props
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(VendorInfoEditComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(AgencyInfoEditComponent);
