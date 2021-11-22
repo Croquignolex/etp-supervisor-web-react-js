@@ -41,7 +41,7 @@ function AgenciesCardsComponent({agencies, handleAgencyDetailsModalShow}) {
                 {agencies.length === 0 &&
                     <div className="col-12">
                         <div className='alert custom-active text-center'>
-                            Pas de fournisseur
+                            Pas d'agences
                         </div>
                     </div>
                 }

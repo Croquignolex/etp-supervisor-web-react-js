@@ -16,6 +16,7 @@ import supplies from './supplies/saga';
 import payments from './payments/saga';
 import expenses from './expenses/saga';
 import revenues from './revenues/saga';
+import agencies from './agencies/saga';
 import movements from './movements/saga';
 import operators from './operators/saga';
 import transfers from './transfers/saga';
@@ -45,6 +46,7 @@ export default function* sagas() {
         refuels(),
         affords(),
         vendors(),
+        agencies(),
         supplies(),
         revenues(),
         expenses(),
