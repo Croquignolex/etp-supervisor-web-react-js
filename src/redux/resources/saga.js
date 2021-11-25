@@ -65,26 +65,6 @@ export function* emitAllResourcesFetch() {
     });
 }
 
-// Fetch search resources from API
-export function* emitSearchResourcesFetch() {
-    yield takeLatest(EMIT_SEARCH_RESOURCES_FETCH, function*({needle}) {
-        try {
-            // Fire event for request
-            yield put(storeResourcesRequestInit());
-            const apiResponse = yield call(apiGetRequest, `${api.SEARCH_RESOURCES_API_PATH}?needle=${needle}`);
-            // Extract data
-            const resources = extractResourcesData(apiResponse.data.resources);
-            // Fire event to redux
-            yield put(storeSetResourcesData({resources, hasMoreData: false, page: 0}));
-            // Fire event for request
-            yield put(storeResourcesRequestSucceed({message: apiResponse.message}));
-        } catch (message) {
-            // Fire event for request
-            yield put(storeResourcesRequestFailed({message}));
-        }
-    });
-}
-
 // Fetch resources from API
 export function* emitResourcesFetch() {
     yield takeLatest(EMIT_RESOURCES_FETCH, function*() {
@@ -167,7 +147,7 @@ export function* emitResourceFetch() {
             const apiResponse = yield call(apiGetRequest, `${api.RESOURCE_API_PATH}/${id}`);
             // Extract data
             const resource = extractResourceData(
-                apiResponse.data.resource,
+                apiResponse.data.user,
                 apiResponse.data.caisse,
                 apiResponse.data.createur,
             );
@@ -213,7 +193,7 @@ export function* emitUpdateResourceInfo() {
             const apiResponse = yield call(apiPostRequest, `${api.EDIT_RESOURCE_INFO_API_PATH}/${id}`, data);
             // Extract data
             const resource = extractResourceData(
-                apiResponse.data.resource,
+                apiResponse.data.user,
                 apiResponse.data.caisse,
                 apiResponse.data.createur,
             );
@@ -289,7 +269,6 @@ export default function* sagaResources() {
         fork(emitAllResourcesFetch),
         fork(emitNextResourcesFetch),
         fork(emitUpdateResourceInfo),
-        fork(emitSearchResourcesFetch),
         fork(emitToggleResourceStatus),
     ]);
 }
