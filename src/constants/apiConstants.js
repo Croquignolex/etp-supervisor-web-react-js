@@ -57,6 +57,16 @@ export const SEARCH_AGENTS_API_PATH = `${API_URL}/search_agents`;
 export const AGENT_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_agent`;
 export const TOGGLE_AGENT_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
 
+// Resources
+export const RESOURCE_API_PATH = `${API_URL}/show_agent`;
+export const RESOURCES_API_PATH = `${API_URL}/list_agents`;
+export const CREATE_RESOURCE_API_PATH = `${API_URL}/create_agent`;
+export const DELETE_RESOURCE_API_PATH = `${API_URL}/delete_agent`;
+export const EDIT_RESOURCE_INFO_API_PATH = `${API_URL}/edit_agent`;
+export const ALL_RESOURCES_API_PATH = `${API_URL}/list_agents_all`;
+export const SEARCH_RESOURCES_API_PATH = `${API_URL}/search_agents`;
+export const TOGGLE_RESOURCE_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
+
 // Collectors
 export const COLLECTORS_API_PATH = `${API_URL}/recouvreurs`;
 export const EDIT_COLLECTOR_API_PATH = `${API_URL}/edit_user`;

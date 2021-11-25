@@ -300,11 +300,11 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                         {cardsData.includes(setting.CARD_AGENTS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-primary'
+                                                                    data={agents.length}
                                                                     icon='fa fa-user-cog'
                                                                     request={allAgentsRequests}
                                                                     url={path.AGENTS_PAGE_PATH}
                                                                     label={setting.LABEL_AGENTS}
-                                                                    data={agents.length - resourcesData}
                                             />
                                         </div>
                                         }
