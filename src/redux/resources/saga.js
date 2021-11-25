@@ -250,7 +250,7 @@ function extractResourceData(apiResource, apiAccount, apiCreator) {
         }
     }
     if(apiResource) {
-        resource.name = apiUser.name;
+        resource.name = apiResource.name;
         resource.actionLoader = false;
         resource.toggleLoader = false;
         resource.phone = apiResource.phone;
