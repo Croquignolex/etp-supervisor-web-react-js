@@ -7,7 +7,7 @@ import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import ZoneDetailsContainer from "../../containers/zones/ZoneDetailsContainer";
 
 // Component
-function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow, handleReportsModalShow,
+function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow,
                                       handleMovementsModalShow, handleTransactionsModalShow, handleCollectorDetailsModalShow}) {
     // Local states
     const [zoneDetailsModal, setZoneDetailsModal] = useState({show: false, header: 'DETAIL DE LA ZONE', id: ''});
@@ -92,11 +92,11 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                                 onClick={() => handleMovementsModalShow(item)}>
                                             <i className="fa fa-table" /> Movements caisse
                                         </button><br/>
-                                        <button type="button"
+                                        {/*<button type="button"
                                                 className="btn btn-sm btn-theme"
                                                 onClick={() => handleReportsModalShow(item)}>
                                             <i className="fa fa-table" /> Rapport journalier
-                                        </button>
+                                        </button>*/}
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@ CollectorsCardsComponent.propTypes = {
     collectors: PropTypes.array.isRequired,
     handleBlock: PropTypes.func.isRequired,
     handleBlockModalShow: PropTypes.func.isRequired,
-    handleReportsModalShow: PropTypes.func.isRequired,
+    // handleReportsModalShow: PropTypes.func.isRequired,
     handleMovementsModalShow: PropTypes.func.isRequired,
     handleTransactionsModalShow: PropTypes.func.isRequired,
     handleCollectorDetailsModalShow: PropTypes.func.isRequired,

@@ -12,7 +12,7 @@ import BlockModalComponent from "../../components/modals/BlockModalComponent";
 import CollectorNewContainer from "../../containers/collectors/CollectorNewContainer";
 import CollectorsCardsComponent from "../../components/collectors/CollectorsCardsComponent";
 import CollectorDetailsContainer from "../../containers/collectors/CollectorDetailsContainer";
-import CollectorReportsContainer from "../../containers/collectors/CollectorReportsContainer";
+// import CollectorReportsContainer from "../../containers/collectors/CollectorReportsContainer";
 import CollectorMovementsContainer from "../../containers/collectors/CollectorMovementsContainer";
 import CollectorTransactionsContainer from "../../containers/collectors/CollectorTransactionsContainer";
 import {emitCollectorsFetch, emitNextCollectorsFetch, emitToggleCollectorStatus} from "../../redux/collectors/actions";
@@ -25,7 +25,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
     const [newCollectorModal, setNewCollectorModal] = useState({show: false, header: ''});
-    const [reportsModal, setReportsModal] = useState({show: false, header: '', collector: {}});
+    // const [reportsModal, setReportsModal] = useState({show: false, header: '', collector: {}});
     const [movementsModal, setMovementsModal] = useState({show: false, header: '', collector: {}});
     const [transactionsModal, setTransactionsModal] = useState({show: false, header: '', collector: {}});
     const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: '', id: ''});
@@ -121,7 +121,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
         dispatch(emitToggleCollectorStatus({id}));
     };
 
-    // Show reports modal form
+    /*// Show reports modal form
     const handleReportsModalShow = (collector) => {
         setReportsModal({...reportsModal, collector, show: true, header: 'RAPPORT JOURNALIER DE ' + collector.name})
     }
@@ -129,7 +129,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
     // Hide reports modal form
     const handleReportsModalHide = () => {
         setReportsModal({...reportsModal, show: false})
-    }
+    }*/
 
     // Render
     return (
@@ -164,7 +164,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                                 ? <CollectorsCardsComponent handleBlock={handleBlock}
                                                                             handleBlockModalShow={handleBlockModalShow}
                                                                             collectors={searchEngine(collectors, needle)}
-                                                                            handleReportsModalShow={handleReportsModalShow}
+                                                                            // handleReportsModalShow={handleReportsModalShow}
                                                                             handleMovementsModalShow={handleMovementsModalShow}
                                                                             handleTransactionsModalShow={handleTransactionsModalShow}
                                                                             handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
@@ -179,7 +179,7 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
                                                             <CollectorsCardsComponent collectors={collectors}
                                                                                       handleBlock={handleBlock}
                                                                                       handleBlockModalShow={handleBlockModalShow}
-                                                                                      handleReportsModalShow={handleReportsModalShow}
+                                                                                      // handleReportsModalShow={handleReportsModalShow}
                                                                                       handleMovementsModalShow={handleMovementsModalShow}
                                                                                       handleTransactionsModalShow={handleTransactionsModalShow}
                                                                                       handleCollectorDetailsModalShow={handleCollectorDetailsModalShow}
@@ -212,9 +212,9 @@ function CollectorsPage({collectors, collectorsRequests, hasMoreData, page, disp
             <FormModalComponent modal={transactionsModal} handleClose={handleTransactionsModalHide}>
                 <CollectorTransactionsContainer collector={transactionsModal.collector} />
             </FormModalComponent>
-            <FormModalComponent modal={reportsModal} handleClose={handleReportsModalHide}>
-                <CollectorReportsContainer collector={reportsModal.collector} />
-            </FormModalComponent>
+            {/*<FormModalComponent modal={reportsModal} handleClose={handleReportsModalHide}>*/}
+            {/*    <CollectorReportsContainer collector={reportsModal.collector} />*/}
+            {/*</FormModalComponent>*/}
         </>
     )
 }
