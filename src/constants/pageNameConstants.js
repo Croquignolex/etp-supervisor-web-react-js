@@ -9,14 +9,15 @@ export const MY_NETWORK = 'Mon réseau';
 export const MY_NETWORK_FLEET = 'Flottages';
 
 // Commons
+export const AGENTS = 'Agents';
 export const ZONES_PAGE = 'Zones';
 export const USERS = 'Utilisateurs';
+export const RESOURCES = 'Resources';
 export const OPERATORS = 'Opérateurs';
 export const OVERSEER = 'Contrôleurs';
 export const AGENCIES_PAGE = 'Agences';
 export const ADMINS = 'Administrateurs';
 export const ACCOUNTANTS = 'Comptables';
-export const AGENTS = 'Agents/Resources';
 export const SUPERVISORS = 'Superviseurs';
 export const VENDORS_PAGE = 'Fournisseurs';
 export const MANAGERS = 'Gestionnaires...';

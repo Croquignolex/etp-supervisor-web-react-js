@@ -1,9 +1,9 @@
 import React from 'react';
+import {NotificationContainer} from "react-notifications";
 import { Switch, Route,  BrowserRouter as Router } from 'react-router-dom';
 
 import * as path from "./constants/pagePathConstants";
 import asyncComponent from './components/asyncComponent';
-import {NotificationContainer} from "react-notifications";
 import PublicRouteContainer from "./containers/PublicRouteContainer";
 import RestrictedRouteContainer from "./containers/RestrictedRouteContainer";
 
@@ -35,6 +35,7 @@ function AppRoutes() {
                 {/* Users */}
                 <RestrictedRouteContainer exact path={path.AGENTS_PAGE_PATH} component={asyncComponent(() => import('./containers/agents/AgentsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.MANAGERS_PAGE_PATH} component={asyncComponent(() => import('./containers/managers/ManagersPageContainer'))} />
+                <RestrictedRouteContainer exact path={path.RESOURCES_PAGE_PATH} component={asyncComponent(() => import('./containers/resources/ResourcesPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.OVERSEERS_PAGE_PATH} component={asyncComponent(() => import('./containers/overseers/OverseersPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.COLLECTORS_PAGE_PATH} component={asyncComponent(() => import('./containers/collectors/CollectorsPageContainer'))} />
                 <RestrictedRouteContainer exact path={path.SUPERVISORS_PAGE_PATH} component={asyncComponent(() => import('./containers/supervisors/SupervisorsPageContainer'))} />

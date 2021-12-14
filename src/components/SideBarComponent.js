@@ -192,6 +192,7 @@ function buildUsersMenu() {
             {name: page.ACCOUNTANTS, path: path.ACCOUNTANTS_PAGE_PATH},
             {name: page.MANAGERS, path: path.MANAGERS_PAGE_PATH},
             {name: page.COLLECTORS, path: path.COLLECTORS_PAGE_PATH},
+            {name: page.RESOURCES, path: path.RESOURCES_PAGE_PATH},
             {name: page.AGENTS, path: path.AGENTS_PAGE_PATH},
         ]
     }
