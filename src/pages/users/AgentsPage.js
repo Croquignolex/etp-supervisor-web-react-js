@@ -7,7 +7,6 @@ import LoaderComponent from "../../components/LoaderComponent";
 import {agentTypeBadgeColor} from "../../functions/typeFunctions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
-import {AGENT_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
 import AgentNewContainer from "../../containers/agents/AgentNewContainer";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
@@ -83,12 +82,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
 
     // Show new agent modal form
     const handleNewAgentModalShow = () => {
-        setNewAgentModal({newAgentModal, type: AGENT_TYPE, header: "NOUVEL AGENT", show: true})
-    }
-
-    // Show new resource modal form
-    const handleNewResourceModalShow = () => {
-        setNewAgentModal({newAgentModal, type: RESOURCE_TYPE, header: "NOUVELLE RESSOURCE", show: true})
+        setNewAgentModal({newAgentModal, header: "NOUVEL AGENT", show: true})
     }
 
     // Hide new agent modal form
@@ -127,7 +121,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Tous les agents/ressources" icon={'fa fa-user-cog'} />
+                    <HeaderComponent title="Tous les agents" icon={'fa fa-user-cog'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -148,16 +142,10 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                             {requestFailed(agentsRequests.next) && <ErrorAlertComponent message={agentsRequests.next.message} />}
                                             {requestFailed(agentsRequests.status) && <ErrorAlertComponent message={agentsRequests.status.message} />}
                                             <button type="button"
-                                                    className="btn btn-primary mr-2 mb-2"
+                                                    className="btn btn-theme ml-2 mb-2"
                                                     onClick={handleNewAgentModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvel agent
-                                            </button>
-                                            <button type="button"
-                                                    className="btn btn-info mb-2"
-                                                    onClick={handleNewResourceModalShow}
-                                            >
-                                                <i className="fa fa-plus" /> Nouvelle ressource
                                             </button>
                                             {/* Search result & Infinite scroll */}
                                             {requestLoading(agentsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
@@ -197,9 +185,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                  handleClose={handleBlockModalHide}
             />
             <FormModalComponent modal={newAgentModal} handleClose={handleNewAgentModalHide}>
-                <AgentNewContainer type={newAgentModal.type}
-                                   handleClose={handleNewAgentModalHide}
-                />
+                <AgentNewContainer handleClose={handleNewAgentModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />

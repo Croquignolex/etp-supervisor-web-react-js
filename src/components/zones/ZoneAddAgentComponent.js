@@ -114,18 +114,14 @@ function ZoneAddAgentComponent({type, request, zone, dispatch, handleClose}) {
         if(validationOK)
             dispatch(emitAddZoneAgents({
                 id: zone.id,
-                reference: type,
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
                 document: _document.data,
-                town: constants.DEFAULT_TOWN,
                 description: description.data,
                 backIDCard: _backIDCard.data.file,
-                country: constants.DEFAULT_COUNTRY,
                 frontIDCard: _frontIDCard.data.file,
-                password: constants.DEFAULT_PASSWORD,
             }));
         else playWarningSound();
     };

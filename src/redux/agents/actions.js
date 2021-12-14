@@ -104,19 +104,13 @@ export const emitToggleAgentStatus = ({id}) => ({
 });
 
 // Emit new agent fetch
-export const emitNewAgent = ({name, address, phone, zone, reference, town,
-                                 country, email, password, description,
-                                 backIDCard, frontIDCard, document}) => ({
+export const emitNewAgent = ({name, address, phone, zone, email, description, backIDCard, frontIDCard, document}) => ({
     name,
     zone,
-    town,
     phone,
     email,
-    country,
     address,
     document,
-    password,
-    reference,
     backIDCard,
     frontIDCard,
     description,

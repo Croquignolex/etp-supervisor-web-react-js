@@ -179,22 +179,16 @@ export function* emitUpdateZone() {
 
 // Add zone agent
 export function* emitAddZoneAgents() {
-    yield takeLatest(EMIT_ADD_ZONE_AGENTS, function*({id, name, address, phone, reference, email,
-                                                         town, country, password, description,
-                                                         backIDCard, frontIDCard, document}) {
+    yield takeLatest(EMIT_ADD_ZONE_AGENTS, function*({id, name, address, phone, email, description, backIDCard, frontIDCard, document}) {
         try {
             // Fire event for request
             yield put(storeZoneAddAgentRequestInit());
             const data = new FormData();
             data.append('name', name);
-            data.append('ville', town);
             data.append('phone', phone);
             data.append('email', email);
-            data.append('pays', country);
             data.append('adresse', address);
             data.append('document', document);
-            data.append('password', password);
-            data.append('reference', reference);
             data.append('description', description);
             frontIDCard && data.append('base_64_image', frontIDCard);
             backIDCard && data.append('base_64_image_back', backIDCard);

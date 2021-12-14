@@ -90,19 +90,13 @@ export const emitUpdateZone = ({id, name, reference, description}) => ({
 });
 
 // Emit add zone agents
-export const emitAddZoneAgents = ({id, name, address, phone, reference, email,
-                                      town, country, password, description,
-                                      backIDCard, frontIDCard, document}) => ({
+export const emitAddZoneAgents = ({id, name, address, phone, email, description, backIDCard, frontIDCard, document}) => ({
     id,
     name,
-    town,
     phone,
     email,
     address,
-    country,
-    password,
     document,
-    reference,
     backIDCard,
     frontIDCard,
     description,

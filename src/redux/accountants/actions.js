@@ -93,12 +93,11 @@ export const emitToggleAccountantStatus = ({id}) => ({
 });
 
 // Emit new accountant fetch
-export const emitNewAccountant = ({name, address, phone, email, password,  description}) => ({
+export const emitNewAccountant = ({name, address, phone, email,  description}) => ({
     name,
     phone,
     email,
     address,
-    password,
     description,
     type: EMIT_NEW_ACCOUNTANT
 });

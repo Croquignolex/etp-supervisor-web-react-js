@@ -128,12 +128,12 @@ export function* emitToggleAccountantStatus() {
 
 // New accountant into API
 export function* emitNewAccountant() {
-    yield takeLatest(EMIT_NEW_ACCOUNTANT, function*({name, address, phone, email, password,  description}) {
+    yield takeLatest(EMIT_NEW_ACCOUNTANT, function*({name, address, phone, email,  description}) {
         try {
             // Fire event for request
             yield put(storeAddAccountantRequestInit());
             // From data
-            const data = {name, phone, email, password, description, adresse: address}
+            const data = {name, phone, email, description, adresse: address}
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_ACCOUNTANT_API_PATH, data);
             // Extract data

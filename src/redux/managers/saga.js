@@ -139,12 +139,12 @@ export function* emitToggleManagerStatus() {
 
 // New manager into API
 export function* emitNewManager() {
-    yield takeLatest(EMIT_NEW_MANAGER, function*({name, address, phone, email, password,  description}) {
+    yield takeLatest(EMIT_NEW_MANAGER, function*({name, address, phone, email,  description}) {
         try {
             // Fire event for request
             yield put(storeAddManagerRequestInit());
             // From data
-            const data = {name, phone, email, password, description, adresse: address}
+            const data = {name, phone, email, description, adresse: address}
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_MANAGER_API_PATH, data);
             // Extract data

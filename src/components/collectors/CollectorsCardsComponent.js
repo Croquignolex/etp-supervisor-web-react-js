@@ -91,12 +91,7 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                                 className="btn btn-sm btn-theme mb-1"
                                                 onClick={() => handleMovementsModalShow(item)}>
                                             <i className="fa fa-table" /> Movements caisse
-                                        </button><br/>
-                                        {/*<button type="button"
-                                                className="btn btn-sm btn-theme"
-                                                onClick={() => handleReportsModalShow(item)}>
-                                            <i className="fa fa-table" /> Rapport journalier
-                                        </button>*/}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
