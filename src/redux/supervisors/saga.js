@@ -108,12 +108,12 @@ export function* emitNextSupervisorsFetch() {
 
 // New supervisor into API
 export function* emitNewSupervisor() {
-    yield takeLatest(EMIT_NEW_SUPERVISOR, function*({name, address, phone, email,  description}) {
+    yield takeLatest(EMIT_NEW_SUPERVISOR, function*({name, address, phone, email, password,  description}) {
         try {
             // Fire event for request
             yield put(storeAddSupervisorRequestInit());
             // From data
-            const data = {name, phone, email, description, adresse: address}
+            const data = {name, phone, email, password, description, adresse: address}
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_SUPERVISOR_API_PATH, data);
             // Extract data

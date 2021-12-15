@@ -107,7 +107,8 @@ function CollectorNewComponent({zones, request, allZonesRequests, dispatch, hand
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
-                description: description.data
+                description: description.data,
+                password: constants.DEFAULT_PASSWORD,
             }));
         else playWarningSound();
     };

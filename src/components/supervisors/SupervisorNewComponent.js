@@ -87,7 +87,8 @@ function SupervisorNewComponent({request, dispatch, handleClose}) {
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
-                description: description.data
+                description: description.data,
+                password: constants.DEFAULT_PASSWORD,
             }));
         else playWarningSound();
     };

@@ -57,7 +57,7 @@ export const storeSetCollectorTransactionsData = ({transactions}) => ({
     transactions,
     type: STORE_SET_COLLECTOR_TRANSACTIONS_DATA
 });
-
+ 
 // Set next collectors data in store
 export const storeSetNextCollectorsData = ({collectors, hasMoreData, page}) => ({
     page,
@@ -119,12 +119,13 @@ export const emitToggleCollectorStatus = ({id}) => ({
 });
 
 // Emit new collector fetch
-export const emitNewCollector = ({name, address, phone, zone, email,  description}) => ({
+export const emitNewCollector = ({name, address, phone, zone, email, password,  description}) => ({
     name,
     zone,
     phone,
     email,
     address,
+    password,
     description,
     type: EMIT_NEW_COLLECTOR
 });

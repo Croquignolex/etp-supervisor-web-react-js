@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import * as types from "../constants/typeConstants";
 import * as path from "../constants/pagePathConstants";
 import {emitAllSimsFetch} from "../redux/sims/actions";
 import {MASTER_TYPE} from "../constants/typeConstants";
@@ -13,7 +14,6 @@ import {emitAllVendorsFetch} from "../redux/vendors/actions";
 import {DASHBOARD_PAGE} from "../constants/pageNameConstants";
 import {emitAllManagersFetch} from "../redux/managers/actions";
 import {emitAllCompaniesFetch} from "../redux/companies/actions";
-import {emitAllResourcesFetch} from "../redux/resources/actions";
 import {emitAllOperatorsFetch} from "../redux/operators/actions";
 import {emitAllOverseersFetch} from "../redux/overseers/actions";
 import AppLayoutContainer from "../containers/AppLayoutContainer";
@@ -32,7 +32,6 @@ import {emitFetchUserBalance, emitUserFactoryReset} from "../redux/user/actions"
 import {storeAllCompaniesRequestReset} from "../redux/requests/companies/actions";
 import {storeAllOperatorsRequestReset} from "../redux/requests/operators/actions";
 import {storeAllOverseersRequestReset} from "../redux/requests/overseers/actions";
-import {storeAllResourcesRequestReset} from "../redux/requests/resources/actions";
 import DashboardCardComponent from "../components/dashboard/DashboardCardComponent";
 import {storeAllCollectorsRequestReset} from "../redux/requests/collectors/actions";
 import {storeAllSupervisorsRequestReset} from "../redux/requests/supervisors/actions";
@@ -43,8 +42,7 @@ import {storeUserBalanceFetchRequestReset, storeUserFactoryResetRequestReset} fr
 import {applySuccess, formatNumber, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
 
 // Component
-function DashboardPage({allResourcesRequests, resources, agents,
-                           overseers, accountants, settings, dispatch,
+function DashboardPage({agents, overseers, accountants, settings, dispatch,
                            balanceUserRequests, allVendorsRequests, administrators,
                            supervisors, managers, collectors, companies, sims, zones, location, vendors,
                            operators, user, allAgentsRequests, allAdministratorsRequests, allOverseersRequests,
@@ -84,7 +82,6 @@ function DashboardPage({allResourcesRequests, resources, agents,
         dispatch(emitAllCompaniesFetch());
         dispatch(emitAllOperatorsFetch());
         dispatch(emitAllOverseersFetch());
-        dispatch(emitAllResourcesFetch());
         dispatch(emitAllCollectorsFetch());
         dispatch(emitAllSupervisorsFetch());
         dispatch(emitAllAccountantsFetch());
@@ -101,7 +98,6 @@ function DashboardPage({allResourcesRequests, resources, agents,
         dispatch(storeAllCompaniesRequestReset());
         dispatch(storeAllOverseersRequestReset());
         dispatch(storeAllOperatorsRequestReset());
-        dispatch(storeAllResourcesRequestReset());
         dispatch(storeAllCollectorsRequestReset());
         dispatch(storeAllSupervisorsRequestReset());
         dispatch(storeAllAccountantsRequestReset());
@@ -112,6 +108,10 @@ function DashboardPage({allResourcesRequests, resources, agents,
 
     // Data
     const cardsData = settings.cards;
+    const resourcesData = useMemo(() => {
+        return agents.filter(agent => types.RESOURCE_TYPE === agent.reference).length
+        // eslint-disable-next-line
+    }, [agents]);
     const mtnFleetSimsFleetsData = useMemo(() => {
         const data = sims.filter(sim => ((sim.operator.id === '1') && (sim.type.name === MASTER_TYPE)));
         const number = data.length
@@ -296,24 +296,25 @@ function DashboardPage({allResourcesRequests, resources, agents,
                                             />
                                         </div>
                                         }
+
                                         {cardsData.includes(setting.CARD_AGENTS) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-primary'
-                                                                    data={agents.length}
                                                                     icon='fa fa-user-cog'
                                                                     request={allAgentsRequests}
                                                                     url={path.AGENTS_PAGE_PATH}
                                                                     label={setting.LABEL_AGENTS}
+                                                                    data={agents.length - resourcesData}
                                             />
                                         </div>
                                         }
                                         {cardsData.includes(setting.CARD_RESOURCES) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
                                             <DashboardCardComponent color='bg-info'
+                                                                    data={resourcesData}
                                                                     icon='fa fa-user-lock'
-                                                                    data={resources.length}
-                                                                    request={allResourcesRequests}
-                                                                    url={path.RESOURCES_PAGE_PATH}
+                                                                    url={path.AGENTS_PAGE_PATH}
+                                                                    request={allAgentsRequests}
                                                                     label={setting.LABEL_RESOURCES}
                                             />
                                         </div>

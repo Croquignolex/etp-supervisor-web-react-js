@@ -10,9 +10,9 @@ export const STORE_STOP_INFINITE_SCROLL_SUPERVISORS_DATA = 'STORE_STOP_INFINITE_
 // Middleware action types
 export const EMIT_NEW_SUPERVISOR = 'EMIT_NEW_SUPERVISOR';
 export const EMIT_SUPERVISOR_FETCH = 'EMIT_SUPERVISOR_FETCH';
-export const EMIT_SUPERVISORS_FETCH = 'EMIT_SUPERVISORS_FETCH';
+export const EMIT_SUPERVISORS_FETCH = 'EMIT_SUPERVISORS_FETCH'; 
 export const EMIT_NEXT_SUPERVISORS_FETCH = 'EMIT_NEXT_SIMS_FETCH';
-export const EMIT_ALL_SUPERVISORS_FETCH = 'EMIT_ALL_SUPERVISORS_FETCH';
+export const EMIT_ALL_SUPERVISORS_FETCH = 'EMIT_ALL_SUPERVISORS_FETCH'; 
 export const EMIT_SUPERVISOR_MOVEMENTS_FETCH = 'EMIT_SUPERVISOR_MOVEMENTS_FETCH';
 export const EMIT_SUPERVISOR_TRANSACTIONS_FETCH = 'EMIT_SUPERVISOR_TRANSACTIONS_FETCH';
 
@@ -86,13 +86,14 @@ export const emitSupervisorFetch = ({id}) => ({
     id,
     type: EMIT_SUPERVISOR_FETCH
 });
-
+ 
 // Emit new supervisor fetch
-export const emitNewSupervisor = ({name, address, phone, email,  description}) => ({
+export const emitNewSupervisor = ({name, address, phone, email, password,  description}) => ({
     name,
     phone,
     email,
     address,
+    password,
     description,
     type: EMIT_NEW_SUPERVISOR
 });

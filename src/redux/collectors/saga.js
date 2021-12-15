@@ -179,12 +179,12 @@ export function* emitUpdateCollectorInfo() {
 
 // New collector into API
 export function* emitNewCollector() {
-    yield takeLatest(EMIT_NEW_COLLECTOR, function*({name, address, phone, zone, email, description}) {
+    yield takeLatest(EMIT_NEW_COLLECTOR, function*({name, address, phone, zone, email, password,  description}) {
         try {
             // Fire event for request
             yield put(storeAddCollectorRequestInit());
             // From data
-            const data = {name, phone, email, description, id_zone: zone, adresse: address}
+            const data = {name, phone, email, password, description, id_zone: zone, adresse: address}
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_COLLECTOR_API_PATH, data);
             // Extract data

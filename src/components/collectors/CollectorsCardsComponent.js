@@ -91,7 +91,12 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                                                 className="btn btn-sm btn-theme mb-1"
                                                 onClick={() => handleMovementsModalShow(item)}>
                                             <i className="fa fa-table" /> Movements caisse
-                                        </button>
+                                        </button><br/>
+                                        {/*<button type="button"
+                                                className="btn btn-sm btn-theme"
+                                                onClick={() => handleReportsModalShow(item)}>
+                                            <i className="fa fa-table" /> Rapport journalier
+                                        </button>*/}
                                     </div>
                                 </div>
                             </div>
@@ -99,11 +104,11 @@ function CollectorsCardsComponent({collectors, handleBlock, handleBlockModalShow
                     )
                 })}
                 {collectors.length === 0 &&
-                    <div className="col-12">
-                        <div className='alert custom-active text-center'>
-                            Pas de responsable de zone
-                        </div>
+                <div className="col-12">
+                    <div className='alert custom-active text-center'>
+                        Pas de responsable de zone
                     </div>
+                </div>
                 }
             </div>
             {/* Modal */}

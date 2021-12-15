@@ -49,20 +49,13 @@ export const AGENTS_API_PATH = `${API_URL}/list_agents`;
 export const EDIT_AGENT_CNI_API_PATH = `${API_URL}/edit_cni`;
 export const AGENT_ADD_SIM = `${API_URL}/ajouter_puce_agent`;
 export const CREATE_AGENT_API_PATH = `${API_URL}/create_agent`;
+export const DELETE_AGENT_API_PATH = `${API_URL}/delete_agent`;
 export const EDIT_AGENT_INFO_API_PATH = `${API_URL}/edit_agent`;
 export const ALL_AGENTS_API_PATH = `${API_URL}/list_agents_all`;
 export const EDIT_AGENT_DOC_API_PATH = `${API_URL}/edit_folder`;
 export const SEARCH_AGENTS_API_PATH = `${API_URL}/search_agents`;
 export const AGENT_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_agent`;
 export const TOGGLE_AGENT_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
-
-// Resources
-export const RESOURCE_API_PATH = `${API_URL}/details_user`;
-export const RESOURCES_API_PATH = `${API_URL}/list_resources`;
-export const EDIT_RESOURCE_INFO_API_PATH = `${API_URL}/edit_user`;
-export const CREATE_RESOURCE_API_PATH = `${API_URL}/create_resource`;
-export const ALL_RESOURCES_API_PATH = `${API_URL}/list_resources_all`;
-export const TOGGLE_RESOURCE_STATUS_API_PATH = `${API_URL}/edit_user_status`;
 
 // Collectors
 export const COLLECTORS_API_PATH = `${API_URL}/recouvreurs`;

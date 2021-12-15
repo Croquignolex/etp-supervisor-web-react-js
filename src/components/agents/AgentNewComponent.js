@@ -19,7 +19,7 @@ import {fileChecker, imageChecker, phoneChecker, requiredChecker} from "../../fu
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function AgentNewComponent({zones, request, allZonesRequests, dispatch, handleClose}) {
+function AgentNewComponent({type, zones, request, allZonesRequests, dispatch, handleClose}) {
     // Local state
     const [doc, setDoc] = useState(constants.DEFAULT_FORM_DATA);
     const [zone, setZone] = useState(constants.DEFAULT_FORM_DATA);
@@ -132,15 +132,19 @@ function AgentNewComponent({zones, request, allZonesRequests, dispatch, handleCl
         // Check
         if(validationOK)
             dispatch(emitNewAgent({
+                reference: type,
                 name: _name.data,
                 zone: _zone.data,
                 email: email.data,
                 phone: _phone.data,
                 address: address.data,
                 document: _document.data,
+                town: constants.DEFAULT_TOWN,
                 description: description.data,
                 backIDCard: _backIDCard.data.file,
-                frontIDCard: _frontIDCard.data.file
+                country: constants.DEFAULT_COUNTRY,
+                frontIDCard: _frontIDCard.data.file,
+                password: constants.DEFAULT_PASSWORD,
             }));
         else playWarningSound();
     };
@@ -243,6 +247,7 @@ function AgentNewComponent({zones, request, allZonesRequests, dispatch, handleCl
 // Prop types to ensure destroyed props data type
 AgentNewComponent.propTypes = {
     zones: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
