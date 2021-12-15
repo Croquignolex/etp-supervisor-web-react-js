@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 
-import AgentsPage from "../../pages/users/AgentsPage";
-import {AGENTS} from "../../constants/pageNameConstants";
+import ResourcesPage from "../../pages/users/ResourcesPage";
+import {RESOURCES} from "../../constants/pageNameConstants";
 import {setPageTitle} from "../../functions/generalFunctions";
 
-setPageTitle(AGENTS);
+setPageTitle(RESOURCES);
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
     page: state.agents.page,
-    agents: state.agents.list,
-    agentsRequests: state.agentsRequests,
-    hasMoreData: state.agents.hasMoreData,
+    resources: state.resources.list,
+    resourcesRequests: state.resourcesRequests,
+    hasMoreData: state.resources.hasMoreData,
 });
 
 // Map dispatch function to component props
@@ -20,4 +20,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(AgentsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ResourcesPage);

@@ -7,17 +7,17 @@ import LoaderComponent from "../../components/LoaderComponent";
 import {agentTypeBadgeColor} from "../../functions/typeFunctions";
 import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
-import AgentNewContainer from "../../containers/agents/AgentNewContainer";
+import ResourceNewContainer from "../../containers/resources/ResourceNewContainer";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import AgentsCardsComponent from "../../components/agents/AgentsCardsComponent";
-import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
+import ResourcesCardsComponent from "../../components/resources/ResourcesCardsComponent";
+import ResourceDetailsContainer from "../../containers/resources/ResourceDetailsContainer";
 import TableSearchWithButtonComponent from "../../components/TableSearchWithButtonComponent";
 import {
-    storeAgentsRequestReset,
-    storeNextAgentsRequestReset,
-    storeAgentStatusToggleRequestReset
-} from "../../redux/requests/agents/actions";
+    storeResourcesRequestReset,
+    storeNextResourcesRequestReset,
+    storeResourceStatusToggleRequestReset
+} from "../../redux/requests/resources/actions";
 import {
     applySuccess,
     dateToString,
@@ -27,23 +27,23 @@ import {
     requestSucceeded
 } from "../../functions/generalFunctions";
 import {
-    emitAgentsFetch,
-    emitNextAgentsFetch,
-    emitSearchAgentsFetch,
-    emitToggleAgentStatus
-} from "../../redux/agents/actions";
+    emitResourcesFetch,
+    emitNextResourcesFetch,
+    emitSearchResourcesFetch,
+    emitToggleResourceStatus
+} from "../../redux/resources/actions";
 
 // Component
-function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, location}) {
+function ResourcesPage({resources, resourcesRequests, hasMoreData, page, dispatch, location}) {
     // Local states
     const [needle, setNeedle] = useState('');
     const [blockModal, setBlockModal] = useState({show: false, body: '', id: 0});
-    const [newAgentModal, setNewAgentModal] = useState({show: false, header: '', type: ''});
-    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: '', id: ''});
+    const [newResourceModal, setNewResourceModal] = useState({show: false, header: '', type: ''});
+    const [agentDetailsModal, setResourceDetailsModal] = useState({show: false, header: '', id: ''});
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAgentsFetch());
+        dispatch(emitResourcesFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -54,50 +54,50 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     // Local effects
     useEffect(() => {
         // Reset inputs while toast (well done) into current scope
-        if(requestSucceeded(agentsRequests.status)) {
-            applySuccess(agentsRequests.status.message);
+        if(requestSucceeded(resourcesRequests.status)) {
+            applySuccess(resourcesRequests.status.message);
         }
         // eslint-disable-next-line
-    }, [agentsRequests.status]);
+    }, [resourcesRequests.status]);
 
     const handleNeedleInput = (data) => {
         setNeedle(data)
     }
 
     const handleSearchInput = () => {
-        dispatch(emitSearchAgentsFetch({needle}));
+        dispatch(emitSearchResourcesFetch({needle}));
     }
 
     // Reset error alert
     const shouldResetErrorData = () => {
-        dispatch(storeAgentsRequestReset());
-        dispatch(storeNextAgentsRequestReset());
-        dispatch(storeAgentStatusToggleRequestReset());
+        dispatch(storeResourcesRequestReset());
+        dispatch(storeNextResourcesRequestReset());
+        dispatch(storeResourceStatusToggleRequestReset());
     };
 
-    // Fetch next agents data to enhance infinite scroll
-    const handleNextAgentsData = () => {
-        dispatch(emitNextAgentsFetch({page}));
+    // Fetch next resources data to enhance infinite scroll
+    const handleNextResourcesData = () => {
+        dispatch(emitNextResourcesFetch({page}));
     }
 
     // Show new agent modal form
-    const handleNewAgentModalShow = () => {
-        setNewAgentModal({newAgentModal, header: "NOUVEL AGENT", show: true})
+    const handleNewResourceModalShow = () => {
+        setNewResourceModal({newResourceModal, header: "NOUVEL AGENT", show: true})
     }
 
     // Hide new agent modal form
-    const handleNewAgentModalHide = () => {
-        setNewAgentModal({...newAgentModal, show: false})
+    const handleNewResourceModalHide = () => {
+        setNewResourceModal({...newResourceModal, show: false})
     }
 
     // Show agent details modal form
-    const handleAgentDetailsModalShow = ({id, name}) => {
-        setAgentDetailsModal({...agentDetailsModal, show: true, id, header: "DETAIL DE " + name})
+    const handleResourceDetailsModalShow = ({id, name}) => {
+        setResourceDetailsModal({...agentDetailsModal, show: true, id, header: "DETAIL DE " + name})
     }
 
     // Hide agent details modal form
-    const handleAgentDetailsModalHide = () => {
-        setAgentDetailsModal({...agentDetailsModal, show: false})
+    const handleResourceDetailsModalHide = () => {
+        setResourceDetailsModal({...agentDetailsModal, show: false})
     }
 
     // Trigger when user block status confirmed on modal
@@ -113,7 +113,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
     // Trigger when user change status confirmed on modal
     const handleBlock = (id) => {
         handleBlockModalHide();
-        dispatch(emitToggleAgentStatus({id}));
+        dispatch(emitToggleResourceStatus({id}));
     };
 
     // Render
@@ -121,7 +121,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
         <>
             <AppLayoutContainer pathname={location.pathname}>
                 <div className="content-wrapper">
-                    <HeaderComponent title="Tous les agents" icon={'fa fa-user-cog'} />
+                    <HeaderComponent title="Tous les resources" icon={'fa fa-user-cog'} />
                     <section className="content">
                         <div className='container-fluid'>
                             <div className="row">
@@ -138,35 +138,35 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                         </div>
                                         <div className="card-body">
                                             {/* Error message */}
-                                            {requestFailed(agentsRequests.list) && <ErrorAlertComponent message={agentsRequests.list.message} />}
-                                            {requestFailed(agentsRequests.next) && <ErrorAlertComponent message={agentsRequests.next.message} />}
-                                            {requestFailed(agentsRequests.status) && <ErrorAlertComponent message={agentsRequests.status.message} />}
+                                            {requestFailed(resourcesRequests.list) && <ErrorAlertComponent message={resourcesRequests.list.message} />}
+                                            {requestFailed(resourcesRequests.next) && <ErrorAlertComponent message={resourcesRequests.next.message} />}
+                                            {requestFailed(resourcesRequests.status) && <ErrorAlertComponent message={resourcesRequests.status.message} />}
                                             <button type="button"
                                                     className="btn btn-theme ml-2 mb-2"
-                                                    onClick={handleNewAgentModalShow}
+                                                    onClick={handleNewResourceModalShow}
                                             >
                                                 <i className="fa fa-plus" /> Nouvel agent
                                             </button>
                                             {/* Search result & Infinite scroll */}
-                                            {requestLoading(agentsRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
+                                            {requestLoading(resourcesRequests.list) ? <LoaderComponent /> : ((needle !== '' && needle !== undefined) ?
                                                     (
-                                                        <AgentsCardsComponent handleBlock={handleBlock}
-                                                                              agents={searchEngine(agents, needle)}
+                                                        <ResourcesCardsComponent handleBlock={handleBlock}
+                                                                              resources={searchEngine(resources, needle)}
                                                                               handleBlockModalShow={handleBlockModalShow}
-                                                                              handleAgentDetailsModalShow={handleAgentDetailsModalShow}
+                                                                              handleResourceDetailsModalShow={handleResourceDetailsModalShow}
                                                         />
                                                     ) :
                                                     (
                                                         <InfiniteScroll hasMore={hasMoreData}
-                                                                        dataLength={agents.length}
-                                                                        next={handleNextAgentsData}
+                                                                        dataLength={resources.length}
+                                                                        next={handleNextResourcesData}
                                                                         loader={<LoaderComponent />}
                                                                         style={{ overflow: 'hidden' }}
                                                         >
-                                                            <AgentsCardsComponent agents={agents}
+                                                            <ResourcesCardsComponent resources={resources}
                                                                                   handleBlock={handleBlock}
                                                                                   handleBlockModalShow={handleBlockModalShow}
-                                                                                  handleAgentDetailsModalShow={handleAgentDetailsModalShow}
+                                                                                  handleResourceDetailsModalShow={handleResourceDetailsModalShow}
                                                             />
                                                         </InfiniteScroll>
                                                     )
@@ -184,11 +184,11 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                  handleBlock={handleBlock}
                                  handleClose={handleBlockModalHide}
             />
-            <FormModalComponent modal={newAgentModal} handleClose={handleNewAgentModalHide}>
-                <AgentNewContainer handleClose={handleNewAgentModalHide} />
+            <FormModalComponent modal={newResourceModal} handleClose={handleNewResourceModalHide}>
+                <ResourceNewContainer handleClose={handleNewResourceModalHide} />
             </FormModalComponent>
-            <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
-                <AgentDetailsContainer id={agentDetailsModal.id} />
+            <FormModalComponent modal={agentDetailsModal} handleClose={handleResourceDetailsModalHide}>
+                <ResourceDetailsContainer id={agentDetailsModal.id} />
             </FormModalComponent>
         </>
     )
@@ -217,13 +217,13 @@ function searchEngine(data, _needle) {
 }
 
 // Prop types to ensure destroyed props data type
-AgentsPage.propTypes = {
+ResourcesPage.propTypes = {
     page: PropTypes.number.isRequired,
-    agents: PropTypes.array.isRequired,
+    resources: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     hasMoreData: PropTypes.bool.isRequired,
-    agentsRequests: PropTypes.object.isRequired,
+    resourcesRequests: PropTypes.object.isRequired,
 };
 
-export default React.memo(AgentsPage);
+export default React.memo(ResourcesPage);
