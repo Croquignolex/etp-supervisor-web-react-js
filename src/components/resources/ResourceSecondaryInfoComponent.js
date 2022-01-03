@@ -37,7 +37,7 @@ function ResourceSecondaryInfoComponent({agent}) {
     const handleAgencyDetailModalHide = () => {
         setAgencyDetailsModal({...agencyDetailsModal, show: false})
     }
-
+console.log({agent})
     // Render
     return (
         <>
@@ -63,7 +63,7 @@ function ResourceSecondaryInfoComponent({agent}) {
                             <span className="float-right">{agent.country}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>Zone</b>
+                            <b>Agence</b>
                             <span className="float-right">
                                 {agent.agency.name}
                                 {agent.agency.id !== '' && (

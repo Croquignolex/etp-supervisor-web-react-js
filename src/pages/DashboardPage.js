@@ -313,7 +313,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             <DashboardCardComponent color='bg-info'
                                                                     data={resourcesData}
                                                                     icon='fa fa-user-lock'
-                                                                    url={path.AGENTS_PAGE_PATH}
+                                                                    url={path.RESOURCES_PAGE_PATH}
                                                                     request={allAgentsRequests}
                                                                     label={setting.LABEL_RESOURCES}
                                             />
