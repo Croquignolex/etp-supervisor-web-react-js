@@ -185,7 +185,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                                  handleClose={handleBlockModalHide}
             />
             <FormModalComponent modal={newAgentModal} handleClose={handleNewAgentModalHide}>
-                {/*<ResourceNewContainer handleClose={handleNewAgentModalHide} />*/}
+                <ResourceNewContainer handleClose={handleNewAgentModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />

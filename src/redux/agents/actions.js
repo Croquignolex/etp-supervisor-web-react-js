@@ -10,6 +10,7 @@ export const STORE_STOP_INFINITE_SCROLL_AGENTS_DATA = 'STORE_STOP_INFINITE_SCROL
 // Middleware action types
 export const EMIT_NEW_AGENT = 'EMIT_NEW_AGENT';
 export const EMIT_AGENT_FETCH = 'EMIT_AGENT_FETCH';
+export const EMIT_NEW_RESOURCE = 'EMIT_NEW_RESOURCE';
 export const EMIT_AGENTS_FETCH = 'EMIT_AGENTS_FETCH';
 export const EMIT_ADD_AGENT_SIMS = 'EMIT_ADD_AGENT_SIMS';
 export const EMIT_RESOURCES_FETCH = 'EMIT_RESOURCES_FETCH';
@@ -128,6 +129,20 @@ export const emitNewAgent = ({name, address, phone, zone, email, description, ba
     frontIDCard,
     description,
     type: EMIT_NEW_AGENT
+});
+
+// Emit new resource fetch
+export const emitNewResource = ({name, address, phone, agency, email, description, backIDCard, frontIDCard, document}) => ({
+    name,
+    phone,
+    email,
+    agency,
+    address,
+    document,
+    backIDCard,
+    frontIDCard,
+    description,
+    type: EMIT_NEW_RESOURCE
 });
 
 // Emit update agent info

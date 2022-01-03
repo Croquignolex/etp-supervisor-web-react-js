@@ -1,12 +1,12 @@
-import React, {useEffect, useMemo, useState} from 'react';
 import PropTypes from "prop-types";
+import React, {useEffect, useMemo, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
 import SelectComponent from "../form/SelectComponent";
-import {emitNewAgent} from "../../redux/agents/actions";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
+import {emitNewResource} from "../../redux/agents/actions";
 import FileImageComponent from "../form/FileImageComponent";
 import * as constants from "../../constants/defaultConstants";
 import FileDocumentComponent from "../form/FileDocumentComponent";
@@ -120,8 +120,8 @@ function ResourceNewComponent({agencies, request, allAgenciesRequests, dispatch,
         // Set value
         setName(_name);
         setPhone(_phone);
-        setAgency(agency);
         setDoc(_document);
+        setAgency(_agency);
         setBackIDCard(_backIDCard);
         setFrontIDCard(_frontIDCard);
         const validationOK = (
@@ -131,7 +131,7 @@ function ResourceNewComponent({agencies, request, allAgenciesRequests, dispatch,
         );
         // Check
         if(validationOK)
-            dispatch(emitNewAgent({
+            dispatch(emitNewResource({
                 name: _name.data,
                 email: email.data,
                 phone: _phone.data,

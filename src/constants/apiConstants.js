@@ -55,6 +55,7 @@ export const EDIT_AGENT_INFO_API_PATH = `${API_URL}/edit_agent`;
 export const ALL_AGENTS_API_PATH = `${API_URL}/list_agents_all`;
 export const EDIT_AGENT_DOC_API_PATH = `${API_URL}/edit_folder`;
 export const SEARCH_AGENTS_API_PATH = `${API_URL}/search_agents`;
+export const CREATE_RESOURCE_API_PATH = `${API_URL}/create_resource`;
 export const AGENT_ZONE_UPDATE_API_PATH = `${API_URL}/edit_zone_agent`;
 export const TOGGLE_AGENT_STATUS_API_PATH = `${API_URL}/edit_agent_status`;
 
@@ -91,9 +92,9 @@ export const VENDOR_DETAILS_API_PATH = `${API_URL}/show_vendor`;
 
 // Agencies
 export const AGENCIES_API_PATH = `${API_URL}/agencies`;
-export const ALL_AGENCIES_API_PATH = `${API_URL}/all_agencies`;
 export const EDIT_AGENCY_API_PATH = `${API_URL}/edit_agency`;
 export const CREATE_AGENCY_API_PATH = `${API_URL}/new_agency`;
+export const ALL_AGENCIES_API_PATH = `${API_URL}/all_agencies`;
 export const AGENCY_DETAILS_API_PATH = `${API_URL}/show_agency`;
 
 // Administrators
