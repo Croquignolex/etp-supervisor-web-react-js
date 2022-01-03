@@ -9,9 +9,9 @@ import AppLayoutContainer from "../../containers/AppLayoutContainer";
 import ErrorAlertComponent from "../../components/ErrorAlertComponent";
 import FormModalComponent from "../../components/modals/FormModalComponent";
 import BlockModalComponent from "../../components/modals/BlockModalComponent";
-import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
 import ResourceNewContainer from "../../containers/resources/ResourceNewContainer";
 import ResourcesCardsComponent from "../../components/resources/ResourcesCardsComponent";
+import ResourceDetailsContainer from "../../containers/resources/ResourceDetailsContainer";
 import TableSearchWithButtonComponent from "../../components/TableSearchWithButtonComponent";
 import {
     storeAgentsRequestReset,
@@ -188,7 +188,7 @@ function AgentsPage({agents, agentsRequests, hasMoreData, page, dispatch, locati
                 <ResourceNewContainer handleClose={handleNewAgentModalHide} />
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailsModalHide}>
-                <AgentDetailsContainer id={agentDetailsModal.id} />
+                <ResourceDetailsContainer id={agentDetailsModal.id} />
             </FormModalComponent>
         </>
     )

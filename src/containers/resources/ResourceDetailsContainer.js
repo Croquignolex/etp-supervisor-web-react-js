@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import AgentDetailsComponent from "../../components/agents/AgentDetailsComponent";
+import ResourceDetailsComponent from "../../components/resources/ResourceDetailsComponent";
 
 // Map state function to component props
 const mapStateToProps = (state) => ({
@@ -14,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Connect component to Redux
-export default connect(mapStateToProps, mapDispatchToProps)(AgentDetailsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ResourceDetailsComponent);

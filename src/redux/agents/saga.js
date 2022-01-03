@@ -31,7 +31,7 @@ import {
     EMIT_SEARCH_AGENTS_FETCH,
     EMIT_TOGGLE_AGENT_STATUS,
     EMIT_NEXT_RESOURCES_FETCH,
-    storeStopInfiniteScrollAgentData
+    storeStopInfiniteScrollAgentData, EMIT_RESOURCE_FETCH, EMIT_UPDATE_AGENT_AGENCY
 } from "./actions";
 import {
     storeAgentRequestInit,
@@ -68,6 +68,7 @@ import {
     storeAgentStatusToggleRequestFailed,
     storeAgentStatusToggleRequestSucceed
 } from "../requests/agents/actions";
+import {AGENT_AGENCY_UPDATE_API_PATH, RESOURCE_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all agents from API
 export function* emitAllAgentsFetch() {
@@ -260,7 +261,6 @@ export function* emitNewResource() {
                 apiResponse.data.puces,
                 apiResponse.data.agency,
             );
-            console.log({agent})
             // Fire event to redux
             yield put(storeSetNewAgentData({agent}));
             // Fire event for request
@@ -287,6 +287,34 @@ export function* emitAgentFetch() {
                 apiResponse.data.caisse,
                 apiResponse.data.createur,
                 apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetAgentData({agent}));
+            // Fire event for request
+            yield put(storeAgentRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAgentRequestFailed({message}));
+        }
+    });
+}
+
+// Fetch resource from API
+export function* emitResourceFetch() {
+    yield takeLatest(EMIT_RESOURCE_FETCH, function*({id}) {
+        try {
+            // Fire event for request
+            yield put(storeAgentRequestInit());
+            const apiResponse = yield call(apiGetRequest, `${api.RESOURCE_API_PATH}/${id}`);
+            // Extract data
+            const agent = extractAgentData(
+                apiResponse.data.agent,
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.createur,
+                apiResponse.data.puces,
+                apiResponse.data.agency,
             );
             // Fire event to redux
             yield put(storeSetAgentData({agent}));
@@ -364,6 +392,35 @@ export function* emitUpdateAgentZone() {
                 apiResponse.data.caisse,
                 apiResponse.data.createur,
                 apiResponse.data.puces
+            );
+            // Fire event to redux
+            yield put(storeSetAgentData({agent, alsoInList: true}));
+            // Fire event for request
+            yield put(storeAgentEditZoneRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAgentEditZoneRequestFailed({message}));
+        }
+    });
+}
+
+// Update agent agency
+export function* emitUpdateAgentAgency() {
+    yield takeLatest(EMIT_UPDATE_AGENT_AGENCY, function*({id, agency}) {
+        try {
+            // Fire event for request
+            yield put(storeAgentEditZoneRequestInit());
+            const data = {id_agency: agency};
+            const apiResponse = yield call(apiPostRequest, `${api.AGENT_AGENCY_UPDATE_API_PATH}/${id}`, data);
+            // Extract data
+            const agent = extractAgentData(
+                apiResponse.data.agent,
+                apiResponse.data.user,
+                apiResponse.data.zone,
+                apiResponse.data.caisse,
+                apiResponse.data.createur,
+                apiResponse.data.puces,
+                apiResponse.data.agency,
             );
             // Fire event to redux
             yield put(storeSetAgentData({agent, alsoInList: true}));
@@ -478,7 +535,6 @@ function extractAgentData(apiAgent, apiUser, apiZone, apiAccount, apiCreator, ap
 
         sims: []
     };
-    console.log({apiAgent, apiUser, apiZone, apiAccount, apiCreator, apiSims, apiAgency})
     if(apiSims) {
         apiSims.forEach(data => {
             agent.sims.push({
