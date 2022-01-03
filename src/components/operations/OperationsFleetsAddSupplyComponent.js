@@ -5,7 +5,6 @@ import ButtonComponent from "../form/ButtonComponent";
 import AmountComponent from "../form/AmountComponent";
 import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
-import {MASTER_TYPE} from "../../constants/typeConstants";
 import {emitAllSimsFetch} from "../../redux/sims/actions";
 import CheckBoxComponent from "../form/CheckBoxComponent";
 import {emitAddSupply} from "../../redux/supplies/actions";
@@ -17,6 +16,7 @@ import {storeAllSimsRequestReset} from "../../redux/requests/sims/actions";
 import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
 import {dataToArrayForSelect, mappedSims} from "../../functions/arrayFunctions";
 import {storeAddSupplyRequestReset} from "../../redux/requests/supplies/actions";
+import {AGENT_TYPE, MASTER_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
@@ -79,9 +79,19 @@ function OperationsFleetsAddSupplyComponent({request, sims, agents, allAgentsReq
 
     // Build select options
     const incomingSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(mappedSims(sims.filter(
-            item => (item.agent.id === agent.data) && (item.operator.id === selectedOp)
-        )))
+        const selectedAgent = agents.find((item) => item.id === agent.data);
+        if(selectedAgent) {
+            if(selectedAgent.reference === AGENT_TYPE) {
+                return dataToArrayForSelect(mappedSims(sims.filter(
+                    item => (item.agent.id === agent.data) && (item.operator.id === selectedOp)
+                )))
+            } else {
+                return dataToArrayForSelect(mappedSims(sims.filter(
+                    item => (item.type.name === RESOURCE_TYPE) && (item.operator.id === selectedOp)
+                )))
+            }
+        } else return [];
+
     }, [sims, agent.data, selectedOp]);
 
     // Build select options
