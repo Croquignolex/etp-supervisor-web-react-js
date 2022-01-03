@@ -149,8 +149,7 @@ export function* emitNextAgentsFetch() {
 
 // New agent into API
 export function* emitNewAgent() {
-    yield takeLatest(EMIT_NEW_AGENT, function*({name, address, phone, zone, reference,
-                                                   town, country, email, password, description,
+    yield takeLatest(EMIT_NEW_AGENT, function*({name, address, phone, zone, email, description,
                                                    frontIDCard, backIDCard, document}) {
         try {
             // Fire event for request
@@ -158,15 +157,11 @@ export function* emitNewAgent() {
             // From data
             const data = new FormData();
             data.append('name', name);
-            data.append('ville', town);
             data.append('phone', phone);
             data.append('email', email);
-            data.append('pays', country);
             data.append('id_zone', zone);
             data.append('adresse', address);
             data.append('document', document);
-            data.append('password', password);
-            data.append('reference', reference);
             data.append('description', description);
             frontIDCard && data.append('base_64_image', frontIDCard);
             backIDCard && data.append('base_64_image_back', backIDCard);

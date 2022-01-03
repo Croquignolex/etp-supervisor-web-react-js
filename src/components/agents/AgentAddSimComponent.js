@@ -112,7 +112,7 @@ function AgentAddSimComponent({request, agent, operators, allOperatorsRequests, 
                     <div className='col-sm-6'>
                         <DisabledInput id='inputAgent'
                                        val={agent.name}
-                                       label='Agent/Ressource'
+                                       label='Agent'
                         />
                     </div>
                 </div>

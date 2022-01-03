@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 
 import LoaderComponent from "../LoaderComponent";
 import AgentCniComponent from "./AgentCniComponent";
-import {AGENT_TYPE} from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAgentFetch} from "../../redux/agents/actions";
 import AgentSimsListComponent from "./AgentSimsListComponent";
@@ -44,11 +43,9 @@ function AgentDetailsComponent({id, agent, dispatch, request}) {
                         <div className="col-lg-12 col-md-12">
                             <AgentCniComponent agent={agent} />
                         </div>
-                        {(agent.reference === AGENT_TYPE) && (
-                            <div className="col-lg-12 col-md-12">
-                                <AgentSimsListComponent agent={agent} />
-                            </div>
-                        )}
+                        <div className="col-lg-12 col-md-12">
+                            <AgentSimsListComponent agent={agent} />
+                        </div>
                     </div>
                 )
             )}
