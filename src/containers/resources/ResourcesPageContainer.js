@@ -9,9 +9,9 @@ setPageTitle(RESOURCES);
 // Map state function to component props
 const mapStateToProps = (state) => ({
     page: state.agents.page,
-    resources: state.resources.list,
-    resourcesRequests: state.resourcesRequests,
-    hasMoreData: state.resources.hasMoreData,
+    agents: state.agents.list,
+    agentsRequests: state.agentsRequests,
+    hasMoreData: state.agents.hasMoreData,
 });
 
 // Map dispatch function to component props
