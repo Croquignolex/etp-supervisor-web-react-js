@@ -5,6 +5,7 @@ import LoaderComponent from "../LoaderComponent";
 import AgencyInfoComponent from "./AgencyInfoComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import {emitAgencyFetch} from "../../redux/agencies/actions";
+import AgencySimsListComponent from "./AgencySimsListComponent";
 import {requestFailed, requestLoading} from "../../functions/generalFunctions";
 import {storeShowAgencyRequestReset} from "../../redux/requests/agencies/actions";
 
@@ -34,6 +35,9 @@ function AgencyDetailsComponent({id, agency, dispatch, request}) {
                     <div className="row">
                         <div className="col-lg-12 col-md-12">
                             <AgencyInfoComponent agency={agency} />
+                        </div>
+                        <div className="col-lg-12 col-md-12">
+                            <AgencySimsListComponent agency={agency} />
                         </div>
                     </div>
                 )

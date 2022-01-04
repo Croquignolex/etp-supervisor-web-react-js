@@ -125,7 +125,7 @@ function AgenciesPage({agencies, agenciesRequests, hasMoreData, page, dispatch, 
             <FormModalComponent modal={newAgencyModal} handleClose={handleNewAgencyModalHide}>
                 <AgencyNewContainer handleClose={handleNewAgencyModalHide} />
             </FormModalComponent>
-            <FormModalComponent small={true} modal={agencyDetailsModal} handleClose={handleAgencyDetailsModalHide}>
+            <FormModalComponent modal={agencyDetailsModal} handleClose={handleAgencyDetailsModalHide}>
                 <AgencyDetailsContainer id={agencyDetailsModal.id} />
             </FormModalComponent>
         </>

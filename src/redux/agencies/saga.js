@@ -111,6 +111,7 @@ export function* emitNewAgency() {
             const agency = extractAgencyData(
                 apiResponse.data.agency,
                 apiResponse.data.manager,
+                apiResponse.data.puces,
             );
             // Fire event to redux
             yield put(storeSetNewAgencyData({agency}));
@@ -134,6 +135,7 @@ export function* emitAgencyFetch() {
             const agency = extractAgencyData(
                 apiResponse.data.agency,
                 apiResponse.data.manager,
+                apiResponse.data.puces,
             );
             // Fire event to redux
             yield put(storeSetAgencyData({agency}));
@@ -158,6 +160,7 @@ export function* emitUpdateAgency() {
             const agency = extractAgencyData(
                 apiResponse.data.agency,
                 apiResponse.data.manager,
+                apiResponse.data.puces,
             );
             // Fire event to redux
             yield put(storeSetAgencyData({agency, alsoInList: true}));
@@ -171,12 +174,24 @@ export function* emitUpdateAgency() {
 }
 
 // Extract zone data
-function extractAgencyData(apiAgency, apiManager) {
+function extractAgencyData(apiAgency, apiManager, apiSims) {
     let agency = {
         id: '', name: '', description: '', creation: '',
 
+        sims: [],
         manager: {id: '', name: ''},
     };
+    if(apiSims) {
+        apiSims.forEach(data => {
+            agency.sims.push({
+                name: data.nom,
+                number: data.numero,
+                balance: data.solde,
+                id: data.id.toString(),
+                creation: data.created_at
+            })
+        });
+    }
     if(apiManager) {
         agency.manager = {
             name: apiManager.name,
@@ -201,6 +216,7 @@ function extractAgenciesData(apiAgencies) {
             agencies.push(extractAgencyData(
                 data.agency,
                 data.manager,
+                data.puces,
             ));
         });
     }

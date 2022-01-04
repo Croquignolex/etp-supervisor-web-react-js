@@ -3,11 +3,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
-import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitNewAgency} from "../../redux/agencies/actions";
-import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
@@ -25,7 +23,7 @@ function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handl
 
     // Local effects
     useEffect(() => {
-        dispatch(emitAllAgentsFetch());
+        // dispatch(emitAllAgentsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -74,15 +72,16 @@ function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handl
         e.preventDefault();
         shouldResetErrorData();
         const _name = requiredChecker(name);
-        const _manager = requiredChecker(manager);
+        // const _manager = requiredChecker(manager);
         // Set value
         setName(_name);
-        const validationOK = (_name.isValid && _manager.isValid);
+        // const validationOK = (_name.isValid && _manager.isValid);
+        const validationOK = (_name.isValid);
         // Check
         if(validationOK)
             dispatch(emitNewAgency({
                 name: _name.data,
-                manager: _manager.data,
+                // manager: _manager.data,
                 description: description.data
             }));
         else playWarningSound();
@@ -105,6 +104,13 @@ function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handl
                                 />
                             </div>
                             <div className='col-sm-6'>
+                                <TextareaComponent label='Description'
+                                                   input={description}
+                                                   id='inputDescription'
+                                                   handleInput={handleDescriptionInput}
+                                />
+                            </div>
+                            {/*<div className='col-sm-6'>
                                 <SelectComponent input={manager}
                                                  id='inputSimAgent'
                                                  label='Responsable'
@@ -113,9 +119,9 @@ function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handl
                                                  handleInput={handleManagerSelect}
                                                  requestProcessing={requestLoading(allAgentsRequests)}
                                 />
-                            </div>
+                            </div>*/}
                         </div>
-                        <div className='row'>
+                        {/*<div className='row'>
                             <div className='col-sm-6'>
                                 <TextareaComponent label='Description'
                                                    input={description}
@@ -123,7 +129,7 @@ function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handl
                                                    handleInput={handleDescriptionInput}
                                 />
                             </div>
-                        </div>
+                        </div>*/}
                         <div className="form-group row">
                             <ButtonComponent processing={requestLoading(request)} />
                         </div>
