@@ -258,6 +258,7 @@ export default function* sagaAgencies() {
         fork(emitNewAgency),
         fork(emitAgencyFetch),
         fork(emitUpdateAgency),
+        fork(emitAddAgencySims),
         fork(emitAgenciesFetch),
         fork(emitAllAgenciesFetch),
         fork(emitNextAgenciesFetch),
