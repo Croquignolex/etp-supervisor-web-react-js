@@ -99,16 +99,19 @@ export function* emitNextAgenciesFetch() {
 
 // New agency into API
 export function* emitNewAgency() {
-    yield takeLatest(EMIT_NEW_AGENCY, function*({name, description}) {
+    yield takeLatest(EMIT_NEW_AGENCY, function*({name, manager, description}) {
         try {
             // Fire event for request
             yield put(storeAddAgencyRequestInit());
             // From data
-            const data = {name, description}
+            const data = {name, manager, description}
             // API request
             const apiResponse = yield call(apiPostRequest, api.CREATE_AGENCY_API_PATH, data);
             // Extract data
-            const agency = extractAgencyData(apiResponse.data.agency);
+            const agency = extractAgencyData(
+                apiResponse.data.agency,
+                apiResponse.data.manager,
+            );
             // Fire event to redux
             yield put(storeSetNewAgencyData({agency}));
             // Fire event for request
@@ -129,7 +132,8 @@ export function* emitAgencyFetch() {
             const apiResponse = yield call(apiGetRequest, `${api.AGENCY_DETAILS_API_PATH}/${id}`);
             // Extract data
             const agency = extractAgencyData(
-                apiResponse.data.agency
+                apiResponse.data.agency,
+                apiResponse.data.manager,
             );
             // Fire event to redux
             yield put(storeSetAgencyData({agency}));
@@ -152,7 +156,8 @@ export function* emitUpdateAgency() {
             const apiResponse = yield call(apiPostRequest, `${api.EDIT_AGENCY_API_PATH}/${id}`, data);
             // Extract data
             const agency = extractAgencyData(
-                apiResponse.data.agency
+                apiResponse.data.agency,
+                apiResponse.data.manager,
             );
             // Fire event to redux
             yield put(storeSetAgencyData({agency, alsoInList: true}));
@@ -166,14 +171,21 @@ export function* emitUpdateAgency() {
 }
 
 // Extract zone data
-function extractAgencyData(apiAgency) {
+function extractAgencyData(apiAgency, apiManager) {
     let agency = {
-        id: '', name: '', balance: '', description: '', creation: '',
+        id: '', name: '', description: '', creation: '',
+
+        manager: {id: '', name: ''},
     };
+    if(apiManager) {
+        agency.manager = {
+            name: apiManager.name,
+            id: apiManager.id.toString(),
+        }
+    }
     if(apiAgency) {
         agency.actionLoader = false;
         agency.name = apiAgency.name;
-        agency.balance = apiAgency.solde;
         agency.id = apiAgency.id.toString();
         agency.creation = apiAgency.created_at;
         agency.description = apiAgency.description;
@@ -187,7 +199,8 @@ function extractAgenciesData(apiAgencies) {
     if(apiAgencies) {
         apiAgencies.forEach(data => {
             agencies.push(extractAgencyData(
-                data.agency
+                data.agency,
+                data.manager,
             ));
         });
     }

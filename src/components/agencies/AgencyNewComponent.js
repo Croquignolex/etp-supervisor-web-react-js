@@ -1,25 +1,31 @@
 import PropTypes from "prop-types";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import InputComponent from "../form/InputComponent";
 import ButtonComponent from "../form/ButtonComponent";
+import SelectComponent from "../form/SelectComponent";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitNewAgency} from "../../redux/agencies/actions";
+import {emitAllAgentsFetch} from "../../redux/agents/actions";
 import {requiredChecker} from "../../functions/checkerFunctions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
+import {dataToArrayForSelect} from "../../functions/arrayFunctions";
+import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
 import {storeAddAgencyRequestReset} from "../../redux/requests/agencies/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
 
 // Component
-function AgencyNewComponent({request, dispatch, handleClose}) {
+function AgencyNewComponent({agents, allAgentsRequests, request, dispatch, handleClose}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
+    const [manager, setManger] = useState(DEFAULT_FORM_DATA);
     const [description, setDescription] = useState(DEFAULT_FORM_DATA);
 
     // Local effects
     useEffect(() => {
+        dispatch(emitAllAgentsFetch());
         // Cleaner error alert while component did unmount without store dependency
         return () => {
             shouldResetErrorData();
@@ -47,8 +53,19 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
         setDescription({...description, isValid: true, data})
     }
 
+    const handleManagerSelect = (data) => {
+        shouldResetErrorData();
+        setManger({...manager,  isValid: true, data})
+    }
+
+    // Build select options
+    const managerSelectOptions = useMemo(() => {
+        return dataToArrayForSelect(agents)
+    }, [agents]);
+
     // Reset error alert
     const shouldResetErrorData = () => {
+        dispatch(storeAllAgentsRequestReset());
         dispatch(storeAddAgencyRequestReset());
     };
 
@@ -57,13 +74,15 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
         e.preventDefault();
         shouldResetErrorData();
         const _name = requiredChecker(name);
+        const _manager = requiredChecker(manager);
         // Set value
         setName(_name);
-        const validationOK = (_name.isValid);
+        const validationOK = (_name.isValid && _manager.isValid);
         // Check
         if(validationOK)
             dispatch(emitNewAgency({
                 name: _name.data,
+                manager: _manager.data,
                 description: description.data
             }));
         else playWarningSound();
@@ -86,6 +105,18 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
                                 />
                             </div>
                             <div className='col-sm-6'>
+                                <SelectComponent input={manager}
+                                                 id='inputSimAgent'
+                                                 label='Responsable'
+                                                 title='Choisir un responsable'
+                                                 options={managerSelectOptions}
+                                                 handleInput={handleManagerSelect}
+                                                 requestProcessing={requestLoading(allAgentsRequests)}
+                                />
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-sm-6'>
                                 <TextareaComponent label='Description'
                                                    input={description}
                                                    id='inputDescription'
@@ -105,9 +136,11 @@ function AgencyNewComponent({request, dispatch, handleClose}) {
 
 // Prop types to ensure destroyed props data type
 AgencyNewComponent.propTypes = {
+    agents: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
+    allAgentsRequests: PropTypes.object.isRequired,
 };
 
 export default React.memo(AgencyNewComponent);

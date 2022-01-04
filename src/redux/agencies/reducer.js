@@ -10,6 +10,8 @@ const initialState = {
 
     current: {
         id: '', name: '', description: '', creation: '',
+
+        manager: {id: '', name: ''},
     }
 };
 

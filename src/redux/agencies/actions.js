@@ -72,8 +72,9 @@ export const emitAgencyFetch = ({id}) => ({
 });
 
 // Emit new agency
-export const emitNewAgency = ({name, description}) => ({
+export const emitNewAgency = ({name, manager, description}) => ({
     name,
+    manager,
     description,
     type: EMIT_NEW_AGENCY
 });
