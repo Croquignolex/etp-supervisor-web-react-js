@@ -97,6 +97,7 @@ export const AGENCIES_API_PATH = `${API_URL}/agencies`;
 export const EDIT_AGENCY_API_PATH = `${API_URL}/edit_agency`;
 export const CREATE_AGENCY_API_PATH = `${API_URL}/new_agency`;
 export const ALL_AGENCIES_API_PATH = `${API_URL}/all_agencies`;
+export const AGENCY_ADD_SIM = `${API_URL}/ajouter_puce_agence`;
 export const AGENCY_DETAILS_API_PATH = `${API_URL}/show_agency`;
 
 // Administrators

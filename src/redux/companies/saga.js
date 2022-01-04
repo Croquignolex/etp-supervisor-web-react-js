@@ -105,7 +105,6 @@ export function* emitNextCompaniesFetch() {
     });
 }
 
-
 // New company into API
 export function* emitNewCompany() {
     yield takeLatest(EMIT_NEW_COMPANY, function*({name, phone, address, manager, document, description}) {

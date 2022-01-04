@@ -8,6 +8,7 @@ import {
     EMIT_UPDATE_AGENCY,
     storeSetAgencyData,
     EMIT_AGENCIES_FETCH,
+    EMIT_ADD_AGENCY_SIMS,
     storeSetAgenciesData,
     storeSetNewAgencyData,
     EMIT_ALL_AGENCIES_FETCH,
@@ -26,6 +27,7 @@ import {
     storeAgenciesRequestSucceed,
     storeNextAgenciesRequestInit,
     storeShowAgencyRequestFailed,
+    storeAgencyAddSimRequestInit,
     storeAddAgencyRequestSucceed,
     storeEditAgencyRequestFailed,
     storeAllAgenciesRequestFailed,
@@ -33,7 +35,9 @@ import {
     storeEditAgencyRequestSucceed,
     storeNextAgenciesRequestFailed,
     storeAllAgenciesRequestSucceed,
+    storeAgencyAddSimRequestFailed,
     storeNextAgenciesRequestSucceed,
+    storeAgencyAddSimRequestSucceed,
 } from "../requests/agencies/actions";
 
 // Fetch all agencies from API
@@ -169,6 +173,31 @@ export function* emitUpdateAgency() {
         } catch (message) {
             // Fire event for request
             yield put(storeEditAgencyRequestFailed({message}));
+        }
+    });
+}
+
+// Add agency sim
+export function* emitAddAgencySims() {
+    yield takeLatest(EMIT_ADD_AGENCY_SIMS, function*({id, name, reference, number, description, operator}) {
+        try {
+            // Fire event for request
+            yield put(storeAgencyAddSimRequestInit());
+            const data = {reference, nom: name, description, numero: number, id_flotte: operator,}
+            const apiResponse = yield call(apiPostRequest, `${api.AGENCY_ADD_SIM}/${id}`, data);
+            // Extract data
+            const agency = extractAgencyData(
+                apiResponse.data.agency,
+                apiResponse.data.manager,
+                apiResponse.data.puces,
+            );
+            // Fire event to redux
+            yield put(storeSetAgencyData({agency, alsoInList: true}));
+            // Fire event for request
+            yield put(storeAgencyAddSimRequestSucceed({message: apiResponse.message}));
+        } catch (message) {
+            // Fire event for request
+            yield put(storeAgencyAddSimRequestFailed({message}));
         }
     });
 }

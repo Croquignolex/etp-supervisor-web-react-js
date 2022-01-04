@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {formatNumber} from "../../functions/generalFunctions";
 import FormModalComponent from "../modals/FormModalComponent";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
-import OperatorAddSimContainer from "../../containers/operators/OperatorAddSimContainer";
+import AgencyAddSimContainer from "../../containers/agencies/AgencyAddSimContainer";
 
 // Component
 function AgencySimsListComponent({agency}) {
@@ -75,7 +75,7 @@ function AgencySimsListComponent({agency}) {
             </div>
             {/* Modal */}
             <FormModalComponent modal={addSimModal} handleClose={handleAddSimModalHide}>
-                <OperatorAddSimContainer handleClose={handleAddSimModalHide} />
+                <AgencyAddSimContainer handleClose={handleAddSimModalHide} />
             </FormModalComponent>
             <FormModalComponent small={true} modal={simDetailsModal} handleClose={handleSimDetailModalHide}>
                 <SimDetailsContainer id={simDetailsModal.id} />
