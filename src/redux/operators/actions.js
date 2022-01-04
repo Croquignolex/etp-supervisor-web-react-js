@@ -96,14 +96,14 @@ export const emitUpdateOperator = ({id, name, description}) => ({
 });
 
 // Emit add operator sims
-export const emitAddOperatorSims = ({id, simType, name, number, description, agent, company, collector, resource, reference}) => ({
+export const emitAddOperatorSims = ({id, simType, name, number, description, agent, company, collector, agency, reference}) => ({
     id,
     name,
     agent,
+    agency,
     number,
     simType,
     company,
-    resource,
     collector,
     reference,
     description,

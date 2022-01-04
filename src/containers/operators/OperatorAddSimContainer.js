@@ -5,12 +5,14 @@ import OperatorAddSimComponent from "../../components/operators/OperatorAddSimCo
 // Map state function to component props
 const mapStateToProps = (state) => ({
     agents: state.agents.list,
+    agencies: state.agencies.list,
     companies: state.companies.list,
     simsTypes: state.simsTypes.list,
     collectors: state.collectors.list,
     operator: state.operators.current,
     request: state.operatorsRequests.sim,
     allAgentsRequests: state.agentsRequests.all,
+    allAgenciesRequests: state.agenciesRequests.all,
     allSimsTypesRequests: state.simsTypesRequests.all,
     allCompaniesRequests: state.companiesRequests.all,
     allCollectorsRequests: state.collectorsRequests.all,

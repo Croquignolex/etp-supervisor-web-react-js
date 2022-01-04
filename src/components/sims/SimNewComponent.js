@@ -9,6 +9,7 @@ import * as types from "../../constants/typeConstants";
 import ErrorAlertComponent from "../ErrorAlertComponent";
 import TextareaComponent from "../form/TextareaComponent";
 import {emitAllAgentsFetch} from "../../redux/agents/actions";
+import {emitAllAgenciesFetch} from "../../redux/agencies/actions";
 import {DEFAULT_FORM_DATA} from "../../constants/defaultConstants";
 import {playWarningSound} from "../../functions/playSoundFunctions";
 import {dataToArrayForSelect} from "../../functions/arrayFunctions";
@@ -19,13 +20,12 @@ import {emitAllCollectorsFetch} from "../../redux/collectors/actions";
 import {storeAddSimRequestReset} from "../../redux/requests/sims/actions";
 import {phoneChecker, requiredChecker} from "../../functions/checkerFunctions";
 import {storeAllAgentsRequestReset} from "../../redux/requests/agents/actions";
+import {storeAllAgenciesRequestReset} from "../../redux/requests/agencies/actions";
 import {storeAllCompaniesRequestReset} from "../../redux/requests/companies/actions";
 import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/actions";
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
-import {emitAllAgenciesFetch} from "../../redux/agencies/actions";
-import {storeAllAgenciesRequestReset} from "../../redux/requests/agencies/actions";
 
 // Component
 function SimNewComponent({request, agents, simsTypes, companies, collectors, operators,

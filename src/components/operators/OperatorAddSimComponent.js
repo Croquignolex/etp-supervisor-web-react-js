@@ -23,16 +23,19 @@ import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/acti
 import {storeOperatorAddSimRequestReset} from "../../redux/requests/operators/actions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {emitAllAgenciesFetch} from "../../redux/agencies/actions";
+import {storeAllAgenciesRequestReset} from "../../redux/requests/agencies/actions";
 
 // Component
-function OperatorAddSimComponent({request, agents, simsTypes, companies, collectors, operator, dispatch, handleClose,
-                                     allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests}) {
+function OperatorAddSimComponent({request, agents, simsTypes, companies, collectors,
+                                     agencies, operator, dispatch, handleClose, allAgentsRequests,
+                                     allSimsTypesRequests, allCompaniesRequests, allAgenciesRequests, allCollectorsRequests}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
     const [agent, setAgent] = useState(DEFAULT_FORM_DATA);
     const [number, setNumber] = useState(DEFAULT_FORM_DATA);
+    const [agency, setAgency] = useState(DEFAULT_FORM_DATA);
     const [company, setCompany] = useState(DEFAULT_FORM_DATA);
-    const [resource, setResource] = useState(DEFAULT_FORM_DATA);
     const [simsType, setSimsType] = useState(DEFAULT_FORM_DATA);
     const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
     const [simsTypeData, setSimsTypeData] = useState({});
@@ -41,6 +44,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
     // Local effects
     useEffect(() => {
         dispatch(emitAllAgentsFetch());
+        dispatch(emitAllAgenciesFetch());
         dispatch(emitAllCompaniesFetch());
         dispatch(emitAllSimsTypesFetch());
         dispatch(emitAllCollectorsFetch());
@@ -64,6 +68,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
     // Reset error alert
     const shouldResetErrorData = () => {
         dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllAgenciesRequestReset());
         dispatch(storeAllCompaniesRequestReset());
         dispatch(storeAllSimsTypesRequestReset());
         dispatch(storeAllCollectorsRequestReset());
@@ -89,8 +94,8 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         shouldResetErrorData();
         // reinitialize selects
         setAgent(DEFAULT_FORM_DATA)
+        setAgency(DEFAULT_FORM_DATA)
         setCompany(DEFAULT_FORM_DATA)
-        setResource(DEFAULT_FORM_DATA)
         setCollector(DEFAULT_FORM_DATA)
 
         setSimsType({...simsType,  isValid: true, data})
@@ -102,9 +107,9 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         setAgent({...agent,  isValid: true, data})
     }
 
-    const handleResourceSelect = (data) => {
+    const handleAgencySelect = (data) => {
         shouldResetErrorData();
-        setResource({...resource,  isValid: true, data})
+        setAgency({...agency,  isValid: true, data})
     }
 
     const handleCompanySelect = (data) => {
@@ -128,9 +133,9 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
     }, [agents]);
 
     // Build select options
-    const resourceSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(agents.filter(agent => types.RESOURCE_TYPE === agent.reference));
-    }, [agents]);
+    const agencySelectOptions = useMemo(() => {
+        return dataToArrayForSelect(agencies);
+    }, [agencies]);
 
     // Build select options
     const companySelectOptions = useMemo(() => {
@@ -149,17 +154,17 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
         const _name = requiredChecker(name);
         const _number = phoneChecker(number);
         const _agent = requiredChecker(agent);
+        const _agency = requiredChecker(agency);
         const _company = requiredChecker(company);
-        const _resource= requiredChecker(resource);
         const _simsType = requiredChecker(simsType);
         const _collector = requiredChecker(collector);
         // Set value
         setName(_name);
         setAgent(_agent);
         setNumber(_number);
+        setAgency(_agency);
         setCompany(_company);
         setSimsType(_simsType);
-        setResource(_resource);
         setCollector(_collector);
 
         let reference;
@@ -169,8 +174,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
             validationOK = validationOK && _agent.isValid;
             reference = types.AGENT_TYPE;
         } else if(simsTypeData.needResource) {
-            validationOK = validationOK && _resource.isValid;
-            reference = types.RESOURCE_TYPE;
+            validationOK = validationOK && _agency.isValid;
         } else if(simsTypeData.needCollector) {
             validationOK = validationOK && _collector.isValid
         } else if(simsTypeData.needCompany) {
@@ -187,7 +191,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
                 number: _number.data,
                 company: _company.data,
                 simType: _simsType.data,
-                resource: _resource.data,
+                agency: _agency.data,
                 collector: _collector.data,
                 description: description.data,
             }));
@@ -233,13 +237,13 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
                     )}
                     {simsTypeData.needResource &&  (
                         <div className='col-sm-6'>
-                            <SelectComponent label='Ressource'
-                                             input={resource}
+                            <SelectComponent label='Agence'
+                                             input={agency}
                                              id='inputResource'
-                                             title='Choisir une ressource'
-                                             options={resourceSelectOptions}
-                                             handleInput={handleResourceSelect}
-                                             requestProcessing={requestLoading(allAgentsRequests)}
+                                             title='Choisir une agence'
+                                             options={agencySelectOptions}
+                                             handleInput={handleAgencySelect}
+                                             requestProcessing={requestLoading(allAgenciesRequests)}
                             />
                         </div>
                     )}
@@ -307,6 +311,7 @@ function OperatorAddSimComponent({request, agents, simsTypes, companies, collect
 OperatorAddSimComponent.propTypes = {
     agents: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
+    agencies: PropTypes.array.isRequired,
     request: PropTypes.object.isRequired,
     simsTypes: PropTypes.array.isRequired,
     companies: PropTypes.array.isRequired,
@@ -314,6 +319,7 @@ OperatorAddSimComponent.propTypes = {
     collectors: PropTypes.array.isRequired,
     handleClose: PropTypes.func.isRequired,
     allAgentsRequests: PropTypes.object.isRequired,
+    allAgenciesRequests: PropTypes.object.isRequired,
     allSimsTypesRequests: PropTypes.object.isRequired,
     allCompaniesRequests: PropTypes.object.isRequired,
     allCollectorsRequests: PropTypes.object.isRequired,

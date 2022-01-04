@@ -179,7 +179,8 @@ export function* emitUpdateOperator() {
 
 // Add agent sim
 export function* emitAddOperatorSims() {
-    yield takeLatest(EMIT_ADD_OPERATOR_SIMS, function*({id, simType, name, number, description, agent, company, collector, resource, reference}) {
+    yield takeLatest(EMIT_ADD_OPERATOR_SIMS, function*({id, simType, name, number, description,
+                                                           agent, company, collector, agency, reference}) {
         try {
             // Fire event for request
             yield put(storeOperatorAddSimRequestInit());
@@ -191,8 +192,8 @@ export function* emitAddOperatorSims() {
                 numero: number,
                 id_agent: agent,
                 id_rz: collector,
+                id_agency: agency,
                 id_corporate: company,
-                id_ressource: resource,
             }
             const apiResponse = yield call(apiPostRequest, `${api.OPERATOR_ADD_SIM}/${id}`, data);
             // Extract data
