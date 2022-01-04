@@ -86,7 +86,7 @@ function RecoveriesFleetsAddReturnComponent({request, agents, sims, dispatch, ha
                 return dataToArrayForSelect(mappedSims(sims.filter(item => item.type.name === RESOURCE_TYPE)));
             }
         } else return [];
-    }, [sims, agent.data]);
+    }, [sims, agent.data, agents]);
 
     // Build select options
     const agentSelectOptions = useMemo(() => {

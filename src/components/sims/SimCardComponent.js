@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
+import AgencyDetailsContainer from "../../containers/agencies/AgencyDetailsContainer";
 import CompanyDetailsContainer from "../../containers/companies/CompanyDetailsContainer";
 import OperatorDetailsContainer from "../../containers/operators/OperatorDetailsContainer";
 import {dateToString, formatNumber, upperFirstCase} from "../../functions/generalFunctions";
@@ -19,6 +20,7 @@ import {
 // Component
 function SimCardComponent({sim}) {
     // Local states
+    const [agencyDetailsModal, setAgencyDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENCE", id: ''});
     const [companyDetailsModal, setCompanyDetailsModal] = useState({show: false, header: "DETAIL DE L'ENTREPRISE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
     const [operatorDetailsModal, setOperatorDetailsModal] = useState({show: false, header: "DETAIL DE L'OPERATEUR", id: ''});
@@ -42,6 +44,11 @@ function SimCardComponent({sim}) {
     // Hide company details modal form
     const handleCompanyDetailsModalHide = () => {
         setCompanyDetailsModal({...companyDetailsModal, show: false})
+    }
+
+    // Hide agency details modal form
+    const handleAgencyDetailsModalHide = () => {
+        setAgencyDetailsModal({...agencyDetailsModal, show: false})
     }
 
     // Render
@@ -69,7 +76,7 @@ function SimCardComponent({sim}) {
                 </li>
                 {AGENT_RESOURCE_COLLECTOR_CORPORATE_TYPE.includes(sim.type.name) && (
                     <li className="list-group-item">
-                        <b>{upperFirstCase(sim.type.name)}</b>
+                        <b>{(sim.type.name === RESOURCE_TYPE) ? 'Agence' : upperFirstCase(sim.type.name)}</b>
                         <span className="float-right">
                             {sim.type.name === AGENT_TYPE && (
                                 <>
@@ -81,9 +88,9 @@ function SimCardComponent({sim}) {
                             )}
                             {sim.type.name === RESOURCE_TYPE && (
                                 <>
-                                    {sim.agent.name}
+                                    {sim.agency.name}
                                     <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                       onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: sim.agent.id})}
+                                       onClick={() => setAgencyDetailsModal({...agencyDetailsModal, show: true, id: sim.agency.id})}
                                     />
                                 </>
                             )}
@@ -119,6 +126,9 @@ function SimCardComponent({sim}) {
             </FormModalComponent>
             <FormModalComponent modal={companyDetailsModal} handleClose={handleCompanyDetailsModalHide}>
                 <CompanyDetailsContainer id={companyDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={agencyDetailsModal} handleClose={handleAgencyDetailsModalHide}>
+                <AgencyDetailsContainer id={agencyDetailsModal.id} />
             </FormModalComponent>
         </>
     )

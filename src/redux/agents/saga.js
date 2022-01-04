@@ -17,6 +17,7 @@ import {
     storeSetAgentData,
     storeSetAgentsData,
     EMIT_ADD_AGENT_SIMS,
+    EMIT_RESOURCE_FETCH,
     storeSetNewAgentData,
     EMIT_RESOURCES_FETCH,
     EMIT_ALL_AGENTS_FETCH,
@@ -30,8 +31,9 @@ import {
     storeSetAgentToggleData,
     EMIT_SEARCH_AGENTS_FETCH,
     EMIT_TOGGLE_AGENT_STATUS,
+    EMIT_UPDATE_AGENT_AGENCY,
     EMIT_NEXT_RESOURCES_FETCH,
-    storeStopInfiniteScrollAgentData, EMIT_RESOURCE_FETCH, EMIT_UPDATE_AGENT_AGENCY
+    storeStopInfiniteScrollAgentData
 } from "./actions";
 import {
     storeAgentRequestInit,
@@ -68,7 +70,6 @@ import {
     storeAgentStatusToggleRequestFailed,
     storeAgentStatusToggleRequestSucceed
 } from "../requests/agents/actions";
-import {AGENT_AGENCY_UPDATE_API_PATH, RESOURCE_API_PATH} from "../../constants/apiConstants";
 
 // Fetch all agents from API
 export function* emitAllAgentsFetch() {
