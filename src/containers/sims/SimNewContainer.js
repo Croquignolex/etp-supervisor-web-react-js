@@ -5,12 +5,14 @@ import SimNewComponent from "../../components/sims/SimNewComponent";
 // Map state function to component props
 const mapStateToProps = (state) => ({
     agents: state.agents.list,
+    agencies: state.agencies.list,
     operators: state.operators.list,
     request: state.simsRequests.add,
     companies: state.companies.list,
     simsTypes: state.simsTypes.list,
     collectors: state.collectors.list,
     allAgentsRequests: state.agentsRequests.all,
+    allAgenciesRequests: state.agenciesRequests.all,
     allSimsTypesRequests: state.simsTypesRequests.all,
     allCompaniesRequests: state.companiesRequests.all,
     allOperatorsRequests: state.operatorsRequests.all,

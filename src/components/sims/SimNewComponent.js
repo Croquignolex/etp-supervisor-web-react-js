@@ -24,16 +24,19 @@ import {storeAllSimsTypesRequestReset} from "../../redux/requests/simsTypes/acti
 import {storeAllOperatorsRequestReset} from "../../redux/requests/operators/actions";
 import {storeAllCollectorsRequestReset} from "../../redux/requests/collectors/actions";
 import {applySuccess, requestFailed, requestLoading, requestSucceeded} from "../../functions/generalFunctions";
+import {emitAllAgenciesFetch} from "../../redux/agencies/actions";
+import {storeAllAgenciesRequestReset} from "../../redux/requests/agencies/actions";
 
 // Component
-function SimNewComponent({request, agents, simsTypes, companies, collectors, operators, dispatch, handleClose,
-                         allAgentsRequests, allSimsTypesRequests, allCompaniesRequests, allCollectorsRequests, allOperatorsRequests}) {
+function SimNewComponent({request, agents, simsTypes, companies, collectors, operators,
+                             agencies, dispatch, handleClose, allAgentsRequests, allSimsTypesRequests,
+                             allCompaniesRequests, allCollectorsRequests, allAgenciesRequests, allOperatorsRequests}) {
     // Local state
     const [name, setName] = useState(DEFAULT_FORM_DATA);
     const [agent, setAgent] = useState(DEFAULT_FORM_DATA);
     const [number, setNumber] = useState(DEFAULT_FORM_DATA);
+    const [agency, setAgency] = useState(DEFAULT_FORM_DATA);
     const [company, setCompany] = useState(DEFAULT_FORM_DATA);
-    const [resource, setResource] = useState(DEFAULT_FORM_DATA);
     const [operator, setOperator] = useState(DEFAULT_FORM_DATA);
     const [simsType, setSimsType] = useState(DEFAULT_FORM_DATA);
     const [collector, setCollector] = useState(DEFAULT_FORM_DATA);
@@ -43,6 +46,7 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
     // Local effects
     useEffect(() => {
         dispatch(emitAllAgentsFetch());
+        dispatch(emitAllAgenciesFetch());
         dispatch(emitAllCompaniesFetch());
         dispatch(emitAllSimsTypesFetch());
         dispatch(emitAllOperatorsFetch());
@@ -68,6 +72,7 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
     const shouldResetErrorData = () => {
         dispatch(storeAddSimRequestReset());
         dispatch(storeAllAgentsRequestReset());
+        dispatch(storeAllAgenciesRequestReset());
         dispatch(storeAllCompaniesRequestReset());
         dispatch(storeAllSimsTypesRequestReset());
         dispatch(storeAllOperatorsRequestReset());
@@ -93,8 +98,8 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
         shouldResetErrorData();
         // reinitialize selects
         setAgent(DEFAULT_FORM_DATA)
+        setAgency(DEFAULT_FORM_DATA)
         setCompany(DEFAULT_FORM_DATA)
-        setResource(DEFAULT_FORM_DATA)
         setCollector(DEFAULT_FORM_DATA)
 
         setSimsType({...simsType,  isValid: true, data})
@@ -106,14 +111,14 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
         setAgent({...agent,  isValid: true, data})
     }
 
-    const handleResourceSelect = (data) => {
-        shouldResetErrorData();
-        setResource({...resource,  isValid: true, data})
-    }
-
     const handleCompanySelect = (data) => {
         shouldResetErrorData();
         setCompany({...company,  isValid: true, data})
+    }
+
+    const handleAgencySelect = (data) => {
+        shouldResetErrorData();
+        setAgency({...agency,  isValid: true, data})
     }
 
     const handleCollectorSelect = (data) => {
@@ -137,14 +142,14 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
     }, [agents]);
 
     // Build select options
-    const resourceSelectOptions = useMemo(() => {
-        return dataToArrayForSelect(agents.filter(agent => types.RESOURCE_TYPE === agent.reference));
-    }, [agents]);
-
-    // Build select options
     const companySelectOptions = useMemo(() => {
         return dataToArrayForSelect(companies);
     }, [companies]);
+
+    // Build select options
+    const agencySelectOptions = useMemo(() => {
+        return dataToArrayForSelect(agencies);
+    }, [agencies]);
 
     // Build select options
     const collectorSelectOptions = useMemo(() => {
@@ -163,8 +168,8 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
         const _name = requiredChecker(name);
         const _number = phoneChecker(number);
         const _agent = requiredChecker(agent);
+        const _agency = requiredChecker(agency);
         const _company = requiredChecker(company);
-        const _resource= requiredChecker(resource);
         const _simsType = requiredChecker(simsType);
         const _operator = requiredChecker(operator);
         const _collector = requiredChecker(collector);
@@ -172,21 +177,20 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
         setName(_name);
         setAgent(_agent);
         setNumber(_number);
+        setAgency(_agency);
         setCompany(_company);
         setSimsType(_simsType);
-        setResource(_resource);
         setOperator(_operator);
         setCollector(_collector);
 
-        let reference;
+        let reference = null;
         let validationOK = _simsType.isValid && _name.isValid && _number.isValid && _operator.isValid;
 
         if(simsTypeData.needAgent) {
             validationOK = validationOK && _agent.isValid;
             reference = types.AGENT_TYPE;
         } else if(simsTypeData.needResource) {
-            validationOK = validationOK && _resource.isValid;
-            reference = types.RESOURCE_TYPE;
+            validationOK = validationOK && _agency.isValid;
         } else if(simsTypeData.needCollector) {
             validationOK = validationOK && _collector.isValid
         } else if(simsTypeData.needCompany) {
@@ -199,11 +203,11 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
                 reference,
                 name: _name.data,
                 agent: _agent.data,
+                agency: _agency.data,
                 number: _number.data,
                 company: _company.data,
                 simType: _simsType.data,
                 operator: _operator.data,
-                resource: _resource.data,
                 collector: _collector.data,
                 description: description.data,
             }));
@@ -241,13 +245,13 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
                     )}
                     {simsTypeData.needResource &&  (
                         <div className='col-sm-6'>
-                            <SelectComponent label='Ressource'
-                                             input={resource}
+                            <SelectComponent label='Agence'
+                                             input={agency}
                                              id='inputResource'
-                                             title='Choisir une ressource'
-                                             options={resourceSelectOptions}
-                                             handleInput={handleResourceSelect}
-                                             requestProcessing={requestLoading(allAgentsRequests)}
+                                             title='Choisir une agence'
+                                             options={agencySelectOptions}
+                                             handleInput={handleAgencySelect}
+                                             requestProcessing={requestLoading(allAgenciesRequests)}
                             />
                         </div>
                     )}
@@ -325,6 +329,7 @@ function SimNewComponent({request, agents, simsTypes, companies, collectors, ope
 SimNewComponent.propTypes = {
     agents: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
+    agencies: PropTypes.array.isRequired,
     request: PropTypes.object.isRequired,
     simsTypes: PropTypes.array.isRequired,
     companies: PropTypes.array.isRequired,
@@ -332,6 +337,7 @@ SimNewComponent.propTypes = {
     collectors: PropTypes.array.isRequired,
     handleClose: PropTypes.func.isRequired,
     allAgentsRequests: PropTypes.object.isRequired,
+    allAgenciesRequests: PropTypes.object.isRequired,
     allSimsTypesRequests: PropTypes.object.isRequired,
     allCompaniesRequests: PropTypes.object.isRequired,
     allOperatorsRequests: PropTypes.object.isRequired,

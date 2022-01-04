@@ -423,7 +423,7 @@ export function* emitSimFetch() {
 
 // New sim into API
 export function* emitNewSim() {
-    yield takeLatest(EMIT_NEW_SIM, function*({name, number, operator, agent, collector, resource,
+    yield takeLatest(EMIT_NEW_SIM, function*({name, number, operator, agent, collector, agency,
                                                  reference, description, simType, company}) {
         try {
             // Fire event for request
@@ -436,9 +436,9 @@ export function* emitNewSim() {
                 type: simType,
                 numero: number,
                 id_agent: agent,
+                id_agency: agency,
                 id_flotte: operator,
                 id_corporate: company,
-                id_ressource: resource,
                 id_recouvreur: collector,
             }
             // API request
