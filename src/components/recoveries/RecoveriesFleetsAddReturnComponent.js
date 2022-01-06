@@ -104,17 +104,20 @@ function RecoveriesFleetsAddReturnComponent({request, agents, sims, dispatch, ha
     const handleSubmit = (e) => {
         e.preventDefault();
         shouldResetErrorData();
+        const _agent = requiredChecker(agent);
         const _amount = requiredChecker(amount);
         const _outgoingSim = requiredChecker(outgoingSim);
         const _incomingSim = requiredChecker(incomingSim);
         // Set value
+        setAgent(_agent);
         setAmount(_amount);
         setOutgoingSim(_outgoingSim);
         setIncomingSim(_incomingSim);
-        const validationOK = (_amount.isValid && _incomingSim.isValid && _outgoingSim.isValid);
+        const validationOK = (_amount.isValid && _incomingSim.isValid && _outgoingSim.isValid && _agent.isValid);
         // Check
         if(validationOK) {
             dispatch(emitAddFleetReturn({
+                agent: _agent.data,
                 amount: _amount.data,
                 agentSim: _outgoingSim.data,
                 managerSim: _incomingSim.data

@@ -37,7 +37,7 @@ function ResourceSecondaryInfoComponent({agent}) {
     const handleAgencyDetailModalHide = () => {
         setAgencyDetailsModal({...agencyDetailsModal, show: false})
     }
-console.log({agent})
+
     // Render
     return (
         <>
