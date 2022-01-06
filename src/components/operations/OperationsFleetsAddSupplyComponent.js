@@ -91,7 +91,6 @@ function OperationsFleetsAddSupplyComponent({request, sims, agents, allAgentsReq
                 )))
             }
         } else return [];
-
     }, [sims, agent.data, agents, selectedOp]);
 
     // Build select options
