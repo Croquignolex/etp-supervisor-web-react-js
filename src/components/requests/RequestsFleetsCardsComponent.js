@@ -16,7 +16,7 @@ function RequestsFleetsCardsComponent({fleets}) {
     // Local states
     const [simDetailsModal, setSimDetailsModal] = useState({show: false, header: "DETAIL DU COMPTE", id: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT", id: ''});
-    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE RESSOURCE", id: ''});
+    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
     const [collectorDetailsModal, setCollectorDetailsModal] = useState({show: false, header: "DETAIL DU RESPONSABLE DE ZONE", id: ''});
 
     // Hide agent details modal form

@@ -14,7 +14,7 @@ function RequestsGroupSuppliesCardsComponent({supplies, handleGroupDetailsModalS
                                                  handleGroupReturnModalShow, handleGroupRecoveryModalShow}) {
     // Local states
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT/RESSOURCE", id: ''});
-    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE RESSOURCE", id: ''});
+    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
 
     // Hide agent details modal form
     const handleAgentDetailsModalHide = () => {

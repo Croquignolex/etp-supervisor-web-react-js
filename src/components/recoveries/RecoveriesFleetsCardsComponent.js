@@ -14,7 +14,7 @@ import ResourceDetailsContainer from "../../containers/resources/ResourceDetails
 function RecoveriesFleetsCardsComponent({returns}) {
     // Local states
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT", id: ''});
-    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE RESSOURCE", id: ''});
+    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
     const [incomingSimDetailsModal, setIncomingSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE AGENT', id: ''});
     const [outgoingSimDetailsModal, setOutgoingSimDetailsModal] = useState({show: false, header: 'DETAIL DU COMPTE DE FLOTTAGE', id: ''});
 
