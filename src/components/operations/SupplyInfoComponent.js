@@ -52,15 +52,15 @@ function SupplyInfoComponent({supply}) {
                             <span className="float-right">{dateToString(supply.creation)}</span>
                         </li>
                         <li className="list-group-item">
-                            <b>{(item.agent?.reference === AGENT_TYPE) ? "Agent" : "Ressource"}</b>
+                            <b>{(supply.agent?.reference === AGENT_TYPE) ? "Agent" : "Ressource"}</b>
                             <span className="float-right">
-                                                {item.agent.name}
-                                {(item.agent?.reference === AGENT_TYPE)
+                                                {supply.agent.name}
+                                {(supply.agent?.reference === AGENT_TYPE)
                                     ? <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                         onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.agent.id})}
+                                         onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: supply.agent.id})}
                                     />
                                     : <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
-                                         onClick={() => setResourceDetailsModal({...resourceDetailsModal, show: true, id: item.agent.id})}
+                                         onClick={() => setResourceDetailsModal({...resourceDetailsModal, show: true, id: supply.agent.id})}
                                     />
                                 }
                                             </span>
