@@ -4,7 +4,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import * as types from "../constants/typeConstants";
 import * as path from "../constants/pagePathConstants";
 import {emitAllSimsFetch} from "../redux/sims/actions";
-import {MASTER_TYPE} from "../constants/typeConstants";
 import {emitAllZonesFetch} from "../redux/zones/actions";
 import * as setting from "../constants/settingsConstants";
 import {emitAllAgentsFetch} from "../redux/agents/actions";
@@ -113,19 +112,25 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
         // eslint-disable-next-line
     }, [agents]);
     const mtnFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => ((sim.operator.id === '1') && (sim.type.name === MASTER_TYPE)));
+        const data = sims.filter(sim => (sim.operator.id === '1'));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
     const orangeFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => ((sim.operator.id === '2') && (sim.type.name === MASTER_TYPE)));
+        const data = sims.filter(sim => (sim.operator.id === '2'));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
     const yupFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => ((sim.operator.id === '3') && (sim.type.name === MASTER_TYPE)));
+        const data = sims.filter(sim => (sim.operator.id === '3'));
+        const number = data.length
+        const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
+        return {number, value}
+    }, [sims]);
+    const yoomeeFleetSimsFleetsData = useMemo(() => {
+        const data = sims.filter(sim => (sim.operator.id === '4'));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
@@ -192,7 +197,8 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                         </div>
                                         }
                                     </div>
-                                    {/*  Fleet balance */}
+
+                                    {/* Fleets */}
                                     <div className="row">
                                         {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_MTN) &&
                                         <div className="col-lg-3 col-md-4 col-sm-6">
@@ -227,7 +233,19 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             />
                                         </div>
                                         }
+                                        {cardsData.includes(setting.CARD_FLEET_SIMS_FLEETS_YOOMEE) &&
+                                        <div className="col-lg-3 col-md-4 col-sm-6">
+                                            <DashboardWithOperatorCardComponent color='bg-secondary'
+                                                                                operator={{id: '4'}}
+                                                                                request={allSimsRequests}
+                                                                                url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                                data={formatNumber(yoomeeFleetSimsFleetsData.value)}
+                                                                                label={`${setting.LABEL_FLEET_SIMS_FLEETS_YOOMEE} (${yoomeeFleetSimsFleetsData.number})`}
+                                            />
+                                        </div>
+                                        }
                                     </div>
+
                                     {/* Others */}
                                     <div className="row">
                                         {cardsData.includes(setting.CARD_ADMINS) &&

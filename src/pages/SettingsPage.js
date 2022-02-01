@@ -69,6 +69,7 @@ function SettingsPage({settings, request, dispatch, location}) {
                 {value: setting.CARD_FLEET_SIMS_FLEETS_YUP, label: setting.LABEL_FLEET_SIMS_FLEETS_YUP},
                 {value: setting.CARD_FLEET_SIMS_FLEETS_MTN, label: setting.LABEL_FLEET_SIMS_FLEETS_MTN},
                 {value: setting.CARD_FLEET_SIMS_FLEETS_ORANGE, label: setting.LABEL_FLEET_SIMS_FLEETS_ORANGE},
+                {value: setting.CARD_FLEET_SIMS_FLEETS_YOOMEE, label: setting.LABEL_FLEET_SIMS_FLEETS_YOOMEE},
             ],
             charts: [
                 // {value: 0, label: 'name'}
