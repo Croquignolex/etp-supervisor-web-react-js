@@ -5,12 +5,14 @@ import FormModalComponent from "../modals/FormModalComponent";
 import {AGENT_TYPE, RESOURCE_TYPE} from "../../constants/typeConstants";
 import ZoneAddAgentContainer from "../../containers/zones/ZoneAddAgentContainer";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
+import ResourceDetailsContainer from "../../containers/resources/ResourceDetailsContainer";
 
 // Component
 function ZoneAgentsListComponent({zone}) {
     // Local states
     const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: '', type: ''});
-    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: 'DETAIL DE LA AGENT', id: ''});
+    const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT", id: ''});
+    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
 
     // Show add agent modal form
     const handleAddAgentModalShow = () => {
@@ -30,6 +32,11 @@ function ZoneAgentsListComponent({zone}) {
     // Hide agent details modal form
     const handleAgentDetailModalHide = () => {
         setAgentDetailsModal({...agentDetailsModal, show: false})
+    }
+
+    // Hide resource details modal form
+    const handleResourceDetailsModalHide = () => {
+        setResourceDetailsModal({...resourceDetailsModal, show: false})
     }
 
     // Render
@@ -56,9 +63,14 @@ function ZoneAgentsListComponent({zone}) {
                                 return (
                                     <tr key={key}>
                                         <td>
-                                            <i className="fa fa-question-circle small mr-1 hand-cursor text-theme"
-                                               onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.id})}
-                                            />
+                                            {(item?.reference === AGENT_TYPE)
+                                                ? <i className="fa fa-question-circle small ml-1 hand-cursor text-theme mr-1"
+                                                     onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.id})}
+                                                />
+                                                : <i className="fa fa-question-circle small ml-1 hand-cursor text-theme mr-1"
+                                                     onClick={() => setResourceDetailsModal({...resourceDetailsModal, show: true, id: item.id})}
+                                                />
+                                            }
                                             {item.name}
                                         </td>
                                         <td>{item.reference}</td>
@@ -85,6 +97,9 @@ function ZoneAgentsListComponent({zone}) {
             </FormModalComponent>
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
+            </FormModalComponent>
+            <FormModalComponent modal={resourceDetailsModal} handleClose={handleResourceDetailsModalHide}>
+                <ResourceDetailsContainer id={resourceDetailsModal.id} />
             </FormModalComponent>
         </>
     )
