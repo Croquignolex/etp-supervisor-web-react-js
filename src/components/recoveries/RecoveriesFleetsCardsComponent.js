@@ -4,10 +4,10 @@ import React, {useState} from 'react';
 import OperatorComponent from "../OperatorComponent";
 import FormModalComponent from "../modals/FormModalComponent";
 import {fleetTypeBadgeColor} from "../../functions/typeFunctions";
-import {AGENT_TYPE, CANCEL, DONE, PROCESSING} from "../../constants/typeConstants";
 import SimDetailsContainer from "../../containers/sims/SimDetailsContainer";
 import {dateToString, formatNumber} from "../../functions/generalFunctions";
 import AgentDetailsContainer from "../../containers/agents/AgentDetailsContainer";
+import {AGENT_TYPE, CANCEL, DONE, PROCESSING} from "../../constants/typeConstants";
 import ResourceDetailsContainer from "../../containers/resources/ResourceDetailsContainer";
 
 // Component
@@ -61,7 +61,7 @@ function RecoveriesFleetsCardsComponent({returns}) {
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Compte {(item.agent?.reference === AGENT_TYPE) ? "agent" : "ressource"}</b>
+                                            <b>Compte émetteur</b>
                                             <span className="float-right">
                                                 {item.sim_outgoing.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
@@ -70,7 +70,7 @@ function RecoveriesFleetsCardsComponent({returns}) {
                                             </span>
                                         </li>
                                         <li className="list-group-item">
-                                            <b>Compte de flottage</b>
+                                            <b>Compte recepteur</b>
                                             <span className="float-right">
                                                 {item.sim_incoming.number}
                                                 <i className="fa fa-question-circle small ml-1 hand-cursor text-theme"
