@@ -22,8 +22,9 @@ export const storeResetUserData = () => ({
 });
 
 // Set user data in store
-export const storeSetUserFullData = ({id, name, post, email, phone, avatar, address, creation, description}) => ({
+export const storeSetUserFullData = ({id, name, post, email, phone, avatar, address, home, creation, description}) => ({
     id,
+    home,
     name,
     post,
     phone,

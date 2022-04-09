@@ -59,7 +59,7 @@ export function* emitCheckUserAuthentication() {
             if(userData != null && settingsData !== null && userData.auth) {
                 // Deconstruction
                 const {cards, charts, bars, sound, session} = settingsData;
-                const {name, post, email, phone, avatar, address, creation} = userData;
+                const {name, post, email, phone, avatar, address, creation, home} = userData;
                 // Fire event to redux for settings data
                 yield put(storeSetSettingsData({
                     id: settingsData.id,
@@ -70,7 +70,7 @@ export function* emitCheckUserAuthentication() {
                 yield put(storeSetUserFullData({
                     id: userData.id,
                     description: userData.description,
-                    address, post, name, phone, email, avatar, creation,
+                    address, home, post, name, phone, email, avatar, creation,
                 }));
             } else {
                 yield put(storeResetUserData());
@@ -101,7 +101,7 @@ export function* emitAttemptUserAuthentication() {
             // Deconstruction
             if(roleData === data.role) {
                 const {cards, charts, bars, sound, session} = settingsData;
-                const {name, post, email, phone, avatar, address, creation} = userData;
+                const {name, post, email, phone, home, avatar, address, creation} = userData;
                 // Set user data into local storage
                 yield call(setLocaleStorageItem, LOCAL_STORAGE_SETTINGS, settingsData);
                 yield call(setLocaleStorageItem, LOCAL_STORAGE_USER_DATA, {...userData, token});
@@ -115,6 +115,7 @@ export function* emitAttemptUserAuthentication() {
                 }))
                 // Fire event to redux for user data
                 yield put(storeSetUserFullData({
+                    home,
                     id: userData.id,
                     description: userData.description,
                     address, post, name, phone, email, avatar, creation,
@@ -257,6 +258,7 @@ function extractUserAndSettingsData(apiResponse) {
             id: user.id.toString(),
             creation: user.created_at,
             description: user.description,
+            home: user.email_verified_at !== null,
             avatar: getProfileImageFromServer(user.avatar)
         },
         settingsData: {
