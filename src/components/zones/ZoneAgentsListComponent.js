@@ -12,7 +12,7 @@ function ZoneAgentsListComponent({zone}) {
     // Local states
     const [addAgentModal, setAddAgentEditModal] = useState({show: false, header: '', type: ''});
     const [agentDetailsModal, setAgentDetailsModal] = useState({show: false, header: "DETAIL DE L'AGENT", id: ''});
-    const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
+    // const [resourceDetailsModal, setResourceDetailsModal] = useState({show: false, header: "DETAIL DE LA RESSOURCE", id: ''});
 
     // Show add agent modal form
     const handleAddAgentModalShow = () => {
@@ -35,9 +35,9 @@ function ZoneAgentsListComponent({zone}) {
     }
 
     // Hide resource details modal form
-    const handleResourceDetailsModalHide = () => {
+    /*const handleResourceDetailsModalHide = () => {
         setResourceDetailsModal({...resourceDetailsModal, show: false})
-    }
+    }*/
 
     // Render
     return (
@@ -45,16 +45,15 @@ function ZoneAgentsListComponent({zone}) {
             <button type="button" className="btn btn-theme mb-1 mr-1" onClick={handleAddAgentModalShow}>
                 <i className="fa fa-plus" /> Ajouter un agent
             </button>
-            <button type="button" className="btn btn-theme mb-1" onClick={handleAddResourceModalShow}>
+            {/*<button type="button" className="btn btn-theme mb-1" onClick={handleAddResourceModalShow}>
                 <i className="fa fa-plus" /> Ajouter une ressource
-            </button>
+            </button>*/}
             <div className="card">
                 <div className="table-responsive">
                     <table className="table table-hover text-nowrap table-bordered">
                         <thead>
                             <tr>
                                 <th>NOM</th>
-                                <th>TYPE</th>
                                 <th>TELEPHONE</th>
                             </tr>
                         </thead>
@@ -63,17 +62,11 @@ function ZoneAgentsListComponent({zone}) {
                                 return (
                                     <tr key={key}>
                                         <td>
-                                            {(item?.reference === AGENT_TYPE)
-                                                ? <i className="fa fa-question-circle small ml-1 hand-cursor text-theme mr-1"
-                                                     onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.id})}
-                                                />
-                                                : <i className="fa fa-question-circle small ml-1 hand-cursor text-theme mr-1"
-                                                     onClick={() => setResourceDetailsModal({...resourceDetailsModal, show: true, id: item.id})}
-                                                />
-                                            }
+                                            <i className="fa fa-question-circle small ml-1 hand-cursor text-theme mr-1"
+                                               onClick={() => setAgentDetailsModal({...agentDetailsModal, show: true, id: item.id})}
+                                            />
                                             {item.name}
                                         </td>
-                                        <td>{item.reference}</td>
                                         <td>{item.phone}</td>
                                     </tr>
                                 )
@@ -98,9 +91,9 @@ function ZoneAgentsListComponent({zone}) {
             <FormModalComponent modal={agentDetailsModal} handleClose={handleAgentDetailModalHide}>
                 <AgentDetailsContainer id={agentDetailsModal.id} />
             </FormModalComponent>
-            <FormModalComponent modal={resourceDetailsModal} handleClose={handleResourceDetailsModalHide}>
+           {/* <FormModalComponent modal={resourceDetailsModal} handleClose={handleResourceDetailsModalHide}>
                 <ResourceDetailsContainer id={resourceDetailsModal.id} />
-            </FormModalComponent>
+            </FormModalComponent>*/}
         </>
     )
 }
