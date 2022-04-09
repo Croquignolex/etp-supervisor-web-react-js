@@ -39,6 +39,7 @@ import {storeAllAdministratorsRequestReset} from "../redux/requests/administrato
 import DashboardWithOperatorCardComponent from "../components/dashboard/DashboardWithOperatorCardComponent";
 import {storeUserBalanceFetchRequestReset, storeUserFactoryResetRequestReset} from "../redux/requests/user/actions";
 import {applySuccess, formatNumber, requestFailed, requestLoading, requestSucceeded} from "../functions/generalFunctions";
+import {MASTER_TYPE} from "../constants/typeConstants";
 
 // Component
 function DashboardPage({agents, overseers, accountants, settings, dispatch,
@@ -112,25 +113,25 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
         // eslint-disable-next-line
     }, [agents]);
     const mtnFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => (sim.operator.id === '1'));
+        const data = sims.filter(sim => (sim.operator.id === '1' && sim.type.name === MASTER_TYPE));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
     const orangeFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => (sim.operator.id === '2'));
+        const data = sims.filter(sim => (sim.operator.id === '2' && sim.type.name === MASTER_TYPE));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
     const yupFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => (sim.operator.id === '3'));
+        const data = sims.filter(sim => (sim.operator.id === '3' && sim.type.name === MASTER_TYPE));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
     }, [sims]);
     const yoomeeFleetSimsFleetsData = useMemo(() => {
-        const data = sims.filter(sim => (sim.operator.id === '4'));
+        const data = sims.filter(sim => (sim.operator.id === '4' && sim.type.name === MASTER_TYPE));
         const number = data.length
         const value = data.reduce((acc, val) => acc + parseInt(val.balance, 10), 0)
         return {number, value}
@@ -205,7 +206,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '1'}}
                                                                                 request={allSimsRequests}
-                                                                                url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                                url={path.MASTERS_SIMS_PAGE_PATH}
                                                                                 data={formatNumber(mtnFleetSimsFleetsData.value)}
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_MTN} (${mtnFleetSimsFleetsData.number})`}
                                             />
@@ -216,7 +217,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '2'}}
                                                                                 request={allSimsRequests}
-                                                                                url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                                url={path.MASTERS_SIMS_PAGE_PATH}
                                                                                 data={formatNumber(orangeFleetSimsFleetsData.value)}
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_ORANGE} (${orangeFleetSimsFleetsData.number})`}
                                             />
@@ -227,7 +228,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '3'}}
                                                                                 request={allSimsRequests}
-                                                                                url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                                url={path.MASTERS_SIMS_PAGE_PATH}
                                                                                 data={formatNumber(yupFleetSimsFleetsData.value)}
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_YUP} (${yupFleetSimsFleetsData.number})`}
                                             />
@@ -238,7 +239,7 @@ function DashboardPage({agents, overseers, accountants, settings, dispatch,
                                             <DashboardWithOperatorCardComponent color='bg-secondary'
                                                                                 operator={{id: '4'}}
                                                                                 request={allSimsRequests}
-                                                                                url={path.FLEETS_SIMS_PAGE_PATH}
+                                                                                url={path.MASTERS_SIMS_PAGE_PATH}
                                                                                 data={formatNumber(yoomeeFleetSimsFleetsData.value)}
                                                                                 label={`${setting.LABEL_FLEET_SIMS_FLEETS_YOOMEE} (${yoomeeFleetSimsFleetsData.number})`}
                                             />
